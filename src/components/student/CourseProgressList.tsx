@@ -1,38 +1,34 @@
 import React from 'react';
 
-interface Course {
+interface CourseProps {
   title: string;
   progress: string;
   lastActivity: string;
 }
 
 interface CourseProgressListProps {
-  courses: Course[];
+  courses: CourseProps[];
 }
 
-const CourseProgressList: React.FC<CourseProgressListProps> = ({ courses }) => {
+export default function CourseProgressList({ courses }: CourseProgressListProps) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">Your Courses</h3>
-      <div className="space-y-4">
-        {courses.map((course, index) => (
-          <div key={index} className="border-b border-gray-100 last:border-0 pb-4 last:pb-0">
-            <div className="flex justify-between items-start mb-2">
-              <h4 className="font-medium text-gray-800">{course.title}</h4>
-              <span className="text-sm text-blue-600">{course.progress}</span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-1.5 mb-2">
-              <div
-                className="bg-blue-600 h-1.5 rounded-full"
+    <div className="bg-white rounded-xl shadow-md p-6">
+      <h3 className="text-lg font-bold mb-4">Courses</h3>
+      <ul className="space-y-4">
+        {courses.map((course, idx) => (
+          <li key={idx} className="border-b pb-4 last:border-0 last:pb-0 border-gray-100">
+            <h4 className="font-medium">{course.title}</h4>
+            <div className="mt-2 w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+              <div 
+                className="bg-[rgb(60,152,251)] h-2"
                 style={{ width: course.progress }}
               ></div>
             </div>
-            <p className="text-sm text-gray-500">Last activity: {course.lastActivity}</p>
-          </div>
+            <p className="mt-1 text-xs text-gray-500">Progress: {course.progress}</p>
+            <p className="text-xs text-gray-500">Last activity: {course.lastActivity}</p>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
-};
-
-export default CourseProgressList; 
+} 
