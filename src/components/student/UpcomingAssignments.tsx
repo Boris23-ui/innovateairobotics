@@ -10,29 +10,19 @@ interface UpcomingAssignmentsProps {
   assignments: Assignment[];
 }
 
-const UpcomingAssignments: React.FC<UpcomingAssignmentsProps> = ({ assignments }) => {
+export default function UpcomingAssignments({ assignments }: UpcomingAssignmentsProps) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">Upcoming Assignments</h3>
-      <div className="space-y-4">
-        {assignments.map((assignment, index) => (
-          <div
-            key={index}
-            className="flex items-start justify-between p-4 bg-gray-50 rounded-lg"
-          >
-            <div>
-              <h4 className="font-medium text-gray-800">{assignment.title}</h4>
-              <p className="text-sm text-gray-600">{assignment.course}</p>
-            </div>
-            <div className="text-right">
-              <p className="text-sm font-medium text-blue-600">Due</p>
-              <p className="text-sm text-gray-600">{assignment.dueDate}</p>
-            </div>
-          </div>
+    <div className="bg-white rounded-xl shadow-md p-6">
+      <h3 className="text-xl font-bold mb-4">Upcoming Assignments</h3>
+      <ul className="space-y-4">
+        {assignments.map((assign, idx) => (
+          <li key={idx} className="p-4 border-l-4 border-[rgb(60,152,251)] bg-[rgb(60,152,251)]/[0.05] rounded-r-lg">
+            <h4 className="font-medium">{assign.title}</h4>
+            <p className="text-sm text-gray-600 mt-1">Course: {assign.course}</p>
+            <p className="text-sm text-gray-600 mt-1">Due: {assign.dueDate}</p>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
-};
-
-export default UpcomingAssignments; 
+} 
