@@ -2,7 +2,7 @@ import React from 'react';
 
 interface Project {
   title: string;
-  status: 'graded' | 'pending';
+  status: string;
   score?: string;
   feedback: string | null;
 }
@@ -11,41 +11,33 @@ interface SubmittedProjectsProps {
   projects: Project[];
 }
 
-const SubmittedProjects: React.FC<SubmittedProjectsProps> = ({ projects }) => {
+export default function SubmittedProjects({ projects }: SubmittedProjectsProps) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">Submitted Projects</h3>
-      <div className="space-y-4">
-        {projects.map((project, index) => (
-          <div
-            key={index}
-            className="border border-gray-100 rounded-lg p-4"
-          >
-            <div className="flex justify-between items-start mb-2">
-              <h4 className="font-medium text-gray-800">{project.title}</h4>
-              <span
-                className={`px-2 py-1 rounded-full text-xs ${
-                  project.status === 'graded'
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-yellow-100 text-yellow-800'
-                }`}
-              >
-                {project.status === 'graded' ? 'Graded' : 'Pending'}
-              </span>
+    <div className="bg-white rounded-xl shadow-md p-6">
+      <h3 className="text-xl font-bold mb-4">Submitted Projects</h3>
+      <ul className="space-y-4">
+        {projects.map((project, idx) => (
+          <li key={idx} className="flex justify-between items-center p-3 bg-gray-50 rounded">
+            <div>
+              <h4 className="font-medium">{project.title}</h4>
+              <p className="text-sm text-gray-500">
+                Status: <span className={`${project.status === 'graded' ? 'text-green-600' : 'text-yellow-600'}`}>
+                  {project.status === 'graded' ? 'Graded' : 'In Review'}
+                </span>
+              </p>
+              {project.score && (
+                <p className="text-sm text-gray-500">Score: {project.score}</p>
+              )}
+              {project.feedback && (
+                <p className="text-sm text-gray-500 mt-1">{project.feedback}</p>
+              )}
             </div>
-            {project.status === 'graded' && project.score && (
-              <div className="mb-2">
-                <span className="text-sm font-medium text-blue-600">Score: {project.score}</span>
-              </div>
-            )}
-            {project.feedback && (
-              <p className="text-sm text-gray-600">{project.feedback}</p>
-            )}
-          </div>
+            <button className="px-3 py-1 text-sm text-[rgb(60,152,251)] hover:text-[rgb(45,130,220)] transition-colors">
+              View Details
+            </button>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
-};
-
-export default SubmittedProjects; 
+} 

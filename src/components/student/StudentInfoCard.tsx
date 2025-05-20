@@ -10,7 +10,7 @@ interface StudentInfoProps {
 export default function StudentInfoCard({ name, gradeLevel, progress, lastLogin }: StudentInfoProps) {
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
-      <h2 className="text-xl font-bold mb-4">{name}</h2>
+      <h2 className="text-xl font-bold mb-2">{name}</h2>
       <p className="text-sm text-gray-500 mb-4">Grade Level: {gradeLevel}</p>
       <div className="mb-4">
         <div className="flex justify-between mb-1">
