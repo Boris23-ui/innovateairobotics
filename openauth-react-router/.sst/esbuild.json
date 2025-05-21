@@ -1,0 +1,38 @@
+
+  .sst/platform/sst.config.1747856775918.mjs ────────── 23.9kb ─ 100.0%
+   ├ ../node_modules/aws4fetch/dist/aws4fetch.esm.mjs ─ 11.5kb ── 47.9%
+   │  └ ../node_modules/sst/dist/aws/client.js
+   │     └ ../node_modules/sst/dist/vector/index.js
+   │        └ ../node_modules/sst/dist/index.js
+   │           └ sst.config.ts
+   │              └ eval.ts
+   ├ ../node_modules/sst/dist/resource.js ────────────── 2.8kb ── 11.6%
+   │  └ ../node_modules/sst/dist/index.js
+   │     └ sst.config.ts
+   │        └ eval.ts
+   ├ ../node_modules/sst/dist/vector/index.js ────────── 2.5kb ── 10.3%
+   │  └ ../node_modules/sst/dist/index.js
+   │     └ sst.config.ts
+   │        └ eval.ts
+   ├ ../node_modules/sst/dist/aws/realtime.js ────────── 2.1kb ─── 8.8%
+   │  └ ../node_modules/sst/dist/realtime/index.js
+   │     └ ../node_modules/sst/dist/index.js
+   │        └ sst.config.ts
+   │           └ eval.ts
+   ├ ../node_modules/sst/dist/aws/client.js ──────────── 1.4kb ─── 5.9%
+   │  └ ../node_modules/sst/dist/vector/index.js
+   │     └ ../node_modules/sst/dist/index.js
+   │        └ sst.config.ts
+   │           └ eval.ts
+   ├ ../node_modules/sst/dist/index.js ───────────────── 931b ──── 3.8%
+   │  └ sst.config.ts
+   │     └ eval.ts
+   ├ sst.config.ts ───────────────────────────────────── 392b ──── 1.6%
+   │  └ eval.ts
+   ├ eval.ts ─────────────────────────────────────────── 243b ──── 1.0%
+   ├ ../node_modules/sst/dist/realtime/index.js ──────── 206b ──── 0.8%
+   │  └ ../node_modules/sst/dist/index.js
+   │     └ sst.config.ts
+   │        └ eval.ts
+   └ <define:$input> ─────────────────────────────────── 147b ──── 0.6%
+      └ eval.ts
