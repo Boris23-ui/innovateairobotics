@@ -1,4 +1,5 @@
 import React from 'react';
+import { OpenAuth } from '@openauthjs/openauth';
 
 interface Course {
   title: string;
