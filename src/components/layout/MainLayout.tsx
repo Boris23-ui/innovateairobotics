@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
+import Footer from './Footer';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -71,6 +72,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 </Link>
               ))}
               <Link
+                href="/login"
+                className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+              >
+                Login
+              </Link>
+              <Link
                 href="/donate"
                 className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
               >
@@ -127,6 +134,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                   </Link>
                 ))}
                 <Link
+                  href="/login"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
                   href="/donate"
                   className="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700"
                   onClick={() => setIsMenuOpen(false)}
@@ -151,45 +165,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </motion.main>
 
       {/* Footer */}
-      <footer className="bg-white border-t">
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">InnovateAI Robotics</h3>
-              <p className="text-gray-600">
-                Empowering minds through AI robotics education
-              </p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Quick Links</h3>
-              <ul className="space-y-2">
-                {navItems.map((item) => (
-                  <li key={item.path}>
-                    <Link
-                      href={item.path}
-                      className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Contact</h3>
-              <p className="text-gray-600">
-                Phone: +1 (650) 619-4676
-              </p>
-              <p className="text-gray-600">
-                Email: info@innovateairobotics.com
-              </p>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t text-center text-gray-600">
-            <p>&copy; {new Date().getFullYear()} InnovateAI Robotics. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -22,11 +22,20 @@ const Carousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+    let timer: NodeJS.Timeout;
+    try {
+      timer = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+      }, 5000);
+    } catch (error) {
+      console.error('Error in carousel timer:', error);
+    }
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
+  }, [testimonials.length]);
 
   return (
     <section className="py-20 bg-gray-50">

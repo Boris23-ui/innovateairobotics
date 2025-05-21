@@ -1,36 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+interface Student {
+  id: string;
+  name: string;
+  course: string;
+  progress: number;
+  lastActivity: string;
+  status: 'active' | 'inactive';
+}
 
 const StudentProgress: React.FC = () => {
-  const students = [
-    {
-      name: 'John Smith',
-      course: 'Introduction to Robotics',
-      progress: 75,
-      lastActivity: '2 days ago',
-      status: 'active',
-    },
-    {
-      name: 'Emma Wilson',
-      course: 'Advanced AI',
-      progress: 90,
-      lastActivity: '1 day ago',
-      status: 'active',
-    },
-    {
-      name: 'Michael Brown',
-      course: 'Robotics Engineering',
-      progress: 60,
-      lastActivity: '5 days ago',
-      status: 'inactive',
-    },
-    {
-      name: 'Sarah Davis',
-      course: 'Introduction to Robotics',
-      progress: 85,
-      lastActivity: '3 days ago',
-      status: 'active',
-    },
-  ];
+  const [students, setStudents] = useState<Student[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        // Replace with actual API call
+        const response = await fetch('/api/students/progress');
+        if (!response.ok) {
+          throw new Error('Failed to fetch student progress');
+        }
+        const data = await response.json();
+        setStudents(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchStudents();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-semibold mb-6">Student Progress</h2>
+        <div className="animate-pulse space-y-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="h-16 bg-gray-200 rounded"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-semibold mb-6">Student Progress</h2>
+        <div className="bg-red-50 text-red-600 p-4 rounded-md">
+          {error}
+        </div>
+      </div>
+    );
+  }
+
+  if (students.length === 0) {
+    return (
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-semibold mb-6">Student Progress</h2>
+        <div className="text-center text-gray-500 py-8">
+          No student progress data available
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
@@ -57,9 +96,9 @@ const StudentProgress: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {students.map((student, index) => (
+            {students.map((student) => (
               <tr
-                key={index}
+                key={student.id}
                 className="border-b border-gray-200 last:border-0"
               >
                 <td className="py-4 px-4">

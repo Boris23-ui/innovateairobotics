@@ -1,52 +1,99 @@
 import React from 'react';
-import Link from 'next/link';
 
-const Footer: React.FC = () => {
+export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-white">
-      <div className="container mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="bg-gray-800 text-white py-12 mt-auto">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Brand Section */}
           <div>
-            <h3 className="text-xl font-bold mb-4">InnovateAI Robotics</h3>
-            <p className="text-gray-300">
-              Empowering the next generation through robotics and AI education.
+            <h3 className="text-lg font-semibold mb-4">RoboEd</h3>
+            <p className="text-sm text-gray-300">
+              Empowering K–12 students through innovative robotics education.
             </p>
           </div>
+
+          {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/programs" className="text-gray-300 hover:text-white">
+                <a href="/" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="/programs" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
                   Programs
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="/curriculum" className="text-gray-300 hover:text-white">
+                <a href="/curriculum" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
                   Curriculum
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="/resources" className="text-gray-300 hover:text-white">
+                <a href="/resources" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
                   Resources
-                </Link>
+                </a>
+              </li>
+              <li>
+                <a href="/contact" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
+                  Contact
+                </a>
               </li>
             </ul>
           </div>
+
+          {/* Legal Section */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li>Email: info@innovateairobotics.com</li>
-              <li>Phone: (555) 123-4567</li>
-              <li>Address: 123 Innovation St, Tech City</li>
+            <h3 className="text-lg font-semibold mb-4">Legal</h3>
+            <ul className="space-y-2">
+              <li>
+                <a href="#" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
+                  Accessibility Statement
+                </a>
+              </li>
             </ul>
+          </div>
+
+          {/* Newsletter / Stay Updated */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Stay Updated</h3>
+            <p className="text-sm text-gray-300 mb-4">
+              Subscribe to our newsletter for updates on programs and resources.
+            </p>
+            <form className="flex">
+              <input
+                type="email"
+                placeholder="Email"
+                className="px-4 py-2 w-full rounded-l-lg focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="bg-[rgb(60,152,251)] hover:bg-[rgb(45,130,220)] text-white px-4 rounded-r-lg"
+              >
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
-          <p>&copy; {new Date().getFullYear()} InnovateAI Robotics. All rights reserved.</p>
+
+        {/* Copyright */}
+        <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
+          &copy; {new Date().getFullYear()} RoboEd. All rights reserved.
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer; 
+} 

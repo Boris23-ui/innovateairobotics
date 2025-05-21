@@ -68,9 +68,8 @@ export default function Home() {
               <Image
                 src="/images/class-demonstration.jpg"
                 alt="Class demonstration with parents and students"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-lg"
+                fill
+                className="rounded-lg object-cover"
               />
             </div>
             <div>

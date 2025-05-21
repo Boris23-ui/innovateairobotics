@@ -10,32 +10,84 @@ interface ProjectSubmissionFormProps {
   }) => void;
 }
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const ALLOWED_FILE_TYPES = ['application/pdf', 'image/jpeg', 'image/png', 'application/zip'];
+
 const ProjectSubmissionForm: React.FC<ProjectSubmissionFormProps> = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [githubUrl, setGithubUrl] = useState('');
   const [demoUrl, setDemoUrl] = useState('');
   const [files, setFiles] = useState<File[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateUrl = (url: string): boolean => {
+    try {
+      new URL(url);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({
-      title,
-      description,
-      githubUrl,
-      demoUrl,
-      files,
-    });
+    setError(null);
+
+    if (!validateUrl(githubUrl)) {
+      setError('Please enter a valid GitHub URL');
+      return;
+    }
+
+    if (demoUrl && !validateUrl(demoUrl)) {
+      setError('Please enter a valid demo URL');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await onSubmit({
+        title,
+        description,
+        githubUrl,
+        demoUrl,
+        files,
+      });
+    } catch (err) {
+      setError('Failed to submit project. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFiles(Array.from(e.target.files));
+      const selectedFiles = Array.from(e.target.files);
+      
+      // Validate file types and sizes
+      const invalidFiles = selectedFiles.filter(
+        file => !ALLOWED_FILE_TYPES.includes(file.type) || file.size > MAX_FILE_SIZE
+      );
+
+      if (invalidFiles.length > 0) {
+        setError('Some files are invalid. Please ensure all files are PDF, JPEG, PNG, or ZIP and under 10MB.');
+        return;
+      }
+
+      setFiles(selectedFiles);
+      setError(null);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {error && (
+        <div className="bg-red-50 text-red-600 p-4 rounded-md">
+          {error}
+        </div>
+      )}
+
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-gray-700">
           Project Title
@@ -47,6 +99,8 @@ const ProjectSubmissionForm: React.FC<ProjectSubmissionFormProps> = ({ onSubmit 
           onChange={(e) => setTitle(e.target.value)}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           required
+          minLength={3}
+          maxLength={100}
         />
       </div>
 
@@ -61,6 +115,8 @@ const ProjectSubmissionForm: React.FC<ProjectSubmissionFormProps> = ({ onSubmit 
           rows={4}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           required
+          minLength={10}
+          maxLength={1000}
         />
       </div>
 
@@ -75,6 +131,8 @@ const ProjectSubmissionForm: React.FC<ProjectSubmissionFormProps> = ({ onSubmit 
           onChange={(e) => setGithubUrl(e.target.value)}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           required
+          pattern="https?:\/\/github\.com\/.*"
+          title="Please enter a valid GitHub repository URL"
         />
       </div>
 
@@ -93,13 +151,14 @@ const ProjectSubmissionForm: React.FC<ProjectSubmissionFormProps> = ({ onSubmit 
 
       <div>
         <label htmlFor="files" className="block text-sm font-medium text-gray-700">
-          Additional Files
+          Additional Files (PDF, JPEG, PNG, or ZIP, max 10MB each)
         </label>
         <input
           type="file"
           id="files"
           multiple
           onChange={handleFileChange}
+          accept={ALLOWED_FILE_TYPES.join(',')}
           className="mt-1 block w-full text-sm text-gray-500
             file:mr-4 file:py-2 file:px-4
             file:rounded-md file:border-0
@@ -112,9 +171,12 @@ const ProjectSubmissionForm: React.FC<ProjectSubmissionFormProps> = ({ onSubmit 
       <div className="flex justify-end">
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          disabled={isSubmitting}
+          className={`px-4 py-2 bg-blue-600 text-white rounded-lg transition-colors ${
+            isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'
+          }`}
         >
-          Submit Project
+          {isSubmitting ? 'Submitting...' : 'Submit Project'}
         </button>
       </div>
     </form>
