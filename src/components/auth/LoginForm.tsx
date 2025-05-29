@@ -1,59 +1,36 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { auth } from '../../config/firebase';
 
-interface RegisterFormProps {
+interface LoginFormProps {
   onSuccess?: () => void;
 }
 
-export default function RegisterForm({ onSuccess }: RegisterFormProps) {
-  const [name, setName] = useState('');
+export default function LoginForm({ onSuccess }: LoginFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
     setLoading(true);
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       onSuccess?.();
     } catch (err: any) {
-      setError(err.message || 'Registration failed. Please try again.');
+      setError(err.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleRegister} className="space-y-5">
-      <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-          Full Name
-        </label>
-        <input
-          id="name"
-          type="text"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[rgb(60,152,251)]/50 focus:border-[rgb(60,152,251)] outline-none transition-colors"
-          placeholder="John Doe"
-        />
-      </div>
-
+    <form onSubmit={handleLogin} className="space-y-5">
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
           Email
@@ -84,21 +61,6 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
         />
       </div>
 
-      <div>
-        <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700 mb-1">
-          Confirm Password
-        </label>
-        <input
-          id="confirm-password"
-          type="password"
-          required
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[rgb(60,152,251)]/50 focus:border-[rgb(60,152,251)] outline-none transition-colors"
-          placeholder="••••••••"
-        />
-      </div>
-
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-sm">
           <p>{error}</p>
@@ -118,9 +80,9 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
               <circle className="opacity-25" cx="12" cy="12" r="10" strokeWidth="4" stroke="currentColor" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V4a9 9 0 00-9 9H4z" />
             </svg>
-            Creating...
+            Signing in...
           </span>
-        ) : "Create Account"}
+        ) : "Sign In"}
       </button>
     </form>
   );
