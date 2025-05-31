@@ -145,8 +145,8 @@ export default function StudentDashboard() {
                 </Badge>
               </IconButton>
               <Avatar
-                src={user?.imageUrl}
-                alt={user?.firstName}
+                src={user?.imageUrl || undefined}
+                alt={user?.firstName || 'User'}
                 sx={{ width: 40, height: 40 }}
               />
             </Stack>
@@ -156,8 +156,8 @@ export default function StudentDashboard() {
 
       {/* Quick Stats */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid xs={12} sm={6} md={3}>
-          <Card>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card sx={{ height: '100%' }}>
             <CardContent>
               <Stack direction="row" spacing={2} alignItems="center">
                 <Avatar sx={{ bgcolor: 'primary.main' }}>
@@ -173,8 +173,8 @@ export default function StudentDashboard() {
             </CardContent>
           </Card>
         </Grid>
-        <Grid xs={12} sm={6} md={3}>
-          <Card>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card sx={{ height: '100%' }}>
             <CardContent>
               <Stack direction="row" spacing={2} alignItems="center">
                 <Avatar sx={{ bgcolor: 'warning.main' }}>
@@ -190,8 +190,8 @@ export default function StudentDashboard() {
             </CardContent>
           </Card>
         </Grid>
-        <Grid xs={12} sm={6} md={3}>
-          <Card>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card sx={{ height: '100%' }}>
             <CardContent>
               <Stack direction="row" spacing={2} alignItems="center">
                 <Avatar sx={{ bgcolor: 'success.main' }}>
@@ -207,8 +207,8 @@ export default function StudentDashboard() {
             </CardContent>
           </Card>
         </Grid>
-        <Grid xs={12} sm={6} md={3}>
-          <Card>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card sx={{ height: '100%' }}>
             <CardContent>
               <Stack direction="row" spacing={2} alignItems="center">
                 <Avatar sx={{ bgcolor: 'info.main' }}>
@@ -229,7 +229,7 @@ export default function StudentDashboard() {
       {/* Main Content */}
       <Grid container spacing={4}>
         {/* Left Column - Courses and Assignments */}
-        <Grid xs={12} md={8}>
+        <Grid item xs={12} md={8}>
           {/* Active Courses */}
           <Card sx={{ mb: 4 }}>
             <CardContent>
@@ -240,41 +240,64 @@ export default function StudentDashboard() {
                 {courses.map((course) => (
                   <ListItem
                     key={course.id}
-                    secondaryAction={
-                      <Stack direction="row" spacing={1}>
+                    sx={{
+                      display: 'flex',
+                      flexDirection: { xs: 'column', sm: 'row' },
+                      alignItems: { xs: 'flex-start', sm: 'center' },
+                      gap: 2,
+                      py: 2,
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
+                      <ListItemAvatar sx={{ minWidth: 45 }}>
+                        <Avatar sx={{ bgcolor: 'primary.main', width: 40, height: 40 }}>
+                          <School />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={course.name}
+                        secondary={`Instructor: ${course.instructor}`}
+                        sx={{ 
+                          mr: 2,
+                          '& .MuiListItemText-primary': {
+                            fontWeight: 500,
+                          }
+                        }}
+                      />
+                    </Box>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center',
+                      gap: 2,
+                      width: { xs: '100%', sm: 'auto' },
+                      mt: { xs: 1, sm: 0 }
+                    }}>
+                      <Box sx={{ width: 100, minWidth: 100 }}>
+                        <LinearProgress
+                          variant="determinate"
+                          value={course.progress}
+                          sx={{ mb: 0.5 }}
+                        />
+                        <Typography variant="body2" color="text.secondary" align="right">
+                          {course.progress}%
+                        </Typography>
+                      </Box>
+                      <Stack direction="row" spacing={1} alignItems="center">
                         <Chip
                           size="small"
                           icon={<CalendarIcon />}
                           label={course.nextClass}
+                          sx={{ display: { xs: 'none', sm: 'flex' } }}
                         />
                         <IconButton
                           edge="end"
                           aria-label="more"
                           onClick={handleMenuClick}
+                          size="small"
                         >
                           <MoreVertIcon />
                         </IconButton>
                       </Stack>
-                    }
-                  >
-                    <ListItemAvatar>
-                      <Avatar sx={{ bgcolor: 'primary.main' }}>
-                        <School />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={course.name}
-                      secondary={`Instructor: ${course.instructor}`}
-                    />
-                    <Box sx={{ width: 100, mr: 2 }}>
-                      <LinearProgress
-                        variant="determinate"
-                        value={course.progress}
-                        sx={{ mb: 0.5 }}
-                      />
-                      <Typography variant="body2" color="text.secondary" align="right">
-                        {course.progress}%
-                      </Typography>
                     </Box>
                   </ListItem>
                 ))}
@@ -300,35 +323,43 @@ export default function StudentDashboard() {
                 {assignments.map((assignment) => (
                   <ListItem
                     key={assignment.id}
-                    secondaryAction={
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        onClick={() => router.push(`/dashboard/student/assignments/${assignment.id}`)}
-                      >
-                        View
-                      </Button>
-                    }
+                    sx={{
+                      display: 'flex',
+                      flexDirection: { xs: 'column', sm: 'row' },
+                      alignItems: { xs: 'flex-start', sm: 'center' },
+                      gap: 2,
+                      py: 2,
+                    }}
                   >
-                    <ListItemIcon>
-                      <Assignment />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={assignment.title}
-                      secondary={
-                        <Stack direction="row" spacing={1} alignItems="center">
-                          <Typography variant="body2" color="text.secondary">
-                            {assignment.course}
-                          </Typography>
-                          <Chip
-                            size="small"
-                            icon={<CalendarIcon />}
-                            label={`Due: ${assignment.dueDate}`}
-                            color="warning"
-                          />
-                        </Stack>
-                      }
-                    />
+                    <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
+                      <ListItemIcon sx={{ minWidth: 45 }}>
+                        <Assignment />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={assignment.title}
+                        secondary={
+                          <Stack direction="row" spacing={1} alignItems="center">
+                            <Typography variant="body2" color="text.secondary">
+                              {assignment.course}
+                            </Typography>
+                            <Chip
+                              size="small"
+                              icon={<CalendarIcon />}
+                              label={`Due: ${assignment.dueDate}`}
+                              color="warning"
+                            />
+                          </Stack>
+                        }
+                      />
+                    </Box>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      onClick={() => router.push(`/dashboard/student/assignments/${assignment.id}`)}
+                      sx={{ mt: { xs: 1, sm: 0 } }}
+                    >
+                      View
+                    </Button>
                   </ListItem>
                 ))}
               </List>
@@ -345,7 +376,7 @@ export default function StudentDashboard() {
         </Grid>
 
         {/* Right Column - Achievements and Resources */}
-        <Grid xs={12} md={4}>
+        <Grid item xs={12} md={4}>
           {/* Recent Achievements */}
           <Card sx={{ mb: 4 }}>
             <CardContent>
@@ -354,25 +385,36 @@ export default function StudentDashboard() {
               </Typography>
               <List>
                 {achievements.map((achievement) => (
-                  <ListItem key={achievement.id}>
-                    <ListItemIcon>
-                      <EmojiEvents color="primary" />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={achievement.title}
-                      secondary={
-                        <Stack direction="row" spacing={1} alignItems="center">
-                          <Typography variant="body2" color="text.secondary">
-                            {achievement.description}
-                          </Typography>
-                          <Chip
-                            size="small"
-                            label={achievement.date}
-                            variant="outlined"
-                          />
-                        </Stack>
-                      }
-                    />
+                  <ListItem
+                    key={achievement.id}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: { xs: 'column', sm: 'row' },
+                      alignItems: { xs: 'flex-start', sm: 'center' },
+                      gap: 2,
+                      py: 2,
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
+                      <ListItemIcon sx={{ minWidth: 45 }}>
+                        <EmojiEvents color="primary" />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={achievement.title}
+                        secondary={
+                          <Stack direction="row" spacing={1} alignItems="center">
+                            <Typography variant="body2" color="text.secondary">
+                              {achievement.description}
+                            </Typography>
+                            <Chip
+                              size="small"
+                              label={achievement.date}
+                              variant="outlined"
+                            />
+                          </Stack>
+                        }
+                      />
+                    </Box>
                   </ListItem>
                 ))}
               </List>
@@ -394,32 +436,62 @@ export default function StudentDashboard() {
                 Learning Resources
               </Typography>
               <List>
-                <ListItem>
-                  <ListItemIcon>
-                    <Book />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Course Materials"
-                    secondary="Access all your course materials and resources"
-                  />
+                <ListItem
+                  sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    alignItems: { xs: 'flex-start', sm: 'center' },
+                    gap: 2,
+                    py: 2,
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
+                    <ListItemIcon sx={{ minWidth: 45 }}>
+                      <Book />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Course Materials"
+                      secondary="Access all your course materials and resources"
+                    />
+                  </Box>
                 </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <Code />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Code Examples"
-                    secondary="Browse through code examples and tutorials"
-                  />
+                <ListItem
+                  sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    alignItems: { xs: 'flex-start', sm: 'center' },
+                    gap: 2,
+                    py: 2,
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
+                    <ListItemIcon sx={{ minWidth: 45 }}>
+                      <Code />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Code Examples"
+                      secondary="Browse through code examples and tutorials"
+                    />
+                  </Box>
                 </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <MessageIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Discussion Forum"
-                    secondary="Join discussions with instructors and peers"
-                  />
+                <ListItem
+                  sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    alignItems: { xs: 'flex-start', sm: 'center' },
+                    gap: 2,
+                    py: 2,
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
+                    <ListItemIcon sx={{ minWidth: 45 }}>
+                      <MessageIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Discussion Forum"
+                      secondary="Join discussions with instructors and peers"
+                    />
+                  </Box>
                 </ListItem>
               </List>
             </CardContent>
