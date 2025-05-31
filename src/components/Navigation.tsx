@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/utils/mockAuth';
 import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 import { Button } from '@/components/common/Button';
@@ -22,6 +22,12 @@ import {
   ListItemIcon,
   ListItemButton,
   Link,
+  Container,
+  Divider,
+  Fade,
+  Zoom,
+  Tooltip,
+  Badge,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -35,9 +41,19 @@ import {
   Code,
   Brightness4 as DarkModeIcon,
   Brightness7 as LightModeIcon,
+  Notifications as NotificationsIcon,
+  Person as PersonIcon,
 } from '@mui/icons-material';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTheme } from '@/components/providers/ThemeProvider';
+
+const pages = [
+  { name: 'Programs', path: '/programs', icon: <Code /> },
+  { name: 'Curriculum', path: '/curriculum', icon: <Book /> },
+  { name: 'Resources', path: '/resources', icon: <School /> },
+  { name: 'About', path: '/about', icon: <Info /> },
+  { name: 'Contact', path: '/contact', icon: <ContactSupport /> },
+];
 
 export default function Navigation() {
   const { user, isLoaded, signOut } = useAuth();
@@ -48,6 +64,15 @@ export default function Navigation() {
   const { mode, toggleTheme } = useTheme();
   const muiTheme = useMuiTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   if (!isLoaded) {
     return (
@@ -77,6 +102,61 @@ export default function Navigation() {
     }
     handleClose();
   };
+
+  const handleDrawerToggle = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const isActive = (path: string) => pathname === path;
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+      <Typography
+        variant="h6"
+        sx={{
+          my: 2,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 1,
+          color: 'primary.main',
+          fontWeight: 700,
+        }}
+      >
+        <School /> InnovateAI Robotics
+      </Typography>
+      <Divider />
+      <List>
+        {pages.map((page) => (
+          <ListItem
+            key={page.name}
+            component={Link}
+            href={page.path}
+            selected={isActive(page.path)}
+            sx={{
+              '&.Mui-selected': {
+                backgroundColor: 'primary.light',
+                '&:hover': {
+                  backgroundColor: 'primary.light',
+                },
+              },
+            }}
+          >
+            <ListItemIcon sx={{ color: isActive(page.path) ? 'primary.main' : 'inherit' }}>
+              {page.icon}
+            </ListItemIcon>
+            <ListItemText
+              primary={page.name}
+              primaryTypographyProps={{
+                fontWeight: isActive(page.path) ? 600 : 400,
+                color: isActive(page.path) ? 'primary.main' : 'inherit',
+              }}
+            />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
 
   const navigationItems = [
     { text: 'Programs', href: '/programs', icon: <Code /> },
@@ -169,74 +249,182 @@ export default function Navigation() {
   );
 
   return (
-    <AppBar position="static" color="default" elevation={1}>
-      <Toolbar>
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{ flexGrow: 1, cursor: 'pointer' }}
-          onClick={() => router.push('/')}
-        >
-          InnovateAI Robotics
-        </Typography>
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: scrolled ? 'background.paper' : 'transparent',
+        boxShadow: scrolled ? 1 : 'none',
+        transition: 'all 0.3s ease-in-out',
+      }}
+    >
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          {/* Logo - Desktop */}
+          <School
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              mr: 1,
+              color: 'primary.main',
+            }}
+          />
+          <Typography
+            variant="h6"
+            noWrap
+            component={Link}
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontWeight: 700,
+              color: 'primary.main',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease-in-out',
+              '&:hover': {
+                color: 'primary.dark',
+              },
+            }}
+          >
+            InnovateAI Robotics
+          </Typography>
 
-        {isMobile ? (
-          <>
+          {/* Mobile Menu */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              edge="end"
-              color="inherit"
+              size="large"
               aria-label="menu"
-              onClick={() => setMobileMenuOpen(true)}
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleDrawerToggle}
+              color="inherit"
             >
               <MenuIcon />
             </IconButton>
-            {renderMobileMenu()}
-          </>
-        ) : (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Box sx={{ display: 'flex', gap: 2, mr: 2 }}>
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.text}
-                  href={item.href}
-                  color="inherit"
-                  underline="none"
+            <Drawer
+              variant="temporary"
+              anchor="left"
+              open={mobileMenuOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true,
+              }}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+                '& .MuiDrawer-paper': {
+                  boxSizing: 'border-box',
+                  width: 240,
+                },
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Box>
+
+          {/* Logo - Mobile */}
+          <School
+            sx={{
+              display: { xs: 'flex', md: 'none' },
+              mr: 1,
+              color: 'primary.main',
+            }}
+          />
+          <Typography
+            variant="h6"
+            noWrap
+            component={Link}
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontWeight: 700,
+              color: 'primary.main',
+              textDecoration: 'none',
+            }}
+          >
+            InnovateAI Robotics
+          </Typography>
+
+          {/* Desktop Menu */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 1 }}>
+            {pages.map((page) => (
+              <Tooltip key={page.name} title={page.name} arrow>
+                <Button
+                  component={Link}
+                  href={page.path}
+                  onClick={handleClose}
+                  startIcon={page.icon}
                   sx={{
-                    color: pathname === item.href ? 'primary.main' : 'text.primary',
-                    '&:hover': {
-                      color: 'primary.main',
-                    },
+                    my: 2,
+                    color: isActive(page.path) ? 'primary.main' : 'text.primary',
                     display: 'flex',
-                    alignItems: 'center',
-                    gap: 0.5,
+                    fontWeight: isActive(page.path) ? 600 : 400,
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      width: isActive(page.path) ? '100%' : '0%',
+                      height: '2px',
+                      bottom: 0,
+                      left: 0,
+                      backgroundColor: 'primary.main',
+                      transition: 'width 0.3s ease-in-out',
+                    },
+                    '&:hover::after': {
+                      width: '100%',
+                    },
                   }}
                 >
-                  {item.icon}
-                  {item.text}
-                </Link>
-              ))}
-            </Box>
-            <IconButton
-              color="inherit"
-              onClick={toggleTheme}
-              aria-label="toggle theme"
-            >
-              {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
-            </IconButton>
+                  {page.name}
+                </Button>
+              </Tooltip>
+            ))}
+          </Box>
+
+          {/* Right Side Icons */}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Tooltip title="Notifications" arrow>
+              <IconButton color="inherit">
+                <Badge badgeContent={3} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip title={mode === 'dark' ? 'Light Mode' : 'Dark Mode'} arrow>
+              <IconButton onClick={toggleTheme} color="inherit">
+                {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+              </IconButton>
+            </Tooltip>
+
             {!user ? (
               <>
-                <Button
-                  variant="outlined"
-                  onClick={() => router.push('/signin')}
-                >
-                  Sign In
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={() => router.push('/signup')}
-                >
-                  Sign Up
-                </Button>
+                <Tooltip title="Sign In" arrow>
+                  <Button
+                    variant="outlined"
+                    startIcon={<PersonIcon />}
+                    sx={{
+                      display: { xs: 'none', sm: 'flex' },
+                      ml: 1,
+                      textTransform: 'none',
+                      borderRadius: 2,
+                    }}
+                  >
+                    Sign In
+                  </Button>
+                </Tooltip>
+                <Tooltip title="Sign Up" arrow>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      display: { xs: 'none', sm: 'flex' },
+                      ml: 1,
+                      textTransform: 'none',
+                      borderRadius: 2,
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                </Tooltip>
               </>
             ) : (
               <>
@@ -258,8 +446,8 @@ export default function Navigation() {
               </>
             )}
           </Box>
-        )}
-      </Toolbar>
+        </Toolbar>
+      </Container>
     </AppBar>
   );
 } 

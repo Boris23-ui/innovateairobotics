@@ -67,110 +67,256 @@ export default function Home() {
       {/* Hero Section */}
       <Box
         sx={{
-          bgcolor: 'background.paper',
-          pt: 8,
-          pb: 6,
           position: 'relative',
+          minHeight: { xs: 'auto', md: '90vh' },
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           overflow: 'hidden',
+          mb: 8,
+          mt: { xs: 2, md: 9 },
+          px: { xs: 2, md: 4 },
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 203, 243, 0.1) 100%)',
+            zIndex: 0,
+          },
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
+            animation: 'pulse 8s ease-in-out infinite',
+            zIndex: 0,
+          },
+          '@keyframes pulse': {
+            '0%': { opacity: 0.5 },
+            '50%': { opacity: 1 },
+            '100%': { opacity: 0.5 },
+          },
         }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
           <Grid container spacing={4} alignItems="center">
-            <Grid item xs={12} md={6}>
-              <Typography
-                component="h1"
-                variant="h2"
-                color="primary"
-                gutterBottom
-                sx={{
-                  fontWeight: 700,
-                  animation: 'fadeIn 1s ease-in-out',
-                  '@keyframes fadeIn': {
-                    '0%': { opacity: 0, transform: 'translateY(20px)' },
-                    '100%': { opacity: 1, transform: 'translateY(0)' },
-                  },
-                }}
-              >
-                Welcome to InnovateAI Robotics
-              </Typography>
-              <Typography
-                variant="h5"
-                color="text.secondary"
-                paragraph
-                sx={{
-                  mb: 4,
-                  animation: 'fadeIn 1s ease-in-out 0.2s',
-                  '@keyframes fadeIn': {
-                    '0%': { opacity: 0, transform: 'translateY(20px)' },
-                    '100%': { opacity: 1, transform: 'translateY(0)' },
-                  },
-                }}
-              >
-                Empowering the next generation through AI and robotics education
-              </Typography>
+            {/* Image Card */}
+            <Grid xs={12} md={6}>
               <Box
                 sx={{
+                  position: 'relative',
+                  height: { xs: '300px', md: '600px' },
+                  width: '100%',
                   display: 'flex',
-                  gap: 2,
-                  animation: 'fadeIn 1s ease-in-out 0.4s',
-                  '@keyframes fadeIn': {
-                    '0%': { opacity: 0, transform: 'translateY(20px)' },
-                    '100%': { opacity: 1, transform: 'translateY(0)' },
-                  },
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  perspective: '1000px',
                 }}
               >
-                {user ? (
-                  <Button
-                    component="a"
-                    href={`/dashboard/${user.role}`}
-                    variant="contained"
-                    size="large"
-                    animation="slide"
+                <Box
+                  sx={{
+                    position: 'relative',
+                    height: '100%',
+                    width: '100%',
+                    maxWidth: '500px',
+                    transform: 'rotateY(5deg) rotateX(5deg)',
+                    transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                    '&:hover': {
+                      transform: 'rotateY(0deg) rotateX(0deg)',
+                      '& .image-overlay': {
+                        opacity: 0,
+                      },
+                      '& .image-content': {
+                        transform: 'translateY(0)',
+                        opacity: 1,
+                      },
+                    },
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src="/images/building_drones.jpg"
+                    alt="Students building drones"
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      borderRadius: 4,
+                      boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+                      border: '4px solid white',
+                    }}
+                  />
+                  <Box
+                    className="image-overlay"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      borderRadius: 4,
+                      background: 'linear-gradient(45deg, rgba(33, 150, 243, 0.2) 30%, rgba(33, 203, 243, 0.2) 90%)',
+                      transition: 'opacity 0.3s ease',
+                    }}
+                  />
+                  <Box
+                    className="image-content"
+                    sx={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      padding: 3,
+                      background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
+                      borderRadius: '0 0 16px 16px',
+                      transform: 'translateY(20px)',
+                      opacity: 0,
+                      transition: 'all 0.3s ease',
+                    }}
                   >
-                    Go to Dashboard
-                  </Button>
-                ) : (
-                  <>
-                    <Button
-                      component="a"
-                      href="/signin"
-                      variant="contained"
-                      size="large"
-                      animation="slide"
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: 'white',
+                        fontWeight: 600,
+                        mb: 1,
+                      }}
                     >
-                      Sign In
-                    </Button>
-                    <Button
-                      component="a"
-                      href="/signup"
-                      variant="outlined"
-                      size="large"
-                      animation="slide"
+                      Hands-on Learning
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: 'rgba(255,255,255,0.9)',
+                      }}
                     >
-                      Sign Up
-                    </Button>
-                  </>
-                )}
+                      Students building and programming their own drones
+                    </Typography>
+                  </Box>
+                </Box>
               </Box>
             </Grid>
-            <Grid item xs={12} md={6}>
+
+            {/* Text Content */}
+            <Grid xs={12} md={6}>
               <Box
-                component="img"
-                src="/images/building_drones.jpg"
-                alt="Students building drones"
                 sx={{
-                  width: '100%',
-                  height: 'auto',
-                  maxHeight: '500px',
-                  objectFit: 'cover',
-                  borderRadius: 2,
-                  animation: 'fadeIn 1s ease-in-out 0.6s',
-                  '@keyframes fadeIn': {
-                    '0%': { opacity: 0, transform: 'translateY(20px)' },
-                    '100%': { opacity: 1, transform: 'translateY(0)' },
+                  textAlign: { xs: 'center', md: 'left' },
+                  color: 'text.primary',
+                  pl: { md: 4 },
+                  position: 'relative',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: -20,
+                    left: { xs: '50%', md: 0 },
+                    transform: { xs: 'translateX(-50%)', md: 'none' },
+                    width: '60px',
+                    height: '4px',
+                    background: 'linear-gradient(90deg, #2196F3, #21CBF3)',
+                    borderRadius: '2px',
                   },
                 }}
-              />
+              >
+                <Typography
+                  variant="h1"
+                  component="h1"
+                  sx={{
+                    fontSize: { xs: '2.5rem', md: '4rem' },
+                    fontWeight: 800,
+                    mb: 2,
+                    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                    backgroundClip: 'text',
+                    textFillColor: 'transparent',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    letterSpacing: '-0.02em',
+                    lineHeight: 1.1,
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: -10,
+                      left: 0,
+                      width: '100%',
+                      height: '2px',
+                      background: 'linear-gradient(90deg, transparent, rgba(33, 150, 243, 0.5), transparent)',
+                    },
+                  }}
+                >
+                  Welcome to InnovateAI Robotics
+                </Typography>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    mb: 4,
+                    color: 'text.secondary',
+                    lineHeight: 1.6,
+                    fontWeight: 400,
+                    maxWidth: '600px',
+                    mx: { xs: 'auto', md: 0 },
+                  }}
+                >
+                  Empowering the next generation of innovators through robotics and AI education
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    gap: 2,
+                    justifyContent: { xs: 'center', md: 'flex-start' },
+                    position: 'relative',
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    size="large"
+                    sx={{
+                      px: 4,
+                      py: 1.5,
+                      fontSize: '1.1rem',
+                      textTransform: 'none',
+                      borderRadius: 2,
+                      boxShadow: '0 4px 14px rgba(33, 150, 243, 0.4)',
+                      background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 6px 20px rgba(33, 150, 243, 0.6)',
+                        background: 'linear-gradient(45deg, #1976D2 30%, #1E88E5 90%)',
+                      },
+                    }}
+                  >
+                    Get Started
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    sx={{
+                      px: 4,
+                      py: 1.5,
+                      fontSize: '1.1rem',
+                      textTransform: 'none',
+                      borderRadius: 2,
+                      borderWidth: 2,
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-2px)',
+                        borderWidth: 2,
+                        boxShadow: '0 4px 14px rgba(33, 150, 243, 0.2)',
+                        background: 'rgba(33, 150, 243, 0.04)',
+                      },
+                    }}
+                  >
+                    Learn More
+                  </Button>
+                </Box>
+              </Box>
             </Grid>
           </Grid>
         </Container>
@@ -180,18 +326,18 @@ export default function Home() {
       <Box sx={{ py: 8, bgcolor: 'background.default' }}>
         <Container maxWidth="lg">
           <Typography
-            variant="h3"
+            variant="h2"
             component="h2"
             align="center"
             color="primary"
             gutterBottom
             sx={{ mb: 6, fontWeight: 600 }}
           >
-            Why Choose Us?
+            Why Choose Us
           </Typography>
           <Grid container spacing={4}>
             {features.map((feature, index) => (
-              <Grid item key={index} xs={12} sm={6} md={3}>
+              <Grid xs={12} sm={6} md={4} key={index}>
                 <Card
                   animation="fade"
                   hoverEffect
