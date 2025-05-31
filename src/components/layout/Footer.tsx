@@ -70,7 +70,7 @@ export default function Footer() {
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           {/* Company Info */}
-          <Grid item xs={12} md={4} component="div">
+          <Grid item xs={12} md={4}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               InnovateAI Robotics
             </Typography>
@@ -110,7 +110,7 @@ export default function Footer() {
 
           {/* Footer Links */}
           {footerLinks.map((section) => (
-            <Grid item xs={12} sm={6} md={2} key={section.title} component="div">
+            <Grid item xs={12} sm={6} md={2} key={section.title}>
               <Typography variant="h6" color="text.primary" gutterBottom>
                 {section.title}
               </Typography>

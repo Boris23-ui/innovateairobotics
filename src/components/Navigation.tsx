@@ -128,11 +128,12 @@ export default function Navigation() {
       <Divider />
       <List>
         {pages.map((page) => (
-          <ListItem
+          <ListItemButton
             key={page.name}
-            component={Link}
+            component={Link as any}
             href={page.path}
             selected={isActive(page.path)}
+            disableRipple
             sx={{
               '&.Mui-selected': {
                 backgroundColor: 'primary.light',
@@ -152,7 +153,7 @@ export default function Navigation() {
                 color: isActive(page.path) ? 'primary.main' : 'inherit',
               }}
             />
-          </ListItem>
+          </ListItemButton>
         ))}
       </List>
     </Box>
@@ -227,6 +228,7 @@ export default function Navigation() {
                   setMobileMenuOpen(false);
                 }}
                 selected={pathname === item.href}
+                disableRipple
               >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText>{item.text}</ListItemText>
@@ -236,7 +238,7 @@ export default function Navigation() {
           {userMenuItems.map((item) => (
             item.show && (
               <ListItem key={item.text} disablePadding>
-                <ListItemButton onClick={item.onClick}>
+                <ListItemButton onClick={item.onClick} disableRipple>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText>{item.text}</ListItemText>
                 </ListItemButton>
@@ -260,13 +262,6 @@ export default function Navigation() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Logo - Desktop */}
-          <School
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              mr: 1,
-              color: 'primary.main',
-            }}
-          />
           <Typography
             variant="h6"
             noWrap
@@ -284,7 +279,7 @@ export default function Navigation() {
               },
             }}
           >
-            InnovateAI Robotics
+            <School /> InnovateAI Robotics
           </Typography>
 
           {/* Mobile Menu */}
@@ -320,13 +315,6 @@ export default function Navigation() {
           </Box>
 
           {/* Logo - Mobile */}
-          <School
-            sx={{
-              display: { xs: 'flex', md: 'none' },
-              mr: 1,
-              color: 'primary.main',
-            }}
-          />
           <Typography
             variant="h6"
             noWrap
@@ -341,11 +329,12 @@ export default function Navigation() {
               textDecoration: 'none',
             }}
           >
-            InnovateAI Robotics
+            <School /> InnovateAI Robotics
           </Typography>
+          <Divider />
 
           {/* Desktop Menu */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 1 }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1, ml: 'auto' }}>
             {pages.map((page) => (
               <Tooltip key={page.name} title={page.name} arrow>
                 <Button
@@ -398,31 +387,18 @@ export default function Navigation() {
 
             {!user ? (
               <>
-                <Tooltip title="Sign In" arrow>
-                  <Button
-                    variant="outlined"
-                    startIcon={<PersonIcon />}
-                    sx={{
-                      display: { xs: 'none', sm: 'flex' },
-                      ml: 1,
-                      textTransform: 'none',
-                      borderRadius: 2,
-                    }}
-                  >
-                    Sign In
-                  </Button>
-                </Tooltip>
-                <Tooltip title="Sign Up" arrow>
+                <Tooltip title="Login" arrow>
                   <Button
                     variant="contained"
+                    startIcon={<PersonIcon />}
                     sx={{
-                      display: { xs: 'none', sm: 'flex' },
+                      display: 'flex',
                       ml: 1,
                       textTransform: 'none',
                       borderRadius: 2,
                     }}
                   >
-                    Sign Up
+                    Login
                   </Button>
                 </Tooltip>
               </>
