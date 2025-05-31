@@ -1,7 +1,14 @@
 import React from 'react';
-import { OpenAuth } from '@openauthjs/openauth';
-import { createSubjects } from "@openauthjs/openauth/subject";
-import { z } from "zod";
+import {
+  Card,
+  CardContent,
+  Typography,
+  LinearProgress,
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+} from '@mui/material';
 
 interface Course {
   title: string;
@@ -13,39 +20,42 @@ interface CourseProgressListProps {
   courses: Course[];
 }
 
-const EmailAccount = z.object({
-  type: z.literal("email"),
-  email: z.string(),
-});
-
-export type EmailAccount = z.infer<typeof EmailAccount>;
-export type Account = EmailAccount;
-
-const AccountSchema = z.discriminatedUnion("type", [EmailAccount]);
-
-export const authSubjects = createSubjects({
-  account: AccountSchema,
-});
-
 export default function CourseProgressList({ courses }: CourseProgressListProps) {
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
-      <h3 className="text-lg font-bold mb-4">Your Courses</h3>
-      <ul className="space-y-4">
-        {courses.map((course, idx) => (
-          <li key={idx} className="border-b pb-4 last:border-0 last:pb-0 border-gray-100">
-            <h4 className="font-medium">{course.title}</h4>
-            <div className="mt-2 w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-              <div 
-                className="bg-[rgb(60,152,251)] h-2"
-                style={{ width: course.progress }}
-              ></div>
-            </div>
-            <p className="mt-1 text-xs text-gray-500">Progress: {course.progress}</p>
-            <p className="text-xs text-gray-500">Last activity: {course.lastActivity}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Card>
+      <CardContent>
+        <Typography variant="h6" gutterBottom>
+          Your Courses
+        </Typography>
+        <List>
+          {courses.map((course, idx) => (
+            <ListItem
+              key={idx}
+              divider={idx < courses.length - 1}
+              sx={{ flexDirection: 'column', alignItems: 'flex-start' }}
+            >
+              <Typography variant="subtitle1" fontWeight="medium">
+                {course.title}
+              </Typography>
+              <Box sx={{ width: '100%', mt: 1 }}>
+                <LinearProgress
+                  variant="determinate"
+                  value={parseInt(course.progress)}
+                  sx={{ height: 8, borderRadius: 4 }}
+                />
+              </Box>
+              <Box sx={{ mt: 1, width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant="caption" color="text.secondary">
+                  Progress: {course.progress}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  Last activity: {course.lastActivity}
+                </Typography>
+              </Box>
+            </ListItem>
+          ))}
+        </List>
+      </CardContent>
+    </Card>
   );
 } 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/modules/auth/hooks/useAuth";
+import { useAuth } from "@clerk/nextjs";
 import { LoadingSpinner } from "@/modules/common/components/LoadingSpinner";
 import { Button } from "@/modules/common/components/Button";
 import { Card } from "@/modules/common/components/Card";
@@ -9,14 +9,15 @@ import {
   Container,
   Typography,
   useTheme,
+  Grid,
 } from '@mui/material';
-import Grid from '@mui/material/Grid';
 import {
   School as SchoolIcon,
   Code as CodeIcon,
   SmartToy as RobotIcon,
   Science as ScienceIcon,
 } from '@mui/icons-material';
+import { useRouter } from "next/navigation";
 
 const features = [
   {
@@ -46,7 +47,8 @@ const features = [
 ];
 
 export default function Home() {
-  const { user, isLoaded } = useAuth();
+  const { isLoaded, isSignedIn } = useAuth();
+  const router = useRouter();
   const theme = useTheme();
 
   if (!isLoaded) {
@@ -62,7 +64,7 @@ export default function Home() {
     );
   }
 
-    return (
+  return (
     <Box>
       {/* Hero Section */}
       <Box
@@ -86,22 +88,6 @@ export default function Home() {
             background: 'linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 203, 243, 0.1) 100%)',
             zIndex: 0,
           },
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
-            animation: 'pulse 8s ease-in-out infinite',
-            zIndex: 0,
-          },
-          '@keyframes pulse': {
-            '0%': { opacity: 0.5 },
-            '50%': { opacity: 1 },
-            '100%': { opacity: 0.5 },
-          },
         }}
       >
         <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
@@ -118,18 +104,6 @@ export default function Home() {
                 textAlign: { xs: 'center', md: 'left' },
                 color: 'text.primary',
                 pr: { md: 4 },
-                position: 'relative',
-                '&::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: -20,
-                  left: { xs: '50%', md: 0 },
-                  transform: { xs: 'translateX(-50%)', md: 'none' },
-                  width: '60px',
-                  height: '4px',
-                  background: 'linear-gradient(90deg, #2196F3, #21CBF3)',
-                  borderRadius: '2px',
-                },
               }}
             >
               <Typography
@@ -144,18 +118,6 @@ export default function Home() {
                   textFillColor: 'transparent',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  letterSpacing: '-0.02em',
-                  lineHeight: 1.1,
-                  position: 'relative',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: -10,
-                    left: 0,
-                    width: '100%',
-                    height: '2px',
-                    background: 'linear-gradient(90deg, transparent, rgba(33, 150, 243, 0.5), transparent)',
-                  },
                 }}
               >
                 Welcome to InnovateAI Robotics
@@ -166,9 +128,6 @@ export default function Home() {
                   mb: 4,
                   color: 'text.secondary',
                   lineHeight: 1.6,
-                  fontWeight: 400,
-                  maxWidth: '600px',
-                  mx: { xs: 'auto', md: 0 },
                 }}
               >
                 Empowering the next generation of innovators through robotics and AI education
@@ -178,148 +137,55 @@ export default function Home() {
                   display: 'flex',
                   gap: 2,
                   justifyContent: { xs: 'center', md: 'flex-start' },
-                  position: 'relative',
                 }}
               >
-                <Button
-                  variant="contained"
-                  size="large"
-                  sx={{
-                    px: 4,
-                    py: 1.5,
-                    fontSize: '1.1rem',
-                    textTransform: 'none',
-                    borderRadius: 2,
-                    boxShadow: '0 4px 14px rgba(33, 150, 243, 0.4)',
-                    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 6px 20px rgba(33, 150, 243, 0.6)',
-                      background: 'linear-gradient(45deg, #1976D2 30%, #1E88E5 90%)',
-                    },
-                  }}
-                >
-                  Get Started
-                </Button>
+                {!isSignedIn ? (
+                  <Button
+                    variant="contained"
+                    size="large"
+                    onClick={() => router.push("/sign-in")}
+                  >
+                    Get Started
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    size="large"
+                    onClick={() => router.push("/dashboard/teacher")}
+                  >
+                    Go to Dashboard
+                  </Button>
+                )}
                 <Button
                   variant="outlined"
                   size="large"
-                  sx={{
-                    px: 4,
-                    py: 1.5,
-                    fontSize: '1.1rem',
-                    textTransform: 'none',
-                    borderRadius: 2,
-                    borderWidth: 2,
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-2px)',
-                      borderWidth: 2,
-                      boxShadow: '0 4px 14px rgba(33, 150, 243, 0.2)',
-                      background: 'rgba(33, 150, 243, 0.04)',
-                    },
-                  }}
                 >
                   Learn More
                 </Button>
               </Box>
             </Box>
 
-            {/* Image Card */}
+            {/* Image */}
             <Box
               sx={{
                 flex: 1,
                 position: 'relative',
-                height: { xs: '300px', md: '600px' },
+                height: { xs: '300px', md: '500px' },
                 width: '100%',
-                display: 'flex',
-                justifyContent: 'flex-end',
-                alignItems: 'center',
-                perspective: '1000px',
               }}
             >
               <Box
+                component="img"
+                src="/images/building_drones.jpg"
+                alt="Students building drones"
                 sx={{
-                  position: 'relative',
-                  height: '100%',
                   width: '100%',
-                  maxWidth: '500px',
-                  transform: 'rotateY(-5deg) rotateX(5deg)',
-                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  '&:hover': {
-                    transform: 'rotateY(0deg) rotateX(0deg)',
-                    '& .image-overlay': {
-                      opacity: 0,
-                    },
-                    '& .image-content': {
-                      transform: 'translateY(0)',
-                      opacity: 1,
-                    },
-                  },
+                  height: '100%',
+                  objectFit: 'cover',
+                  borderRadius: 4,
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
                 }}
-              >
-                <Box
-                  component="img"
-                  src="/images/building_drones.jpg"
-                  alt="Students building drones"
-                  sx={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    borderRadius: 4,
-                    boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
-                    border: '4px solid white',
-                  }}
-                />
-                <Box
-                  className="image-overlay"
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    borderRadius: 4,
-                    background: 'linear-gradient(45deg, rgba(33, 150, 243, 0.2) 30%, rgba(33, 203, 243, 0.2) 90%)',
-                    transition: 'opacity 0.3s ease',
-                  }}
-                />
-                <Box
-                  className="image-content"
-                  sx={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    padding: 3,
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
-                    borderRadius: '0 0 16px 16px',
-                    transform: 'translateY(20px)',
-                    opacity: 0,
-                    transition: 'all 0.3s ease',
-                  }}
-                >
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      color: 'white',
-                      fontWeight: 600,
-                      mb: 1,
-                    }}
-                  >
-                    Hands-on Learning
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: 'rgba(255,255,255,0.9)',
-                    }}
-                  >
-                    Students building and programming their own drones
-                  </Typography>
-                </Box>
-              </Box>
+              />
             </Box>
           </Box>
         </Container>
@@ -332,15 +198,13 @@ export default function Home() {
         </Typography>
         <Grid container spacing={4}>
           {features.map((feature, index) => (
-            <Grid item key={index} xs={12} sm={6} md={3} component="div">
+            <Grid item key={index} xs={12} sm={6} md={3}>
               <Card
-                animation="fade"
-                hoverEffect
                 sx={{
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  animationDelay: `${index * 0.2}s`,
+                  p: 3,
                 }}
               >
                 <Box
@@ -412,8 +276,6 @@ export default function Home() {
             }}
           >
             <Button
-              component="a"
-              href="/programs"
               variant="contained"
               size="large"
               sx={{
@@ -424,13 +286,11 @@ export default function Home() {
                   opacity: 0.9,
                 },
               }}
-              animation="scale"
+              onClick={() => router.push("/programs")}
             >
               Explore Programs
             </Button>
             <Button
-              component="a"
-              href="/contact"
               variant="outlined"
               size="large"
               sx={{
@@ -442,7 +302,7 @@ export default function Home() {
                   color: 'primary.main',
                 },
               }}
-              animation="scale"
+              onClick={() => router.push("/contact")}
             >
               Contact Us
             </Button>

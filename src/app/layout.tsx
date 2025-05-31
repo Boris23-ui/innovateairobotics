@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Navigation from '@/components/Navigation';
-import { MockAuthProvider } from '@/modules/auth/components/MockAuthProvider';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import Navigation from '@/components/Navigation';
 import Footer from '@/components/layout/Footer';
+import { ClerkProvider } from '@clerk/nextjs';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,16 +19,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider>
-          <MockAuthProvider>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <ThemeProvider>
             <Navigation />
             <main>{children}</main>
             <Footer />
-          </MockAuthProvider>
-        </ThemeProvider>
-      </body>
-    </html>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 } 
