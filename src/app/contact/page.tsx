@@ -187,7 +187,7 @@ export default function Contact() {
                       Phone
                     </Typography>
                     <Typography variant="body1" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-                      (555) 123-4567
+                      +1 (650) 619-4676
                     </Typography>
                   </Box>
                 </Box>
@@ -199,8 +199,7 @@ export default function Contact() {
                       Address
                     </Typography>
                     <Typography variant="body1">
-                      123 Innovation Street<br />
-                      Tech City, TC 12345
+                      837 Reinert Rd, Mountain View, CA 94043 United States
                     </Typography>
                   </Box>
                 </Box>

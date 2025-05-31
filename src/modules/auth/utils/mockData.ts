@@ -1,4 +1,4 @@
-import { User, UserRole } from "@/types/auth";
+import { User, UserRole } from "@/modules/common/types/auth";
 
 export const mockUsers: Record<UserRole, User> = {
   teacher: {

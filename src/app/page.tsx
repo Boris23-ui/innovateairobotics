@@ -1,9 +1,9 @@
 "use client";
 
-import { useAuth } from "@/utils/mockAuth";
-import { LoadingSpinner } from "@/components/common/LoadingSpinner";
-import { Button } from "@/components/common/Button";
-import { Card } from "@/components/common/Card";
+import { useAuth } from "@/modules/auth/hooks/useAuth";
+import { LoadingSpinner } from "@/modules/common/components/LoadingSpinner";
+import { Button } from "@/modules/common/components/Button";
+import { Card } from "@/modules/common/components/Card";
 import {
   Box,
   Container,
@@ -62,7 +62,7 @@ export default function Home() {
     );
   }
 
-  return (
+    return (
     <Box>
       {/* Hero Section */}
       <Box
@@ -326,66 +326,57 @@ export default function Home() {
       </Box>
 
       {/* Features Section */}
-      <Box sx={{ py: 8, bgcolor: 'background.default' }}>
-        <Container maxWidth="lg">
-          <Typography
-            variant="h2"
-            component="h2"
-            align="center"
-            color="primary"
-            gutterBottom
-            sx={{ mb: 6, fontWeight: 600 }}
-          >
-            Why Choose Us
-          </Typography>
-          <Grid container spacing={4}>
-            {features.map((feature, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <Card
-                  animation="fade"
-                  hoverEffect
+      <Container maxWidth="xl" sx={{ mt: 8, mb: 8 }}>
+        <Typography variant="h2" component="h2" textAlign="center" mb={6}>
+          Why Choose InnovateAI Robotics?
+        </Typography>
+        <Grid container spacing={4}>
+          {features.map((feature, index) => (
+            <Grid item key={index} xs={12} sm={6} md={3} component="div">
+              <Card
+                animation="fade"
+                hoverEffect
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  animationDelay: `${index * 0.2}s`,
+                }}
+              >
+                <Box
                   sx={{
-                    height: '100%',
                     display: 'flex',
-                    flexDirection: 'column',
-                    animationDelay: `${index * 0.2}s`,
+                    justifyContent: 'center',
+                    mb: 2,
+                    color: 'primary.main',
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      mb: 2,
-                      color: 'primary.main',
-                    }}
-                  >
-                    {feature.icon}
-                  </Box>
-                  <Typography
-                    variant="h5"
-                    component="h3"
-                    gutterBottom
-                    sx={{ fontWeight: 600 }}
-                  >
-                    {feature.title}
-                  </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    color="primary"
-                    gutterBottom
-                    sx={{ fontWeight: 500 }}
-                  >
-                    {feature.subtitle}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {feature.description}
-                  </Typography>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Box>
+                  {feature.icon}
+                </Box>
+                <Typography
+                  variant="h5"
+                  component="h3"
+                  gutterBottom
+                  sx={{ fontWeight: 600 }}
+                >
+                  {feature.title}
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  color="primary"
+                  gutterBottom
+                  sx={{ fontWeight: 500 }}
+                >
+                  {feature.subtitle}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {feature.description}
+                </Typography>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
 
       {/* CTA Section */}
       <Box

@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/utils/mockAuth";
+import { useAuth } from "@/modules/auth/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

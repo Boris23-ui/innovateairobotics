@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/utils/mockAuth';
-import { LoadingSpinner } from '@/components/common/LoadingSpinner';
-import { Button } from '@/components/common/Button';
+import { useAuth } from '@/modules/auth/hooks/useAuth';
+import { LoadingSpinner } from '@/modules/common/components/LoadingSpinner';
+import { Button } from '@/modules/common/components/Button';
 import {
   AppBar,
   Toolbar,

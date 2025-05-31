@@ -70,30 +70,39 @@ export default function Footer() {
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           {/* Company Info */}
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4} component="div">
             <Typography variant="h6" color="text.primary" gutterBottom>
               InnovateAI Robotics
             </Typography>
+            <Box
+              component="img"
+              src="/images/InnovateAI Robotics Inc. logo.png"
+              alt="InnovateAI Robotics Logo"
+              sx={{ height: 80, mb: 2 }}
+            />
             <Typography variant="body2" color="text.secondary" paragraph>
               Empowering the next generation through AI and robotics education
+            </Typography>
+            <Typography variant="body2" color="text.secondary" paragraph>
+              InnovateAI Robotics is a donor-supported 501(c)(3) tax-exempt charity (TaxID: 99-2801688)
             </Typography>
             <Box sx={{ mt: 2 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                 <Email sx={{ mr: 1, color: 'text.secondary' }} />
                 <Typography variant="body2" color="text.secondary">
-                  contact@innovateairobotics.com
+                  info@innovateairobotics.com
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                 <Phone sx={{ mr: 1, color: 'text.secondary' }} />
                 <Typography variant="body2" color="text.secondary">
-                  +1 (555) 123-4567
+                  +1 (650) 619-4676
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <LocationOn sx={{ mr: 1, color: 'text.secondary' }} />
                 <Typography variant="body2" color="text.secondary">
-                  123 Innovation Street, Tech City, TC 12345
+                  837 Reinert Rd, Mountain View, CA 94043 United States
                 </Typography>
               </Box>
             </Box>
@@ -101,7 +110,7 @@ export default function Footer() {
 
           {/* Footer Links */}
           {footerLinks.map((section) => (
-            <Grid item xs={12} sm={6} md={2} key={section.title}>
+            <Grid item xs={12} sm={6} md={2} key={section.title} component="div">
               <Typography variant="h6" color="text.primary" gutterBottom>
                 {section.title}
               </Typography>

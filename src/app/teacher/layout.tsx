@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/utils/mockAuth";
+import { useAuth } from "@/modules/auth/hooks/useAuth";
 import { redirect } from "next/navigation";
 
 export default function TeacherLayout({
