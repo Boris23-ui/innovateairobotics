@@ -1,99 +1,160 @@
-import React from 'react';
+'use client';
+
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  Link,
+  IconButton,
+  useTheme,
+} from '@mui/material';
+import {
+  Facebook,
+  Twitter,
+  LinkedIn,
+  Instagram,
+  Email,
+  Phone,
+  LocationOn,
+} from '@mui/icons-material';
 
 export default function Footer() {
+  const theme = useTheme();
+
+  const footerLinks = [
+    {
+      title: 'Company',
+      links: [
+        { text: 'About Us', href: '/about' },
+        { text: 'Careers', href: '/careers' },
+        { text: 'Contact', href: '/contact' },
+        { text: 'Blog', href: '/blog' },
+      ],
+    },
+    {
+      title: 'Resources',
+      links: [
+        { text: 'Programs', href: '/programs' },
+        { text: 'Curriculum', href: '/curriculum' },
+        { text: 'Resources', href: '/resources' },
+        { text: 'FAQ', href: '/faq' },
+      ],
+    },
+    {
+      title: 'Legal',
+      links: [
+        { text: 'Privacy Policy', href: '/privacy' },
+        { text: 'Terms of Service', href: '/terms' },
+        { text: 'Cookie Policy', href: '/cookies' },
+      ],
+    },
+  ];
+
+  const socialLinks = [
+    { icon: <Facebook />, href: 'https://facebook.com' },
+    { icon: <Twitter />, href: 'https://twitter.com' },
+    { icon: <LinkedIn />, href: 'https://linkedin.com' },
+    { icon: <Instagram />, href: 'https://instagram.com' },
+  ];
+
   return (
-    <footer className="bg-gray-800 text-white py-12 mt-auto">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">RoboEd</h3>
-            <p className="text-sm text-gray-300">
-              Empowering K–12 students through innovative robotics education.
-            </p>
-          </div>
+    <Box
+      component="footer"
+      sx={{
+        bgcolor: 'background.paper',
+        py: 6,
+        borderTop: `1px solid ${theme.palette.divider}`,
+      }}
+    >
+      <Container maxWidth="lg">
+        <Grid container spacing={4}>
+          {/* Company Info */}
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" color="text.primary" gutterBottom>
+              InnovateAI Robotics
+            </Typography>
+            <Typography variant="body2" color="text.secondary" paragraph>
+              Empowering the next generation through AI and robotics education
+            </Typography>
+            <Box sx={{ mt: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                <Email sx={{ mr: 1, color: 'text.secondary' }} />
+                <Typography variant="body2" color="text.secondary">
+                  contact@innovateairobotics.com
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                <Phone sx={{ mr: 1, color: 'text.secondary' }} />
+                <Typography variant="body2" color="text.secondary">
+                  +1 (555) 123-4567
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <LocationOn sx={{ mr: 1, color: 'text.secondary' }} />
+                <Typography variant="body2" color="text.secondary">
+                  123 Innovation Street, Tech City, TC 12345
+                </Typography>
+              </Box>
+            </Box>
+          </Grid>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="/" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="/programs" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
-                  Programs
-                </a>
-              </li>
-              <li>
-                <a href="/curriculum" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
-                  Curriculum
-                </a>
-              </li>
-              <li>
-                <a href="/resources" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
-                  Resources
-                </a>
-              </li>
-              <li>
-                <a href="/contact" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
+          {/* Footer Links */}
+          {footerLinks.map((section) => (
+            <Grid item xs={12} sm={6} md={2} key={section.title}>
+              <Typography variant="h6" color="text.primary" gutterBottom>
+                {section.title}
+              </Typography>
+              <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
+                {section.links.map((link) => (
+                  <Box component="li" key={link.text} sx={{ mb: 1 }}>
+                    <Link
+                      href={link.href}
+                      color="text.secondary"
+                      underline="hover"
+                      sx={{ textDecoration: 'none' }}
+                    >
+                      {link.text}
+                    </Link>
+                  </Box>
+                ))}
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
 
-          {/* Legal Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm hover:text-[rgb(60,152,251)] transition-colors">
-                  Accessibility Statement
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Newsletter / Stay Updated */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Stay Updated</h3>
-            <p className="text-sm text-gray-300 mb-4">
-              Subscribe to our newsletter for updates on programs and resources.
-            </p>
-            <form className="flex">
-              <input
-                type="email"
-                placeholder="Email"
-                className="px-4 py-2 w-full rounded-l-lg focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="bg-[rgb(60,152,251)] hover:bg-[rgb(45,130,220)] text-white px-4 rounded-r-lg"
+        {/* Social Links and Copyright */}
+        <Box
+          sx={{
+            mt: 5,
+            pt: 3,
+            borderTop: `1px solid ${theme.palette.divider}`,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 2,
+          }}
+        >
+          <Typography variant="body2" color="text.secondary">
+            © {new Date().getFullYear()} InnovateAI Robotics. All rights reserved.
+          </Typography>
+          <Box>
+            {socialLinks.map((social, index) => (
+              <IconButton
+                key={index}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                color="inherit"
+                size="small"
               >
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-
-        {/* Copyright */}
-        <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
-          &copy; {new Date().getFullYear()} RoboEd. All rights reserved.
-        </div>
-      </div>
-    </footer>
+                {social.icon}
+              </IconButton>
+            ))}
+          </Box>
+        </Box>
+      </Container>
+    </Box>
   );
 } 

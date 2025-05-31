@@ -1,23 +1,32 @@
-export const mockUsers = {
+import { User, UserRole } from "@/types/auth";
+
+export const mockUsers: Record<UserRole, User> = {
   teacher: {
     id: "user_teacher",
-    firstName: "John",
-    lastName: "Doe",
     email: "teacher@example.com",
+    name: "John Doe",
     role: "teacher",
-    publicMetadata: {
-      role: "teacher"
-    }
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-01")
   },
   student: {
     id: "user_student",
-    firstName: "Jane",
-    lastName: "Smith",
     email: "student@example.com",
+    name: "Jane Smith",
     role: "student",
-    publicMetadata: {
-      role: "student"
-    }
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane",
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-01")
+  },
+  admin: {
+    id: "user_admin",
+    email: "admin@example.com",
+    name: "Admin User",
+    role: "admin",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Admin",
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-01")
   }
 };
 

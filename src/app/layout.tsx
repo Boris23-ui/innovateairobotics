@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import Navigation from "@/components/Navigation";
-import { MockAuthProvider } from "@/utils/mockAuth";
+import { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import Navigation from '@/components/Navigation';
+import { MockAuthProvider } from '@/utils/mockAuth';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Innovate AI Robotics",
-  description: "Empowering the next generation through AI and robotics education",
+  title: 'InnovateAI Robotics',
+  description: 'Learn robotics and AI with InnovateAI Robotics',
 };
 
 export default function RootLayout({
@@ -19,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MockAuthProvider>
-          <Navigation />
-          {children}
-        </MockAuthProvider>
+        <ThemeProvider>
+          <MockAuthProvider>
+            <Navigation />
+            <main>{children}</main>
+          </MockAuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

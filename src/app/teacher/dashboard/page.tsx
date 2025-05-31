@@ -1,3 +1,5 @@
+"use client";
+
 import { useAuth } from "@/utils/mockAuth";
 
 export default function TeacherDashboard() {

@@ -6,7 +6,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../config/firebase';
 import Footer from './Footer';
 import UserMenu from '../auth/UserMenu';
-import LoadingSpinner from '../common/LoadingSpinner';
+import { LoadingSpinner } from '../common/LoadingSpinner';
 
 interface MainLayoutProps {
   children: React.ReactNode;

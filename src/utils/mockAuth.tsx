@@ -1,31 +1,58 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
-import { mockUsers } from './mockData';
+"use client";
+
+import React, { createContext, useContext, useState } from "react";
+import { mockUsers } from "./mockData";
 
 type User = typeof mockUsers.teacher | typeof mockUsers.student | null;
 
 interface AuthContextType {
   user: User;
   isLoaded: boolean;
-  signIn: (email: string) => void;
-  signOut: () => void;
+  signIn: (email: string) => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function MockAuthProvider({ children }: { children: ReactNode }) {
+export function MockAuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User>(null);
   const [isLoaded, setIsLoaded] = useState(true);
 
-  const signIn = (email: string) => {
-    if (email === mockUsers.teacher.email) {
-      setUser(mockUsers.teacher);
-    } else if (email === mockUsers.student.email) {
-      setUser(mockUsers.student);
+  const signIn = async (email: string) => {
+    setIsLoaded(false);
+    try {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const foundUser = Object.values(mockUsers).find(
+        (u) => u.email === email
+      ) as User;
+
+      if (foundUser) {
+        setUser(foundUser);
+      } else {
+        throw new Error("User not found");
+      }
+    } catch (error) {
+      console.error("Sign in error:", error);
+      throw error;
+    } finally {
+      setIsLoaded(true);
     }
   };
 
-  const signOut = () => {
-    setUser(null);
+  const signOut = async () => {
+    setIsLoaded(false);
+    try {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      setUser(null);
+    } catch (error) {
+      console.error("Sign out error:", error);
+      throw error;
+    } finally {
+      setIsLoaded(true);
+    }
   };
 
   return (
@@ -38,7 +65,7 @@ export function MockAuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within a MockAuthProvider');
+    throw new Error("useAuth must be used within a MockAuthProvider");
   }
   return context;
 } 

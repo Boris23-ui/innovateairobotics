@@ -1,116 +1,265 @@
-import { useAuth } from "@/utils/mockAuth";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+"use client";
+
+import { useState } from 'react';
+import { useAuth } from '@/utils/mockAuth';
+import { LoadingSpinner } from '@/components/common/LoadingSpinner';
+import { Button } from '@/components/common/Button';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+  Box,
+  Avatar,
+  useTheme as useMuiTheme,
+  useMediaQuery,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  ListItemButton,
+  Link,
+} from '@mui/material';
+import {
+  Menu as MenuIcon,
+  AccountCircle,
+  Dashboard,
+  School,
+  ExitToApp,
+  Book,
+  ContactSupport,
+  Info,
+  Code,
+  Brightness4 as DarkModeIcon,
+  Brightness7 as LightModeIcon,
+} from '@mui/icons-material';
+import { useRouter, usePathname } from 'next/navigation';
+import { useTheme } from '@/components/providers/ThemeProvider';
 
 export default function Navigation() {
   const { user, isLoaded, signOut } = useAuth();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const router = useRouter();
   const pathname = usePathname();
+  const { mode, toggleTheme } = useTheme();
+  const muiTheme = useMuiTheme();
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
 
-  const isTeacher = user?.role === "teacher";
-  const isStudent = user?.role === "student";
+  if (!isLoaded) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="64px">
+        <LoadingSpinner />
+      </Box>
+    );
+  }
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    handleClose();
+    router.push('/');
+  };
+
+  const handleDashboard = () => {
+    if (user) {
+      router.push(`/dashboard/${user.role}`);
+    }
+    handleClose();
+  };
+
+  const navigationItems = [
+    { text: 'Programs', href: '/programs', icon: <Code /> },
+    { text: 'Curriculum', href: '/curriculum', icon: <Book /> },
+    { text: 'Resources', href: '/resources', icon: <School /> },
+    { text: 'About', href: '/about', icon: <Info /> },
+    { text: 'Contact', href: '/contact', icon: <ContactSupport /> },
+  ];
+
+  const userMenuItems = [
+    {
+      text: 'Dashboard',
+      icon: <Dashboard />,
+      onClick: handleDashboard,
+      show: !!user,
+    },
+    {
+      text: 'Sign Out',
+      icon: <ExitToApp />,
+      onClick: handleSignOut,
+      show: !!user,
+    },
+  ];
+
+  const renderMenu = () => (
+    <Menu
+      anchorEl={anchorEl}
+      open={Boolean(anchorEl)}
+      onClose={handleClose}
+      transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+      anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+    >
+      {navigationItems.map((item) => (
+        <MenuItem
+          key={item.href}
+          component={Link}
+          href={item.href}
+          onClick={handleClose}
+        >
+          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemText>{item.text}</ListItemText>
+        </MenuItem>
+      ))}
+      {userMenuItems.map((item) => (
+        item.show && (
+          <MenuItem key={item.text} onClick={item.onClick}>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText>{item.text}</ListItemText>
+          </MenuItem>
+        )
+      ))}
+    </Menu>
+  );
+
+  const renderMobileMenu = () => (
+    <Drawer
+      anchor="right"
+      open={mobileMenuOpen}
+      onClose={() => setMobileMenuOpen(false)}
+    >
+      <Box sx={{ width: 250 }}>
+        <List>
+          {navigationItems.map((item) => (
+            <ListItem key={item.text} disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  router.push(item.href);
+                  setMobileMenuOpen(false);
+                }}
+                selected={pathname === item.href}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText>{item.text}</ListItemText>
+              </ListItemButton>
+            </ListItem>
+          ))}
+          {userMenuItems.map((item) => (
+            item.show && (
+              <ListItem key={item.text} disablePadding>
+                <ListItemButton onClick={item.onClick}>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText>{item.text}</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            )
+          ))}
+        </List>
+      </Box>
+    </Drawer>
+  );
 
   return (
-    <nav className="bg-white shadow">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
-              <Link href="/" className="text-xl font-bold text-blue-600">
-                Innovate AI Robotics
-              </Link>
-            </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <Link
-                href="/programs"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                  pathname === "/programs"
-                    ? "border-blue-500 text-gray-900"
-                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                }`}
-              >
-                Programs
-              </Link>
-              <Link
-                href="/curriculum"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                  pathname === "/curriculum"
-                    ? "border-blue-500 text-gray-900"
-                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                }`}
-              >
-                Curriculum
-              </Link>
-              <Link
-                href="/resources"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                  pathname === "/resources"
-                    ? "border-blue-500 text-gray-900"
-                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                }`}
-              >
-                Resources
-              </Link>
-              <Link
-                href="/contact"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                  pathname === "/contact"
-                    ? "border-blue-500 text-gray-900"
-                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                }`}
-              >
-                Contact
-              </Link>
-            </div>
-          </div>
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            {isLoaded && (
+    <AppBar position="static" color="default" elevation={1}>
+      <Toolbar>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1, cursor: 'pointer' }}
+          onClick={() => router.push('/')}
+        >
+          InnovateAI Robotics
+        </Typography>
+
+        {isMobile ? (
+          <>
+            <IconButton
+              edge="end"
+              color="inherit"
+              aria-label="menu"
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+            {renderMobileMenu()}
+          </>
+        ) : (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ display: 'flex', gap: 2, mr: 2 }}>
+              {navigationItems.map((item) => (
+                <Link
+                  key={item.text}
+                  href={item.href}
+                  color="inherit"
+                  underline="none"
+                  sx={{
+                    color: pathname === item.href ? 'primary.main' : 'text.primary',
+                    '&:hover': {
+                      color: 'primary.main',
+                    },
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 0.5,
+                  }}
+                >
+                  {item.icon}
+                  {item.text}
+                </Link>
+              ))}
+            </Box>
+            <IconButton
+              color="inherit"
+              onClick={toggleTheme}
+              aria-label="toggle theme"
+            >
+              {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+            </IconButton>
+            {!user ? (
               <>
-                {user ? (
-                  <div className="flex items-center space-x-4">
-                    {isTeacher && (
-                      <Link
-                        href="/teacher/dashboard"
-                        className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium"
-                      >
-                        Teacher Dashboard
-                      </Link>
-                    )}
-                    {isStudent && (
-                      <Link
-                        href="/student/dashboard"
-                        className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium"
-                      >
-                        Student Dashboard
-                      </Link>
-                    )}
-                    <button
-                      onClick={() => signOut()}
-                      className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Sign Out
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex items-center space-x-4">
-                    <Link
-                      href="/sign-in"
-                      className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Sign In
-                    </Link>
-                    <Link
-                      href="/sign-up"
-                      className="bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
-                    >
-                      Sign Up
-                    </Link>
-                  </div>
-                )}
+                <Button
+                  variant="outlined"
+                  onClick={() => router.push('/signin')}
+                >
+                  Sign In
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => router.push('/signup')}
+                >
+                  Sign Up
+                </Button>
+              </>
+            ) : (
+              <>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  {user.avatar ? (
+                    <Avatar src={user.avatar} alt={user.name} />
+                  ) : (
+                    <AccountCircle />
+                  )}
+                </IconButton>
+                {renderMenu()}
               </>
             )}
-          </div>
-        </div>
-      </div>
-    </nav>
+          </Box>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 } 
