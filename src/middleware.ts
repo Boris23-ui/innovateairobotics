@@ -1,4 +1,7 @@
 import { authMiddleware } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import type { AuthObject } from "@clerk/nextjs/server";
 
 // This example protects all routes including api/trpc routes
 // Please edit this to allow other routes to be public as needed.
@@ -7,25 +10,21 @@ export default authMiddleware({
   publicRoutes: [
     "/",
     "/about",
-    "/donate",
-    "/programs/tiny-tinkerers",
-    "/programs/robot-explorers",
-    "/programs/tech-titans",
-    "/programs/ai-avengers",
-    "/programs/seniors",
-    "/api/webhook(.*)",
-    "/sign-in",
-    "/sign-up",
+    "/contact",
+    "/courses",
+    "/courses/:courseId",
+    "/api/webhook/clerk",
+    "/api/webhook/stripe",
   ],
   ignoredRoutes: [
     "/api/webhook(.*)",
   ],
-  afterAuth(auth, req, evt) {
+  afterAuth(auth: AuthObject, req: NextRequest) {
     // Handle users who aren't authenticated
     if (!auth.userId && !auth.isPublicRoute) {
       const signInUrl = new URL('/sign-in', req.url);
       signInUrl.searchParams.set('redirect_url', req.url);
-      return Response.redirect(signInUrl);
+      return NextResponse.redirect(signInUrl);
     }
   }
 });
