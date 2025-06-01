@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 import { useAuth, useUser, SignOutButton } from '@clerk/nextjs';
-import { LoadingSpinner } from '@/modules/common/components/LoadingSpinner';
-import { Button } from '@/modules/common/components/Button';
 import {
   AppBar,
   Toolbar,
@@ -49,11 +47,13 @@ import {
   Brightness7,
   Engineering,
   Login,
+  AccountCircle,
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTheme, useMediaQuery } from '@mui/material';
 import { useTheme as useAppTheme } from '@/components/providers/ThemeProvider';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const programItems = [
   {
@@ -95,8 +95,6 @@ const programItems = [
 
 const navItems = [
   { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
-  { name: 'Donate', href: '/donate' },
 ];
 
 const publicNavItems = [
@@ -122,6 +120,7 @@ export default function Navigation() {
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+    setProgramsAnchorEl(null);
   };
 
   const handleClose = () => {
@@ -130,10 +129,36 @@ export default function Navigation() {
 
   const handleProgramsClick = (event: React.MouseEvent<HTMLElement>) => {
     setProgramsAnchorEl(event.currentTarget);
+    setAnchorEl(null);
   };
 
   const handleProgramsClose = () => {
     setProgramsAnchorEl(null);
+  };
+
+  const handleProfile = () => {
+    handleClose();
+    router.push('/profile');
+  };
+
+  const handleDashboard = () => {
+    handleClose();
+    router.push('/dashboard/teacher');
+  };
+
+  const handleSettings = () => {
+    handleClose();
+    router.push('/settings');
+  };
+
+  const handleSignOut = () => {
+    handleClose();
+  };
+
+  const handleLogin = () => {
+    setAnchorEl(null);
+    setProgramsAnchorEl(null);
+    router.push('/sign-in');
   };
 
   const isActive = (path: string) => pathname === path;
@@ -264,17 +289,26 @@ export default function Navigation() {
                 }}
                 PaperProps={{
                   sx: {
-                    width: 320,
+                    width: 'auto',
+                    maxWidth: '90vw',
                     maxHeight: 400,
                     overflow: 'auto',
-                    p: 1,
+                    p: 2,
                     mt: 0.5,
-                    borderRadius: 1,
-                    boxShadow: 2,
+                    borderRadius: 2,
+                    boxShadow: 3,
                   },
                 }}
               >
-                <List sx={{ py: 0.5 }}>
+                <List sx={{ 
+                  py: 0.5,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: 2,
+                  flexWrap: 'wrap',
+                  minWidth: 800,
+                  justifyContent: 'center',
+                }}>
                   {programItems.map((item) => (
                     <ListItem
                       key={item.title}
@@ -282,13 +316,20 @@ export default function Navigation() {
                       href={item.href}
                       onClick={handleProgramsClose}
                       sx={{
-                        py: 1,
-                        px: 1.5,
+                        py: 1.5,
+                        px: 2,
                         mb: 0.5,
-                        borderRadius: 1,
+                        borderRadius: 2,
+                        width: 'auto',
+                        minWidth: 220,
+                        maxWidth: 280,
+                        bgcolor: 'background.paper',
+                        border: '1px solid',
+                        borderColor: 'divider',
                         '&:hover': {
                           backgroundColor: 'action.hover',
-                          transform: 'translateY(-1px)',
+                          transform: 'translateY(-2px)',
+                          boxShadow: 2,
                           transition: 'all 0.2s ease-in-out',
                         },
                         '&:last-child': {
@@ -296,26 +337,29 @@ export default function Navigation() {
                         },
                       }}
                     >
-                      <ListItemIcon sx={{ minWidth: 36 }}>
+                      <ListItemIcon sx={{ 
+                        minWidth: 40,
+                        color: 'primary.main',
+                      }}>
                         {item.icon}
                       </ListItemIcon>
                       <ListItemText
                         primary={
-                          <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.25 }}>
+                          <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 0.5 }}>
                             {item.title}
                           </Typography>
                         }
                         secondary={
-                          <Box component="span" sx={{ display: 'flex', flexDirection: 'column', gap: 0.25 }}>
+                          <Box component="span" sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
                             <Typography
                               component="span"
                               variant="caption"
                               sx={{
                                 bgcolor: 'primary.main',
                                 color: 'primary.contrastText',
-                                px: 0.75,
+                                px: 1,
                                 py: 0.25,
-                                borderRadius: 0.5,
+                                borderRadius: 1,
                                 fontSize: '0.7rem',
                                 display: 'inline-block',
                                 width: 'fit-content',
@@ -325,11 +369,11 @@ export default function Navigation() {
                             </Typography>
                             <Typography
                               component="span"
-                              variant="caption"
+                              variant="body2"
                               sx={{ 
                                 color: 'text.secondary',
                                 display: 'block',
-                                lineHeight: 1.3,
+                                lineHeight: 1.4,
                               }}
                             >
                               {item.description}
@@ -341,21 +385,6 @@ export default function Navigation() {
                   ))}
                 </List>
               </Popover>
-
-              {/* Main Navigation Items */}
-              {navItems.slice(1).map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <MuiButton
-                    startIcon={item.icon}
-                  >
-                    {item.name}
-                  </MuiButton>
-                </Link>
-              ))}
 
               {/* Theme Toggle Button */}
               <IconButton
@@ -373,12 +402,15 @@ export default function Navigation() {
 
               {isSignedIn ? (
                 <>
-                  <Button
+                  <MuiButton
                     startIcon={<Dashboard />}
-                    onClick={() => router.push('/dashboard/teacher')}
+                    onClick={() => {
+                      setProgramsAnchorEl(null);
+                      router.push('/dashboard/teacher');
+                    }}
                   >
                     Dashboard
-                  </Button>
+                  </MuiButton>
                   <IconButton
                     onClick={handleMenuOpen}
                     size="small"
@@ -391,10 +423,10 @@ export default function Navigation() {
                   </IconButton>
                 </>
               ) : (
-                <Button
+                <MuiButton
                   variant="contained"
                   startIcon={<Login />}
-                  onClick={() => router.push('/sign-in')}
+                  onClick={handleLogin}
                   sx={{
                     minWidth: '100px',
                     '&:hover': {
@@ -403,7 +435,7 @@ export default function Navigation() {
                   }}
                 >
                   Login
-                </Button>
+                </MuiButton>
               )}
             </Box>
 
@@ -461,31 +493,33 @@ export default function Navigation() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        {programItems.map((item) => (
-          <MenuItem
-            key={item.title}
-            component={Link}
-            href={item.href}
-            selected={isActive(item.href)}
-            sx={{
-              '&.Mui-selected': {
-                bgcolor: 'action.selected',
-              },
-            }}
-          >
+        <MenuItem onClick={handleProfile}>
+          <ListItemIcon>
+            <AccountCircle fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Profile</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleDashboard}>
+          <ListItemIcon>
+            <Dashboard fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Dashboard</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleSettings}>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Settings</ListItemText>
+        </MenuItem>
+        <Divider />
+        <SignOutButton>
+          <MenuItem>
             <ListItemIcon>
-              <School />
+              <Logout fontSize="small" />
             </ListItemIcon>
-            <ListItemText 
-              primary={item.title}
-              secondary={item.ageRange}
-              secondaryTypographyProps={{
-                variant: 'caption',
-                color: 'text.secondary',
-              }}
-            />
+            <ListItemText>Sign Out</ListItemText>
           </MenuItem>
-        ))}
+        </SignOutButton>
       </Menu>
     </Box>
   );

@@ -3,8 +3,12 @@
 import { SignIn } from "@clerk/nextjs";
 import { Container, Box, Paper, Typography, Alert } from '@mui/material';
 import { School } from '@mui/icons-material';
+import { useSearchParams } from 'next/navigation';
 
 export default function SignInPage() {
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams?.get('redirect_url') || '/dashboard/student';
+
   return (
     <Container maxWidth="sm">
       <Box
@@ -46,7 +50,7 @@ export default function SignInPage() {
             </Typography>
           </Alert>
 
-          <SignIn />
+          <SignIn redirectUrl={redirectUrl} />
         </Paper>
       </Box>
     </Container>

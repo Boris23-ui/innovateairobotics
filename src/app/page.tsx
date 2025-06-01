@@ -1,50 +1,31 @@
 "use client";
 
 import { useAuth } from "@clerk/nextjs";
-import { LoadingSpinner } from "@/modules/common/components/LoadingSpinner";
-import { Button } from "@/modules/common/components/Button";
-import { Card } from "@/modules/common/components/Card";
+import { useRouter } from "next/navigation";
+import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Container,
   Typography,
-  useTheme,
+  Button,
   Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  Stack,
+  IconButton,
+  Avatar,
+  Badge,
 } from '@mui/material';
 import {
-  School as SchoolIcon,
-  Code as CodeIcon,
-  SmartToy as RobotIcon,
-  Science as ScienceIcon,
+  School,
+  Code,
+  Science,
+  EmojiObjects,
+  ArrowForward,
+  Notifications as NotificationsIcon,
 } from '@mui/icons-material';
-import { useRouter } from "next/navigation";
-
-const features = [
-  {
-    icon: <SchoolIcon sx={{ fontSize: 40 }} />,
-    title: 'Expert-Led Courses',
-    subtitle: 'Learn from industry professionals and experienced educators',
-    description: 'Our courses are designed and taught by experts in robotics and AI, ensuring you receive the highest quality education.',
-  },
-  {
-    icon: <CodeIcon sx={{ fontSize: 40 }} />,
-    title: 'Hands-on Projects',
-    subtitle: 'Build real-world applications and gain practical experience',
-    description: 'Apply your knowledge through hands-on projects that simulate real-world scenarios and challenges.',
-  },
-  {
-    icon: <RobotIcon sx={{ fontSize: 40 }} />,
-    title: 'Cutting-edge Technology',
-    subtitle: 'Access the latest tools and technologies in robotics and AI',
-    description: 'Stay ahead of the curve with access to state-of-the-art robotics platforms and AI development tools.',
-  },
-  {
-    icon: <ScienceIcon sx={{ fontSize: 40 }} />,
-    title: 'Research Opportunities',
-    subtitle: 'Contribute to groundbreaking research in robotics and AI',
-    description: 'Participate in research projects and collaborate with leading institutions in the field.',
-  },
-];
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function Home() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -90,48 +71,46 @@ export default function Home() {
           },
         }}
       >
-        <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
-          <Box sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            alignItems: 'center',
-            gap: 4,
-          }}>
-            {/* Text Content */}
+        <Container maxWidth="lg">
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
+              alignItems: 'center',
+              gap: 4,
+              position: 'relative',
+              zIndex: 1,
+            }}
+          >
+            {/* Content */}
             <Box
               sx={{
                 flex: 1,
                 textAlign: { xs: 'center', md: 'left' },
-                color: 'text.primary',
-                pr: { md: 4 },
               }}
             >
               <Typography
                 variant="h1"
-                component="h1"
                 sx={{
-                  fontSize: { xs: '2.5rem', md: '4rem' },
-                  fontWeight: 800,
+                  fontSize: { xs: '2.5rem', md: '3.5rem' },
+                  fontWeight: 'bold',
                   mb: 2,
-                  background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-                  backgroundClip: 'text',
-                  textFillColor: 'transparent',
+                  background: 'linear-gradient(135deg, #2196f3 0%, #00bcd4 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                Welcome to InnovateAI Robotics
+                Empowering the Next Generation of Innovators
               </Typography>
+
               <Typography
                 variant="h5"
-                sx={{
-                  mb: 4,
-                  color: 'text.secondary',
-                  lineHeight: 1.6,
-                }}
+                color="text.secondary"
+                sx={{ mb: 4, maxWidth: '600px', mx: { xs: 'auto', md: 0 } }}
               >
-                Empowering the next generation of innovators through robotics and AI education
+                Join our robotics and AI education programs designed for all ages. Learn, create, and innovate with cutting-edge technology.
               </Typography>
+
               <Box
                 sx={{
                   display: 'flex',
@@ -139,23 +118,13 @@ export default function Home() {
                   justifyContent: { xs: 'center', md: 'flex-start' },
                 }}
               >
-                {!isSignedIn ? (
-                  <Button
-                    variant="contained"
-                    size="large"
-                    onClick={() => router.push("/sign-in")}
-                  >
-                    Get Started
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    size="large"
-                    onClick={() => router.push("/dashboard/teacher")}
-                  >
-                    Go to Dashboard
-                  </Button>
-                )}
+                <Button
+                  variant="contained"
+                  size="large"
+                  onClick={() => router.push("/sign-in")}
+                >
+                  Get Started
+                </Button>
                 <Button
                   variant="outlined"
                   size="large"
@@ -192,123 +161,76 @@ export default function Home() {
       </Box>
 
       {/* Features Section */}
-      <Container maxWidth="xl" sx={{ mt: 8, mb: 8 }}>
-        <Typography variant="h2" component="h2" textAlign="center" mb={6}>
-          Why Choose InnovateAI Robotics?
+      <Container maxWidth="lg" sx={{ mb: 8 }}>
+        <Typography
+          variant="h2"
+          align="center"
+          sx={{ mb: 6 }}
+        >
+          Our Programs
         </Typography>
+
         <Grid container spacing={4}>
-          {features.map((feature, index) => (
-            <Grid item key={index} xs={12} sm={6} md={3}>
+          {[
+            {
+              title: 'Tiny Tinkerers',
+              description: 'Introduction to robotics for young learners (Ages 5-7)',
+              icon: <School sx={{ fontSize: 40 }} />,
+              href: '/programs/tiny-tinkerers',
+            },
+            {
+              title: 'Robot Explorers',
+              description: 'Hands-on robotics projects for elementary students (Ages 8-11)',
+              icon: <Code sx={{ fontSize: 40 }} />,
+              href: '/programs/robot-explorers',
+            },
+            {
+              title: 'Tech Titans',
+              description: 'Advanced robotics and programming for middle schoolers (Ages 12-14)',
+              icon: <Science sx={{ fontSize: 40 }} />,
+              href: '/programs/tech-titans',
+            },
+            {
+              title: 'AI Avengers',
+              description: 'AI and machine learning for high school students (Ages 15-18)',
+              icon: <EmojiObjects sx={{ fontSize: 40 }} />,
+              href: '/programs/ai-avengers',
+            },
+          ].map((program, index) => (
+            <Grid item xs={12} sm={6} md={3} key={index} component="div">
               <Card
                 sx={{
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  p: 3,
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'translateY(-8px)',
+                  },
                 }}
               >
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    mb: 2,
-                    color: 'primary.main',
-                  }}
-                >
-                  {feature.icon}
-                </Box>
-                <Typography
-                  variant="h5"
-                  component="h3"
-                  gutterBottom
-                  sx={{ fontWeight: 600 }}
-                >
-                  {feature.title}
-                </Typography>
-                <Typography
-                  variant="subtitle1"
-                  color="primary"
-                  gutterBottom
-                  sx={{ fontWeight: 500 }}
-                >
-                  {feature.subtitle}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {feature.description}
-                </Typography>
+                <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
+                  <Box sx={{ color: 'primary.main', mb: 2 }}>
+                    {program.icon}
+                  </Box>
+                  <Typography variant="h5" component="h3" gutterBottom>
+                    {program.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    {program.description}
+                  </Typography>
+                  <Button
+                    endIcon={<ArrowForward />}
+                    onClick={() => router.push(program.href)}
+                  >
+                    Learn More
+                  </Button>
+                </CardContent>
               </Card>
             </Grid>
           ))}
         </Grid>
       </Container>
-
-      {/* CTA Section */}
-      <Box
-        sx={{
-          py: 8,
-          bgcolor: 'primary.main',
-          color: 'primary.contrastText',
-        }}
-      >
-        <Container maxWidth="md">
-          <Typography
-            variant="h3"
-            component="h2"
-            align="center"
-            gutterBottom
-            sx={{ fontWeight: 600 }}
-          >
-            Ready to Start Your Journey?
-          </Typography>
-          <Typography
-            variant="h6"
-            align="center"
-            paragraph
-            sx={{ mb: 4, opacity: 0.9 }}
-          >
-            Join our community of learners and start building the future of robotics and AI
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: 2,
-            }}
-          >
-            <Button
-              variant="contained"
-              size="large"
-              sx={{
-                bgcolor: 'background.paper',
-                color: 'primary.main',
-                '&:hover': {
-                  bgcolor: 'background.paper',
-                  opacity: 0.9,
-                },
-              }}
-              onClick={() => router.push("/programs")}
-            >
-              Explore Programs
-            </Button>
-            <Button
-              variant="outlined"
-              size="large"
-              sx={{
-                borderColor: 'background.paper',
-                color: 'background.paper',
-                '&:hover': {
-                  borderColor: 'background.paper',
-                  bgcolor: 'background.paper',
-                  color: 'primary.main',
-                },
-              }}
-              onClick={() => router.push("/contact")}
-            >
-              Contact Us
-            </Button>
-          </Box>
-        </Container>
-      </Box>
     </Box>
   );
 } 

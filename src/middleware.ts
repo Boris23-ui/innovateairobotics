@@ -14,10 +14,20 @@ export default authMiddleware({
     "/programs/ai-avengers",
     "/programs/seniors",
     "/api/webhook(.*)",
+    "/sign-in",
+    "/sign-up",
   ],
   ignoredRoutes: [
     "/api/webhook(.*)",
   ],
+  afterAuth(auth, req, evt) {
+    // Handle users who aren't authenticated
+    if (!auth.userId && !auth.isPublicRoute) {
+      const signInUrl = new URL('/sign-in', req.url);
+      signInUrl.searchParams.set('redirect_url', req.url);
+      return Response.redirect(signInUrl);
+    }
+  }
 });
 
 export const config = {

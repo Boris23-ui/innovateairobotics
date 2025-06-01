@@ -45,7 +45,7 @@ import { useEffect, useState } from 'react';
 import CreateCourseDialog from './components/CreateCourseDialog';
 import { toast } from 'react-hot-toast';
 
-interface Course {
+interface CourseData {
   id: string;
   name: string;
   description: string;
@@ -56,12 +56,15 @@ interface Course {
   endDate: string;
   tags: string[];
   students: any[];
+  schedule: string;
+  location: string;
 }
 
 const recentActivities = [
-  { id: 1, student: 'John Doe', action: 'Completed Assignment', course: 'Introduction to Robotics', time: '2 hours ago', type: 'success' },
-  { id: 2, student: 'Jane Smith', action: 'Submitted Project', course: 'Advanced Programming', time: '3 hours ago', type: 'info' },
-  { id: 3, student: 'Mike Johnson', action: 'Asked Question', course: 'Robot Design', time: '5 hours ago', type: 'warning' },
+  { id: '1', type: 'success', student: 'Emma Johnson', action: 'Completed Robot Building Project', course: 'Robot Explorers Club', time: '2 hours ago' },
+  { id: '2', type: 'info', student: 'Michael Chen', action: 'Submitted AI Ethics Assignment', course: 'AI Avengers Workshop', time: '3 hours ago' },
+  { id: '3', type: 'warning', student: 'Sarah Williams', action: 'Needs Help with Sensor Integration', course: 'Tech Titans Challenge', time: '5 hours ago' },
+  { id: '4', type: 'success', student: 'David Kim', action: 'Achieved Perfect Score in Coding Challenge', course: 'Senior Innovators Program', time: '1 day ago' },
 ];
 
 const notifications = [
@@ -78,54 +81,76 @@ export default function TeacherDashboard() {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const [notificationAnchor, setNotificationAnchor] = useState<null | HTMLElement>(null);
   const [isCreateCourseOpen, setIsCreateCourseOpen] = useState(false);
-  const [courses, setCourses] = useState<Course[]>([
+  const [courses, setCourses] = useState<CourseData[]>([
     {
       id: '1',
-      name: 'Introduction to Robotics',
-      description: 'Learn the fundamentals of robotics, including basic mechanics, electronics, and programming concepts.',
-      category: 'Beginner',
-      level: 'Level 1',
-      maxStudents: 30,
+      name: 'Tiny Tinkerers Robotics',
+      description: 'An engaging introduction to robotics for young learners aged 5 and under. Through play-based activities, children explore basic robot movements, sounds, and simple cause-and-effect relationships.',
+      category: 'Early Learning',
+      level: 'Beginner',
+      maxStudents: 12,
       startDate: '2024-03-01',
       endDate: '2024-06-30',
-      tags: ['robotics', 'beginner', 'electronics'],
-      students: Array(15).fill({ id: 'student', name: 'Student' })
+      tags: ['robotics', 'early-learning', 'play-based'],
+      students: Array(8).fill({ id: 'student', name: 'Student' }),
+      schedule: 'Mon & Wed, 10:00 AM - 11:00 AM',
+      location: 'Room 101'
     },
     {
       id: '2',
-      name: 'Advanced Robot Programming',
-      description: 'Master advanced programming techniques for robotics, including sensor integration and autonomous navigation.',
-      category: 'Advanced',
-      level: 'Level 3',
-      maxStudents: 25,
+      name: 'Robot Explorers Club',
+      description: 'Designed for 6-9 year olds, this course introduces basic programming concepts through visual coding and hands-on robot building. Students learn about sensors, motors, and simple automation.',
+      category: 'Elementary',
+      level: 'Intermediate',
+      maxStudents: 15,
       startDate: '2024-03-15',
       endDate: '2024-07-15',
-      tags: ['programming', 'advanced', 'sensors'],
-      students: Array(18).fill({ id: 'student', name: 'Student' })
+      tags: ['programming', 'robotics', 'sensors'],
+      students: Array(12).fill({ id: 'student', name: 'Student' }),
+      schedule: 'Tue & Thu, 3:00 PM - 4:30 PM',
+      location: 'Lab 203'
     },
     {
       id: '3',
-      name: 'Robot Vision Systems',
-      description: 'Explore computer vision and image processing techniques for robotic applications.',
-      category: 'Specialized',
-      level: 'Level 2',
-      maxStudents: 20,
+      name: 'Tech Titans Challenge',
+      description: 'Advanced robotics and coding for 10-12 year olds. Students tackle complex projects involving autonomous navigation, sensor integration, and problem-solving challenges.',
+      category: 'Middle School',
+      level: 'Advanced',
+      maxStudents: 12,
       startDate: '2024-04-01',
       endDate: '2024-07-31',
-      tags: ['vision', 'computer-vision', 'specialized'],
-      students: Array(12).fill({ id: 'student', name: 'Student' })
+      tags: ['advanced', 'coding', 'challenges'],
+      students: Array(10).fill({ id: 'student', name: 'Student' }),
+      schedule: 'Wed & Fri, 4:00 PM - 5:30 PM',
+      location: 'Lab 305'
     },
     {
       id: '4',
-      name: 'Robotic Arm Control',
-      description: 'Learn about robotic arm kinematics, control systems, and industrial applications.',
-      category: 'Industrial',
-      level: 'Level 2',
-      maxStudents: 20,
+      name: 'AI Avengers Workshop',
+      description: 'For teens aged 13-17, this course explores the intersection of AI and robotics. Students learn about machine learning, computer vision, and ethical AI development.',
+      category: 'High School',
+      level: 'Expert',
+      maxStudents: 15,
       startDate: '2024-04-15',
       endDate: '2024-08-15',
-      tags: ['industrial', 'mechanics', 'control-systems'],
-      students: Array(10).fill({ id: 'student', name: 'Student' })
+      tags: ['AI', 'machine-learning', 'ethics'],
+      students: Array(14).fill({ id: 'student', name: 'Student' }),
+      schedule: 'Sat, 10:00 AM - 1:00 PM',
+      location: 'AI Lab'
+    },
+    {
+      id: '5',
+      name: 'Senior Innovators Program',
+      description: 'A comprehensive program for adults interested in AI and robotics. Covers professional applications, industry trends, and hands-on project development.',
+      category: 'Adult Learning',
+      level: 'Professional',
+      maxStudents: 20,
+      startDate: '2024-05-01',
+      endDate: '2024-08-31',
+      tags: ['professional', 'industry', 'projects'],
+      students: Array(16).fill({ id: 'student', name: 'Student' }),
+      schedule: 'Mon & Thu, 6:00 PM - 8:00 PM',
+      location: 'Conference Room'
     }
   ]);
   const [isLoading, setIsLoading] = useState(true);

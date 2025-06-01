@@ -76,47 +76,45 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-// Mock data for demonstration
-const courseData = {
-  id: 1,
-  name: 'Introduction to AI',
-  description: 'Learn the fundamentals of Artificial Intelligence and Machine Learning.',
-  instructor: 'Dr. Sarah Johnson',
-  progress: 75,
-  nextClass: '2024-03-20 10:00 AM',
-  modules: [
-    {
-      id: 1,
-      title: 'Introduction to AI Concepts',
-      description: 'Understanding the basics of AI and its applications',
-      lessons: [
-        { id: 1, title: 'What is AI?', duration: '45 min', type: 'video', completed: true },
-        { id: 2, title: 'History of AI', duration: '30 min', type: 'reading', completed: true },
-        { id: 3, title: 'AI Applications', duration: '60 min', type: 'quiz', completed: false },
-      ],
-    },
-    {
-      id: 2,
-      title: 'Machine Learning Fundamentals',
-      description: 'Core concepts of machine learning algorithms',
-      lessons: [
-        { id: 4, title: 'Supervised Learning', duration: '60 min', type: 'video', completed: false },
-        { id: 5, title: 'Unsupervised Learning', duration: '45 min', type: 'reading', completed: false },
-        { id: 6, title: 'ML Algorithms', duration: '90 min', type: 'coding', completed: false },
-      ],
-    },
-  ],
-  assignments: [
-    { id: 1, title: 'AI Project Submission', dueDate: '2024-03-25', status: 'pending', type: 'project' },
-    { id: 2, title: 'ML Quiz', dueDate: '2024-03-28', status: 'pending', type: 'quiz' },
-    { id: 3, title: 'Coding Assignment', dueDate: '2024-03-30', status: 'pending', type: 'coding' },
-  ],
-  resources: [
-    { id: 1, title: 'Course Textbook', type: 'pdf', url: '#' },
-    { id: 2, title: 'Additional Readings', type: 'link', url: '#' },
-    { id: 3, title: 'Code Examples', type: 'github', url: '#' },
-  ],
-};
+interface Lesson {
+  id: string;
+  title: string;
+  duration: string;
+  type: 'video' | 'reading' | 'quiz' | 'coding';
+  completed: boolean;
+}
+
+interface Module {
+  id: string;
+  title: string;
+  description: string;
+  lessons: Lesson[];
+}
+
+interface CourseData {
+  id: string;
+  name: string;
+  description: string;
+  instructor: string;
+  nextClass: string;
+  schedule: string;
+  location: string;
+  progress: number;
+  modules: Module[];
+  assignments: {
+    id: string;
+    title: string;
+    dueDate: string;
+    status: string;
+    type: string;
+  }[];
+  resources: {
+    id: string;
+    title: string;
+    type: string;
+    url: string;
+  }[];
+}
 
 export default function CourseDetailPage({ params }: { params: { id: string } }) {
   const { isLoaded, isSignedIn } = useAuth();
@@ -124,6 +122,70 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
   const router = useRouter();
   const [tabValue, setTabValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  // Mock data for course
+  const courseData: CourseData = {
+    id: params.id,
+    name: 'Introduction to Robotics',
+    description: 'Learn the fundamentals of robotics, including basic mechanics, electronics, and programming concepts.',
+    instructor: 'Dr. Sarah Chen',
+    nextClass: 'Mon, Mar 15, 2024 - 2:00 PM',
+    schedule: 'Mon & Wed, 2:00 PM - 3:30 PM',
+    location: 'Lab 101',
+    progress: 65,
+    modules: [
+      {
+        id: '1',
+        title: 'Introduction to Robotics',
+        description: 'Understanding the basics of robotics and its applications',
+        lessons: [
+          { id: '1', title: 'What is Robotics?', duration: '45 min', type: 'video', completed: true },
+          { id: '2', title: 'History of Robotics', duration: '30 min', type: 'reading', completed: true },
+          { id: '3', title: 'Basic Components', duration: '60 min', type: 'quiz', completed: false },
+        ],
+      },
+      {
+        id: '2',
+        title: 'Robot Mechanics',
+        description: 'Learn about the mechanical components and their functions',
+        lessons: [
+          { id: '4', title: 'Motors and Actuators', duration: '60 min', type: 'video', completed: false },
+          { id: '5', title: 'Sensors and Feedback', duration: '45 min', type: 'reading', completed: false },
+          { id: '6', title: 'Mechanical Design', duration: '90 min', type: 'coding', completed: false },
+        ],
+      },
+    ],
+    assignments: [
+      {
+        id: '1',
+        title: 'Robot Navigation Project',
+        dueDate: '2024-03-15',
+        status: 'pending',
+        type: 'Project'
+      },
+      {
+        id: '2',
+        title: 'Sensor Integration Lab',
+        dueDate: '2024-03-20',
+        status: 'completed',
+        type: 'Lab'
+      }
+    ],
+    resources: [
+      {
+        id: '1',
+        title: 'Course Syllabus',
+        type: 'PDF',
+        url: '#'
+      },
+      {
+        id: '2',
+        title: 'Week 1 Lecture Notes',
+        type: 'PDF',
+        url: '#'
+      }
+    ]
+  };
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -152,7 +214,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
       {/* Course Header */}
       <Box sx={{ mb: 4 }}>
         <Grid container spacing={3} alignItems="center">
-          <Grid item xs={12} md={8}>
+          <Grid xs={12} md={8}>
             <Typography variant="h4" component="h1" gutterBottom>
               {courseData.name}
             </Typography>
@@ -172,30 +234,30 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
               />
             </Stack>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid xs={12} md={4}>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   Course Progress
                 </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                  <Box sx={{ width: '100%', mr: 1 }}>
-                    <LinearProgress variant="determinate" value={courseData.progress} />
-                  </Box>
-                  <Box sx={{ minWidth: 35 }}>
-                    <Typography variant="body2" color="text.secondary">
-                      {courseData.progress}%
-                    </Typography>
-                  </Box>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="h4" color="primary">
+                    {courseData.progress}%
+                  </Typography>
+                  <LinearProgress
+                    variant="determinate"
+                    value={courseData.progress}
+                    sx={{ height: 8, borderRadius: 4 }}
+                  />
                 </Box>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  startIcon={<PlayCircle />}
-                  onClick={() => {/* Handle continue learning */}}
-                >
-                  Continue Learning
-                </Button>
+                <Stack spacing={1}>
+                  <Typography variant="body2" color="text.secondary">
+                    Schedule: {courseData.schedule}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Location: {courseData.location}
+                  </Typography>
+                </Stack>
               </CardContent>
             </Card>
           </Grid>
@@ -221,7 +283,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
         {/* Modules Tab */}
         <TabPanel value={tabValue} index={0}>
           <List>
-            {courseData.modules.map((module) => (
+            {courseData.modules.map((module: Module) => (
               <Card key={module.id} sx={{ mb: 2 }}>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
@@ -231,7 +293,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
                     {module.description}
                   </Typography>
                   <List>
-                    {module.lessons.map((lesson) => (
+                    {module.lessons.map((lesson: Lesson) => (
                       <ListItem
                         key={lesson.id}
                         secondaryAction={
@@ -271,7 +333,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
               <Card key={assignment.id} sx={{ mb: 2 }}>
                 <CardContent>
                   <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={12} md={8}>
+                    <Grid xs={12} md={8}>
                       <Typography variant="h6">
                         {assignment.title}
                       </Typography>
@@ -289,7 +351,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
                         />
                       </Stack>
                     </Grid>
-                    <Grid item xs={12} md={4}>
+                    <Grid xs={12} md={4}>
                       <Button
                         variant="contained"
                         fullWidth
@@ -309,7 +371,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
         <TabPanel value={tabValue} index={2}>
           <Grid container spacing={2}>
             {courseData.resources.map((resource) => (
-              <Grid item xs={12} md={4} key={resource.id}>
+              <Grid xs={12} md={4} key={resource.id}>
                 <Card>
                   <CardContent>
                     <Typography variant="h6" gutterBottom>

@@ -58,36 +58,6 @@ import {
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-// Mock data for demonstration
-const assignmentData = {
-  id: 1,
-  title: 'AI Project Submission',
-  course: 'Introduction to AI',
-  courseId: 1,
-  description: `Create a machine learning model that can classify images into different categories. 
-  The project should demonstrate your understanding of supervised learning concepts and image processing techniques.
-  
-  Requirements:
-  1. Use a dataset of at least 1000 images
-  2. Implement at least 2 different classification algorithms
-  3. Compare the performance of the algorithms
-  4. Write a detailed report explaining your approach and results`,
-  dueDate: '2024-03-25',
-  status: 'pending',
-  type: 'project',
-  grade: null,
-  feedback: null,
-  attachments: [
-    { id: 1, name: 'Project Guidelines.pdf', type: 'pdf', url: '#' },
-    { id: 2, name: 'Sample Dataset.zip', type: 'zip', url: '#' },
-  ],
-  rubric: [
-    { category: 'Code Quality', weight: 30, criteria: 'Clean, well-documented code with proper error handling' },
-    { category: 'Model Performance', weight: 40, criteria: 'Accuracy and efficiency of the implemented models' },
-    { category: 'Report Quality', weight: 30, criteria: 'Clear explanation of approach and results' },
-  ],
-};
-
 export default function AssignmentDetailPage({ params }: { params: { id: string } }) {
   const { isLoaded, isSignedIn } = useAuth();
   const { user } = useUser();
@@ -95,6 +65,28 @@ export default function AssignmentDetailPage({ params }: { params: { id: string 
   const [submission, setSubmission] = useState('');
   const [files, setFiles] = useState<File[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  // Mock data for assignment
+  const assignmentData = {
+    id: params.id,
+    title: 'Robot Navigation Project',
+    course: 'Introduction to Robotics',
+    courseId: 'course-1',
+    type: 'Project',
+    status: 'pending',
+    dueDate: '2024-03-15',
+    description: 'Create a robot that can navigate through a maze using sensors and basic programming concepts.',
+    requirements: [
+      'Use at least 2 different types of sensors',
+      'Implement basic collision avoidance',
+      'Document your code and design process',
+      'Create a video demonstration'
+    ],
+    points: 100,
+    submitted: false,
+    grade: null,
+    feedback: null
+  };
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -153,62 +145,60 @@ export default function AssignmentDetailPage({ params }: { params: { id: string 
       </Breadcrumbs>
 
       {/* Assignment Header */}
-      <Box sx={{ mb: 4 }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
-            <Typography variant="h4" component="h1" gutterBottom>
-              {assignmentData.title}
-            </Typography>
-            <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>
-              <Chip
-                icon={<School />}
-                label={assignmentData.course}
-                variant="outlined"
-              />
-              <Chip
-                icon={<CalendarIcon />}
-                label={`Due: ${assignmentData.dueDate}`}
-                color={assignmentData.status === 'pending' ? 'warning' : 'success'}
-                variant="outlined"
-              />
-              <Chip
-                icon={<Assignment />}
-                label={assignmentData.type}
-                variant="outlined"
-              />
-            </Stack>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Assignment Status
-                </Typography>
-                <Stack spacing={2}>
-                  <Box>
-                    <Typography variant="body2" color="text.secondary">
-                      Status
-                    </Typography>
-                    <Typography variant="body1">
-                      {assignmentData.status === 'pending' ? 'Not Submitted' : 'Submitted'}
-                    </Typography>
-                  </Box>
-                  {assignmentData.grade && (
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">
-                        Grade
-                      </Typography>
-                      <Typography variant="body1">
-                        {assignmentData.grade}%
-                      </Typography>
-                    </Box>
-                  )}
-                </Stack>
-              </CardContent>
-            </Card>
-          </Grid>
+      <Grid container spacing={3}>
+        <Grid item component="div" xs={12} md={8}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            {assignmentData.title}
+          </Typography>
+          <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>
+            <Chip
+              icon={<School />}
+              label={assignmentData.course}
+              variant="outlined"
+            />
+            <Chip
+              icon={<CalendarIcon />}
+              label={`Due: ${assignmentData.dueDate}`}
+              color={assignmentData.status === 'pending' ? 'warning' : 'success'}
+              variant="outlined"
+            />
+            <Chip
+              icon={<Assignment />}
+              label={assignmentData.type}
+              variant="outlined"
+            />
+          </Stack>
         </Grid>
-      </Box>
+        <Grid item component="div" xs={12} md={4}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Assignment Details
+              </Typography>
+              <Stack spacing={2}>
+                <Box>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Points
+                  </Typography>
+                  <Typography variant="h6">
+                    {assignmentData.points} points
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Status
+                  </Typography>
+                  <Chip
+                    label={assignmentData.status}
+                    color={assignmentData.status === 'pending' ? 'warning' : 'success'}
+                    size="small"
+                  />
+                </Box>
+              </Stack>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
 
       {/* Assignment Content */}
       <Grid container spacing={4}>
@@ -225,24 +215,16 @@ export default function AssignmentDetailPage({ params }: { params: { id: string 
             </CardContent>
           </Card>
 
-          {/* Rubric */}
+          {/* Requirements */}
           <Card sx={{ mb: 4 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Grading Rubric
+                Assignment Requirements
               </Typography>
               <List>
-                {assignmentData.rubric.map((item, index) => (
+                {assignmentData.requirements.map((requirement, index) => (
                   <ListItem key={index}>
-                    <ListItemText
-                      primary={
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <Typography variant="subtitle1">{item.category}</Typography>
-                          <Typography variant="subtitle1">{item.weight}%</Typography>
-                        </Box>
-                      }
-                      secondary={item.criteria}
-                    />
+                    <ListItemText primary={requirement} />
                   </ListItem>
                 ))}
               </List>
@@ -320,24 +302,7 @@ export default function AssignmentDetailPage({ params }: { params: { id: string 
                 Assignment Files
               </Typography>
               <List>
-                {assignmentData.attachments.map((file) => (
-                  <ListItem
-                    key={file.id}
-                    secondaryAction={
-                      <IconButton edge="end" aria-label="download">
-                        <Download />
-                      </IconButton>
-                    }
-                  >
-                    <ListItemIcon>
-                      <Description />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={file.name}
-                      secondary={file.type.toUpperCase()}
-                    />
-                  </ListItem>
-                ))}
+                {/* Add assignment files here */}
               </List>
             </CardContent>
           </Card>

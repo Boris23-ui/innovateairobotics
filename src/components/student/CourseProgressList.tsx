@@ -6,13 +6,13 @@ import {
   LinearProgress,
   List,
   ListItem,
-  ListItemText,
   Box,
 } from '@mui/material';
 
 interface Course {
+  id: string;
   title: string;
-  progress: string;
+  progress: number;
   lastActivity: string;
 }
 
@@ -28,10 +28,10 @@ export default function CourseProgressList({ courses }: CourseProgressListProps)
           Your Courses
         </Typography>
         <List>
-          {courses.map((course, idx) => (
+          {courses.map((course) => (
             <ListItem
-              key={idx}
-              divider={idx < courses.length - 1}
+              key={course.id}
+              divider
               sx={{ flexDirection: 'column', alignItems: 'flex-start' }}
             >
               <Typography variant="subtitle1" fontWeight="medium">
@@ -40,13 +40,13 @@ export default function CourseProgressList({ courses }: CourseProgressListProps)
               <Box sx={{ width: '100%', mt: 1 }}>
                 <LinearProgress
                   variant="determinate"
-                  value={parseInt(course.progress)}
+                  value={course.progress}
                   sx={{ height: 8, borderRadius: 4 }}
                 />
               </Box>
               <Box sx={{ mt: 1, width: '100%', display: 'flex', justifyContent: 'space-between' }}>
                 <Typography variant="caption" color="text.secondary">
-                  Progress: {course.progress}
+                  Progress: {course.progress}%
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
                   Last activity: {course.lastActivity}
