@@ -1,9 +1,9 @@
 "use client";
 
-import { AuthProvider } from '@/modules/auth/hooks/useAuth';
-import { MockAuthProvider } from '@/modules/auth/components/MockAuthProvider';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/layout/Footer';
+import { Toaster } from 'react-hot-toast';
 
 export default function ClientLayout({
   children,
@@ -11,12 +11,11 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   return (
-    <AuthProvider>
-      <MockAuthProvider>
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
-      </MockAuthProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <Navigation />
+      <main style={{ minHeight: 'calc(100vh - 64px - 64px)' }}>{children}</main>
+      <Footer />
+      <Toaster position="top-right" />
+    </ThemeProvider>
   );
 } 
