@@ -25,8 +25,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const savedMode = localStorage.getItem('theme-mode');
     if (savedMode === 'dark' || savedMode === 'light') {
       setMode(savedMode);
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setMode('dark');
+    } else {
+      setMode('light');
     }
     setMounted(true);
   }, []);
