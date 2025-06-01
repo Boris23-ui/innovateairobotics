@@ -242,8 +242,8 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
                 </Typography>
                 <Box sx={{ mb: 2 }}>
                   <Typography variant="h4" color="primary">
-                    {courseData.progress}%
-                  </Typography>
+                      {courseData.progress}%
+                    </Typography>
                   <LinearProgress
                     variant="determinate"
                     value={courseData.progress}

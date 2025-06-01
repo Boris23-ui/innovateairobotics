@@ -5,7 +5,6 @@
   "scripts": {
     "clean": "rimraf .next node_modules",
     "clean:win": "if exist .next rmdir /s /q .next && if exist node_modules rmdir /s /q node_modules",
-    "predev": "npm run clean:win",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -17,14 +16,14 @@
     "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.20.2",
+    "@clerk/nextjs": "^4.29.7",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^5.15.0",
     "@mui/lab": "^5.0.0-alpha.165",
     "@mui/material": "^5.17.1",
     "framer-motion": "^12.12.1",
-    "next": "^14.2.29",
+    "next": "^15.3.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.5.2",

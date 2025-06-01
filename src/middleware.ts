@@ -11,24 +11,26 @@ export default authMiddleware({
     "/",
     "/about",
     "/contact",
-    "/courses",
-    "/courses/:courseId",
+    "/sign-in",
+    "/sign-up",
+    "/donate",
+    "/programs/seniors",
+    "/programs/robot-explorers",
+    "/programs/robotics-101",
+    "/programs/advanced-robotics",
+    "/programs/competition-team",
+    "/programs/summer-camps",
+    "/programs/workshops",
     "/api/webhook/clerk",
     "/api/webhook/stripe",
   ],
   ignoredRoutes: [
-    "/api/webhook(.*)",
+    "/api/webhook/clerk",
+    "/api/webhook/stripe",
   ],
-  afterAuth(auth: AuthObject, req: NextRequest) {
-    // Handle users who aren't authenticated
-    if (!auth.userId && !auth.isPublicRoute) {
-      const signInUrl = new URL('/sign-in', req.url);
-      signInUrl.searchParams.set('redirect_url', req.url);
-      return NextResponse.redirect(signInUrl);
-    }
-  }
 });
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  runtime: "experimental-edge",
 };

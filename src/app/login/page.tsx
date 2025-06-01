@@ -41,7 +41,7 @@ export default function LoginPage() {
       });
 
       if (result.status === 'complete') {
-        router.push(redirectTo);
+      router.push(redirectTo);
       } else {
         setError('Please check your email for verification code');
       }
