@@ -11,8 +11,16 @@ export default authMiddleware({
     "/programs",
     "/curriculum",
     "/resources",
-    "/contact"
+    "/contact",
+    "/about",
+    "/donate",
+    "/api/webhook/clerk",
+    "/api/webhook/stripe"
   ],
+  ignoredRoutes: [
+    "/api/webhook/clerk",
+    "/api/webhook/stripe"
+  ]
 });
 
 export const config = {

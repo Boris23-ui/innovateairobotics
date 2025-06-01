@@ -1,0 +1,65 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Course {
+  id          String    @id @default(cuid())
+  name        String
+  description String
+  category    String
+  level       String
+  maxStudents Int
+  startDate   DateTime
+  endDate     DateTime
+  tags        String    // comma-separated tags
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  teacherId   String
+  teacher     User      @relation("TeacherCourses", fields: [teacherId], references: [id])
+  students    User[]    @relation("StudentCourses")
+  modules     Module[]
+}
+
+model Module {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  order       Int
+  courseId    String
+  course      Course    @relation(fields: [courseId], references: [id])
+  lessons     Lesson[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Lesson {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  type        String    // video, reading, quiz, coding
+  duration    Int       // in minutes
+  content     String    // URL or content
+  order       Int
+  moduleId    String
+  module      Module    @relation(fields: [moduleId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// Update User model to include course relations
+model User {
+  id              String    @id @default(cuid())
+  clerkId         String    @unique
+  firstName       String?
+  lastName        String?
+  email           String    @unique
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  teachingCourses Course[]  @relation("TeacherCourses")
+  enrolledCourses Course[]  @relation("StudentCourses")
+} 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth } from '@clerk/nextjs';
+import { useAuth, useUser } from '@clerk/nextjs';
 import {
   Container,
   Typography,
@@ -42,13 +42,21 @@ import {
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import CreateCourseDialog from './components/CreateCourseDialog';
+import { toast } from 'react-hot-toast';
 
-// Mock data for demonstration
-const courses = [
-  { id: 1, name: 'Introduction to Robotics', students: 24, progress: 75, attendance: 92, avgGrade: 85 },
-  { id: 2, name: 'Advanced Programming', students: 18, progress: 60, attendance: 88, avgGrade: 82 },
-  { id: 3, name: 'Robot Design', students: 15, progress: 45, attendance: 95, avgGrade: 88 },
-];
+interface Course {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  level: string;
+  maxStudents: number;
+  startDate: string;
+  endDate: string;
+  tags: string[];
+  students: any[];
+}
 
 const recentActivities = [
   { id: 1, student: 'John Doe', action: 'Completed Assignment', course: 'Introduction to Robotics', time: '2 hours ago', type: 'success' },
@@ -63,20 +71,92 @@ const notifications = [
 ];
 
 export default function TeacherDashboard() {
-  const { isLoaded, userId, user } = useAuth();
+  const { isLoaded, userId } = useAuth();
+  const { user } = useUser();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedCourse, setSelectedCourse] = useState<number | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const [notificationAnchor, setNotificationAnchor] = useState<null | HTMLElement>(null);
+  const [isCreateCourseOpen, setIsCreateCourseOpen] = useState(false);
+  const [courses, setCourses] = useState<Course[]>([
+    {
+      id: '1',
+      name: 'Introduction to Robotics',
+      description: 'Learn the fundamentals of robotics, including basic mechanics, electronics, and programming concepts.',
+      category: 'Beginner',
+      level: 'Level 1',
+      maxStudents: 30,
+      startDate: '2024-03-01',
+      endDate: '2024-06-30',
+      tags: ['robotics', 'beginner', 'electronics'],
+      students: Array(15).fill({ id: 'student', name: 'Student' })
+    },
+    {
+      id: '2',
+      name: 'Advanced Robot Programming',
+      description: 'Master advanced programming techniques for robotics, including sensor integration and autonomous navigation.',
+      category: 'Advanced',
+      level: 'Level 3',
+      maxStudents: 25,
+      startDate: '2024-03-15',
+      endDate: '2024-07-15',
+      tags: ['programming', 'advanced', 'sensors'],
+      students: Array(18).fill({ id: 'student', name: 'Student' })
+    },
+    {
+      id: '3',
+      name: 'Robot Vision Systems',
+      description: 'Explore computer vision and image processing techniques for robotic applications.',
+      category: 'Specialized',
+      level: 'Level 2',
+      maxStudents: 20,
+      startDate: '2024-04-01',
+      endDate: '2024-07-31',
+      tags: ['vision', 'computer-vision', 'specialized'],
+      students: Array(12).fill({ id: 'student', name: 'Student' })
+    },
+    {
+      id: '4',
+      name: 'Robotic Arm Control',
+      description: 'Learn about robotic arm kinematics, control systems, and industrial applications.',
+      category: 'Industrial',
+      level: 'Level 2',
+      maxStudents: 20,
+      startDate: '2024-04-15',
+      endDate: '2024-08-15',
+      tags: ['industrial', 'mechanics', 'control-systems'],
+      students: Array(10).fill({ id: 'student', name: 'Student' })
+    }
+  ]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (isLoaded && !userId) {
-      console.log('No user found, redirecting to sign-in...');
       router.push('/sign-in');
     }
   }, [isLoaded, userId, router]);
 
-  const handleMenuClick = (event: React.MouseEvent<HTMLElement>, courseId: number) => {
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch('/api/courses');
+        if (!response.ok) throw new Error('Failed to fetch courses');
+        const data = await response.json();
+        setCourses(data);
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+        toast.error('Failed to load courses');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (userId) {
+      fetchCourses();
+    }
+  }, [userId]);
+
+  const handleMenuClick = (event: React.MouseEvent<HTMLElement>, courseId: string) => {
     setAnchorEl(event.currentTarget);
     setSelectedCourse(courseId);
   };
@@ -94,7 +174,28 @@ export default function TeacherDashboard() {
     setNotificationAnchor(null);
   };
 
-  if (!isLoaded) {
+  const handleCreateCourse = async (courseData: any) => {
+    try {
+      const response = await fetch('/api/courses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(courseData),
+      });
+
+      if (!response.ok) throw new Error('Failed to create course');
+      
+      const newCourse = await response.json();
+      setCourses([...courses, newCourse]);
+      toast.success('Course created successfully');
+    } catch (error) {
+      console.error('Error creating course:', error);
+      toast.error('Failed to create course');
+    }
+  };
+
+  if (!isLoaded || isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <CircularProgress />
@@ -159,81 +260,134 @@ export default function TeacherDashboard() {
         </Stack>
       </Box>
 
-      <Grid container spacing={3}>
-        {/* Quick Stats */}
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Stack direction="row" alignItems="center" spacing={2}>
-                <Avatar sx={{ bgcolor: 'primary.light' }}>
-                  <School />
-                </Avatar>
-                <Box>
-                  <Typography variant="h6">Active Courses</Typography>
-                  <Typography variant="h4">{courses.length}</Typography>
-                </Box>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
+      {/* Stats Section */}
+      <Box sx={{ mb: 4 }}>
+        <Grid
+          container
+          spacing={3}
+          wrap={{ xs: 'nowrap', md: 'wrap' } as any}
+          sx={{
+            overflowX: { xs: 'auto', md: 'visible' },
+            pb: { xs: 2, md: 0 },
+            mx: { xs: -2, md: 0 },
+          }}
+        >
+          <Box sx={{ minWidth: { xs: 260, md: 'auto' } }}>
+            <Card elevation={4} sx={{
+              borderRadius: 3,
+              background: 'linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)',
+              color: 'white',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+              '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
+            }}>
+              <CardContent>
+                <Stack direction="row" alignItems="center" spacing={2}>
+                  <Avatar sx={{ bgcolor: 'white', color: '#1976d2', width: 56, height: 56 }}>
+                    <School fontSize="large" />
+                  </Avatar>
+                  <Box>
+                    <Typography variant="subtitle2" sx={{ color: 'white', opacity: 0.85 }}>
+                      Active Courses
+                    </Typography>
+                    <Typography variant="h4" sx={{ color: 'white' }}>{courses.length}</Typography>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Box>
 
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Stack direction="row" alignItems="center" spacing={2}>
-                <Avatar sx={{ bgcolor: 'success.light' }}>
-                  <People />
-                </Avatar>
-                <Box>
-                  <Typography variant="h6">Total Students</Typography>
-                  <Typography variant="h4">
-                    {courses.reduce((acc, course) => acc + course.students, 0)}
-                  </Typography>
-                </Box>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
+          <Box sx={{ minWidth: { xs: 260, md: 'auto' } }}>
+            <Card elevation={4} sx={{
+              borderRadius: 3,
+              background: 'linear-gradient(135deg, #388e3c 0%, #66bb6a 100%)',
+              color: 'white',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+              '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
+            }}>
+              <CardContent>
+                <Stack direction="row" alignItems="center" spacing={2}>
+                  <Avatar sx={{ bgcolor: 'white', color: '#388e3c', width: 56, height: 56 }}>
+                    <People fontSize="large" />
+                  </Avatar>
+                  <Box>
+                    <Typography variant="subtitle2" sx={{ color: 'white', opacity: 0.85 }}>
+                      Total Students
+                    </Typography>
+                    <Typography variant="h4" sx={{ color: 'white' }}>
+                      {courses.reduce((acc, course) => acc + (course.students?.length || 0), 0)}
+                    </Typography>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Box>
 
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Stack direction="row" alignItems="center" spacing={2}>
-                <Avatar sx={{ bgcolor: 'warning.light' }}>
-                  <Assignment />
-                </Avatar>
-                <Box>
-                  <Typography variant="h6">Pending Reviews</Typography>
-                  <Typography variant="h4">12</Typography>
-                </Box>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
+          <Box sx={{ minWidth: { xs: 260, md: 'auto' } }}>
+            <Card elevation={4} sx={{
+              borderRadius: 3,
+              background: 'linear-gradient(135deg, #fbc02d 0%, #ffd54f 100%)',
+              color: 'white',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+              '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
+            }}>
+              <CardContent>
+                <Stack direction="row" alignItems="center" spacing={2}>
+                  <Avatar sx={{ bgcolor: 'white', color: '#fbc02d', width: 56, height: 56 }}>
+                    <Assignment fontSize="large" />
+                  </Avatar>
+                  <Box>
+                    <Typography variant="subtitle2" sx={{ color: 'white', opacity: 0.85 }}>
+                      Pending Reviews
+                    </Typography>
+                    <Typography variant="h4" sx={{ color: 'white' }}>12</Typography>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Box>
 
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Stack direction="row" alignItems="center" spacing={2}>
-                <Avatar sx={{ bgcolor: 'info.light' }}>
-                  <Book />
-                </Avatar>
-                <Box>
-                  <Typography variant="h6">Resources</Typography>
-                  <Typography variant="h4">24</Typography>
-                </Box>
-              </Stack>
-            </CardContent>
-          </Card>
+          <Box sx={{ minWidth: { xs: 260, md: 'auto' } }}>
+            <Card elevation={4} sx={{
+              borderRadius: 3,
+              background: 'linear-gradient(135deg, #7b1fa2 0%, #ba68c8 100%)',
+              color: 'white',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+              '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
+            }}>
+              <CardContent>
+                <Stack direction="row" alignItems="center" spacing={2}>
+                  <Avatar sx={{ bgcolor: 'white', color: '#7b1fa2', width: 56, height: 56 }}>
+                    <Book fontSize="large" />
+                  </Avatar>
+                  <Box>
+                    <Typography variant="subtitle2" sx={{ color: 'white', opacity: 0.85 }}>
+                      Resources
+                    </Typography>
+                    <Typography variant="h4" sx={{ color: 'white' }}>24</Typography>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Box>
         </Grid>
+      </Box>
 
-        {/* Course List */}
-        <Grid item xs={12} md={8}>
+      {/* Main Content Sections: Courses and Recent Activity */}
+      <Grid container spacing={3} sx={{ mt: 0 }}>
+        <Box sx={{ width: { xs: '100%', md: '58.333333%' }, pr: { md: 2 }, mb: { xs: 3, md: 0 } }}>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="h6">Your Courses</Typography>
-                <Button startIcon={<AddIcon />} variant="contained">
+                <Button 
+                  startIcon={<AddIcon />} 
+                  variant="contained"
+                  onClick={() => setIsCreateCourseOpen(true)}
+                >
                   New Course
                 </Button>
               </Box>
@@ -260,29 +414,22 @@ export default function TeacherDashboard() {
                             <Chip
                               size="small"
                               icon={<People />}
-                              label={`${course.students} students`}
+                              label={`${course.students?.length || 0} students`}
                             />
                             <Chip
                               size="small"
                               icon={<BarChartIcon />}
-                              label={`${course.attendance}% attendance`}
+                              label={`${course.level}`}
                             />
                             <Chip
                               size="small"
                               icon={<Assignment />}
-                              label={`${course.avgGrade}% avg grade`}
+                              label={`${course.category}`}
                             />
                           </Stack>
-                          <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                            <Box sx={{ width: '100%', mr: 1 }}>
-                              <LinearProgress variant="determinate" value={course.progress} />
-                            </Box>
-                            <Box sx={{ minWidth: 35 }}>
-                              <Typography variant="body2" color="text.secondary">
-                                {course.progress}%
-                              </Typography>
-                            </Box>
-                          </Box>
+                          <Typography variant="body2" color="text.secondary">
+                            {course.description}
+                          </Typography>
                         </Box>
                       }
                     />
@@ -291,10 +438,9 @@ export default function TeacherDashboard() {
               </List>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
 
-        {/* Recent Activity */}
-        <Grid item xs={12} md={4}>
+        <Box sx={{ width: { xs: '100%', md: '41.666667%' }, pl: { md: 2 } }}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -337,7 +483,7 @@ export default function TeacherDashboard() {
               </Button>
             </CardActions>
           </Card>
-        </Grid>
+        </Box>
       </Grid>
 
       <Menu
@@ -364,6 +510,12 @@ export default function TeacherDashboard() {
           <ListItemText>Send Announcement</ListItemText>
         </MenuItem>
       </Menu>
+
+      <CreateCourseDialog
+        open={isCreateCourseOpen}
+        onClose={() => setIsCreateCourseOpen(false)}
+        onSubmit={handleCreateCourse}
+      />
     </Container>
   );
 } 

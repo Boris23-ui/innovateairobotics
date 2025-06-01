@@ -30,6 +30,7 @@ import {
   Info,
   ContactSupport,
   LocalLibrary,
+  Favorite,
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -39,6 +40,11 @@ const navItems = [
   { label: 'Curriculum', href: '/curriculum', icon: <Book /> },
   { label: 'Resources', href: '/resources', icon: <Science /> },
   { label: 'Contact', href: '/contact', icon: <ContactSupport /> },
+];
+
+const publicNavItems = [
+  { label: 'About', href: '/about', icon: <Info /> },
+  { label: 'Donate', href: '/donate', icon: <Favorite /> },
 ];
 
 export default function Navigation() {
@@ -91,14 +97,34 @@ export default function Navigation() {
             ml: 'auto',
             gap: 1
           }}>
-            {navItems.map((item) => (
-              <MuiButton
+            {/* Public Navigation Items - Always Visible */}
+            {publicNavItems.map((item) => (
+              <Link
                 key={item.label}
-                startIcon={item.icon}
-                onClick={() => router.push(item.href)}
+                href={item.href}
+                style={{ textDecoration: 'none' }}
               >
-                {item.label}
-              </MuiButton>
+                <MuiButton
+                  startIcon={item.icon}
+                >
+                  {item.label}
+                </MuiButton>
+              </Link>
+            ))}
+
+            {/* Main Navigation Items */}
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                style={{ textDecoration: 'none' }}
+              >
+                <MuiButton
+                  startIcon={item.icon}
+                >
+                  {item.label}
+                </MuiButton>
+              </Link>
             ))}
 
             {isSignedIn ? (
@@ -186,18 +212,34 @@ export default function Navigation() {
             open={Boolean(mobileMenuAnchorEl)}
             onClose={handleMobileMenuClose}
           >
-            {navItems.map((item) => (
-              <MenuItem
+            {/* Public Navigation Items - Always Visible */}
+            {publicNavItems.map((item) => (
+              <Link
                 key={item.label}
-                onClick={() => {
-                  handleMobileMenuClose();
-                  router.push(item.href);
-                }}
+                href={item.href}
+                style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                {item.icon}
-                <Typography sx={{ ml: 1 }}>{item.label}</Typography>
-              </MenuItem>
+                <MenuItem onClick={handleMobileMenuClose}>
+                  {item.icon}
+                  <Typography sx={{ ml: 1 }}>{item.label}</Typography>
+                </MenuItem>
+              </Link>
             ))}
+
+            {/* Main Navigation Items */}
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <MenuItem onClick={handleMobileMenuClose}>
+                  {item.icon}
+                  <Typography sx={{ ml: 1 }}>{item.label}</Typography>
+                </MenuItem>
+              </Link>
+            ))}
+
             {isSignedIn && (
               <>
                 <MenuItem onClick={() => {
