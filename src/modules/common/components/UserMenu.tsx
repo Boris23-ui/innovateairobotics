@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
-import { mockTeacher, mockStudent } from '../../services/mockData';
+import { mockTeacher, mockStudent } from '../services/mockData';
 
 interface UserMenuProps {
   user?: {

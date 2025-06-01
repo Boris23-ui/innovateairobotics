@@ -1,5 +1,6 @@
 export const mockTeacher = {
   id: '1',
+  displayName: 'John Doe',
   firstName: 'John',
   lastName: 'Doe',
   email: 'john.doe@example.com',
@@ -14,6 +15,7 @@ export const mockTeacher = {
 
 export const mockStudent = {
   id: '2',
+  displayName: 'Jane Smith',
   firstName: 'Jane',
   lastName: 'Smith',
   email: 'jane.smith@example.com',
