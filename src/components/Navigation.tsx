@@ -246,7 +246,7 @@ export default function Navigation() {
             ml: 'auto',
               gap: 1,
               alignItems: 'center'
-            }}>
+          }}>
               {/* Public Navigation Items - Always Visible */}
               {publicNavItems.map((item) => (
                 <Link

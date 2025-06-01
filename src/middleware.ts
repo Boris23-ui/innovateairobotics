@@ -14,6 +14,7 @@ export default authMiddleware({
     "/sign-in",
     "/sign-up",
     "/donate",
+    // All program routes
     "/programs/seniors",
     "/programs/robot-explorers",
     "/programs/robotics-101",
@@ -21,6 +22,9 @@ export default authMiddleware({
     "/programs/competition-team",
     "/programs/summer-camps",
     "/programs/workshops",
+    "/programs/tiny-tinkerers",
+    "/programs/tech-titans",
+    "/programs/ai-avengers",
     "/api/webhook/clerk",
     "/api/webhook/stripe",
   ],
@@ -32,5 +36,4 @@ export default authMiddleware({
 
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
-  runtime: "experimental-edge",
 };

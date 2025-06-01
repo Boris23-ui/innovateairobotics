@@ -20,6 +20,7 @@ import {
   Code,
   EmojiObjects,
 } from '@mui/icons-material';
+import Image from 'next/image';
 
 const donationTiers = [
   {
@@ -100,6 +101,121 @@ export default function DonatePage() {
           </Stack>
         </Paper>
       </Box>
+
+      {/* Impact Images Grid */}
+      <Grid container spacing={3} sx={{ mb: 8 }}>
+        <Grid item xs={12} md={4}>
+          <Box
+            sx={{
+              position: 'relative',
+              height: 300,
+              borderRadius: 2,
+              overflow: 'hidden',
+              boxShadow: 3,
+              '&:hover': {
+                transform: 'scale(1.02)',
+                transition: 'transform 0.3s ease-in-out',
+              },
+            }}
+          >
+            <Image
+              src="/images/Nairobi-classes-7.jpg"
+              alt="Students engaged in robotics learning"
+              fill
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                p: 2,
+                background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
+                color: 'white',
+              }}
+            >
+              <Typography variant="h6">Hands-on Learning</Typography>
+              <Typography variant="body2">Students engaged in robotics projects</Typography>
+            </Box>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Box
+            sx={{
+              position: 'relative',
+              height: 300,
+              borderRadius: 2,
+              overflow: 'hidden',
+              boxShadow: 3,
+              '&:hover': {
+                transform: 'scale(1.02)',
+                transition: 'transform 0.3s ease-in-out',
+              },
+            }}
+          >
+            <Image
+              src="/images/Nairobi-classes-3.jpg"
+              alt="Students working together on robotics"
+              fill
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                p: 2,
+                background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
+                color: 'white',
+              }}
+            >
+              <Typography variant="h6">Collaborative Learning</Typography>
+              <Typography variant="body2">Students working together on robotics projects</Typography>
+            </Box>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Box
+            sx={{
+              position: 'relative',
+              height: 300,
+              borderRadius: 2,
+              overflow: 'hidden',
+              boxShadow: 3,
+              '&:hover': {
+                transform: 'scale(1.02)',
+                transition: 'transform 0.3s ease-in-out',
+              },
+            }}
+          >
+            <Image
+              src="/images/kids_designing_simple_machines.jpg"
+              alt="Young students designing and building"
+              fill
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                p: 2,
+                background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
+                color: 'white',
+              }}
+            >
+              <Typography variant="h6">Creative Design</Typography>
+              <Typography variant="body2">Young minds exploring engineering concepts</Typography>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
 
       {/* Donation Tiers */}
       <Grid container spacing={4} sx={{ mb: 8 }}>

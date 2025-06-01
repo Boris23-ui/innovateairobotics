@@ -145,60 +145,60 @@ export default function AssignmentDetailPage({ params }: { params: { id: string 
       </Breadcrumbs>
 
       {/* Assignment Header */}
-      <Grid container spacing={3}>
+        <Grid container spacing={3}>
         <Grid item component="div" xs={12} md={8}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            {assignmentData.title}
-          </Typography>
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>
-            <Chip
-              icon={<School />}
-              label={assignmentData.course}
-              variant="outlined"
-            />
-            <Chip
-              icon={<CalendarIcon />}
-              label={`Due: ${assignmentData.dueDate}`}
-              color={assignmentData.status === 'pending' ? 'warning' : 'success'}
-              variant="outlined"
-            />
-            <Chip
-              icon={<Assignment />}
-              label={assignmentData.type}
-              variant="outlined"
-            />
-          </Stack>
-        </Grid>
+            <Typography variant="h4" component="h1" gutterBottom>
+              {assignmentData.title}
+            </Typography>
+            <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>
+              <Chip
+                icon={<School />}
+                label={assignmentData.course}
+                variant="outlined"
+              />
+              <Chip
+                icon={<CalendarIcon />}
+                label={`Due: ${assignmentData.dueDate}`}
+                color={assignmentData.status === 'pending' ? 'warning' : 'success'}
+                variant="outlined"
+              />
+              <Chip
+                icon={<Assignment />}
+                label={assignmentData.type}
+                variant="outlined"
+              />
+            </Stack>
+          </Grid>
         <Grid item component="div" xs={12} md={4}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
                 Assignment Details
-              </Typography>
-              <Stack spacing={2}>
-                <Box>
+                </Typography>
+                <Stack spacing={2}>
+                  <Box>
                   <Typography variant="subtitle2" color="text.secondary">
                     Points
-                  </Typography>
+                    </Typography>
                   <Typography variant="h6">
                     {assignmentData.points} points
-                  </Typography>
-                </Box>
-                <Box>
+                    </Typography>
+                  </Box>
+                    <Box>
                   <Typography variant="subtitle2" color="text.secondary">
                     Status
-                  </Typography>
+                      </Typography>
                   <Chip
                     label={assignmentData.status}
                     color={assignmentData.status === 'pending' ? 'warning' : 'success'}
                     size="small"
                   />
-                </Box>
-              </Stack>
-            </CardContent>
-          </Card>
+                    </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
 
       {/* Assignment Content */}
       <Grid container spacing={4}>
