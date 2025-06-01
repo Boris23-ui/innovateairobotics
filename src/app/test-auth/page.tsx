@@ -44,7 +44,7 @@ export default function TestAuthPage() {
               <Typography>
                 Email: {user?.primaryEmailAddress?.emailAddress}
               </Typography>
-              <Typography>
+              <Typography variant="body1">
                 Role: {user?.publicMetadata?.role || 'Not set'}
               </Typography>
               
