@@ -19,12 +19,28 @@ export default function VerifyEmailPage() {
   const { user } = useUser();
   const router = useRouter();
   const [verificationStatus, setVerificationStatus] = useState<'loading' | 'success' | 'error'>('loading');
+  const [isResending, setIsResending] = useState(false);
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
       router.push('/sign-in');
     }
   }, [isLoaded, isSignedIn, router]);
+
+  const handleResendVerification = async () => {
+    if (!user) return;
+    
+    try {
+      setIsResending(true);
+      await user.emailAddresses[0]?.prepareVerification();
+      setVerificationStatus('success');
+    } catch (error) {
+      console.error('Error resending verification email:', error);
+      setVerificationStatus('error');
+    } finally {
+      setIsResending(false);
+    }
+  };
 
   if (!isLoaded || !isSignedIn) {
     return null;
@@ -48,12 +64,25 @@ export default function VerifyEmailPage() {
             </Alert>
             <Button
               variant="contained"
-              onClick={() => user?.createEmailLinkFlow()}
+              onClick={handleResendVerification}
+              disabled={isResending}
               fullWidth
             >
-              Resend Verification Email
+              {isResending ? 'Sending...' : 'Resend Verification Email'}
             </Button>
           </Box>
+
+          {verificationStatus === 'success' && (
+            <Alert severity="success" sx={{ width: '100%' }}>
+              Verification email sent successfully!
+            </Alert>
+          )}
+
+          {verificationStatus === 'error' && (
+            <Alert severity="error" sx={{ width: '100%' }}>
+              Failed to send verification email. Please try again.
+            </Alert>
+          )}
 
           <Button
             variant="outlined"
