@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../config/firebase';
+import { useAuth, useUser, SignOutButton } from '@clerk/nextjs';
 import Footer from './Footer';
 import UserMenu from '../auth/UserMenu';
 import { LoadingSpinner } from '../common/LoadingSpinner';
@@ -15,17 +14,8 @@ interface MainLayoutProps {
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
+  const { isLoaded, isSignedIn } = useAuth();
+  const { user } = useUser();
 
   const isActive = (path: string) => {
     return router.pathname === path;
@@ -87,22 +77,22 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 </Link>
               ))}
               <div className="flex items-center space-x-4">
-                {loading ? (
+                {!isLoaded ? (
                   <LoadingSpinner size="sm" />
-                ) : user ? (
-                  <UserMenu user={user} />
+                ) : isSignedIn ? (
+                  <UserMenu />
                 ) : (
                   <>
                     <Link
-                      href="/login"
+                      href="/sign-in"
                       className={`text-gray-600 hover:text-blue-600 transition-colors duration-200 ${
-                        isActive('/login') ? 'text-blue-600 font-semibold' : ''
+                        isActive('/sign-in') ? 'text-blue-600 font-semibold' : ''
                       }`}
                     >
-                      Login
+                      Sign In
                     </Link>
                     <Link
-                      href="/register"
+                      href="/sign-up"
                       className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
                     >
                       Sign Up
@@ -160,11 +150,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                     {item.name}
                   </Link>
                 ))}
-                {loading ? (
+                {!isLoaded ? (
                   <div className="px-3 py-2">
                     <LoadingSpinner size="sm" />
                   </div>
-                ) : user ? (
+                ) : isSignedIn ? (
                   <>
                     <Link
                       href="/profile"
@@ -180,31 +170,30 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                     >
                       Dashboard
                     </Link>
-                    <button
-                      onClick={() => {
-                        auth.signOut();
-                        setIsMenuOpen(false);
-                      }}
-                      className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-gray-50"
-                    >
-                      Sign Out
-                    </button>
+                    <SignOutButton>
+                      <button
+                        className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-gray-50"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Sign Out
+                      </button>
+                    </SignOutButton>
                   </>
                 ) : (
                   <>
                     <Link
-                      href="/login"
+                      href="/sign-in"
                       className={`block px-3 py-2 rounded-md text-base font-medium ${
-                        isActive('/login')
+                        isActive('/sign-in')
                           ? 'text-blue-600 bg-blue-50'
                           : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
                       }`}
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Login
+                      Sign In
                     </Link>
                     <Link
-                      href="/register"
+                      href="/sign-up"
                       className="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700"
                       onClick={() => setIsMenuOpen(false)}
                     >

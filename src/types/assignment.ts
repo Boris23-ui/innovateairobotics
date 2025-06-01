@@ -1,21 +1,19 @@
-import { Timestamp } from 'firebase/firestore';
-
 export interface Assignment {
   id: string;
   title: string;
   description: string;
   courseId: string;
-  dueDate: Timestamp;
+  dueDate: string;
   status: 'draft' | 'published' | 'grading' | 'completed';
   submissions?: {
     id: string;
     studentId: string;
-    submittedAt: Timestamp;
+    submittedAt: string;
     grade?: number;
     feedback?: string;
   }[];
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: string;
+  updatedAt: string;
   totalPoints: number;
   instructions: string;
   attachments?: {

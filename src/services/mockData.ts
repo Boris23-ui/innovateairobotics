@@ -1,5 +1,3 @@
-import { Timestamp } from 'firebase/firestore';
-
 // Mock User Data
 export const mockTeacher = {
   displayName: 'John Smith',
@@ -54,21 +52,21 @@ export const mockActivities = [
     type: 'assignment' as const,
     title: 'New Assignment Submitted',
     description: 'John Doe submitted the Robotics Basics Quiz',
-    timestamp: Timestamp.fromDate(new Date(Date.now() - 2 * 60 * 60 * 1000)), // 2 hours ago
+    timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
   },
   {
     id: '2',
     type: 'class' as const,
     title: 'Class Schedule Updated',
     description: 'Advanced Robotics class moved to Room 302',
-    timestamp: Timestamp.fromDate(new Date(Date.now() - 4 * 60 * 60 * 1000)), // 4 hours ago
+    timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000), // 4 hours ago
   },
   {
     id: '3',
     type: 'student' as const,
     title: 'New Student Enrolled',
     description: 'Sarah Smith joined the Robotics Club',
-    timestamp: Timestamp.fromDate(new Date(Date.now() - 24 * 60 * 60 * 1000)), // 1 day ago
+    timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
   },
 ];
 
@@ -76,7 +74,7 @@ export interface MockAssignment {
   id: string;
   title: string;
   class: string;
-  dueDate: Timestamp;
+  dueDate: Date;
   status: 'completed' | 'in-progress' | 'not-started';
 }
 
@@ -85,7 +83,7 @@ export const mockAssignments = [
     id: 'assignment-1',
     title: 'Basic Robot Movement',
     class: 'Robotics 101',
-    dueDate: Timestamp.fromDate(new Date('2024-03-15')),
+    dueDate: new Date('2024-03-15'),
     status: 'not-started',
     submittedBy: null
   }
@@ -101,7 +99,7 @@ export const mockClasses = [
     schedule: 'Mon, Wed 10:00 AM - 11:30 AM',
     description: 'Introduction to robotics and basic programming concepts.',
     room: '101',
-    nextSession: Timestamp.fromDate(new Date(Date.now() + 24 * 60 * 60 * 1000)) // Next session in 24 hours
+    nextSession: new Date(Date.now() + 24 * 60 * 60 * 1000) // Next session in 24 hours
   }
 ];
 

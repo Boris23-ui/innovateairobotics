@@ -225,25 +225,25 @@ export default function Navigation() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="default" elevation={1}>
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <Link href="/" passHref style={{ textDecoration: 'none', color: 'inherit' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <School sx={{ fontSize: 32, color: 'primary.main', mr: 1 }} />
-                <Typography
-                  variant="h6"
-                  component="div"
-                  sx={{ display: { xs: 'none', sm: 'block' } }}
-                >
-                  InnovateAI
-                </Typography>
-              </Box>
-            </Link>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Link href="/" passHref style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <School sx={{ fontSize: 32, color: 'primary.main', mr: 1 }} />
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ display: { xs: 'none', sm: 'block' } }}
+              >
+                InnovateAI
+              </Typography>
+            </Box>
+          </Link>
 
-            {/* Desktop Navigation */}
-            <Box sx={{ 
-              display: { xs: 'none', md: 'flex' }, 
-              ml: 'auto',
+          {/* Desktop Navigation */}
+          <Box sx={{ 
+            display: { xs: 'none', md: 'flex' }, 
+            ml: 'auto',
               gap: 1,
               alignItems: 'center'
             }}>
@@ -402,29 +402,29 @@ export default function Navigation() {
                 {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
               </IconButton>
 
-              {isSignedIn ? (
-                <>
+            {isSignedIn ? (
+              <>
                   <MuiButton
-                    startIcon={<Dashboard />}
+                  startIcon={<Dashboard />}
                     onClick={() => {
                       setProgramsAnchorEl(null);
                       router.push('/dashboard/teacher');
                     }}
-                  >
-                    Dashboard
+                >
+                  Dashboard
                   </MuiButton>
-                  <IconButton
+                <IconButton
                     onClick={handleMenuOpen}
-                    size="small"
-                  >
-                    <Avatar
-                      sx={{ width: 32, height: 32 }}
-                      src={user?.imageUrl}
-                      alt={user?.firstName || 'User'}
-                    />
-                  </IconButton>
-                </>
-              ) : (
+                  size="small"
+                >
+                  <Avatar
+                    sx={{ width: 32, height: 32 }}
+                    src={user?.imageUrl}
+                    alt={user?.firstName || 'User'}
+                  />
+                </IconButton>
+              </>
+            ) : (
                 <MuiButton
                   variant="contained"
                   startIcon={<Login />}
@@ -438,21 +438,21 @@ export default function Navigation() {
                 >
                   Login
                 </MuiButton>
-              )}
-            </Box>
+            )}
+          </Box>
 
-            {/* Mobile Menu Button */}
-            <Box sx={{ display: { xs: 'flex', md: 'none' }, ml: 'auto' }}>
-              <IconButton
-                size="large"
-                edge="end"
-                color="inherit"
-                aria-label="menu"
+          {/* Mobile Menu Button */}
+          <Box sx={{ display: { xs: 'flex', md: 'none' }, ml: 'auto' }}>
+            <IconButton
+              size="large"
+              edge="end"
+              color="inherit"
+              aria-label="menu"
                 onClick={handleDrawerToggle}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Box>
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
           </Toolbar>
         </Container>
       </AppBar>
@@ -471,9 +471,9 @@ export default function Navigation() {
       >
         {drawer}
       </Drawer>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
         onClose={handleClose}
         onClick={handleClose}
         PaperProps={{
@@ -492,9 +492,9 @@ export default function Navigation() {
             },
           },
         }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-      >
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          >
         <MenuItem onClick={handleProfile}>
           <ListItemIcon>
             <AccountCircle fontSize="small" />
@@ -506,23 +506,23 @@ export default function Navigation() {
             <Dashboard fontSize="small" />
           </ListItemIcon>
           <ListItemText>Dashboard</ListItemText>
-        </MenuItem>
+            </MenuItem>
         <MenuItem onClick={handleSettings}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           <ListItemText>Settings</ListItemText>
-        </MenuItem>
+            </MenuItem>
         <Divider />
         <SignOutButton>
-          <MenuItem>
+            <MenuItem>
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
             <ListItemText>Sign Out</ListItemText>
           </MenuItem>
-        </SignOutButton>
-      </Menu>
-    </Box>
+              </SignOutButton>
+          </Menu>
+                    </Box>
   );
 } 

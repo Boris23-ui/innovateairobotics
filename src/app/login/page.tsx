@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { useAuth } from '@/components/providers/AuthProvider';
+import { useSignIn } from '@clerk/nextjs';
 import {
   Container,
   Paper,
@@ -20,7 +20,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const { login, isLoaded } = useAuth();
+  const { signIn, isLoaded } = useSignIn();
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams?.get('redirectTo') || '/dashboard/student';
@@ -29,9 +29,22 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
 
+    if (!signIn) {
+      setError('Authentication is not available');
+      return;
+    }
+
     try {
-      await login(email, password);
-      router.push(redirectTo);
+      const result = await signIn.create({
+        identifier: email,
+        password,
+      });
+
+      if (result.status === 'complete') {
+        router.push(redirectTo);
+      } else {
+        setError('Please check your email for verification code');
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred during login');
     }
