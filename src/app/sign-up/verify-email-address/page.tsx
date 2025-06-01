@@ -32,7 +32,7 @@ export default function VerifyEmailPage() {
     
     try {
       setIsResending(true);
-      await user.emailAddresses[0]?.prepareVerification();
+      await user.emailAddresses[0]?.prepareVerification({ strategy: "email_code" });
       setVerificationStatus('success');
     } catch (error) {
       console.error('Error resending verification email:', error);
