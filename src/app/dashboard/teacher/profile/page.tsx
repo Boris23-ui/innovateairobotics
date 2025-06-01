@@ -28,6 +28,7 @@ import {
   CalendarToday,
   Book,
   Star,
+  EmojiEvents,
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
