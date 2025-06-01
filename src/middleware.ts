@@ -32,6 +32,14 @@ export default authMiddleware({
     "/api/webhook/clerk",
     "/api/webhook/stripe",
   ],
+  afterAuth(auth, req, evt) {
+    // Handle users who aren't authenticated
+    if (!auth.userId && !auth.isPublicRoute) {
+      const signInUrl = new URL('/sign-in', req.url);
+      signInUrl.searchParams.set('redirect_url', req.url);
+      return NextResponse.redirect(signInUrl);
+    }
+  }
 });
 
 export const config = {

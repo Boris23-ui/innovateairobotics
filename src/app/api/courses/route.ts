@@ -1,55 +1,55 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs';
-import { prisma } from '@/lib/prisma';
 
-// Mock user for demo
-const MOCK_USER = {
-  id: 'demo-teacher-id',
-  clerkId: 'demo-clerk-id',
-  firstName: 'Demo',
-  lastName: 'Teacher',
-  email: 'demo@teacher.com',
-};
+// Mock data for demo
+const MOCK_COURSES = [
+  {
+    id: '1',
+    name: 'Introduction to Robotics',
+    description: 'Learn the basics of robotics and programming',
+    category: 'Robotics',
+    level: 'Beginner',
+    maxStudents: 20,
+    startDate: new Date('2024-03-01'),
+    endDate: new Date('2024-06-30'),
+    tags: ['robotics', 'beginner', 'programming'],
+    teacherId: 'demo-teacher-id',
+    students: []
+  },
+  {
+    id: '2',
+    name: 'Advanced Robotics',
+    description: 'Advanced concepts in robotics and automation',
+    category: 'Robotics',
+    level: 'Advanced',
+    maxStudents: 15,
+    startDate: new Date('2024-04-01'),
+    endDate: new Date('2024-07-31'),
+    tags: ['robotics', 'advanced', 'automation'],
+    teacherId: 'demo-teacher-id',
+    students: []
+  }
+];
 
 export async function POST(request: Request) {
   try {
-    let { userId } = auth();
+    const { userId } = auth();
     if (!userId) {
-      // For demo, create/find a mock user
-      let user = await prisma.user.findUnique({ where: { clerkId: MOCK_USER.clerkId } });
-      if (!user) {
-        user = await prisma.user.create({ data: MOCK_USER });
-      }
-      userId = user.id;
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
     const body = await request.json();
-    const {
-      name,
-      description,
-      category,
-      level,
-      maxStudents,
-      startDate,
-      endDate,
-      tags,
-    } = body;
+    const newCourse = {
+      id: Math.random().toString(36).substr(2, 9),
+      ...body,
+      teacherId: userId,
+      students: [],
+      startDate: new Date(body.startDate),
+      endDate: new Date(body.endDate),
+    };
 
-    const course = await prisma.course.create({
-      data: {
-        name,
-        description,
-        category,
-        level,
-        maxStudents,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
-        tags: Array.isArray(tags) ? tags.join(',') : tags,
-        teacherId: userId,
-      },
-    });
-
-    return NextResponse.json({ ...course, tags: course.tags.split(',') });
+    MOCK_COURSES.push(newCourse);
+    return NextResponse.json(newCourse);
   } catch (error) {
     console.error('[COURSES_POST]', error);
     return new NextResponse('Internal Error', { status: 500 });
@@ -58,28 +58,14 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    let { userId } = auth();
+    const { userId } = auth();
     if (!userId) {
-      // For demo, use mock user
-      let user = await prisma.user.findUnique({ where: { clerkId: MOCK_USER.clerkId } });
-      if (!user) {
-        user = await prisma.user.create({ data: MOCK_USER });
-      }
-      userId = user.id;
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const courses = await prisma.course.findMany({
-      where: {
-        teacherId: userId,
-      },
-      include: {
-        students: true,
-      },
-    });
-
-    // Convert tags string to array for each course
-    const result = courses.map((course: any) => ({ ...course, tags: course.tags ? course.tags.split(',') : [] }));
-    return NextResponse.json(result);
+    // Filter courses by teacher ID
+    const courses = MOCK_COURSES.filter(course => course.teacherId === userId);
+    return NextResponse.json(courses);
   } catch (error) {
     console.error('[COURSES_GET]', error);
     return new NextResponse('Internal Error', { status: 500 });
