@@ -295,7 +295,7 @@ export default function Navigation() {
                     maxWidth: '90vw',
                     maxHeight: 400,
                     overflow: 'auto',
-                    p: 2,
+                    p: 1,
                     mt: 0.5,
                     borderRadius: 2,
                     boxShadow: 3,
@@ -303,12 +303,12 @@ export default function Navigation() {
                 }}
               >
                 <List sx={{ 
-                  py: 0.5,
+                  py: 0,
                   display: 'flex',
                   flexDirection: 'row',
-                  gap: 2,
+                  gap: 1,
                   flexWrap: 'wrap',
-                  minWidth: 800,
+                  minWidth: 600,
                   justifyContent: 'center',
                 }}>
                   {programItems.map((item) => (
@@ -318,13 +318,13 @@ export default function Navigation() {
                       href={item.href}
                       onClick={handleProgramsClose}
                       sx={{
-                        py: 1.5,
-                        px: 2,
+                        py: 1,
+                        px: 1.5,
                         mb: 0.5,
-                        borderRadius: 2,
+                        borderRadius: 1.5,
                         width: 'auto',
-                        minWidth: 220,
-                        maxWidth: 280,
+                        minWidth: 180,
+                        maxWidth: 240,
                         bgcolor: 'background.paper',
                         border: '1px solid',
                         borderColor: 'divider',
@@ -340,29 +340,29 @@ export default function Navigation() {
                       }}
                     >
                       <ListItemIcon sx={{ 
-                        minWidth: 40,
+                        minWidth: 32,
                         color: 'primary.main',
                       }}>
                         {item.icon}
                       </ListItemIcon>
                       <ListItemText
                         primary={
-                          <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 0.5 }}>
+                          <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.25 }}>
                             {item.title}
                           </Typography>
                         }
                         secondary={
-                          <Box component="span" sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                          <Box component="span" sx={{ display: 'flex', flexDirection: 'column', gap: 0.25 }}>
                             <Typography
                               component="span"
                               variant="caption"
                               sx={{
                                 bgcolor: 'primary.main',
                                 color: 'primary.contrastText',
-                                px: 1,
+                                px: 0.75,
                                 py: 0.25,
-                                borderRadius: 1,
-                                fontSize: '0.7rem',
+                                borderRadius: 0.75,
+                                fontSize: '0.65rem',
                                 display: 'inline-block',
                                 width: 'fit-content',
                               }}
@@ -371,11 +371,12 @@ export default function Navigation() {
                             </Typography>
                             <Typography
                               component="span"
-                              variant="body2"
+                              variant="caption"
                               sx={{ 
                                 color: 'text.secondary',
                                 display: 'block',
-                                lineHeight: 1.4,
+                                lineHeight: 1.3,
+                                fontSize: '0.75rem',
                               }}
                             >
                               {item.description}
