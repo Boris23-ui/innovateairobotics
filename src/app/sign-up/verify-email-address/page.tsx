@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { EmailVerification } from "@clerk/nextjs";
 
 export default function VerifyEmailPage() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -44,7 +43,16 @@ export default function VerifyEmailPage() {
           </Typography>
 
           <Box sx={{ width: '100%' }}>
-            <EmailVerification />
+            <Alert severity="info" sx={{ mb: 2 }}>
+              Please check your email for a verification link. If you don't see it, check your spam folder.
+            </Alert>
+            <Button
+              variant="contained"
+              onClick={() => user?.createEmailLinkFlow()}
+              fullWidth
+            >
+              Resend Verification Email
+            </Button>
           </Box>
 
           <Button
