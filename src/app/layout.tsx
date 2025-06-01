@@ -29,7 +29,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <ThemeProvider>
             <Navigation />
-            <main>{children}</main>
+            <main style={{ minHeight: 'calc(100vh - 64px - 64px)' }}>{children}</main>
             <Footer />
           </ThemeProvider>
         </body>

@@ -4,18 +4,75 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
+  --background-start-rgb: 245, 245, 245;
   --background-end-rgb: 255, 255, 255;
 }
 
+[data-theme='dark'] {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 18, 18, 18;
+  --background-end-rgb: 30, 30, 30;
+}
+
+html,
 body {
+  min-height: 100vh;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgb(var(--background-end-rgb))
-  )
-  rgb(var(--background-start-rgb));
+  background: rgb(var(--background-start-rgb));
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold;
+}
+
+/* Buttons */
+button {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+/* Cards */
+.card {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* Inputs */
+input, textarea {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+/* Links */
+a {
+  @apply transition-colors duration-200 ease-in-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 0.7);
+}
+
+/* Selection */
+::selection {
+  background: rgba(25, 118, 210, 0.2);
+}
+
+[data-theme='dark'] ::selection {
+  background: rgba(144, 202, 249, 0.2);
 }
 
 @layer base {
@@ -46,4 +103,8 @@ body {
   .input {
     @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
   }
+}
+
+* {
+  box-sizing: border-box;
 } 

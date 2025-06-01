@@ -6,23 +6,20 @@ import { authMiddleware } from "@clerk/nextjs";
 export default authMiddleware({
   publicRoutes: [
     "/",
-    "/sign-in",
-    "/sign-up",
-    "/programs",
-    "/curriculum",
-    "/resources",
-    "/contact",
     "/about",
     "/donate",
-    "/api/webhook/clerk",
-    "/api/webhook/stripe"
+    "/programs/tiny-tinkerers",
+    "/programs/robot-explorers",
+    "/programs/tech-titans",
+    "/programs/ai-avengers",
+    "/programs/seniors",
+    "/api/webhook(.*)",
   ],
   ignoredRoutes: [
-    "/api/webhook/clerk",
-    "/api/webhook/stripe"
-  ]
+    "/api/webhook(.*)",
+  ],
 });
 
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
 };

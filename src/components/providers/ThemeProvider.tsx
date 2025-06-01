@@ -1,55 +1,56 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { lightTheme, darkTheme } from '@/theme';
 
-type ThemeMode = 'light' | 'dark';
-
-interface ThemeContextType {
-  mode: ThemeMode;
-  toggleTheme: () => void;
-}
+type ThemeContextType = {
+  mode: 'light' | 'dark';
+  toggleColorMode: () => void;
+};
 
 const ThemeContext = createContext<ThemeContextType>({
   mode: 'light',
-  toggleTheme: () => {},
+  toggleColorMode: () => {},
 });
 
 export const useTheme = () => useContext(ThemeContext);
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [mode, setMode] = useState<'light' | 'dark'>('light');
   const [mounted, setMounted] = useState(false);
-  const [mode, setMode] = useState<ThemeMode>('light');
 
   useEffect(() => {
-    // Check for user's preferred color scheme
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedMode = localStorage.getItem('theme-mode') as ThemeMode;
-    setMode(savedMode || (prefersDark ? 'dark' : 'light'));
+    const savedMode = localStorage.getItem('theme-mode');
+    if (savedMode === 'dark' || savedMode === 'light') {
+      setMode(savedMode);
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setMode('dark');
+    }
     setMounted(true);
   }, []);
 
-  const toggleTheme = () => {
-    const newMode = mode === 'light' ? 'dark' : 'light';
-    setMode(newMode);
-    localStorage.setItem('theme-mode', newMode);
+  const toggleColorMode = () => {
+    setMode((prevMode) => {
+      const newMode = prevMode === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme-mode', newMode);
+      return newMode;
+    });
   };
 
-  const theme = mode === 'light' ? lightTheme : darkTheme;
+  const theme = createTheme(mode === 'light' ? lightTheme : darkTheme);
 
-  // Prevent hydration mismatch
   if (!mounted) {
     return null;
   }
 
   return (
-    <ThemeContext.Provider value={{ mode, toggleTheme }}>
+    <ThemeContext.Provider value={{ mode, toggleColorMode }}>
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         {children}
       </MuiThemeProvider>
     </ThemeContext.Provider>
   );
-}; 
+} 
