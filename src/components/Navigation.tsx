@@ -224,16 +224,20 @@ export default function Navigation() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="default" elevation={1}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+      <AppBar position="static" color="default" elevation={1} sx={{ py: 0 }}>
+      <Container maxWidth="xl" sx={{ py: 0 }}>
+        <Toolbar disableGutters sx={{ minHeight: '56px !important', py: 0 }}>
           <Link href="/" passHref style={{ textDecoration: 'none', color: 'inherit' }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <School sx={{ fontSize: 32, color: 'primary.main', mr: 1 }} />
+              <School sx={{ fontSize: 28, color: 'primary.main', mr: 1 }} />
               <Typography
                 variant="h6"
                 component="div"
-                sx={{ display: { xs: 'none', sm: 'block' } }}
+                sx={{ 
+                  display: { xs: 'none', sm: 'block' },
+                  fontSize: '1.1rem',
+                  lineHeight: 1.2
+                }}
               >
                 InnovateAI Robotics
               </Typography>
@@ -244,8 +248,8 @@ export default function Navigation() {
           <Box sx={{ 
             display: { xs: 'none', md: 'flex' }, 
             ml: 'auto',
-              gap: 1,
-              alignItems: 'center'
+            gap: 1,
+            alignItems: 'center'
           }}>
               {/* Public Navigation Items - Always Visible */}
               {publicNavItems.map((item) => (

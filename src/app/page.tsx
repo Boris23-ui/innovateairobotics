@@ -59,16 +59,6 @@ export default function Home() {
           mb: 8,
           mt: { xs: 2, md: 9 },
           px: { xs: 2, md: 4 },
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 203, 243, 0.1) 100%)',
-            zIndex: 0,
-          },
         }}
       >
         <Container maxWidth="lg">
@@ -80,6 +70,12 @@ export default function Home() {
               gap: 4,
               position: 'relative',
               zIndex: 1,
+              p: { xs: 3, md: 6 },
+              borderRadius: 4,
+              background: 'linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 203, 243, 0.1) 100%)',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
             }}
           >
             {/* Content */}
