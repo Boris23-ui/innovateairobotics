@@ -58,6 +58,7 @@ interface CourseData {
   students: any[];
   schedule: string;
   location: string;
+  modules?: { id: string; title: string; description: string }[];
 }
 
 const recentActivities = [
@@ -94,7 +95,12 @@ export default function TeacherDashboard() {
       tags: ['robotics', 'early-learning', 'play-based'],
       students: Array(8).fill({ id: 'student', name: 'Student' }),
       schedule: 'Mon & Wed, 10:00 AM - 11:00 AM',
-      location: 'Room 101'
+      location: 'Room 101',
+      modules: [
+        { id: '1', title: 'Introduction to Robotics', description: 'Overview of robotics and its applications' },
+        { id: '2', title: 'Building a Simple Robot', description: 'Hands-on activity to build a basic robot' },
+        { id: '3', title: 'Programming Basics', description: 'Introduction to programming concepts' },
+      ]
     },
     {
       id: '2',
@@ -108,7 +114,12 @@ export default function TeacherDashboard() {
       tags: ['programming', 'robotics', 'sensors'],
       students: Array(12).fill({ id: 'student', name: 'Student' }),
       schedule: 'Tue & Thu, 3:00 PM - 4:30 PM',
-      location: 'Lab 203'
+      location: 'Lab 203',
+      modules: [
+        { id: '4', title: 'Introduction to Programming', description: 'Overview of programming concepts' },
+        { id: '5', title: 'Building a Robot', description: 'Hands-on activity to build a robot' },
+        { id: '6', title: 'Sensor Integration', description: 'Learning about different sensors and their uses' },
+      ]
     },
     {
       id: '3',
@@ -122,7 +133,12 @@ export default function TeacherDashboard() {
       tags: ['advanced', 'coding', 'challenges'],
       students: Array(10).fill({ id: 'student', name: 'Student' }),
       schedule: 'Wed & Fri, 4:00 PM - 5:30 PM',
-      location: 'Lab 305'
+      location: 'Lab 305',
+      modules: [
+        { id: '7', title: 'Advanced Robotics', description: 'Exploring more complex robotics projects' },
+        { id: '8', title: 'Coding Challenges', description: 'Solving coding problems and challenges' },
+        { id: '9', title: 'Sensor Integration', description: 'Learning about sensor integration in advanced projects' },
+      ]
     },
     {
       id: '4',
@@ -136,7 +152,12 @@ export default function TeacherDashboard() {
       tags: ['AI', 'machine-learning', 'ethics'],
       students: Array(14).fill({ id: 'student', name: 'Student' }),
       schedule: 'Sat, 10:00 AM - 1:00 PM',
-      location: 'AI Lab'
+      location: 'AI Lab',
+      modules: [
+        { id: '10', title: 'AI Basics', description: 'Introduction to AI and its applications' },
+        { id: '11', title: 'Machine Learning', description: 'Learning about machine learning algorithms' },
+        { id: '12', title: 'Ethical AI Development', description: 'Understanding ethical considerations in AI development' },
+      ]
     },
     {
       id: '5',
@@ -150,7 +171,12 @@ export default function TeacherDashboard() {
       tags: ['professional', 'industry', 'projects'],
       students: Array(16).fill({ id: 'student', name: 'Student' }),
       schedule: 'Mon & Thu, 6:00 PM - 8:00 PM',
-      location: 'Conference Room'
+      location: 'Conference Room',
+      modules: [
+        { id: '13', title: 'Professional Applications', description: 'Exploring professional applications of AI and robotics' },
+        { id: '14', title: 'Industry Trends', description: 'Understanding current industry trends in AI and robotics' },
+        { id: '15', title: 'Project Development', description: 'Hands-on project development in AI and robotics' },
+      ]
     }
   ]);
   const [isLoading, setIsLoading] = useState(true);
@@ -420,44 +446,81 @@ export default function TeacherDashboard() {
                 {courses.map((course) => (
                   <ListItem
                     key={course.id}
-                    secondaryAction={
-                      <IconButton edge="end" onClick={(e) => handleMenuClick(e, course.id)}>
-                        <MoreVertIcon />
-                      </IconButton>
-                    }
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      gap: 2,
+                      py: 2,
+                      borderBottom: '1px solid',
+                      borderColor: 'divider',
+                      '&:last-child': {
+                        borderBottom: 'none'
+                      }
+                    }}
                   >
-                    <ListItemAvatar>
-                      <Avatar sx={{ bgcolor: 'primary.light' }}>
-                        <School />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={course.name}
-                      secondary={
-                        <Box sx={{ mt: 1 }}>
+                    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                        <ListItemAvatar>
+                          <Avatar sx={{ bgcolor: 'primary.light', width: 56, height: 56 }}>
+                            <School />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <Box>
+                          <Typography variant="h6" gutterBottom>
+                            {course.name}
+                          </Typography>
                           <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
                             <Chip
                               size="small"
                               icon={<People />}
-                              label={`${course.students?.length || 0} students`}
+                              label={`${course.students?.length || 0}/${course.maxStudents} students`}
                             />
                             <Chip
                               size="small"
                               icon={<BarChartIcon />}
-                              label={`${course.level}`}
+                              label={course.level}
                             />
                             <Chip
                               size="small"
                               icon={<Assignment />}
-                              label={`${course.category}`}
+                              label={course.category}
                             />
                           </Stack>
-                          <Typography variant="body2" color="text.secondary">
+                          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                             {course.description}
                           </Typography>
+                          <Stack direction="row" spacing={2}>
+                            <Typography variant="body2" color="text.secondary">
+                              <CalendarIcon sx={{ fontSize: 16, mr: 0.5, verticalAlign: 'middle' }} />
+                              {course.schedule}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              <School sx={{ fontSize: 16, mr: 0.5, verticalAlign: 'middle' }} />
+                              {course.location}
+                            </Typography>
+                          </Stack>
                         </Box>
-                      }
-                    />
+                      </Box>
+                      <IconButton onClick={(e) => handleMenuClick(e, course.id)}>
+                        <MoreVertIcon />
+                      </IconButton>
+                    </Box>
+                    <Box sx={{ width: '100%', pl: 9 }}>
+                      <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                        Course Modules
+                      </Typography>
+                      <List dense>
+                        {course.modules?.map((module) => (
+                          <ListItem key={module.id} sx={{ py: 0.5 }}>
+                            <ListItemText
+                              primary={module.title}
+                              secondary={module.description}
+                            />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Box>
                   </ListItem>
                 ))}
               </List>
