@@ -235,7 +235,7 @@ export default function Navigation() {
                 component="div"
                 sx={{ display: { xs: 'none', sm: 'block' } }}
               >
-                InnovateAI
+                InnovateAI Robotics
               </Typography>
             </Box>
           </Link>
