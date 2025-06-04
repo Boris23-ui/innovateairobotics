@@ -26,6 +26,7 @@ import {
   Badge,
   ListItemIcon,
   Paper,
+  useTheme,
 } from '@mui/material';
 import {
   School,
@@ -47,6 +48,14 @@ import {
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import StudentInfoCard from '@/components/student/StudentInfoCard';
+import StudentProgressCard from '@/components/student/StudentProgressCard';
+import StudentDashboardCard from '@/components/student/StudentDashboardCard';
+import BadgesOverview from '@/components/student/BadgesOverview';
+import CurrentChallenges from '@/components/student/CurrentChallenges';
+import UpcomingAssignments from '@/components/student/UpcomingAssignments';
+import PeerReviewSection from '@/components/student/PeerReviewSection';
+import SubmittedProjects from '@/components/student/SubmittedProjects';
 
 // Mock data for demonstration
 const courses = [
@@ -100,11 +109,34 @@ const achievements = [
   },
 ];
 
+// Mock data - Replace with actual data from your backend
+const mockData = {
+  studentInfo: {
+    name: "John Doe",
+    gradeLevel: "Grade 10",
+    progress: "75%",
+    lastLogin: "2 hours ago"
+  },
+  courses: [
+    { course: "Introduction to Robotics", progress: "75%", lastActivity: "2 hours ago" },
+    { course: "Advanced Programming", progress: "60%", lastActivity: "1 day ago" }
+  ],
+  assignments: [
+    { title: "Robot Navigation Project", course: "Introduction to Robotics", dueDate: "April 15, 2024" },
+    { title: "Sensor Integration", course: "Advanced Programming", dueDate: "April 20, 2024" }
+  ],
+  projects: [
+    { title: "Maze Solver Robot", status: "graded", score: "95%", feedback: "Excellent implementation!" },
+    { title: "Sensor Array Project", status: "in_review", feedback: null }
+  ]
+};
+
 export default function StudentDashboard() {
   const { isLoaded, isSignedIn } = useAuth();
   const { user } = useUser();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const theme = useTheme();
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -125,387 +157,71 @@ export default function StudentDashboard() {
   }
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
-      {/* Welcome Section */}
-      <Box sx={{ mb: 4 }}>
-        <Grid container spacing={3} alignItems="center">
-          <Grid item xs={12} md={8}>
-            <Typography variant="h4" component="h1" gutterBottom>
-              Welcome back, {user?.firstName || 'Student'}!
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              Here's an overview of your learning progress and upcoming activities.
-            </Typography>
-          </Grid>
+    <Container maxWidth="lg">
+      <Box sx={{ 
+        my: 4,
+        transition: theme.transitions.create(['background-color', 'color'], {
+          duration: theme.transitions.duration.standard,
+        }),
+      }}>
+        <Typography 
+          variant="h4" 
+          component="h1" 
+          gutterBottom
+          sx={{
+            color: 'text.primary',
+            transition: theme.transitions.create('color', {
+              duration: theme.transitions.duration.standard,
+            }),
+          }}
+        >
+          Student Dashboard
+        </Typography>
+        
+        <Grid container spacing={3}>
+          {/* Student Info Section */}
           <Grid item xs={12} md={4}>
-            <Stack direction="row" spacing={2} justifyContent="flex-end">
-              <IconButton>
-                <Badge badgeContent={3} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <Avatar
-                src={user?.imageUrl || undefined}
-                alt={user?.firstName || 'User'}
-                sx={{ width: 40, height: 40 }}
-              />
-            </Stack>
+            <StudentInfoCard {...mockData.studentInfo} />
+          </Grid>
+          
+          {/* Progress Section */}
+          <Grid item xs={12} md={8}>
+            <StudentProgressCard {...mockData.studentInfo} />
+          </Grid>
+
+          {/* Course Progress Section */}
+          <Grid item xs={12}>
+            <Grid container spacing={2}>
+              {mockData.courses.map((course, index) => (
+                <Grid item xs={12} md={6} key={index}>
+                  <StudentDashboardCard {...course} />
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+
+          {/* Challenges and Assignments Section */}
+          <Grid item xs={12} md={6}>
+            <CurrentChallenges />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <UpcomingAssignments assignments={mockData.assignments} />
+          </Grid>
+
+          {/* Badges and Reviews Section */}
+          <Grid item xs={12} md={6}>
+            <BadgesOverview />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <PeerReviewSection />
+          </Grid>
+
+          {/* Submitted Projects Section */}
+          <Grid item xs={12}>
+            <SubmittedProjects projects={mockData.projects} />
           </Grid>
         </Grid>
       </Box>
-
-      {/* Quick Stats */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ height: '100%' }}>
-            <CardContent>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <Avatar sx={{ bgcolor: 'primary.main' }}>
-                  <School />
-                </Avatar>
-                <Box>
-                  <Typography variant="h6">{courses.length}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Active Courses
-                  </Typography>
-                </Box>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ height: '100%' }}>
-            <CardContent>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <Avatar sx={{ bgcolor: 'warning.main' }}>
-                  <Assignment />
-                </Avatar>
-                <Box>
-                  <Typography variant="h6">{assignments.length}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Pending Assignments
-                  </Typography>
-                </Box>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ height: '100%' }}>
-            <CardContent>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <Avatar sx={{ bgcolor: 'success.main' }}>
-                  <EmojiEvents />
-                </Avatar>
-                <Box>
-                  <Typography variant="h6">{achievements.length}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Achievements
-                  </Typography>
-                </Box>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ height: '100%' }}>
-            <CardContent>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <Avatar sx={{ bgcolor: 'info.main' }}>
-                  <Book />
-                </Avatar>
-                <Box>
-                  <Typography variant="h6">12</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Learning Resources
-                  </Typography>
-                </Box>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      {/* Main Content */}
-      <Grid container spacing={4}>
-        {/* Left Column - Courses and Assignments */}
-        <Grid item xs={12} md={8}>
-          {/* Active Courses */}
-          <Card sx={{ mb: 4 }}>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Active Courses
-              </Typography>
-              <List>
-                {courses.map((course) => (
-                  <ListItem
-                    key={course.id}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: { xs: 'column', sm: 'row' },
-                      alignItems: { xs: 'flex-start', sm: 'center' },
-                      gap: 2,
-                      py: 2,
-                    }}
-                  >
-                    <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
-                      <ListItemAvatar sx={{ minWidth: 45 }}>
-                        <Avatar sx={{ bgcolor: 'primary.main', width: 40, height: 40 }}>
-                          <School />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={course.name}
-                        secondary={`Instructor: ${course.instructor}`}
-                        sx={{ 
-                          mr: 2,
-                          '& .MuiListItemText-primary': {
-                            fontWeight: 500,
-                          }
-                        }}
-                      />
-                    </Box>
-                    <Box sx={{ 
-                      display: 'flex', 
-                      alignItems: 'center',
-                      gap: 2,
-                      width: { xs: '100%', sm: 'auto' },
-                      mt: { xs: 1, sm: 0 }
-                    }}>
-                      <Box sx={{ width: 100, minWidth: 100 }}>
-                        <LinearProgress
-                          variant="determinate"
-                          value={course.progress}
-                          sx={{ mb: 0.5 }}
-                        />
-                        <Typography variant="body2" color="text.secondary" align="right">
-                          {course.progress}%
-                        </Typography>
-                      </Box>
-                      <Stack direction="row" spacing={1} alignItems="center">
-                        <Chip
-                          size="small"
-                          icon={<CalendarIcon />}
-                          label={course.nextClass}
-                          sx={{ display: { xs: 'none', sm: 'flex' } }}
-                        />
-                        <IconButton
-                          edge="end"
-                          aria-label="more"
-                          onClick={handleMenuClick}
-                          size="small"
-                        >
-                          <MoreVertIcon />
-                        </IconButton>
-                      </Stack>
-                    </Box>
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-            <CardActions>
-              <Button
-                startIcon={<PlayCircle />}
-                onClick={() => router.push('/dashboard/student/courses')}
-              >
-                View All Courses
-              </Button>
-            </CardActions>
-          </Card>
-
-          {/* Upcoming Assignments */}
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Upcoming Assignments
-              </Typography>
-              <List>
-                {assignments.map((assignment) => (
-                  <ListItem
-                    key={assignment.id}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: { xs: 'column', sm: 'row' },
-                      alignItems: { xs: 'flex-start', sm: 'center' },
-                      gap: 2,
-                      py: 2,
-                    }}
-                  >
-                    <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
-                      <ListItemIcon sx={{ minWidth: 45 }}>
-                        <Assignment />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={assignment.title}
-                        secondary={
-                          <Stack direction="row" spacing={1} alignItems="center">
-                            <Typography variant="body2" color="text.secondary">
-                              {assignment.course}
-                            </Typography>
-                            <Chip
-                              size="small"
-                              icon={<CalendarIcon />}
-                              label={`Due: ${assignment.dueDate}`}
-                              color="warning"
-                            />
-                          </Stack>
-                        }
-                      />
-                    </Box>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      onClick={() => router.push(`/dashboard/student/assignments/${assignment.id}`)}
-                      sx={{ mt: { xs: 1, sm: 0 } }}
-                    >
-                      View
-                    </Button>
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-            <CardActions>
-              <Button
-                startIcon={<Assignment />}
-                onClick={() => router.push('/dashboard/student/assignments')}
-              >
-                View All Assignments
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-
-        {/* Right Column - Achievements and Resources */}
-        <Grid item xs={12} md={4}>
-          {/* Recent Achievements */}
-          <Card sx={{ mb: 4 }}>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Recent Achievements
-              </Typography>
-              <List>
-                {achievements.map((achievement) => (
-                  <ListItem
-                    key={achievement.id}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: { xs: 'column', sm: 'row' },
-                      alignItems: { xs: 'flex-start', sm: 'center' },
-                      gap: 2,
-                      py: 2,
-                    }}
-                  >
-                    <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
-                      <ListItemIcon sx={{ minWidth: 45 }}>
-                        <EmojiEvents color="primary" />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={achievement.title}
-                        secondary={
-                          <Stack direction="row" spacing={1} alignItems="center">
-                            <Typography variant="body2" color="text.secondary">
-                              {achievement.description}
-                            </Typography>
-                            <Chip
-                              size="small"
-                              label={achievement.date}
-                              variant="outlined"
-                            />
-                          </Stack>
-                        }
-                      />
-                    </Box>
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-            <CardActions>
-              <Button
-                startIcon={<EmojiEvents />}
-                onClick={() => router.push('/dashboard/student/achievements')}
-              >
-                View All Achievements
-              </Button>
-            </CardActions>
-          </Card>
-
-          {/* Learning Resources */}
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Learning Resources
-              </Typography>
-              <List>
-                <ListItem
-                  sx={{
-                    display: 'flex',
-                    flexDirection: { xs: 'column', sm: 'row' },
-                    alignItems: { xs: 'flex-start', sm: 'center' },
-                    gap: 2,
-                    py: 2,
-                  }}
-                >
-                  <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
-                    <ListItemIcon sx={{ minWidth: 45 }}>
-                      <Book />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="Course Materials"
-                      secondary="Access all your course materials and resources"
-                    />
-                  </Box>
-                </ListItem>
-                <ListItem
-                  sx={{
-                    display: 'flex',
-                    flexDirection: { xs: 'column', sm: 'row' },
-                    alignItems: { xs: 'flex-start', sm: 'center' },
-                    gap: 2,
-                    py: 2,
-                  }}
-                >
-                  <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
-                    <ListItemIcon sx={{ minWidth: 45 }}>
-                      <Code />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="Code Examples"
-                      secondary="Browse through code examples and tutorials"
-                    />
-                  </Box>
-                </ListItem>
-                <ListItem
-                  sx={{
-                    display: 'flex',
-                    flexDirection: { xs: 'column', sm: 'row' },
-                    alignItems: { xs: 'flex-start', sm: 'center' },
-                    gap: 2,
-                    py: 2,
-                  }}
-                >
-                  <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
-                    <ListItemIcon sx={{ minWidth: 45 }}>
-                      <MessageIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="Discussion Forum"
-                      secondary="Join discussions with instructors and peers"
-                    />
-                  </Box>
-                </ListItem>
-              </List>
-            </CardContent>
-            <CardActions>
-              <Button
-                startIcon={<Book />}
-                onClick={() => router.push('/dashboard/student/resources')}
-              >
-                Explore Resources
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-      </Grid>
     </Container>
   );
 } 

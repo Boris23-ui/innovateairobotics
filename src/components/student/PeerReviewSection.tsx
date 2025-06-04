@@ -1,5 +1,7 @@
+"use client";
+
 import React from 'react';
-import { Card, CardContent, Typography, Box, Chip, Button, Stack } from '@mui/material';
+import { Card, CardContent, Typography, Box, Chip, Button, Stack, useTheme } from '@mui/material';
 
 interface Review {
   projectTitle: string;
@@ -9,6 +11,7 @@ interface Review {
 }
 
 export default function PeerReviewSection() {
+  const theme = useTheme();
   const reviews: Review[] = [
     {
       projectTitle: "Robot Navigation System",
@@ -24,9 +27,24 @@ export default function PeerReviewSection() {
   ];
 
   return (
-    <Card>
+    <Card sx={{ 
+      bgcolor: 'background.paper',
+      transition: theme.transitions.create(['background-color', 'box-shadow'], {
+        duration: theme.transitions.duration.standard,
+      }),
+    }}>
       <CardContent>
-        <Typography variant="h6" component="h3" gutterBottom>
+        <Typography 
+          variant="h6" 
+          component="h3" 
+          gutterBottom
+          sx={{
+            color: 'text.primary',
+            transition: theme.transitions.create('color', {
+              duration: theme.transitions.duration.standard,
+            }),
+          }}
+        >
           Peer Reviews
         </Typography>
         <Stack spacing={2}>
@@ -35,16 +53,36 @@ export default function PeerReviewSection() {
               key={idx}
               sx={{
                 p: 2,
-                bgcolor: 'grey.50',
+                bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'grey.50',
                 borderRadius: 1,
+                transition: theme.transitions.create(['background-color'], {
+                  duration: theme.transitions.duration.standard,
+                }),
               }}
             >
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <Box>
-                  <Typography variant="subtitle1" fontWeight="medium">
+                  <Typography 
+                    variant="subtitle1" 
+                    fontWeight="medium"
+                    sx={{
+                      color: 'text.primary',
+                      transition: theme.transitions.create('color', {
+                        duration: theme.transitions.duration.standard,
+                      }),
+                    }}
+                  >
                     {review.projectTitle}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography 
+                    variant="body2" 
+                    sx={{
+                      color: 'text.secondary',
+                      transition: theme.transitions.create('color', {
+                        duration: theme.transitions.duration.standard,
+                      }),
+                    }}
+                  >
                     Reviewer: {review.reviewer}
                   </Typography>
                 </Box>
@@ -52,13 +90,37 @@ export default function PeerReviewSection() {
                   label={review.status === 'completed' ? 'Completed' : 'Pending'}
                   size="small"
                   sx={{
-                    bgcolor: review.status === 'completed' ? 'success.light' : 'warning.light',
-                    color: review.status === 'completed' ? 'success.dark' : 'warning.dark',
+                    bgcolor: review.status === 'completed' 
+                      ? theme.palette.mode === 'dark'
+                        ? 'rgba(76, 175, 80, 0.2)'
+                        : 'success.light'
+                      : theme.palette.mode === 'dark'
+                        ? 'rgba(255, 152, 0, 0.2)'
+                        : 'warning.light',
+                    color: review.status === 'completed' 
+                      ? theme.palette.mode === 'dark'
+                        ? 'success.light'
+                        : 'success.dark'
+                      : theme.palette.mode === 'dark'
+                        ? 'warning.light'
+                        : 'warning.dark',
+                    transition: theme.transitions.create(['background-color', 'color'], {
+                      duration: theme.transitions.duration.standard,
+                    }),
                   }}
                 />
               </Box>
               {review.dueDate && (
-                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    mt: 1,
+                    color: 'text.secondary',
+                    transition: theme.transitions.create('color', {
+                      duration: theme.transitions.duration.standard,
+                    }),
+                  }}
+                >
                   Due: {review.dueDate}
                 </Typography>
               )}
@@ -67,7 +129,13 @@ export default function PeerReviewSection() {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  sx={{ mt: 2, textTransform: 'none' }}
+                  sx={{ 
+                    mt: 2, 
+                    textTransform: 'none',
+                    transition: theme.transitions.create(['background-color', 'color'], {
+                      duration: theme.transitions.duration.standard,
+                    }),
+                  }}
                 >
                   Start Review
                 </Button>

@@ -1,9 +1,11 @@
 "use client";
 
-import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText, AppBar, Toolbar, Typography, Divider, ListItemButton } from '@mui/material';
-import { Dashboard, Assignment, School, EmojiEvents, RateReview, Code, MenuBook, ViewList } from '@mui/icons-material';
+import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText, AppBar, Toolbar, Typography, Divider, ListItemButton, IconButton } from '@mui/material';
+import { Dashboard, Assignment, School, EmojiEvents, RateReview, Code, MenuBook, ViewList, Brightness4, Brightness7 } from '@mui/icons-material';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTheme as useAppTheme } from '@/components/providers/ThemeProvider';
+import { useTheme } from '@mui/material/styles';
 
 const drawerWidth = 280;
 
@@ -11,42 +13,42 @@ const menuItems = [
   { 
     text: 'Dashboard', 
     icon: <Dashboard />, 
-    path: '/student/dashboard' 
+    path: '/dashboard/student' 
   },
   { 
     text: 'Active Courses', 
     icon: <School />, 
-    path: '/student/courses' 
+    path: '/dashboard/student/courses' 
   },
   { 
     text: 'Pending Assignments', 
     icon: <Assignment />, 
-    path: '/student/assignments' 
+    path: '/dashboard/student/assignments' 
   },
   { 
     text: 'Projects', 
     icon: <Code />, 
-    path: '/student/projects' 
+    path: '/dashboard/student/projects' 
   },
   { 
     text: 'Achievements', 
     icon: <EmojiEvents />, 
-    path: '/student/badges' 
+    path: '/dashboard/student/badges' 
   },
   { 
     text: 'Learning Resources', 
     icon: <MenuBook />, 
-    path: '/student/resources' 
+    path: '/dashboard/student/resources' 
   },
   { 
     text: 'View All Courses', 
     icon: <ViewList />, 
-    path: '/student/all-courses' 
+    path: '/dashboard/student/all-courses' 
   },
   { 
     text: 'Peer Reviews', 
     icon: <RateReview />, 
-    path: '/student/reviews' 
+    path: '/dashboard/student/reviews' 
   },
 ];
 
@@ -56,6 +58,8 @@ export default function StudentLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const { mode, toggleColorMode } = useAppTheme();
+  const theme = useTheme();
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -68,10 +72,13 @@ export default function StudentLayout({
           boxShadow: 1
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Typography variant="h6" noWrap component="div" sx={{ fontWeight: 'bold' }}>
             Student Portal
           </Typography>
+          <IconButton onClick={toggleColorMode} color="inherit">
+            {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
+          </IconButton>
         </Toolbar>
       </AppBar>
       
@@ -86,6 +93,9 @@ export default function StudentLayout({
             borderRight: '1px solid',
             borderColor: 'divider',
             bgcolor: 'background.paper',
+            transition: theme.transitions.create(['background-color', 'border-color'], {
+              duration: theme.transitions.duration.standard,
+            }),
           },
         }}
       >
@@ -114,12 +124,18 @@ export default function StudentLayout({
                         fontWeight: 'bold',
                       },
                     },
+                    transition: theme.transitions.create(['background-color', 'color'], {
+                      duration: theme.transitions.duration.standard,
+                    }),
                   }}
                 >
                   <ListItemIcon 
                     sx={{ 
                       minWidth: 40,
-                      color: pathname === item.path ? 'primary.main' : 'text.secondary'
+                      color: pathname === item.path ? 'primary.main' : 'text.secondary',
+                      transition: theme.transitions.create('color', {
+                        duration: theme.transitions.duration.standard,
+                      }),
                     }}
                   >
                     {item.icon}
@@ -138,7 +154,17 @@ export default function StudentLayout({
         </Box>
       </Drawer>
       
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box 
+        component="main" 
+        sx={{ 
+          flexGrow: 1, 
+          p: 3,
+          bgcolor: 'background.default',
+          transition: theme.transitions.create('background-color', {
+            duration: theme.transitions.duration.standard,
+          }),
+        }}
+      >
         <Toolbar />
         {children}
       </Box>
