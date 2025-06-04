@@ -1,22 +1,43 @@
 "use client";
 
 import React from 'react';
-import { Card, CardContent, Typography, List, ListItem, Box, Button, useTheme } from '@mui/material';
+import { Card, CardContent, Typography, List, ListItem, Box, Chip, useTheme } from '@mui/material';
+import { CheckCircle, Pending } from '@mui/icons-material';
 
 interface Project {
   title: string;
-  status: string;
+  status: 'graded' | 'in_review';
   score?: string;
-  feedback: string | null;
+  feedback?: string;
 }
 
 interface SubmittedProjectsProps {
-  projects: Project[];
+  projects?: Project[];
 }
 
-export default function SubmittedProjects({ projects }: SubmittedProjectsProps) {
+const defaultProjects: Project[] = [
+  {
+    title: "Maze Solver Robot",
+    status: "graded",
+    score: "95%",
+    feedback: "Excellent implementation! Great work on the pathfinding algorithm."
+  },
+  {
+    title: "Sensor Array Project",
+    status: "in_review",
+    feedback: null
+  },
+  {
+    title: "AI Vision System",
+    status: "graded",
+    score: "88%",
+    feedback: "Good implementation of object detection. Consider optimizing the processing speed."
+  }
+];
+
+export default function SubmittedProjects({ projects = defaultProjects }: SubmittedProjectsProps) {
   const theme = useTheme();
-  
+
   return (
     <Card sx={{ 
       bgcolor: 'background.paper',
@@ -43,88 +64,76 @@ export default function SubmittedProjects({ projects }: SubmittedProjectsProps) 
             <ListItem
               key={idx}
               sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'grey.50',
-                borderRadius: 1,
-                mb: 1,
                 p: 2,
-                transition: theme.transitions.create(['background-color'], {
+                mb: 1,
+                borderLeft: '4px solid',
+                borderColor: project.status === 'graded' ? 'success.main' : 'warning.main',
+                bgcolor: theme.palette.mode === 'dark' 
+                  ? project.status === 'graded' 
+                    ? 'rgba(76, 175, 80, 0.08)'
+                    : 'rgba(255, 152, 0, 0.08)'
+                  : project.status === 'graded'
+                    ? 'rgba(76, 175, 80, 0.08)'
+                    : 'rgba(255, 152, 0, 0.08)',
+                borderRadius: '0 8px 8px 0',
+                transition: theme.transitions.create(['background-color', 'border-color'], {
                   duration: theme.transitions.duration.standard,
                 }),
+                '&:hover': {
+                  bgcolor: theme.palette.mode === 'dark'
+                    ? project.status === 'graded'
+                      ? 'rgba(76, 175, 80, 0.12)'
+                      : 'rgba(255, 152, 0, 0.12)'
+                    : project.status === 'graded'
+                      ? 'rgba(76, 175, 80, 0.12)'
+                      : 'rgba(255, 152, 0, 0.12)',
+                }
               }}
             >
-              <Box>
-                <Typography 
-                  variant="subtitle1" 
-                  fontWeight="medium"
-                  sx={{
-                    color: 'text.primary',
-                    transition: theme.transitions.create('color', {
-                      duration: theme.transitions.duration.standard,
-                    }),
-                  }}
-                >
-                  {project.title}
-                </Typography>
-                <Typography 
-                  variant="body2" 
-                  sx={{
-                    color: project.status === 'graded' 
-                      ? theme.palette.mode === 'dark'
-                        ? 'success.light'
-                        : 'success.main'
-                      : theme.palette.mode === 'dark'
-                        ? 'warning.light'
-                        : 'warning.main',
-                    transition: theme.transitions.create('color', {
-                      duration: theme.transitions.duration.standard,
-                    }),
-                  }}
-                >
-                  Status: {project.status === 'graded' ? 'Graded' : 'In Review'}
-                </Typography>
-                {project.score && (
+              <Box sx={{ width: '100%' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
                   <Typography 
-                    variant="body2" 
+                    variant="subtitle1" 
+                    fontWeight="medium"
                     sx={{
-                      color: 'text.secondary',
+                      color: 'text.primary',
                       transition: theme.transitions.create('color', {
                         duration: theme.transitions.duration.standard,
                       }),
                     }}
                   >
-                    Score: {project.score}
+                    {project.title}
                   </Typography>
-                )}
-                {project.feedback && (
-                  <Typography 
-                    variant="body2" 
-                    sx={{ 
-                      mt: 0.5,
-                      color: 'text.secondary',
-                      transition: theme.transitions.create('color', {
-                        duration: theme.transitions.duration.standard,
-                      }),
-                    }}
-                  >
-                    {project.feedback}
-                  </Typography>
+                  <Chip
+                    icon={project.status === 'graded' ? <CheckCircle /> : <Pending />}
+                    label={project.status === 'graded' ? 'Graded' : 'In Review'}
+                    color={project.status === 'graded' ? 'success' : 'warning'}
+                    size="small"
+                  />
+                </Box>
+                {project.status === 'graded' && (
+                  <>
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        color: 'success.main',
+                        fontWeight: 'medium',
+                        mb: 0.5,
+                      }}
+                    >
+                      Score: {project.score}
+                    </Typography>
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        color: 'text.secondary',
+                      }}
+                    >
+                      {project.feedback}
+                    </Typography>
+                  </>
                 )}
               </Box>
-              <Button
-                variant="text"
-                color="primary"
-                sx={{ 
-                  textTransform: 'none',
-                  transition: theme.transitions.create(['color'], {
-                    duration: theme.transitions.duration.standard,
-                  }),
-                }}
-              >
-                View Details
-              </Button>
             </ListItem>
           ))}
         </List>

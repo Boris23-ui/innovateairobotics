@@ -10,10 +10,28 @@ interface Assignment {
 }
 
 interface UpcomingAssignmentsProps {
-  assignments: Assignment[];
+  assignments?: Assignment[];
 }
 
-export default function UpcomingAssignments({ assignments }: UpcomingAssignmentsProps) {
+const defaultAssignments: Assignment[] = [
+  {
+    title: "Robot Navigation Project",
+    course: "Introduction to Robotics",
+    dueDate: "April 15, 2024"
+  },
+  {
+    title: "Sensor Integration",
+    course: "Advanced Programming",
+    dueDate: "April 20, 2024"
+  },
+  {
+    title: "AI Model Implementation",
+    course: "Machine Learning",
+    dueDate: "April 25, 2024"
+  }
+];
+
+export default function UpcomingAssignments({ assignments = defaultAssignments }: UpcomingAssignmentsProps) {
   const theme = useTheme();
 
   return (
