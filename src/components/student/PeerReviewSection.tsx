@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card, CardContent, Typography, Box, Chip, Button, Stack } from '@mui/material';
 
 interface Review {
   projectTitle: string;
@@ -23,35 +24,58 @@ export default function PeerReviewSection() {
   ];
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
-      <h3 className="text-xl font-bold mb-4">Peer Reviews</h3>
-      <div className="space-y-4">
-        {reviews.map((review, idx) => (
-          <div key={idx} className="p-4 bg-gray-50 rounded-lg">
-            <div className="flex justify-between items-start">
-              <div>
-                <h4 className="font-medium">{review.projectTitle}</h4>
-                <p className="text-sm text-gray-600">Reviewer: {review.reviewer}</p>
-              </div>
-              <span className={`px-3 py-1 rounded-full text-sm ${
-                review.status === 'completed' 
-                  ? 'bg-green-100 text-green-800' 
-                  : 'bg-yellow-100 text-yellow-800'
-              }`}>
-                {review.status === 'completed' ? 'Completed' : 'Pending'}
-              </span>
-            </div>
-            {review.dueDate && (
-              <p className="mt-2 text-sm text-gray-500">Due: {review.dueDate}</p>
-            )}
-            {review.status === 'pending' && (
-              <button className="mt-3 w-full py-2 bg-[rgb(60,152,251)] text-white rounded hover:bg-[rgb(45,130,220)] transition-colors">
-                Start Review
-              </button>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
+    <Card>
+      <CardContent>
+        <Typography variant="h6" component="h3" gutterBottom>
+          Peer Reviews
+        </Typography>
+        <Stack spacing={2}>
+          {reviews.map((review, idx) => (
+            <Box
+              key={idx}
+              sx={{
+                p: 2,
+                bgcolor: 'grey.50',
+                borderRadius: 1,
+              }}
+            >
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <Box>
+                  <Typography variant="subtitle1" fontWeight="medium">
+                    {review.projectTitle}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Reviewer: {review.reviewer}
+                  </Typography>
+                </Box>
+                <Chip
+                  label={review.status === 'completed' ? 'Completed' : 'Pending'}
+                  size="small"
+                  sx={{
+                    bgcolor: review.status === 'completed' ? 'success.light' : 'warning.light',
+                    color: review.status === 'completed' ? 'success.dark' : 'warning.dark',
+                  }}
+                />
+              </Box>
+              {review.dueDate && (
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                  Due: {review.dueDate}
+                </Typography>
+              )}
+              {review.status === 'pending' && (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: 2, textTransform: 'none' }}
+                >
+                  Start Review
+                </Button>
+              )}
+            </Box>
+          ))}
+        </Stack>
+      </CardContent>
+    </Card>
   );
 } 

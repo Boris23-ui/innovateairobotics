@@ -1,4 +1,5 @@
 import React from 'react';
+import { Paper, Typography, Box, Button, Chip } from '@mui/material';
 
 interface CodingChallengeProps {
   title: string;
@@ -9,25 +10,52 @@ interface CodingChallengeProps {
 
 export default function CodingChallenge({ title, description, type, completed }: CodingChallengeProps) {
   return (
-    <div className={`p-4 rounded-lg border ${
-      completed ? 'border-green-200 bg-green-50' : 'border-blue-200 bg-blue-50'
-    }`}>
-      <div className="flex justify-between items-start mb-2">
-        <h4 className="font-medium">{title}</h4>
-        <span className={`px-2 py-1 rounded-full text-xs ${
-          completed ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
-        }`}>
-          {type}
-        </span>
-      </div>
-      <p className="text-sm text-gray-600 mb-3">{description}</p>
-      <button className={`w-full py-2 rounded text-sm font-medium ${
-        completed 
-          ? 'bg-green-100 text-green-700 hover:bg-green-200' 
-          : 'bg-[rgb(60,152,251)] text-white hover:bg-[rgb(45,130,220)]'
-      } transition-colors`}>
+    <Paper
+      elevation={0}
+      sx={{
+        p: 2,
+        border: 1,
+        borderColor: completed ? 'success.light' : 'primary.light',
+        bgcolor: completed ? 'success.light' : 'primary.light',
+        opacity: 0.1,
+        '&:hover': {
+          opacity: 0.15,
+        }
+      }}
+    >
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+        <Typography variant="subtitle1" fontWeight="medium">
+          {title}
+        </Typography>
+        <Chip
+          label={type}
+          size="small"
+          sx={{
+            bgcolor: completed ? 'success.light' : 'primary.light',
+            color: completed ? 'success.dark' : 'primary.dark',
+            opacity: 1,
+          }}
+        />
+      </Box>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+        {description}
+      </Typography>
+      <Button
+        fullWidth
+        variant="contained"
+        color={completed ? 'success' : 'primary'}
+        sx={{
+          textTransform: 'none',
+          bgcolor: completed ? 'success.light' : undefined,
+          color: completed ? 'success.dark' : undefined,
+          '&:hover': {
+            bgcolor: completed ? 'success.main' : undefined,
+            color: completed ? 'white' : undefined,
+          }
+        }}
+      >
         {completed ? 'View Solution' : 'Start Challenge'}
-      </button>
-    </div>
+      </Button>
+    </Paper>
   );
 } 

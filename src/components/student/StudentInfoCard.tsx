@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card, CardContent, Typography, Box, LinearProgress } from '@mui/material';
 
 interface StudentInfoProps {
   name: string;
@@ -8,23 +9,45 @@ interface StudentInfoProps {
 }
 
 export default function StudentInfoCard({ name, gradeLevel, progress, lastLogin }: StudentInfoProps) {
+  // Convert progress string to number for LinearProgress
+  const progressValue = parseInt(progress.replace('%', ''));
+
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
-      <h2 className="text-xl font-bold mb-2">{name}</h2>
-      <p className="text-sm text-gray-500 mb-4">Grade Level: {gradeLevel}</p>
-      <div className="mb-4">
-        <div className="flex justify-between mb-1">
-          <span className="text-sm font-medium">Overall Progress</span>
-          <span className="text-sm font-medium">{progress}</span>
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
-          <div 
-            className="bg-[rgb(60,152,251)] h-2 rounded-full"
-            style={{ width: progress }}
-          ></div>
-        </div>
-      </div>
-      <p className="text-xs text-gray-500">Last login: {lastLogin}</p>
-    </div>
+    <Card>
+      <CardContent>
+        <Typography variant="h5" component="h2" gutterBottom>
+          {name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          Grade Level: {gradeLevel}
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+            <Typography variant="body2" fontWeight="medium">
+              Overall Progress
+            </Typography>
+            <Typography variant="body2" fontWeight="medium">
+              {progress}
+            </Typography>
+          </Box>
+          <LinearProgress 
+            variant="determinate" 
+            value={progressValue}
+            sx={{
+              height: 8,
+              borderRadius: 4,
+              backgroundColor: 'grey.200',
+              '& .MuiLinearProgress-bar': {
+                backgroundColor: 'primary.main',
+                borderRadius: 4,
+              }
+            }}
+          />
+        </Box>
+        <Typography variant="caption" color="text.secondary">
+          Last login: {lastLogin}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 } 

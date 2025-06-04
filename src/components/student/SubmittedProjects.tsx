@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card, CardContent, Typography, List, ListItem, Box, Button } from '@mui/material';
 
 interface Project {
   title: string;
@@ -13,31 +14,54 @@ interface SubmittedProjectsProps {
 
 export default function SubmittedProjects({ projects }: SubmittedProjectsProps) {
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
-      <h3 className="text-xl font-bold mb-4">Submitted Projects</h3>
-      <ul className="space-y-4">
-        {projects.map((project, idx) => (
-          <li key={idx} className="flex justify-between items-center p-3 bg-gray-50 rounded">
-            <div>
-              <h4 className="font-medium">{project.title}</h4>
-              <p className="text-sm text-gray-500">
-                Status: <span className={`${project.status === 'graded' ? 'text-green-600' : 'text-yellow-600'}`}>
-                  {project.status === 'graded' ? 'Graded' : 'In Review'}
-                </span>
-              </p>
-              {project.score && (
-                <p className="text-sm text-gray-500">Score: {project.score}</p>
-              )}
-              {project.feedback && (
-                <p className="text-sm text-gray-500 mt-1">{project.feedback}</p>
-              )}
-            </div>
-            <button className="px-3 py-1 text-sm text-[rgb(60,152,251)] hover:text-[rgb(45,130,220)] transition-colors">
-              View Details
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Card>
+      <CardContent>
+        <Typography variant="h6" component="h3" gutterBottom>
+          Submitted Projects
+        </Typography>
+        <List>
+          {projects.map((project, idx) => (
+            <ListItem
+              key={idx}
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                bgcolor: 'grey.50',
+                borderRadius: 1,
+                mb: 1,
+                p: 2
+              }}
+            >
+              <Box>
+                <Typography variant="subtitle1" fontWeight="medium">
+                  {project.title}
+                </Typography>
+                <Typography variant="body2" color={project.status === 'graded' ? 'success.main' : 'warning.main'}>
+                  Status: {project.status === 'graded' ? 'Graded' : 'In Review'}
+                </Typography>
+                {project.score && (
+                  <Typography variant="body2" color="text.secondary">
+                    Score: {project.score}
+                  </Typography>
+                )}
+                {project.feedback && (
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                    {project.feedback}
+                  </Typography>
+                )}
+              </Box>
+              <Button
+                variant="text"
+                color="primary"
+                sx={{ textTransform: 'none' }}
+              >
+                View Details
+              </Button>
+            </ListItem>
+          ))}
+        </List>
+      </CardContent>
+    </Card>
   );
 } 
