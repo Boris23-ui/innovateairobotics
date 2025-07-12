@@ -39,6 +39,12 @@ export default authMiddleware({
       signInUrl.searchParams.set('redirect_url', req.url);
       return NextResponse.redirect(signInUrl);
     }
+
+    // Handle authenticated users accessing protected routes
+    if (auth.userId && req.nextUrl.pathname === '/') {
+      // Redirect root to dashboard which will handle role-based routing
+      return NextResponse.redirect(new URL('/dashboard', req.url));
+    }
   }
 });
 

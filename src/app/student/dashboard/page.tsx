@@ -1,44 +1,8 @@
-import { auth } from '@clerk/nextjs';
-import { redirect } from 'next/navigation';
-import { Box, Container, Grid, Typography } from '@mui/material';
-import StudentInfoCard from '@/components/student/StudentInfoCard';
-import StudentProgressCard from '@/components/student/StudentProgressCard';
-import StudentDashboardCard from '@/components/student/StudentDashboardCard';
-import BadgesOverview from '@/components/student/BadgesOverview';
-import CurrentChallenges from '@/components/student/CurrentChallenges';
-import UpcomingAssignments from '@/components/student/UpcomingAssignments';
-import PeerReviewSection from '@/components/student/PeerReviewSection';
-import SubmittedProjects from '@/components/student/SubmittedProjects';
+"use client";
 
-// Mock data - Replace with actual data from your backend
-const mockData = {
-  studentInfo: {
-    name: "John Doe",
-    gradeLevel: "Grade 10",
-    progress: "75%",
-    lastLogin: "2 hours ago"
-  },
-  courses: [
-    { course: "Introduction to Robotics", progress: "75%", lastActivity: "2 hours ago" },
-    { course: "Advanced Programming", progress: "60%", lastActivity: "1 day ago" }
-  ],
-  assignments: [
-    { title: "Robot Navigation Project", course: "Introduction to Robotics", dueDate: "April 15, 2024" },
-    { title: "Sensor Integration", course: "Advanced Programming", dueDate: "April 20, 2024" }
-  ],
-  projects: [
-    { title: "Maze Solver Robot", status: "graded", score: "95%", feedback: "Excellent implementation!" },
-    { title: "Sensor Array Project", status: "in_review", feedback: null }
-  ]
-};
+import { Container, Typography, Box, Grid } from '@mui/material';
 
-export default async function StudentDashboard() {
-  const { userId } = auth();
-
-  if (!userId) {
-    redirect('/sign-in');
-  }
-
+export default function StudentDashboard() {
   return (
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
@@ -47,46 +11,25 @@ export default async function StudentDashboard() {
         </Typography>
         
         <Grid container spacing={3}>
-          {/* Student Info Section */}
-          <Grid item xs={12} md={4}>
-            <StudentInfoCard {...mockData.studentInfo} />
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6" gutterBottom>
+              Welcome to InnovateAI Robotics
+            </Typography>
+            <Typography variant="body1">
+              This is your student dashboard where you can track your progress, view assignments, and manage your robotics projects.
+            </Typography>
           </Grid>
           
-          {/* Progress Section */}
-          <Grid item xs={12} md={8}>
-            <StudentProgressCard {...mockData.studentInfo} />
-          </Grid>
-
-          {/* Course Progress Section */}
-          <Grid item xs={12}>
-            <Grid container spacing={2}>
-              {mockData.courses.map((course, index) => (
-                <Grid item xs={12} md={6} key={index}>
-                  <StudentDashboardCard {...course} />
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-
-          {/* Challenges and Assignments Section */}
           <Grid item xs={12} md={6}>
-            <CurrentChallenges />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <UpcomingAssignments assignments={mockData.assignments} />
-          </Grid>
-
-          {/* Badges and Reviews Section */}
-          <Grid item xs={12} md={6}>
-            <BadgesOverview />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <PeerReviewSection />
-          </Grid>
-
-          {/* Submitted Projects Section */}
-          <Grid item xs={12}>
-            <SubmittedProjects projects={mockData.projects} />
+            <Typography variant="h6" gutterBottom>
+              Quick Stats
+            </Typography>
+            <Typography variant="body2">
+              • Courses Enrolled: 3<br/>
+              • Active Projects: 2<br/>
+              • Assignments Due: 1<br/>
+              • Badges Earned: 5
+            </Typography>
           </Grid>
         </Grid>
       </Box>

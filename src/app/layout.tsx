@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import { UserProvider } from '@/components/providers/UserProvider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/layout/Footer';
 import { ClerkProvider } from '@clerk/nextjs';
@@ -30,10 +31,12 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <ThemeProvider>
-            <Navigation />
-            <main style={{ minHeight: 'calc(100vh - 64px - 64px)' }}>{children}</main>
-            <Footer />
-            <Toaster position="top-right" />
+            <UserProvider>
+              <Navigation />
+              <main style={{ minHeight: 'calc(100vh - 64px - 64px)' }}>{children}</main>
+              <Footer />
+              <Toaster position="top-right" />
+            </UserProvider>
           </ThemeProvider>
         </body>
       </html>

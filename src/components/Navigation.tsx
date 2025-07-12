@@ -54,7 +54,9 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTheme, useMediaQuery } from '@mui/material';
 import { useTheme as useAppTheme } from '@/components/providers/ThemeProvider';
+import { useUserProfile } from '@/components/providers/UserProvider';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { getDashboardPath } from '@/utils/auth';
 
 const programItems = [
   {
@@ -107,6 +109,7 @@ const publicNavItems = [
 export default function Navigation() {
   const { isLoaded, isSignedIn } = useAuth();
   const { user } = useUser();
+  const { userProfile } = useUserProfile();
   const router = useRouter();
   const pathname = usePathname();
   const theme = useTheme();
@@ -145,7 +148,9 @@ export default function Navigation() {
 
   const handleDashboard = () => {
     handleClose();
-    router.push('/dashboard/teacher');
+    // Use role-based routing
+    const dashboardPath = userProfile ? getDashboardPath(userProfile.role) : '/dashboard';
+    router.push(dashboardPath);
   };
 
   const handleSettings = () => {
@@ -413,7 +418,9 @@ export default function Navigation() {
                   startIcon={<Dashboard />}
                     onClick={() => {
                       setProgramsAnchorEl(null);
-                      router.push('/dashboard/teacher');
+                      // Use role-based routing
+                      const dashboardPath = userProfile ? getDashboardPath(userProfile.role) : '/dashboard';
+                      router.push(dashboardPath);
                     }}
                 >
                   Dashboard
@@ -511,7 +518,7 @@ export default function Navigation() {
             <Dashboard fontSize="small" />
           </ListItemIcon>
           <ListItemText>Dashboard</ListItemText>
-            </MenuItem>
+        </MenuItem>
         <MenuItem onClick={handleSettings}>
           <ListItemIcon>
             <Settings fontSize="small" />
