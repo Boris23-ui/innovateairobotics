@@ -21,6 +21,9 @@ export async function POST(request: Request) {
     return NextResponse.json(submission);
   } catch (error) {
     console.error('[SUBMISSIONS_POST]', error);
+    if (error instanceof Error && error.message === 'Supabase not configured') {
+      return new NextResponse('Database not configured', { status: 503 });
+    }
     return new NextResponse('Internal Error', { status: 500 });
   }
 }
@@ -44,6 +47,9 @@ export async function GET(request: Request) {
     }
   } catch (error) {
     console.error('[SUBMISSIONS_GET]', error);
+    if (error instanceof Error && error.message === 'Supabase not configured') {
+      return new NextResponse('Database not configured', { status: 503 });
+    }
     return new NextResponse('Internal Error', { status: 500 });
   }
 } 

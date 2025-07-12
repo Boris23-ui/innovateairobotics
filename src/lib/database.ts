@@ -3,9 +3,17 @@ import type { Database } from './supabase';
 
 type Tables = Database['public']['Tables'];
 
+// Helper function to check if Supabase is properly configured
+const isSupabaseConfigured = () => {
+  return process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+};
+
 // User operations
 export const userService = {
   async create(user: Tables['users']['Insert']) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('users')
       .insert(user)
@@ -17,6 +25,9 @@ export const userService = {
   },
 
   async getById(id: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('users')
       .select('*')
@@ -28,6 +39,9 @@ export const userService = {
   },
 
   async getByEmail(email: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('users')
       .select('*')
@@ -39,6 +53,9 @@ export const userService = {
   },
 
   async update(id: string, updates: Tables['users']['Update']) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('users')
       .update(updates)
@@ -51,6 +68,9 @@ export const userService = {
   },
 
   async delete(id: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { error } = await supabase
       .from('users')
       .delete()
@@ -63,6 +83,9 @@ export const userService = {
 // Course operations
 export const courseService = {
   async create(course: Tables['courses']['Insert']) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('courses')
       .insert(course)
@@ -74,6 +97,9 @@ export const courseService = {
   },
 
   async getAll() {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('courses')
       .select(`
@@ -86,6 +112,9 @@ export const courseService = {
   },
 
   async getById(id: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('courses')
       .select(`
@@ -100,6 +129,9 @@ export const courseService = {
   },
 
   async getByInstructor(instructorId: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('courses')
       .select('*')
@@ -110,6 +142,9 @@ export const courseService = {
   },
 
   async update(id: string, updates: Tables['courses']['Update']) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('courses')
       .update(updates)
@@ -122,6 +157,9 @@ export const courseService = {
   },
 
   async delete(id: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { error } = await supabase
       .from('courses')
       .delete()
@@ -134,6 +172,9 @@ export const courseService = {
 // Assignment operations
 export const assignmentService = {
   async create(assignment: Tables['assignments']['Insert']) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('assignments')
       .insert(assignment)
@@ -145,6 +186,9 @@ export const assignmentService = {
   },
 
   async getAll() {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('assignments')
       .select('*');
@@ -154,6 +198,9 @@ export const assignmentService = {
   },
 
   async getById(id: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('assignments')
       .select('*')
@@ -165,6 +212,9 @@ export const assignmentService = {
   },
 
   async getByCourse(courseId: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('assignments')
       .select('*')
@@ -175,6 +225,9 @@ export const assignmentService = {
   },
 
   async update(id: string, updates: Tables['assignments']['Update']) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('assignments')
       .update(updates)
@@ -187,6 +240,9 @@ export const assignmentService = {
   },
 
   async delete(id: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { error } = await supabase
       .from('assignments')
       .delete()
@@ -199,6 +255,9 @@ export const assignmentService = {
 // Submission operations
 export const submissionService = {
   async create(submission: Tables['submissions']['Insert']) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('submissions')
       .insert(submission)
@@ -210,6 +269,9 @@ export const submissionService = {
   },
 
   async getByAssignment(assignmentId: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('submissions')
       .select(`
@@ -223,6 +285,9 @@ export const submissionService = {
   },
 
   async getByStudent(studentId: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('submissions')
       .select(`
@@ -236,6 +301,9 @@ export const submissionService = {
   },
 
   async update(id: string, updates: Tables['submissions']['Update']) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('submissions')
       .update(updates)
@@ -251,6 +319,9 @@ export const submissionService = {
 // Enrollment operations
 export const enrollmentService = {
   async create(enrollment: Tables['enrollments']['Insert']) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('enrollments')
       .insert(enrollment)
@@ -262,6 +333,9 @@ export const enrollmentService = {
   },
 
   async getByStudent(studentId: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('enrollments')
       .select(`
@@ -275,6 +349,9 @@ export const enrollmentService = {
   },
 
   async getByCourse(courseId: string) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('enrollments')
       .select(`
@@ -288,6 +365,9 @@ export const enrollmentService = {
   },
 
   async update(id: string, updates: Tables['enrollments']['Update']) {
+    if (!isSupabaseConfigured()) {
+      throw new Error('Supabase not configured');
+    }
     const { data, error } = await supabase
       .from('enrollments')
       .update(updates)

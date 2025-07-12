@@ -17,6 +17,12 @@ export async function GET() {
     return NextResponse.json(user);
   } catch (error) {
     console.error('Auth check error:', error);
+    if (error instanceof Error && error.message === 'Supabase not configured') {
+      return NextResponse.json(
+        { message: 'Database not configured' },
+        { status: 503 }
+      );
+    }
     return NextResponse.json(
       { message: 'Internal server error' },
       { status: 500 }

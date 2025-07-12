@@ -24,8 +24,7 @@ const defaultProjects: Project[] = [
   },
   {
     title: "Sensor Array Project",
-    status: "in_review",
-    feedback: null
+    status: "in_review"
   },
   {
     title: "AI Vision System",
