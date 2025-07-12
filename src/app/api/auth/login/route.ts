@@ -1,55 +1,43 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-
-// Mock user database - replace with your actual database
-const users = [
-  {
-    id: '1',
-    email: 'teacher@example.com',
-    password: 'password123',
-    name: 'John Doe',
-    role: 'teacher',
-  },
-  {
-    id: '2',
-    email: 'student@example.com',
-    password: 'password123',
-    name: 'Jane Smith',
-    role: 'student',
-  },
-];
+import { auth } from '@clerk/nextjs';
+import { userService } from '@/lib/database';
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json();
-
-    // Find user
-    const user = users.find((u) => u.email === email);
-    if (!user || user.password !== password) {
+    const { userId } = auth();
+    if (!userId) {
       return NextResponse.json(
-        { message: 'Invalid email or password' },
+        { message: 'Unauthorized' },
         { status: 401 }
       );
     }
 
-    // Create session
-    const session = {
-      id: Math.random().toString(36).substring(7),
-      userId: user.id,
-      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
-    };
+    // Get user from Clerk
+    const { user } = await auth();
+    if (!user) {
+      return NextResponse.json(
+        { message: 'User not found' },
+        { status: 404 }
+      );
+    }
 
-    // Set session cookie
-    cookies().set('session', JSON.stringify(session), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 24 * 60 * 60, // 24 hours
-    });
+    // Check if user exists in our database
+    let dbUser;
+    try {
+      dbUser = await userService.getById(userId);
+    } catch (error) {
+      // User doesn't exist in our database, create them
+      const newUser = {
+        id: userId,
+        email: user.emailAddresses[0]?.emailAddress || '',
+        name: user.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : 'Unknown',
+        role: 'student' as const, // Default role
+      };
+      
+      dbUser = await userService.create(newUser);
+    }
 
-    // Return user data (excluding password)
-    const { password: _, ...userWithoutPassword } = user;
-    return NextResponse.json(userWithoutPassword);
+    return NextResponse.json(dbUser);
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(

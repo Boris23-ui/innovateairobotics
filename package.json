@@ -1,35 +1,66 @@
 {
-  "name": "innovateairobotics",
-  "version": "0.1.0",
+  "name": "innovateai-robotics-platform",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@clerk/nextjs": "^4.29.9",
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.13",
-    "@mui/material": "^5.15.13",
-    "framer-motion": "^12.15.0",
-    "next": "^14.2.25",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-hot-toast": "^2.5.2",
-    "zod": "^3.25.46"
+    "dev": "concurrently \"npm run dev:shell\" \"npm run dev:student\" \"npm run dev:teacher\" \"npm run dev:admin\"",
+    "dev:shell": "cd apps/shell && npm run dev",
+    "dev:student": "cd apps/student-dashboard && npm run dev -- --port 3001",
+    "dev:teacher": "cd apps/teacher-dashboard && npm run dev -- --port 3002",
+    "dev:admin": "cd apps/admin-dashboard && npm run dev -- --port 3003",
+    "dev:courses": "cd apps/course-modules && npm run dev -- --port 3004",
+    "dev:assignments": "cd apps/assignment-system && npm run dev -- --port 3005",
+    "dev:progress": "cd apps/progress-tracker && npm run dev -- --port 3006",
+    
+    "build": "npm run build:shared && npm run build:modules && npm run build:shell",
+    "build:shared": "cd apps/shared-components && npm run build",
+    "build:modules": "concurrently \"npm run build:student\" \"npm run build:teacher\" \"npm run build:admin\" \"npm run build:courses\"",
+    "build:student": "cd apps/student-dashboard && npm run build",
+    "build:teacher": "cd apps/teacher-dashboard && npm run build",
+    "build:admin": "cd apps/admin-dashboard && npm run build",
+    "build:courses": "cd apps/course-modules && npm run build",
+    "build:shell": "cd apps/shell && npm run build",
+    
+    "install:all": "npm install && npm run install:apps",
+    "install:apps": "concurrently \"cd apps/shell && npm install\" \"cd apps/student-dashboard && npm install\" \"cd apps/teacher-dashboard && npm install\" \"cd apps/admin-dashboard && npm install\" \"cd apps/course-modules && npm install\" \"cd apps/shared-components && npm install\"",
+    
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:reset": "supabase db reset",
+    "supabase:gen-types": "supabase gen types typescript --local > shared/types/supabase.types.ts",
+    "supabase:migrate": "supabase db push",
+    
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "concurrently \"npm run test:shell\" \"npm run test:student\" \"npm run test:teacher\"",
+    "test:e2e": "cd apps/shell && npm run test:e2e",
+    "test:shell": "cd apps/shell && npm test",
+    "test:student": "cd apps/student-dashboard && npm test",
+    "test:teacher": "cd apps/teacher-dashboard && npm test",
+    
+    "lint": "npm run lint:all",
+    "lint:all": "concurrently \"npm run lint:shell\" \"npm run lint:student\" \"npm run lint:teacher\"",
+    "lint:shell": "cd apps/shell && npm run lint",
+    "lint:student": "cd apps/student-dashboard && npm run lint",
+    "lint:teacher": "cd apps/teacher-dashboard && npm run lint",
+    
+    "deploy:staging": "npm run build && npm run deploy:modules:staging",
+    "deploy:production": "npm run build && npm run deploy:modules:production",
+    "deploy:modules:staging": "concurrently \"npm run deploy:shell:staging\" \"npm run deploy:student:staging\" \"npm run deploy:teacher:staging\"",
+    "deploy:modules:production": "concurrently \"npm run deploy:shell:production\" \"npm run deploy:student:production\" \"npm run deploy:teacher:production\""
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "autoprefixer": "^10.0.1",
-    "eslint": "^8",
-    "eslint-config-next": "^14.2.25",
-    "postcss": "^8",
-    "tailwindcss": "^3.3.0",
-    "typescript": "^5"
+    "concurrently": "^8.2.0",
+    "lerna": "^7.1.0",
+    "supabase": "^1.110.0",
+    "@playwright/test": "^1.40.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0",
+    "@clerk/nextjs": "^4.27.0",
+    "@mui/material": "^5.14.0",
+    "@mui/icons-material": "^5.14.0",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "framer-motion": "^10.16.0"
   }
 }
