@@ -27,7 +27,8 @@ import {
   Code as CodeIcon,
   Science as ScienceIcon,
   TrendingUp as TrendingIcon,
-  Celebration as CelebrationIcon
+  Celebration as CelebrationIcon,
+  CheckCircle as CheckIcon
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { Badge as BadgeType, BadgeCategory } from '@shared/types';

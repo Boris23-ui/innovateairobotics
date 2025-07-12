@@ -1,8 +1,15 @@
 import { Container, Typography } from '@mui/material';
 import SubmittedProjects from '@/components/student/SubmittedProjects';
 
+interface Project {
+  title: string;
+  status: 'graded' | 'in_review';
+  score?: string;
+  feedback?: string;
+}
+
 // Mock data - Replace with actual data from your backend
-const projects = [
+const projects: Project[] = [
   { 
     title: "Maze Solver Robot", 
     status: "graded", 
@@ -11,8 +18,7 @@ const projects = [
   },
   { 
     title: "Sensor Array Project", 
-    status: "in_review", 
-    feedback: null 
+    status: "in_review" 
   },
   { 
     title: "Autonomous Navigation System", 

@@ -1,3 +1,5 @@
+'use client';
+
 import { Container, Typography, Box, Tabs, Tab, Paper } from '@mui/material';
 import LearningResources from '@/components/student/LearningResources';
 import { useState } from 'react';
