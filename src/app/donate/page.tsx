@@ -25,25 +25,25 @@ import Image from 'next/image';
 const donationTiers = [
   {
     title: 'Supporter',
-    amount: 25,
+    amount: 50,
     description: 'Help provide basic robotics kits for one student',
     icon: <Favorite fontSize="large" />,
   },
   {
     title: 'Educator',
-    amount: 50,
+    amount: 100,
     description: 'Support a classroom workshop session',
     icon: <School fontSize="large" />,
   },
   {
     title: 'Innovator',
-    amount: 100,
+    amount: 500,
     description: 'Fund advanced robotics equipment for a team',
     icon: <Science fontSize="large" />,
   },
   {
     title: 'Visionary',
-    amount: 250,
+    amount: 1000,
     description: 'Sponsor a complete robotics program for a school',
     icon: <Code fontSize="large" />,
   },
