@@ -282,3 +282,25 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 *InnovateAI Robotics Inc. - Empowering the next generation of robotics engineers*
 
+---
+
+## How to Fix This on Windows
+
+1. **Close all running Node.js/Next.js processes** (including any dev servers).
+2. **Delete the `.next` directory** manually:
+   - In File Explorer, go to `E:\innovateairobotics`
+   - Delete the `.next` folder (it may be locked—if so, restart your computer and try again).
+3. **Run your terminal as Administrator**:
+   - Right-click your terminal app and select “Run as administrator.”
+4. **Try the build again**:
+   ```sh
+   npm run build
+   ```
+
+---
+
+**This is a common issue on Windows when files are locked by a process or antivirus.**  
+If the problem persists after a reboot and running as admin, let me know and we’ll try additional steps.
+
+Would you like me to walk you through these steps, or do you want to try them and report back?
+
