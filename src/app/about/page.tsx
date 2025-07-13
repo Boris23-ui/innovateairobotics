@@ -94,7 +94,7 @@ export default function AboutPage() {
                 This experience led him to found Innovate AI Robotics Inc., a nonprofit dedicated to advancing robotics education 
                 and fostering innovation, teamwork, and problem-solving through hands-on classes for youth of all ages.
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
                 John received his bachelor's degree from California Lutheran University in Business Administration/Information Systems.
               </Typography>
             </CardContent>
