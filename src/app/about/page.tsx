@@ -139,9 +139,7 @@ export default function AboutPage() {
                 delivered for students, educators, and industry professionals, both in-person and virtually.
               </Typography>
               <Typography variant="body1" paragraph>
-                Previously, he served as a Test and Assessment Developer at the ICDL Foundation, where he collaborated on the 
-                creation of high-quality assessments and supported multimedia content development. His journey also includes a 
-                role as a Creative Writer at Baserange.
+              With all the experience he garnered over the years, he is now building the all-in-one InnovateAI Robotics Inc. standalone App that will transform how robotics education is offered to students, teachers, organization and leading institutions. Boris is currently pursuing his Bachelor’s degree in Computer Science.
               </Typography>
             </CardContent>
           </Card>
