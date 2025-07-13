@@ -2,35 +2,83 @@
 
 🚀 **Empowering the Next Generation of Robotics Engineers**
 
-A comprehensive micro-frontend architecture designed specifically for educational robotics and AI learning platforms. Built with Next.js 14, Material-UI, Clerk authentication, and Supabase for real-time features.
+A comprehensive micro-frontend architecture designed for educational robotics and AI learning platforms. Built with Next.js 14, Clerk authentication, and Supabase for real-time features.
 
-## 🏗️ Architecture Overview
+## 🏗️ Micro-Frontend Structure & Main Routes
 
-### Micro-Frontend Structure
+This project uses a single Next.js app with microfrontend-style routing. Each user role and major feature has a dedicated route:
 
+| Microfrontend         | Main Route                  | Description                        |
+|----------------------|-----------------------------|------------------------------------|
+| Student Dashboard    | `/student/dashboard`        | Student learning interface         |
+| Teacher Dashboard    | `/teacher/dashboard`        | Teacher course management          |
+| Admin Dashboard      | `/admin/dashboard`          | Platform administration            |
+| Courses              | `/courses`                  | Course catalog/content             |
+| Assignments          | `/assignments`              | Assignment system                  |
+| Progress Tracker     | `/progress`                 | Progress and achievements          |
+
+- The root route `/` automatically redirects to the appropriate dashboard based on user role.
+- All microfrontend root routes (e.g., `/student`, `/teacher`, `/admin`) redirect to their respective dashboards.
+- Role-based navigation is handled automatically after login.
+
+## ⚙️ Environment Setup
+
+1. **Copy the example environment file:**
+   ```sh
+   cp .env.example .env.local
+   ```
+2. **Fill in your environment variables in `.env.local`:**
+   ```env
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+   CLERK_SECRET_KEY=your_clerk_secret_key
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+   - **Important:** The `NEXT_PUBLIC_SUPABASE_ANON_KEY` must be a single line (no line breaks).
+   - If you encounter build errors about missing env vars, double-check for typos and line breaks.
+
+## 🪟 Special Windows Notes
+
+- If you encounter errors like `EPERM: operation not permitted` or `EADDRINUSE: address already in use`, try the following:
+  1. Close all Node.js/Next.js processes in Task Manager.
+  2. Restart your computer.
+  3. Run your terminal as Administrator.
+  4. Temporarily disable antivirus if it interferes with file/process access.
+- Always ensure your `.env.local` file uses Windows line endings (CRLF) if editing in Notepad.
+
+## 🚀 Running & Building the Project
+
+### Install Dependencies
+```sh
+npm install
 ```
-innovateai-robotics/
-├── apps/
-│   ├── shell/                        # Main container app
-│   ├── student-dashboard/            # Student learning dashboard
-│   ├── teacher-dashboard/            # Teacher course management
-│   ├── admin-dashboard/              # Administrative controls
-│   ├── course-modules/               # Course content delivery
-│   ├── assignment-system/            # Assignment creation & submission
-│   ├── progress-tracker/             # Progress monitoring & badges
-│   └── shared-components/            # Shared UI components
-├── services/
-│   ├── api-gateway/                  # API orchestration
-│   ├── notification-service/         # Real-time notifications
-│   └── analytics-service/            # Learning analytics
-├── shared/
-│   ├── types/                        # Shared TypeScript types
-│   ├── utils/                        # Shared utilities
-│   ├── constants/                    # Platform constants
-│   └── supabase/                     # Database schemas & RLS
-└── docker/
-    └── docker-compose.yml
+
+### Start the Development Server
+```sh
+npm run dev
 ```
+- The app will be available at [http://localhost:3000](http://localhost:3000)
+- All microfrontend routes are accessible from this single server.
+
+### Build for Production
+```sh
+npm run build
+npm start
+```
+
+## 🧭 Navigation & Role-Based Routing
+- Navigation is role-aware: after login, users are redirected to their dashboard.
+- The navigation menu adapts to the logged-in user's role.
+- Protected routes require authentication; unauthenticated users are redirected to `/login`.
+
+## 🛠️ Troubleshooting
+- **404 at `/` or dashboard routes:** Ensure you are logged in and your user has the correct role assigned.
+- **Environment variable errors:** Double-check `.env.local` for typos, missing values, or line breaks.
+- **Windows process errors:** See the Special Windows Notes above.
+
+## 📚 Documentation & Support
+- See the rest of this README for platform features, design system, and contribution guidelines.
+- For more help, see the [Troubleshooting](./docs/troubleshooting.md) guide or contact support.
 
 ## 🎯 Key Features
 
@@ -49,127 +97,6 @@ innovateai-robotics/
 - **Responsive Design**: Mobile-first approach for all age groups
 - **Accessibility**: WCAG 2.1 compliant for inclusive learning
 - **Security**: Row Level Security (RLS) with Supabase
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js 18+ 
-- Docker & Docker Compose
-- Supabase CLI
-- Clerk Account
-
-### 1. Clone and Install
-```bash
-git clone <repository-url>
-cd innovateai-robotics
-npm run install:all
-```
-
-### 2. Environment Setup
-```bash
-# Copy environment template
-cp .env.example .env.local
-
-# Fill in your environment variables
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
-CLERK_SECRET_KEY=your_clerk_secret
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
-
-### 3. Database Setup
-```bash
-# Start Supabase locally
-npm run supabase:start
-
-# Apply database schema
-npm run supabase:migrate
-
-# Generate TypeScript types
-npm run supabase:gen-types
-```
-
-### 4. Development
-```bash
-# Start all micro-frontends
-npm run dev
-
-# Or start individual modules
-npm run dev:shell        # Main app (port 3000)
-npm run dev:student      # Student dashboard (port 3001)
-npm run dev:teacher      # Teacher dashboard (port 3002)
-npm run dev:admin        # Admin dashboard (port 3003)
-npm run dev:courses      # Course modules (port 3004)
-npm run dev:assignments  # Assignment system (port 3005)
-npm run dev:progress     # Progress tracker (port 3006)
-```
-
-## 🏛️ Module Architecture
-
-### Shell Application (Main Container)
-- **Port**: 3000
-- **Purpose**: Main entry point and navigation
-- **Features**: 
-  - Role-based routing
-  - Authentication with Clerk
-  - Module federation
-  - Global state management
-
-### Student Dashboard
-- **Port**: 3001
-- **Purpose**: Student learning interface
-- **Features**:
-  - Course catalog and enrollment
-  - Progress tracking with visual indicators
-  - Interactive assignments
-  - Badge and achievement system
-  - Personalized learning paths
-
-### Teacher Dashboard
-- **Port**: 3002
-- **Purpose**: Course and student management
-- **Features**:
-  - Course creation and management
-  - Assignment builder with robotics components
-  - Student progress analytics
-  - Grading and feedback system
-  - Class management tools
-
-### Admin Dashboard
-- **Port**: 3003
-- **Purpose**: Platform administration
-- **Features**:
-  - User role management
-  - Platform analytics and insights
-  - Content management system
-  - System monitoring and health checks
-
-### Course Modules
-- **Port**: 3004
-- **Purpose**: Educational content delivery
-- **Features**:
-  - Age-group specific content
-  - Interactive lesson players
-  - Code playground for visual programming
-  - Robot simulation components
-
-### Assignment System
-- **Port**: 3005
-- **Purpose**: Assignment creation and submission
-- **Features**:
-  - Interactive assignment builder
-  - Robotics project templates
-  - Code submission and testing
-  - Peer review and collaboration
-
-### Progress Tracker
-- **Port**: 3006
-- **Purpose**: Learning analytics and achievements
-- **Features**:
-  - Visual progress tracking
-  - Achievement badge system
-  - Learning analytics
-  - Parent/teacher reports
 
 ## 🎨 Design System
 
