@@ -40,11 +40,11 @@ export default authMiddleware({
       return NextResponse.redirect(signInUrl);
     }
 
-    // Handle authenticated users accessing protected routes
-    if (auth.userId && req.nextUrl.pathname === '/') {
-      // Redirect root to dashboard which will handle role-based routing
-      return NextResponse.redirect(new URL('/dashboard', req.url));
-    }
+    // --- Removed redirect for logged-in users at root ('/') ---
+    // if (auth.userId && req.nextUrl.pathname === '/') {
+    //   // Redirect root to dashboard which will handle role-based routing
+    //   return NextResponse.redirect(new URL('/dashboard', req.url));
+    // }
   }
 });
 
