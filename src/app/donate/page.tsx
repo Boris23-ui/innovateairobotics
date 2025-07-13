@@ -21,6 +21,8 @@ import {
   EmojiObjects,
 } from '@mui/icons-material';
 import Image from 'next/image';
+import { loadStripe } from '@stripe/stripe-js';
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const donationTiers = [
   {
@@ -55,8 +57,21 @@ export default function DonatePage() {
   const [customAmount, setCustomAmount] = useState('');
 
   const handleDonate = async (amount: number) => {
-    // TODO: Implement Stripe integration
-    console.log('Donating:', amount);
+    if (!amount || isNaN(amount) || amount <= 0) {
+      alert('Please enter a valid donation amount.');
+      return;
+    }
+    const res = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: Math.round(amount * 100) }), // dollars to cents
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url; // Redirect to Stripe Checkout
+    } else {
+      alert('Error creating checkout session');
+    }
   };
 
   return (
@@ -250,7 +265,7 @@ export default function DonatePage() {
                   fullWidth
                   onClick={() => handleDonate(tier.amount)}
                 >
-                  Donate Now
+                  Donate
                 </Button>
               </CardContent>
             </Card>
@@ -283,10 +298,10 @@ export default function DonatePage() {
             variant="contained"
             size="large"
             fullWidth
-            onClick={() => selectedAmount && handleDonate(selectedAmount)}
-            disabled={!selectedAmount}
+            sx={{ mt: 2 }}
+            onClick={() => handleDonate(Number(customAmount))}
           >
-            Donate ${selectedAmount || '0'}
+            Donate Custom Amount
           </Button>
         </CardContent>
       </Card>
