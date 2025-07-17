@@ -42,9 +42,11 @@ export default function StudentDashboard() {
   const theme = useTheme();
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ px: { xs: 1, sm: 2, md: 3 } }}>
       <Box sx={{ 
         my: 4,
+        minHeight: 0,
+        overflowY: 'auto',
         transition: theme.transitions.create(['background-color', 'color'], {
           duration: theme.transitions.duration.standard,
         }),

@@ -70,7 +70,7 @@ export default function Footer() {
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           {/* Company Info */}
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4} sx={{ mb: { xs: 4, md: 0 } }}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               InnovateAI Robotics
             </Typography>
@@ -110,7 +110,7 @@ export default function Footer() {
 
           {/* Footer Links */}
           {footerLinks.map((section) => (
-            <Grid item xs={12} sm={6} md={2} key={section.title}>
+            <Grid item xs={12} sm={6} md={2} key={section.title} sx={{ mb: { xs: 3, md: 0 } }}>
               <Typography variant="h6" color="text.primary" gutterBottom>
                 {section.title}
               </Typography>
@@ -139,16 +139,18 @@ export default function Footer() {
             pt: 3,
             borderTop: `1px solid ${theme.palette.divider}`,
             display: 'flex',
-            justifyContent: 'space-between',
+            flexDirection: { xs: 'column', sm: 'row' },
+            justifyContent: { xs: 'center', sm: 'space-between' },
             alignItems: 'center',
             flexWrap: 'wrap',
             gap: 2,
+            textAlign: { xs: 'center', sm: 'left' },
           }}
         >
           <Typography variant="body2" color="text.secondary">
             © {new Date().getFullYear()} InnovateAI Robotics. All rights reserved.
           </Typography>
-          <Box>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: { xs: 'center', sm: 'flex-end' } }}>
             {socialLinks.map((social, index) => (
               <IconButton
                 key={index}
@@ -157,6 +159,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 color="inherit"
                 size="small"
+                sx={{ mx: 0.5 }}
               >
                 {social.icon}
               </IconButton>
