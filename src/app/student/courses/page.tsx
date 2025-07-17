@@ -11,11 +11,10 @@ const courses = [
 
 export default function CoursesPage() {
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ px: { xs: 1, sm: 2, md: 3 }, py: { xs: 2, md: 4 } }}>
       <Typography variant="h4" component="h1" gutterBottom>
         My Courses
       </Typography>
-      
       <Grid container spacing={3}>
         {courses.map((course, index) => (
           <Grid item xs={12} md={6} key={index}>

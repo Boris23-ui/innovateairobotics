@@ -12,7 +12,7 @@ export default function ResourcesPage() {
   };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ px: { xs: 1, sm: 2, md: 3 }, py: { xs: 2, md: 4 } }}>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Learning Resources
@@ -21,8 +21,7 @@ export default function ResourcesPage() {
           Access all your learning materials, tutorials, and guides in one place
         </Typography>
       </Box>
-
-      <Paper sx={{ mb: 4 }}>
+      <Paper sx={{ mb: 4, overflowX: 'auto' }}>
         <Tabs
           value={activeTab}
           onChange={handleTabChange}
@@ -45,7 +44,6 @@ export default function ResourcesPage() {
           <Tab label="Labs" />
         </Tabs>
       </Paper>
-
       <LearningResources />
     </Container>
   );
