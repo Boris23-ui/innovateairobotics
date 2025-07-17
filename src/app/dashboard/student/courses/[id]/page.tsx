@@ -210,11 +210,11 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
   }
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Container maxWidth="lg" sx={{ px: { xs: 1, sm: 2, md: 3 }, py: { xs: 2, md: 4 } }}>
       {/* Course Header */}
       <Box sx={{ mb: 4 }}>
         <Grid container spacing={3} alignItems="center">
-          <Grid xs={12} md={8}>
+          <Grid item xs={12} md={8}>
             <Typography variant="h4" component="h1" gutterBottom>
               {courseData.name}
             </Typography>
@@ -234,7 +234,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
               />
             </Stack>
           </Grid>
-          <Grid xs={12} md={4}>
+          <Grid item xs={12} md={4}>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -265,7 +265,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
       </Box>
 
       {/* Course Content Tabs */}
-      <Paper sx={{ width: '100%', mb: 4 }}>
+      <Paper sx={{ width: '100%', mb: 4, overflowX: 'auto' }}>
         <Tabs
           value={tabValue}
           onChange={handleTabChange}
@@ -333,7 +333,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
               <Card key={assignment.id} sx={{ mb: 2 }}>
                 <CardContent>
                   <Grid container spacing={2} alignItems="center">
-                    <Grid xs={12} md={8}>
+                    <Grid item xs={12} md={8}>
                       <Typography variant="h6">
                         {assignment.title}
                       </Typography>
@@ -351,7 +351,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
                         />
                       </Stack>
                     </Grid>
-                    <Grid xs={12} md={4}>
+                    <Grid item xs={12} md={4}>
                       <Button
                         variant="contained"
                         fullWidth
@@ -371,7 +371,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
         <TabPanel value={tabValue} index={2}>
           <Grid container spacing={2}>
             {courseData.resources.map((resource) => (
-              <Grid xs={12} md={4} key={resource.id}>
+              <Grid item xs={12} md={4} key={resource.id}>
                 <Card>
                   <CardContent>
                     <Typography variant="h6" gutterBottom>

@@ -31,7 +31,7 @@ export default function AssignmentsPage() {
   const theme = useTheme();
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ px: { xs: 1, sm: 2, md: 3 }, py: { xs: 2, md: 4 } }}>
       <Typography 
         variant="h4" 
         component="h1" 
@@ -46,7 +46,6 @@ export default function AssignmentsPage() {
       >
         Pending Assignments
       </Typography>
-      
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <UpcomingAssignments assignments={mockAssignments} />

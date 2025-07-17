@@ -118,7 +118,7 @@ export default function AssignmentDetailPage({ params }: { params: { id: string 
   }
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Container maxWidth="lg" sx={{ px: { xs: 1, sm: 2, md: 3 }, py: { xs: 2, md: 4 } }}>
       {/* Breadcrumbs */}
       <Breadcrumbs separator={<NavigateNext fontSize="small" />} sx={{ mb: 3 }}>
         <Link
@@ -146,7 +146,7 @@ export default function AssignmentDetailPage({ params }: { params: { id: string 
 
       {/* Assignment Header */}
         <Grid container spacing={3}>
-        <Grid item component="div" xs={12} md={8}>
+        <Grid item xs={12} md={8}>
             <Typography variant="h4" component="h1" gutterBottom>
               {assignmentData.title}
             </Typography>
@@ -169,7 +169,7 @@ export default function AssignmentDetailPage({ params }: { params: { id: string 
               />
             </Stack>
           </Grid>
-        <Grid item component="div" xs={12} md={4}>
+        <Grid item xs={12} md={4}>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>

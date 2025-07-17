@@ -27,6 +27,7 @@ import {
   Badge,
   ListItemIcon,
   CircularProgress,
+  useTheme,
 } from '@mui/material';
 import {
   School,
@@ -75,6 +76,7 @@ const notifications = [
 ];
 
 export default function TeacherDashboard() {
+  const theme = useTheme();
   const { isLoaded, userId } = useAuth();
   const { user } = useUser();
   const router = useRouter();
@@ -259,351 +261,360 @@ export default function TeacherDashboard() {
   }
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
-      <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Avatar sx={{ width: 56, height: 56, bgcolor: 'primary.main' }}>
-            {user?.firstName?.charAt(0) || 'T'}
-          </Avatar>
-          <Box>
-            <Typography variant="h4" component="h1" gutterBottom>
-              Welcome back, {user?.firstName}!
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              Here's what's happening with your courses today.
-            </Typography>
-          </Box>
-        </Stack>
-        <Stack direction="row" spacing={2}>
-          <Tooltip title="Notifications">
-            <IconButton onClick={handleNotificationClick}>
-              <Badge badgeContent={notifications.length} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </Tooltip>
-          <Menu
-            anchorEl={notificationAnchor}
-            open={Boolean(notificationAnchor)}
-            onClose={handleNotificationClose}
-            PaperProps={{
-              sx: { width: 320, maxHeight: 400 },
+    <Container maxWidth="lg" sx={{ px: { xs: 1, sm: 2, md: 3 } }}>
+      <Box sx={{
+        my: 4,
+        minHeight: 0,
+        overflowY: 'auto',
+        transition: theme.transitions.create(['background-color', 'color'], {
+          duration: theme.transitions.duration.standard,
+        }),
+      }}>
+        <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Avatar sx={{ width: 56, height: 56, bgcolor: 'primary.main' }}>
+              {user?.firstName?.charAt(0) || 'T'}
+            </Avatar>
+            <Box>
+              <Typography variant="h4" component="h1" gutterBottom>
+                Welcome back, {user?.firstName}!
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                Here's what's happening with your courses today.
+              </Typography>
+            </Box>
+          </Stack>
+          <Stack direction="row" spacing={2}>
+            <Tooltip title="Notifications">
+              <IconButton onClick={handleNotificationClick}>
+                <Badge badgeContent={notifications.length} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              anchorEl={notificationAnchor}
+              open={Boolean(notificationAnchor)}
+              onClose={handleNotificationClose}
+              PaperProps={{
+                sx: { width: 320, maxHeight: 400 },
+              }}
+            >
+              {notifications.map((notification) => (
+                <MenuItem key={notification.id} onClick={handleNotificationClose}>
+                  <ListItemText
+                    primary={notification.title}
+                    secondary={
+                      <>
+                        <Typography variant="body2" color="text.secondary">
+                          {notification.message}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {notification.time}
+                        </Typography>
+                      </>
+                    }
+                  />
+                </MenuItem>
+              ))}
+            </Menu>
+          </Stack>
+        </Box>
+
+        {/* Stats Section */}
+        <Box sx={{ mb: 4 }}>
+          <Grid
+            container
+            spacing={3}
+            wrap={{ xs: 'nowrap', md: 'wrap' } as any}
+            sx={{
+              overflowX: { xs: 'auto', md: 'visible' },
+              pb: { xs: 2, md: 0 },
+              mx: { xs: -2, md: 0 },
             }}
           >
-            {notifications.map((notification) => (
-              <MenuItem key={notification.id} onClick={handleNotificationClose}>
-                <ListItemText
-                  primary={notification.title}
-                  secondary={
-                    <>
-                      <Typography variant="body2" color="text.secondary">
-                        {notification.message}
+            <Grid item xs={12} md={3}>
+              <Card elevation={4} sx={{
+                borderRadius: 3,
+                background: 'linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)',
+                color: 'white',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
+              }}>
+                <CardContent>
+                  <Stack direction="row" alignItems="center" spacing={2}>
+                    <Avatar sx={{ bgcolor: 'white', color: '#1976d2', width: 56, height: 56 }}>
+                      <School fontSize="large" />
+                    </Avatar>
+                    <Box>
+                      <Typography variant="subtitle2" sx={{ color: 'white', opacity: 0.85 }}>
+                        Active Courses
                       </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {notification.time}
+                      <Typography variant="h4" sx={{ color: 'white' }}>{courses.length}</Typography>
+                    </Box>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} md={3}>
+              <Card elevation={4} sx={{
+                borderRadius: 3,
+                background: 'linear-gradient(135deg, #388e3c 0%, #66bb6a 100%)',
+                color: 'white',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
+              }}>
+                <CardContent>
+                  <Stack direction="row" alignItems="center" spacing={2}>
+                    <Avatar sx={{ bgcolor: 'white', color: '#388e3c', width: 56, height: 56 }}>
+                      <People fontSize="large" />
+                    </Avatar>
+                    <Box>
+                      <Typography variant="subtitle2" sx={{ color: 'white', opacity: 0.85 }}>
+                        Total Students
                       </Typography>
-                    </>
-                  }
-                />
-              </MenuItem>
-            ))}
-          </Menu>
-        </Stack>
-      </Box>
+                      <Typography variant="h4" sx={{ color: 'white' }}>
+                        {courses.reduce((acc, course) => acc + (course.students?.length || 0), 0)}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
 
-      {/* Stats Section */}
-      <Box sx={{ mb: 4 }}>
-        <Grid
-          container
-          spacing={3}
-          wrap={{ xs: 'nowrap', md: 'wrap' } as any}
-          sx={{
-            overflowX: { xs: 'auto', md: 'visible' },
-            pb: { xs: 2, md: 0 },
-            mx: { xs: -2, md: 0 },
-          }}
-        >
-          <Box sx={{ minWidth: { xs: 260, md: 'auto' } }}>
-            <Card elevation={4} sx={{
-              borderRadius: 3,
-              background: 'linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)',
-              color: 'white',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-              '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
-            }}>
+            <Grid item xs={12} md={3}>
+              <Card elevation={4} sx={{
+                borderRadius: 3,
+                background: 'linear-gradient(135deg, #fbc02d 0%, #ffd54f 100%)',
+                color: 'white',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
+              }}>
+                <CardContent>
+                  <Stack direction="row" alignItems="center" spacing={2}>
+                    <Avatar sx={{ bgcolor: 'white', color: '#fbc02d', width: 56, height: 56 }}>
+                      <Assignment fontSize="large" />
+                    </Avatar>
+                    <Box>
+                      <Typography variant="subtitle2" sx={{ color: 'white', opacity: 0.85 }}>
+                        Pending Reviews
+                      </Typography>
+                      <Typography variant="h4" sx={{ color: 'white' }}>12</Typography>
+                    </Box>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} md={3}>
+              <Card elevation={4} sx={{
+                borderRadius: 3,
+                background: 'linear-gradient(135deg, #7b1fa2 0%, #ba68c8 100%)',
+                color: 'white',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
+              }}>
+                <CardContent>
+                  <Stack direction="row" alignItems="center" spacing={2}>
+                    <Avatar sx={{ bgcolor: 'white', color: '#7b1fa2', width: 56, height: 56 }}>
+                      <Book fontSize="large" />
+                    </Avatar>
+                    <Box>
+                      <Typography variant="subtitle2" sx={{ color: 'white', opacity: 0.85 }}>
+                        Resources
+                      </Typography>
+                      <Typography variant="h4" sx={{ color: 'white' }}>24</Typography>
+                    </Box>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Box>
+
+        {/* Main Content Sections: Courses and Recent Activity */}
+        <Grid container spacing={3} sx={{ mt: 0 }}>
+          <Grid item xs={12} md={8} pr={2} mb={{ xs: 3, md: 0 }}>
+            <Card>
               <CardContent>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  <Avatar sx={{ bgcolor: 'white', color: '#1976d2', width: 56, height: 56 }}>
-                    <School fontSize="large" />
-                  </Avatar>
-                  <Box>
-                    <Typography variant="subtitle2" sx={{ color: 'white', opacity: 0.85 }}>
-                      Active Courses
-                    </Typography>
-                    <Typography variant="h4" sx={{ color: 'white' }}>{courses.length}</Typography>
-                  </Box>
-                </Stack>
-              </CardContent>
-            </Card>
-          </Box>
-
-          <Box sx={{ minWidth: { xs: 260, md: 'auto' } }}>
-            <Card elevation={4} sx={{
-              borderRadius: 3,
-              background: 'linear-gradient(135deg, #388e3c 0%, #66bb6a 100%)',
-              color: 'white',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-              '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
-            }}>
-              <CardContent>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  <Avatar sx={{ bgcolor: 'white', color: '#388e3c', width: 56, height: 56 }}>
-                    <People fontSize="large" />
-                  </Avatar>
-                  <Box>
-                    <Typography variant="subtitle2" sx={{ color: 'white', opacity: 0.85 }}>
-                      Total Students
-                    </Typography>
-                    <Typography variant="h4" sx={{ color: 'white' }}>
-                      {courses.reduce((acc, course) => acc + (course.students?.length || 0), 0)}
-                    </Typography>
-                  </Box>
-                </Stack>
-              </CardContent>
-            </Card>
-          </Box>
-
-          <Box sx={{ minWidth: { xs: 260, md: 'auto' } }}>
-            <Card elevation={4} sx={{
-              borderRadius: 3,
-              background: 'linear-gradient(135deg, #fbc02d 0%, #ffd54f 100%)',
-              color: 'white',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-              '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
-            }}>
-              <CardContent>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  <Avatar sx={{ bgcolor: 'white', color: '#fbc02d', width: 56, height: 56 }}>
-                    <Assignment fontSize="large" />
-                  </Avatar>
-                  <Box>
-                    <Typography variant="subtitle2" sx={{ color: 'white', opacity: 0.85 }}>
-                      Pending Reviews
-                    </Typography>
-                    <Typography variant="h4" sx={{ color: 'white' }}>12</Typography>
-                  </Box>
-                </Stack>
-              </CardContent>
-            </Card>
-          </Box>
-
-          <Box sx={{ minWidth: { xs: 260, md: 'auto' } }}>
-            <Card elevation={4} sx={{
-              borderRadius: 3,
-              background: 'linear-gradient(135deg, #7b1fa2 0%, #ba68c8 100%)',
-              color: 'white',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-              '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
-            }}>
-              <CardContent>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  <Avatar sx={{ bgcolor: 'white', color: '#7b1fa2', width: 56, height: 56 }}>
-                    <Book fontSize="large" />
-                  </Avatar>
-                  <Box>
-                    <Typography variant="subtitle2" sx={{ color: 'white', opacity: 0.85 }}>
-                      Resources
-                    </Typography>
-                    <Typography variant="h4" sx={{ color: 'white' }}>24</Typography>
-                  </Box>
-                </Stack>
-              </CardContent>
-            </Card>
-          </Box>
-        </Grid>
-      </Box>
-
-      {/* Main Content Sections: Courses and Recent Activity */}
-      <Grid container spacing={3} sx={{ mt: 0 }}>
-        <Box sx={{ width: { xs: '100%', md: '58.333333%' }, pr: { md: 2 }, mb: { xs: 3, md: 0 } }}>
-          <Card>
-            <CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="h6">Your Courses</Typography>
-                <Button 
-                  startIcon={<AddIcon />} 
-                  variant="contained"
-                  onClick={() => setIsCreateCourseOpen(true)}
-                >
-                  New Course
-                </Button>
-              </Box>
-              <List>
-                {courses.map((course) => (
-                  <ListItem
-                    key={course.id}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                      gap: 2,
-                      py: 2,
-                      borderBottom: '1px solid',
-                      borderColor: 'divider',
-                      '&:last-child': {
-                        borderBottom: 'none'
-                      }
-                    }}
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                  <Typography variant="h6">Your Courses</Typography>
+                  <Button 
+                    startIcon={<AddIcon />} 
+                    variant="contained"
+                    onClick={() => setIsCreateCourseOpen(true)}
                   >
-                    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                      <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                        <ListItemAvatar>
-                          <Avatar sx={{ bgcolor: 'primary.light', width: 56, height: 56 }}>
-                            <School />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <Box>
-                          <Typography variant="h6" gutterBottom>
-                            {course.name}
-                          </Typography>
-                          <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
-                            <Chip
-                              size="small"
-                              icon={<People />}
-                              label={`${course.students?.length || 0}/${course.maxStudents} students`}
-                            />
-                            <Chip
-                              size="small"
-                              icon={<BarChartIcon />}
-                              label={course.level}
-                            />
-                            <Chip
-                              size="small"
-                              icon={<Assignment />}
-                              label={course.category}
-                            />
-                          </Stack>
-                          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                            {course.description}
-                          </Typography>
-                          <Stack direction="row" spacing={2}>
-                            <Typography variant="body2" color="text.secondary">
-                              <CalendarIcon sx={{ fontSize: 16, mr: 0.5, verticalAlign: 'middle' }} />
-                              {course.schedule}
+                    New Course
+                  </Button>
+                </Box>
+                <List>
+                  {courses.map((course) => (
+                    <ListItem
+                      key={course.id}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        gap: 2,
+                        py: 2,
+                        borderBottom: '1px solid',
+                        borderColor: 'divider',
+                        '&:last-child': {
+                          borderBottom: 'none'
+                        }
+                      }}
+                    >
+                      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                          <ListItemAvatar>
+                            <Avatar sx={{ bgcolor: 'primary.light', width: 56, height: 56 }}>
+                              <School />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <Box>
+                            <Typography variant="h6" gutterBottom>
+                              {course.name}
                             </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              <School sx={{ fontSize: 16, mr: 0.5, verticalAlign: 'middle' }} />
-                              {course.location}
+                            <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
+                              <Chip
+                                size="small"
+                                icon={<People />}
+                                label={`${course.students?.length || 0}/${course.maxStudents} students`}
+                              />
+                              <Chip
+                                size="small"
+                                icon={<BarChartIcon />}
+                                label={course.level}
+                              />
+                              <Chip
+                                size="small"
+                                icon={<Assignment />}
+                                label={course.category}
+                              />
+                            </Stack>
+                            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                              {course.description}
                             </Typography>
-                          </Stack>
+                            <Stack direction="row" spacing={2}>
+                              <Typography variant="body2" color="text.secondary">
+                                <CalendarIcon sx={{ fontSize: 16, mr: 0.5, verticalAlign: 'middle' }} />
+                                {course.schedule}
+                              </Typography>
+                              <Typography variant="body2" color="text.secondary">
+                                <School sx={{ fontSize: 16, mr: 0.5, verticalAlign: 'middle' }} />
+                                {course.location}
+                              </Typography>
+                            </Stack>
+                          </Box>
                         </Box>
+                        <IconButton onClick={(e) => handleMenuClick(e, course.id)}>
+                          <MoreVertIcon />
+                        </IconButton>
                       </Box>
-                      <IconButton onClick={(e) => handleMenuClick(e, course.id)}>
-                        <MoreVertIcon />
-                      </IconButton>
-                    </Box>
-                    <Box sx={{ width: '100%', pl: 9 }}>
-                      <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                        Course Modules
-                      </Typography>
-                      <List dense>
-                        {course.modules?.map((module) => (
-                          <ListItem key={module.id} sx={{ py: 0.5 }}>
-                            <ListItemText
-                              primary={module.title}
-                              secondary={module.description}
-                            />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Box>
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-          </Card>
-        </Box>
-
-        <Box sx={{ width: { xs: '100%', md: '41.666667%' }, pl: { md: 2 } }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Recent Activity
-              </Typography>
-              <List>
-                {recentActivities.map((activity) => (
-                  <ListItem key={activity.id} alignItems="flex-start">
-                    <ListItemAvatar>
-                      <Avatar sx={{ bgcolor: `${activity.type}.light` }}>
-                        {activity.type === 'success' ? <Assignment /> :
-                         activity.type === 'info' ? <MessageIcon /> :
-                         <BarChartIcon />}
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={
-                        <Typography variant="subtitle2">
-                          {activity.student} - {activity.action}
+                      <Box sx={{ width: '100%', pl: 9 }}>
+                        <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                          Course Modules
                         </Typography>
-                      }
-                      secondary={
-                        <>
-                          <Typography variant="body2" color="text.secondary">
-                            {activity.course}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            {activity.time}
-                          </Typography>
-                        </>
-                      }
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-            <CardActions>
-              <Button size="small" color="primary">
-                View All Activity
-              </Button>
-            </CardActions>
-          </Card>
-        </Box>
-      </Grid>
+                        <List dense>
+                          {course.modules?.map((module) => (
+                            <ListItem key={module.id} sx={{ py: 0.5 }}>
+                              <ListItemText
+                                primary={module.title}
+                                secondary={module.description}
+                              />
+                            </ListItem>
+                          ))}
+                        </List>
+                      </Box>
+                    </ListItem>
+                  ))}
+                </List>
+              </CardContent>
+            </Card>
+          </Grid>
 
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={handleMenuClose}>
-          <ListItemIcon>
-            <BarChartIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>View Analytics</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={handleMenuClose}>
-          <ListItemIcon>
-            <CalendarIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Schedule Class</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={handleMenuClose}>
-          <ListItemIcon>
-            <MessageIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Send Announcement</ListItemText>
-        </MenuItem>
-      </Menu>
+          <Grid item xs={12} md={4} pl={2}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Recent Activity
+                </Typography>
+                <List>
+                  {recentActivities.map((activity) => (
+                    <ListItem key={activity.id} alignItems="flex-start">
+                      <ListItemAvatar>
+                        <Avatar sx={{ bgcolor: `${activity.type}.light` }}>
+                          {activity.type === 'success' ? <Assignment /> :
+                           activity.type === 'info' ? <MessageIcon /> :
+                           <BarChartIcon />}
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Typography variant="subtitle2">
+                            {activity.student} - {activity.action}
+                          </Typography>
+                        }
+                        secondary={
+                          <>
+                            <Typography variant="body2" color="text.secondary">
+                              {activity.course}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              {activity.time}
+                            </Typography>
+                          </>
+                        }
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              </CardContent>
+              <CardActions>
+                <Button size="small" color="primary">
+                  View All Activity
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        </Grid>
 
-      <CreateCourseDialog
-        open={isCreateCourseOpen}
-        onClose={() => setIsCreateCourseOpen(false)}
-        onSubmit={handleCreateCourse}
-      />
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+        >
+          <MenuItem onClick={handleMenuClose}>
+            <ListItemIcon>
+              <BarChartIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>View Analytics</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={handleMenuClose}>
+            <ListItemIcon>
+              <CalendarIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Schedule Class</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={handleMenuClose}>
+            <ListItemIcon>
+              <MessageIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Send Announcement</ListItemText>
+          </MenuItem>
+        </Menu>
+
+        <CreateCourseDialog
+          open={isCreateCourseOpen}
+          onClose={() => setIsCreateCourseOpen(false)}
+          onSubmit={handleCreateCourse}
+        />
+      </Box>
     </Container>
   );
 } 
