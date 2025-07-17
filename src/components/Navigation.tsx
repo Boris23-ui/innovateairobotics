@@ -175,157 +175,477 @@ export default function Navigation() {
   }
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        Innovate AI Robotics
-      </Typography>
-      <Divider />
-      <List>
-        {/* Public Navigation Items */}
-        {publicNavItems.map((item) => (
-          <ListItem key={item.label} disablePadding>
-            <ListItemButton
-              component={Link}
-              href={item.href}
-              selected={isActive(item.href)}
+    <Box 
+      onClick={handleDrawerToggle} 
+      sx={{
+        height: '100%',
+        background: 'linear-gradient(135deg, #667ea0, #764ba2 100%)',
+        color: 'white',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Header Section */}
+      <Box sx={{ 
+        p: 3, 
+        textAlign: 'center',
+        background: 'rgba(255, 255, 255, 0.1)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+        position: 'relative',
+        zIndex: 1
+      }}>
+        <Box sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          mb: 2
+        }}>
+          <School sx={{ 
+            fontSize: 40, 
+            color: 'white', 
+            mr: 1,
+            filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))'
+          }} />
+          <Typography 
+            variant="h5"
+            sx={{ 
+              fontWeight: 700,
+              textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+              letterSpacing: '0.5px'
+            }}
+          >
+            InnovateAI
+          </Typography>
+        </Box>
+        <Typography 
+          variant="body2"
+          sx={{ 
+            opacity: 0.9,
+            fontWeight: 300,
+            letterSpacing: 0.5
+          }}
+        >
+          Robotics Education Platform
+        </Typography>
+      </Box>
+
+      {/* User Profile Section (if signed in) */}
+      {isSignedIn && (
+        <Box sx={{ 
+          p: 3, 
+          background: 'rgba(255, 255, 255, 0.1)',
+          backdropFilter: 'blur(10px)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+          position: 'relative',
+          zIndex: 1
+        }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+            <Avatar
+              src={user?.imageUrl}
+              alt={user?.firstName || 'User'}
               sx={{
-                textAlign: 'center',
-                '&.Mui-selected': {
-                  bgcolor: 'action.selected',
-                },
+                width: 50,
+                height: 50,
+                border: '3px solid rgba(255, 255, 255, 0.8)',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                mr: 2
               }}
-            >
-              <ListItemIcon sx={{ minWidth: 40 }}>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        <Divider />
-        {/* Programs */}
-        {programItems.map((item) => (
-          <ListItem key={item.title} disablePadding>
-            <ListItemButton
-              component={Link}
-              href={item.href}
-              selected={isActive(item.href)}
-              sx={{
-                textAlign: 'center',
-                '&.Mui-selected': {
-                  bgcolor: 'action.selected',
-                },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 40 }}>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText 
-                primary={item.title}
-                secondary={item.ageRange}
-                secondaryTypographyProps={{
-                  variant: 'caption',
-                  color: 'text.secondary',
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        <Divider />
-        {/* Authentication Section */}
-        {isSignedIn ? (
-          <>
-            <ListItem disablePadding>
+            />
+            <Box>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, color: 'white' }}>
+                {user?.firstName} {user?.lastName}
+              </Typography>
+              <Typography variant="caption" sx={{ opacity: 0.8, color: 'white' }}>
+                {user?.emailAddresses?.[0]?.emailAddress}
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+      )}
+
+      {/* Navigation Content */}
+      <Box sx={{ 
+        flex: 1, 
+        overflow: 'auto',   
+        py: 2,
+        position: 'relative',
+        zIndex: 1
+      }}>
+        <List sx={{ py: 0 }}>
+          {/* Public Navigation Items */}
+          <Typography 
+            variant="overline" 
+            sx={{ 
+              px: 3, 
+              py: 1,            
+              color: 'rgba(255, 255, 255, 0.7)',
+              fontWeight: 600,
+              letterSpacing: '1px',
+              fontSize: '0.75rem'
+            }}
+          >
+            NAVIGATION
+          </Typography>
+          {publicNavItems.map((item) => (
+            <ListItem key={item.label} disablePadding sx={{ mb: 0.5 }}>
               <ListItemButton
-                onClick={() => {
-                  handleDrawerToggle();
-                  const dashboardPath = userProfile ? getDashboardPath(userProfile.role) : '/dashboard';
-                  router.push(dashboardPath);
-                }}
+                component={Link}
+                href={item.href}
+                selected={isActive(item.href)}
                 sx={{
-                  textAlign: 'center',
+                  mx: 1,
+                  borderRadius: 2,
+                  color: 'white',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  '&:hover': {
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    transform: 'translateX(8px)',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                  },
+                  '&.Mui-selected': {
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    '&:hover': {
+                      background: 'rgba(255, 255, 255, 0.1)',
+                    },
+                  },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: 40 }}>
-                  <Dashboard />
+                <ListItemIcon sx={{ 
+                  minWidth: 45,
+                  color: 'white',
+                  '& .MuiSvgIcon-root': {
+                    fontSize: '1.4rem'
+                  }
+                }}>
+                  {item.icon}
                 </ListItemIcon>
-                <ListItemText primary="Dashboard" />
+                <ListItemText 
+                  primary={item.label}
+                  primaryTypographyProps={{
+                    fontWeight: 500,
+                    fontSize: '1rem'
+                  }}
+                />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding>
+          ))}
+
+          <Divider sx={{ my: 2, borderColor: 'rgba(255, 255, 255, 0.2)' }} />
+
+          {/* Programs Section */}
+          <Typography 
+            variant="overline" 
+            sx={{ 
+              px: 3, 
+              py: 1,            
+              color: 'rgba(255, 255, 255, 0.7)',
+              fontWeight: 600,
+              letterSpacing: '1px',
+              fontSize: '0.75rem'
+            }}
+          >
+            PROGRAMS
+          </Typography>
+          {programItems.map((item) => (
+            <ListItem key={item.title} disablePadding sx={{ mb: 0.5 }}>
               <ListItemButton
-                onClick={() => {
-                  handleDrawerToggle();
-                  router.push('/profile');
-                }}
+                component={Link}
+                href={item.href}
+                selected={isActive(item.href)}
                 sx={{
-                  textAlign: 'center',
+                  mx: 1,
+                  borderRadius: 2,
+                  color: 'white',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  '&:hover': {
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    transform: 'translateX(8px)',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                  },
+                  '&.Mui-selected': {
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    '&:hover': {
+                      background: 'rgba(255, 255, 255, 0.1)',
+                    },
+                  },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: 40 }}>
-                  <Person />
+                <ListItemIcon sx={{ 
+                  minWidth: 45,
+                  color: 'white',
+                  '& .MuiSvgIcon-root': {
+                    fontSize: '1.4rem'
+                  }
+                }}>
+                  {item.icon}
                 </ListItemIcon>
-                <ListItemText primary="Profile" />
+                <Box sx={{ flex: 1 }}>
+                  <Typography 
+                    variant="subtitle2" 
+                    sx={{ 
+                      fontWeight: 600,
+                      color: 'white',
+                      mb: 0.5
+                    }}
+                  >
+                    {item.title}
+                  </Typography>
+                  <Typography 
+                    variant="caption" 
+                    sx={{ 
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      display: 'block',
+                      lineHeight: 1.2
+                    }}
+                  >
+                    {item.ageRange} • {item.description}
+                  </Typography>
+                </Box>
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  handleDrawerToggle();
-                  router.push('/settings');
-                }}
-                sx={{
-                  textAlign: 'center',
+          ))}
+
+          <Divider sx={{ my: 2, borderColor: 'rgba(255, 255, 255, 0.2)' }} />
+
+          {/* Authentication Section */}
+          {isSignedIn ? (
+            <>
+              <Typography 
+                variant="overline"
+                sx={{ 
+                  px: 3, 
+                  py: 1, 
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  fontWeight: 600,
+                  letterSpacing: '1px',
+                  fontSize: '0.75rem'
                 }}
               >
-                <ListItemIcon sx={{ minWidth: 40 }}>
-                  <Settings />
-                </ListItemIcon>
-                <ListItemText primary="Settings" />
-              </ListItemButton>
-            </ListItem>
-            <Divider />
-            <SignOutButton>
-              <ListItem disablePadding>
+                ACCOUNT
+              </Typography>
+              <ListItem disablePadding sx={{ mb: 0.5 }}>
                 <ListItemButton
-                  onClick={handleDrawerToggle}
+                  onClick={() => {
+                    handleDrawerToggle();
+                    const dashboardPath = userProfile ? getDashboardPath(userProfile.role) : '/dashboard';
+                    router.push(dashboardPath);
+                  }}
                   sx={{
-                    textAlign: 'center',
-                    color: 'error.main',
+                    mx: 1,
+                    borderRadius: 2,
+                    color: 'white',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    '&:hover': {
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      transform: 'translateX(8px)',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    },
                   }}
                 >
-                  <ListItemIcon sx={{ minWidth:40, color: 'error.main' }}>
-                    <Logout />
+                  <ListItemIcon sx={{ 
+                    minWidth: 45,
+                    color: 'white',
+                    '& .MuiSvgIcon-root': {
+                      fontSize: '1.4rem'
+                    }
+                  }}>
+                    <Dashboard />
                   </ListItemIcon>
-                  <ListItemText primary="Sign Out" />
+                  <ListItemText 
+                    primary="Dashboard"
+                    primaryTypographyProps={{
+                      fontWeight: 500,
+                      fontSize: '1rem'
+                    }}
+                  />
                 </ListItemButton>
               </ListItem>
-            </SignOutButton>
-          </>
-        ) : (
-          <ListItem disablePadding>
-            <ListItemButton
-              onClick={() => {
-                handleDrawerToggle();
-                router.push('/sign-in');
-              }}
-              sx={{
-                textAlign: 'center',
-                bgcolor: 'primary.main',
-                color: 'primary.contrastText',
-                '&:hover': {
-                  bgcolor: 'primary.dark',
-                },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 40, color: 'inherit' }}>
-                <Login />
-              </ListItemIcon>
-              <ListItemText primary="Login" />
-            </ListItemButton>
-          </ListItem>
-        )}
-      </List>
+              <ListItem disablePadding sx={{ mb: 0.5 }}>
+                <ListItemButton
+                  onClick={() => {
+                    handleDrawerToggle();
+                    router.push('/profile');
+                  }}
+                  sx={{
+                    mx: 1,
+                    borderRadius: 2,
+                    color: 'white',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    '&:hover': {
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      transform: 'translateX(8px)',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    },
+                  }}
+                >
+                  <ListItemIcon sx={{ 
+                    minWidth: 45,
+                    color: 'white',
+                    '& .MuiSvgIcon-root': {
+                      fontSize: '1.4rem'
+                    }
+                  }}>
+                    <Person />
+                  </ListItemIcon>
+                  <ListItemText 
+                    primary="Profile"
+                    primaryTypographyProps={{
+                      fontWeight: 500,
+                      fontSize: '1rem'
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding sx={{ mb: 0.5 }}>
+                <ListItemButton
+                  onClick={() => {
+                    handleDrawerToggle();
+                    router.push('/settings');
+                  }}
+                  sx={{
+                    mx: 1,
+                    borderRadius: 2,
+                    color: 'white',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    '&:hover': {
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      transform: 'translateX(8px)',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    },
+                  }}
+                >
+                  <ListItemIcon sx={{ 
+                    minWidth: 45,
+                    color: 'white',
+                    '& .MuiSvgIcon-root': {
+                      fontSize: '1.4rem'
+                    }
+                  }}>
+                    <Settings />
+                  </ListItemIcon>
+                  <ListItemText 
+                    primary="Settings"
+                    primaryTypographyProps={{
+                      fontWeight: 500,
+                      fontSize: '1rem'
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+              <SignOutButton>
+                <ListItem disablePadding sx={{ mb: 0.5 }}>
+                  <ListItemButton
+                    onClick={handleDrawerToggle}
+                    sx={{
+                      mx: 1,
+                      borderRadius: 2,
+                      color: '#ff6b6b',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      '&:hover': {
+                        background: 'rgba(255, 107, 107, 0.1)',
+                        transform: 'translateX(8px)',
+                        boxShadow: '0 4px 12px rgba(255, 107, 107, 0.2)',
+                      },
+                    }}
+                  >
+                    <ListItemIcon sx={{ 
+                      minWidth: 45,
+                      color: '#ff6b6b',
+                      '& .MuiSvgIcon-root': {
+                        fontSize: '1.4rem'
+                      }
+                    }}>
+                      <Logout />
+                    </ListItemIcon>
+                    <ListItemText 
+                      primary="Sign Out"
+                      primaryTypographyProps={{
+                        fontWeight: 500,
+                        fontSize: '1rem'
+                      }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              </SignOutButton>
+            </>
+          ) : (
+            <>
+              <Typography 
+                variant="overline"
+                sx={{ 
+                  px: 3, 
+                  py: 1, 
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  fontWeight: 600,
+                  letterSpacing: '1px',
+                  fontSize: '0.75rem'
+                }}
+              >
+                GET STARTED
+              </Typography>
+              <ListItem disablePadding sx={{ mb: 0.5 }}>
+                <ListItemButton
+                  onClick={() => {
+                    handleDrawerToggle();
+                    router.push('/sign-in');
+                  }}
+                  sx={{
+                    mx: 1,
+                    borderRadius: 2,
+                    background: 'linear-gradient(135deg, #667ea0, #764ba2 100%)',
+                    color: 'white',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    boxShadow: '0 4px 12px rgba(121, 26, 26, 0.2)',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 8px 20px rgba(121, 26, 26, 0.3)',
+                      background: 'linear-gradient(135deg, #5a6fd8, #6a4190 100%)',
+                    },
+                  }}
+                >
+                  <ListItemIcon sx={{ 
+                    minWidth: 45,
+                    color: 'white',
+                    '& .MuiSvgIcon-root': {
+                      fontSize: '1.4rem'
+                    }
+                  }}>
+                    <Login />
+                  </ListItemIcon>
+                  <ListItemText 
+                    primary="Sign In"
+                    primaryTypographyProps={{
+                      fontWeight: 600,
+                      fontSize: '1rem'
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </>
+          )}
+        </List>
+      </Box>
+
+      {/* Footer */}
+      <Box sx={{ 
+        p: 2, 
+        textAlign: 'center',
+        background: 'rgba(0, 0, 0, 0.8)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+        position: 'relative',
+        zIndex: 1
+      }}>
+        <Typography 
+          variant="caption"
+          sx={{ 
+            color: 'rgba(255, 255, 255, 0.7)',
+            fontSize: '0.75rem'
+          }}
+        >
+          © 2024 InnovateAI Robotics
+        </Typography>
+      </Box>
     </Box>
   );
 
@@ -562,9 +882,26 @@ export default function Navigation() {
               edge="end"
               color="inherit"
               aria-label="menu"
-                onClick={handleDrawerToggle}
+              onClick={handleDrawerToggle}
+              sx={{
+                background: 'linear-gradient(135deg, #667ea0, #764ba2 100%)',
+                color: 'white',
+                borderRadius: 2,
+                width: 48,
+                height: 48,
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '0 4px 12px rgba(121, 26, 26, 0.2)',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                  boxShadow: '0 6px 16px rgba(121, 26, 26, 0.3)',
+                  background: 'linear-gradient(135deg, #5a6fd8, #6a4190 100%)',
+                },
+                '&:active': {
+                  transform: 'scale(0.95)',
+                },
+              }}
             >
-              <MenuIcon />
+              <MenuIcon sx={{ fontSize: '1.5rem' }} />
             </IconButton>
           </Box>
           </Toolbar>
