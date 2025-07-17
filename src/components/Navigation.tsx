@@ -183,6 +183,8 @@ export default function Navigation() {
         color: 'white',
         position: 'relative',
         overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       {/* Header Section */}
@@ -264,10 +266,11 @@ export default function Navigation() {
         </Box>
       )}
 
-      {/* Navigation Content */}
+      {/* Navigation Content - make this scrollable */}
       <Box sx={{ 
         flex: 1, 
-        overflow: 'auto',   
+        minHeight: 0,
+        overflowY: 'auto',
         py: 2,
         position: 'relative',
         zIndex: 1
