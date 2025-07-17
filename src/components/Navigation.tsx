@@ -181,8 +181,9 @@ export default function Navigation() {
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item.name} disablePadding>
+        {/* Public Navigation Items */}
+        {publicNavItems.map((item) => (
+          <ListItem key={item.label} disablePadding>
             <ListItemButton
               component={Link}
               href={item.href}
@@ -194,11 +195,15 @@ export default function Navigation() {
                 },
               }}
             >
-              <ListItemText primary={item.name} />
+              <ListItemIcon sx={{ minWidth: 40 }}>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
         ))}
         <Divider />
+        {/* Programs */}
         {programItems.map((item) => (
           <ListItem key={item.title} disablePadding>
             <ListItemButton
@@ -212,6 +217,9 @@ export default function Navigation() {
                 },
               }}
             >
+              <ListItemIcon sx={{ minWidth: 40 }}>
+                {item.icon}
+              </ListItemIcon>
               <ListItemText 
                 primary={item.title}
                 secondary={item.ageRange}
@@ -223,6 +231,100 @@ export default function Navigation() {
             </ListItemButton>
           </ListItem>
         ))}
+        <Divider />
+        {/* Authentication Section */}
+        {isSignedIn ? (
+          <>
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  handleDrawerToggle();
+                  const dashboardPath = userProfile ? getDashboardPath(userProfile.role) : '/dashboard';
+                  router.push(dashboardPath);
+                }}
+                sx={{
+                  textAlign: 'center',
+                }}
+              >
+                <ListItemIcon sx={{ minWidth: 40 }}>
+                  <Dashboard />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  handleDrawerToggle();
+                  router.push('/profile');
+                }}
+                sx={{
+                  textAlign: 'center',
+                }}
+              >
+                <ListItemIcon sx={{ minWidth: 40 }}>
+                  <Person />
+                </ListItemIcon>
+                <ListItemText primary="Profile" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  handleDrawerToggle();
+                  router.push('/settings');
+                }}
+                sx={{
+                  textAlign: 'center',
+                }}
+              >
+                <ListItemIcon sx={{ minWidth: 40 }}>
+                  <Settings />
+                </ListItemIcon>
+                <ListItemText primary="Settings" />
+              </ListItemButton>
+            </ListItem>
+            <Divider />
+            <SignOutButton>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={handleDrawerToggle}
+                  sx={{
+                    textAlign: 'center',
+                    color: 'error.main',
+                  }}
+                >
+                  <ListItemIcon sx={{ minWidth:40, color: 'error.main' }}>
+                    <Logout />
+                  </ListItemIcon>
+                  <ListItemText primary="Sign Out" />
+                </ListItemButton>
+              </ListItem>
+            </SignOutButton>
+          </>
+        ) : (
+          <ListItem disablePadding>
+            <ListItemButton
+              onClick={() => {
+                handleDrawerToggle();
+                router.push('/sign-in');
+              }}
+              sx={{
+                textAlign: 'center',
+                bgcolor: 'primary.main',
+                color: 'primary.contrastText',
+                '&:hover': {
+                  bgcolor: 'primary.dark',
+                },
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 40, color: 'inherit' }}>
+                <Login />
+              </ListItemIcon>
+              <ListItemText primary="Login" />
+            </ListItemButton>
+          </ListItem>
+        )}
       </List>
     </Box>
   );

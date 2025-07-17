@@ -14,6 +14,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'InnovateAI Robotics',
   description: 'AI-powered robotics education platform',
+  viewport: 'width=device-width, initial-scale=1maximum-scale=1',
 };
 
 // Validate environment variables at build time
