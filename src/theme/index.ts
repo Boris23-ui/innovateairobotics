@@ -3,6 +3,7 @@ import { createTheme, ThemeOptions } from '@mui/material/styles';
 const commonThemeOptions: ThemeOptions = {
   typography: {
     fontFamily: [
+      'Inter',
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',

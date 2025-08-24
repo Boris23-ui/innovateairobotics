@@ -2,6 +2,7 @@
 
 import { Box, Typography } from '@mui/material';
 import { ProgramLayout } from '@/components/programs/ProgramLayout';
+import InfoCard from '@/components/programs/InfoCard';
 import Image from 'next/image';
 
 export default function SeniorsPage() {
@@ -20,27 +21,29 @@ export default function SeniorsPage() {
             style={{ objectFit: 'cover' }}
           />
         </Box>
-        <Box sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 4 }}>
-          <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
-            What You'll Learn
-          </Typography>
-          <Box component="ul" sx={{ pl: 2 }}>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Advanced AI and robotics concepts
+        <Box>
+          <InfoCard>
+            <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
+              What You'll Learn
             </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Professional applications and industry trends
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Ethical considerations and societal impact
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Hands-on project development
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Future technology integration
-            </Typography>
-          </Box>
+            <Box component="ul" sx={{ pl: 2 }}>
+              <Typography component="li" sx={{ mb: 1 }}>
+                Advanced AI and robotics concepts
+              </Typography>
+              <Typography component="li" sx={{ mb: 1 }}>
+                Professional applications and industry trends
+              </Typography>
+              <Typography component="li" sx={{ mb: 1 }}>
+                Ethical considerations and societal impact
+              </Typography>
+              <Typography component="li" sx={{ mb: 1 }}>
+                Hands-on project development
+              </Typography>
+              <Typography component="li" sx={{ mb: 1 }}>
+                Future technology integration
+              </Typography>
+            </Box>
+          </InfoCard>
         </Box>
       </Box>
     </ProgramLayout>
