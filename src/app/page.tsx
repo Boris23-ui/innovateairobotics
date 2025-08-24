@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { Container, Typography, Box, Button, Stack, Paper } from '@mui/material';
 import { PlayArrow, School } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
@@ -11,6 +12,18 @@ export default function LandingPage() {
     <>
       <Container maxWidth="lg" sx={{ py: 10, minHeight: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <Box sx={{ textAlign: 'center', mb: 6 }}>
+          {/* Hero image sits above the fold and fades in */}
+          <Box sx={{ mb: 4, borderRadius: 2, overflow: 'hidden', boxShadow: 3, width: '100%', maxWidth: 900 }}>
+            <Image
+              src="/images/young-robotics-engineers.jpg"
+              alt="Kids learning robotics"
+              width={900}
+              height={380}
+              style={{ width: '100%', height: 'auto', display: 'block', animation: 'fadeIn 700ms ease-in-out' }}
+            />
+          </Box>
+          <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: translateY(0);} }`}</style>
+
           <Typography variant="h2" component="h1" gutterBottom fontWeight="bold">
             Empowering the Next Generation of
             <Typography
@@ -31,13 +44,14 @@ export default function LandingPage() {
           <Typography variant="h5" color="text.secondary" sx={{ mb: 4 }}>
             Hands-on learning experiences that combine robotics, AI, and coding to inspire creativity and innovation in young minds.
           </Typography>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" role="group" aria-label="Primary actions">
             <Button
               variant="contained"
               size="large"
               startIcon={<PlayArrow />}
               sx={{ px: 4, py: 1.5 }}
               onClick={() => router.push('/sign-in')}
+              aria-label="Start learning - Sign in"
             >
               Start Learning
             </Button>
@@ -47,8 +61,18 @@ export default function LandingPage() {
               startIcon={<School />}
               sx={{ px: 4, py: 1.5 }}
               onClick={() => router.push('/courses')}
+              aria-label="Explore courses"
             >
               Explore Courses
+            </Button>
+            <Button
+              variant="text"
+              size="large"
+              sx={{ px: 2, py: 1.5, color: 'text.primary' }}
+              onClick={() => router.push('/test-data')}
+              aria-label="View demo content"
+            >
+              View Demo
             </Button>
           </Stack>
         </Box>
