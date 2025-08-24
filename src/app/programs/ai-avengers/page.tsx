@@ -2,7 +2,6 @@
 
 import { Box, Typography } from '@mui/material';
 import { ProgramLayout } from '@/components/programs/ProgramLayout';
-import InfoCard from '@/components/programs/InfoCard';
 import Image from 'next/image';
 
 export default function AIAvengersPage() {
@@ -21,29 +20,27 @@ export default function AIAvengersPage() {
             style={{ objectFit: 'cover' }}
           />
         </Box>
-        <Box>
-          <InfoCard>
-            <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
-              What You'll Learn
+        <Box sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 4 }}>
+          <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
+            What You'll Learn
+          </Typography>
+          <Box component="ul" sx={{ pl: 2 }}>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Advanced AI and machine learning concepts
             </Typography>
-            <Box component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Advanced AI and machine learning concepts
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Complex robotics programming and control
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Ethical considerations in AI development
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Real-world problem-solving applications
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Research and development methodologies
-              </Typography>
-            </Box>
-          </InfoCard>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Complex robotics programming and control
+            </Typography>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Ethical considerations in AI development
+            </Typography>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Real-world problem-solving applications
+            </Typography>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Research and development methodologies
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </ProgramLayout>

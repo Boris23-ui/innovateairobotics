@@ -2,7 +2,6 @@
 
 import { Box, Typography } from '@mui/material';
 import { ProgramLayout } from '@/components/programs/ProgramLayout';
-import InfoCard from '@/components/programs/InfoCard';
 import Image from 'next/image';
 
 export default function TechTitansPage() {
@@ -21,29 +20,27 @@ export default function TechTitansPage() {
             style={{ objectFit: 'cover' }}
           />
         </Box>
-        <Box>
-          <InfoCard>
-            <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
-              What You'll Learn
+        <Box sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 4 }}>
+          <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
+            What You'll Learn
+          </Typography>
+          <Box component="ul" sx={{ pl: 2 }}>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Advanced programming and robotics concepts
             </Typography>
-            <Box component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Advanced programming and robotics concepts
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                AI decision-making and problem-solving
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Robot design and construction
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Competition preparation and strategy
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Project management and presentation skills
-              </Typography>
-            </Box>
-          </InfoCard>
+            <Typography component="li" sx={{ mb: 1 }}>
+              AI decision-making and problem-solving
+            </Typography>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Robot design and construction
+            </Typography>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Competition preparation and strategy
+            </Typography>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Project management and presentation skills
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </ProgramLayout>

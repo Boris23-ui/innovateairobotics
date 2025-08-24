@@ -1,9 +1,13 @@
 "use client";
 
+
 import Image from 'next/image';
 import { Container, Typography, Box, Button, Stack, Paper } from '@mui/material';
 import { PlayArrow, School } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+const RoboticArm3D = dynamic(() => import('@/components/RoboticArm3D'), { ssr: false });
 
 export default function LandingPage() {
   const router = useRouter();
@@ -12,17 +16,7 @@ export default function LandingPage() {
     <>
       <Container maxWidth="lg" sx={{ py: 10, minHeight: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <Box sx={{ textAlign: 'center', mb: 6 }}>
-          {/* Hero image sits above the fold and fades in */}
-          <Box sx={{ mb: 4, borderRadius: 2, overflow: 'hidden', boxShadow: 3, width: '100%', maxWidth: 900 }}>
-            <Image
-              src="/images/young-robotics-engineers.jpg"
-              alt="Kids learning robotics"
-              width={900}
-              height={380}
-              style={{ width: '100%', height: 'auto', display: 'block', animation: 'fadeIn 700ms ease-in-out' }}
-            />
-          </Box>
-          <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: translateY(0);} }`}</style>
+          {/* ...existing code... */}
 
           <Typography variant="h2" component="h1" gutterBottom fontWeight="bold">
             Empowering the Next Generation of
@@ -75,6 +69,10 @@ export default function LandingPage() {
               View Demo
             </Button>
           </Stack>
+        </Box>
+        {/* 3D Robotic Arm Animation at the top of hero */}
+        <Box sx={{ mb: 4, width: '100%', maxWidth: 900, mx: 'auto', borderRadius: 2, overflow: 'hidden', boxShadow: 3, background: 'linear-gradient(120deg, #e0e7ef 60%, #ede9fe 100%)' }}>
+          <RoboticArm3D />
         </Box>
       </Container>
       {/* Testimonials Section */}

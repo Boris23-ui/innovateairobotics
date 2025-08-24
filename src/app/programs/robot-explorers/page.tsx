@@ -2,7 +2,6 @@
 
 import { Box, Typography } from '@mui/material';
 import { ProgramLayout } from '@/components/programs/ProgramLayout';
-import InfoCard from '@/components/programs/InfoCard';
 import Image from 'next/image';
 
 export default function RobotExplorersPage() {
@@ -21,29 +20,27 @@ export default function RobotExplorersPage() {
             style={{ objectFit: 'cover' }}
           />
         </Box>
-        <Box>
-          <InfoCard>
-            <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
-              What You'll Learn
+        <Box sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 4 }}>
+          <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
+            What You'll Learn
+          </Typography>
+          <Box component="ul" sx={{ pl: 2 }}>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Basic programming concepts through visual coding
             </Typography>
-            <Box component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Basic programming concepts through visual coding
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Robot movement and sensor interaction
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Problem-solving and critical thinking
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Team collaboration and communication
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Introduction to AI concepts through games
-              </Typography>
-            </Box>
-          </InfoCard>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Robot movement and sensor interaction
+            </Typography>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Problem-solving and critical thinking
+            </Typography>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Team collaboration and communication
+            </Typography>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Introduction to AI concepts through games
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </ProgramLayout>

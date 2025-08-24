@@ -2,7 +2,6 @@
 
 import { Box, Grid, Typography } from '@mui/material';
 import { ProgramLayout } from '@/components/programs/ProgramLayout';
-import InfoCard from '@/components/programs/InfoCard';
 import Image from 'next/image';
 
 export default function TinyTinkerersPage() {
@@ -21,30 +20,27 @@ export default function TinyTinkerersPage() {
             style={{ objectFit: 'cover' }}
           />
         </Box>
-        <Box>
-          {/* Use shared InfoCard for consistent light/dark styling */}
-          <InfoCard>
-            <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
-              What You'll Learn
+        <Box sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 4 }}>
+          <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
+            What You'll Learn
+          </Typography>
+          <Box component="ul" sx={{ pl: 2 }}>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Basic robot movements and sounds
             </Typography>
-            <Box component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Basic robot movements and sounds
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Simple cause and effect relationships
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Introduction to colors and shapes through robotics
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Basic problem-solving through play
-              </Typography>
-              <Typography component="li" sx={{ mb: 1 }}>
-                Teamwork and social interaction
-              </Typography>
-            </Box>
-          </InfoCard>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Simple cause and effect relationships
+            </Typography>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Introduction to colors and shapes through robotics
+            </Typography>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Basic problem-solving through play
+            </Typography>
+            <Typography component="li" sx={{ mb: 1 }}>
+              Teamwork and social interaction
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </ProgramLayout>
