@@ -512,7 +512,7 @@ export default function TeacherDashboard() {
                             </Stack>
                           </Box>
                         </Box>
-                        <IconButton onClick={(e) => handleMenuClick(e, course.id)}>
+                        <IconButton onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleMenuClick(e, course.id)}>
                           <MoreVertIcon />
                         </IconButton>
                       </Box>

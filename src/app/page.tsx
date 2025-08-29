@@ -62,7 +62,7 @@ export default function LandingPage() {
             <Button
               variant="text"
               size="large"
-              sx={{ px: 2, py: 1.5, color: 'text.primary' }}
+              sx={{ px: 2, py: 1.5, color: 'text.primary' }}L
               onClick={() => router.push('/test-data')}
               aria-label="View demo content"
             >

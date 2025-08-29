@@ -124,7 +124,7 @@ export default function AssignmentDetailPage({ params }: { params: { id: string 
         <Link
           color="inherit"
           href="/dashboard/student"
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
             e.preventDefault();
             router.push('/dashboard/student');
           }}
@@ -134,7 +134,7 @@ export default function AssignmentDetailPage({ params }: { params: { id: string 
         <Link
           color="inherit"
           href={`/dashboard/student/courses/${assignmentData.courseId}`}
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
             e.preventDefault();
             router.push(`/dashboard/student/courses/${assignmentData.courseId}`);
           }}

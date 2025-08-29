@@ -328,7 +328,7 @@ export const RobotSimulator: React.FC<RobotSimulatorProps> = ({
           </Typography>
           <Slider
             value={robotState.speed}
-            onChange={(_, value) => setRobotState(prev => ({ ...prev, speed: value as number }))}
+            onChange={(_: Event, value: number | number[]) => setRobotState(prev => ({ ...prev, speed: typeof value === 'number' ? value : prev.speed }))}
             min={0}
             max={100}
             valueLabelDisplay="auto"
@@ -341,7 +341,7 @@ export const RobotSimulator: React.FC<RobotSimulatorProps> = ({
           </Typography>
           <Slider
             value={simulationSpeed}
-            onChange={(_, value) => setSimulationSpeed(value as number)}
+            onChange={(_: Event, value: number | number[]) => setSimulationSpeed(typeof value === 'number' ? value : simulationSpeed)}
             min={0.1}
             max={3}
             step={0.1}

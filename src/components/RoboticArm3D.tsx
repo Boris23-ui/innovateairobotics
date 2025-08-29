@@ -1,13 +1,14 @@
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Suspense, useRef, useState } from 'react';
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 
+import * as THREE from 'three';
 function RoboticArm() {
-  const lowerArmRef = useRef();
-  const upperArmRef = useRef();
-  const gripperLeftRef = useRef();
-  const gripperRightRef = useRef();
+  const lowerArmRef = useRef<THREE.Mesh>(null);
+  const upperArmRef = useRef<THREE.Mesh>(null);
+  const gripperLeftRef = useRef<THREE.Mesh>(null);
+  const gripperRightRef = useRef<THREE.Mesh>(null);
   const [t] = useState(() => ({ value: 0 }));
   useFrame((state, delta) => {
     t.value += delta;
