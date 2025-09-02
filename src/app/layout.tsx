@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+// import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { UserProvider } from '@/components/providers/UserProvider';
@@ -9,7 +9,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { Toaster } from 'react-hot-toast';
 import { validateEnv } from '@/utils/env';
 
-const inter = Inter({ subsets: ['latin'] });
+
 
 export const metadata: Metadata = {
   title: 'InnovateAI Robotics',
@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
+  <body className="font-sans">
           <ThemeProvider>
             <UserProvider>
               <Navigation />
