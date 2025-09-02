@@ -26,7 +26,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Merriweather', 'Inter', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+        sans: ['Merriweather', 'serif'],
+        serif: ['Merriweather', 'serif'],
         merriweather: ['Merriweather', 'serif'],
       },
       animation: {

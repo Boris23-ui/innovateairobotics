@@ -3,7 +3,8 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { lightTheme, darkTheme } from '@/theme';
+import baseTheme from '@/styles/theme';
+import { deepmerge } from '@mui/utils';
 
 type ThemeContextType = {
   mode: 'light' | 'dark';
@@ -39,7 +40,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const theme = createTheme(mode === 'light' ? lightTheme : darkTheme);
+  const theme = createTheme(deepmerge(baseTheme, {
+    palette: {
+      mode,
+    },
+  }));
 
   if (!mounted) {
     return null;

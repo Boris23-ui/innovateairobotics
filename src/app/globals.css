@@ -1,6 +1,25 @@
+@import '@fontsource/merriweather/300.css';
+@import '@fontsource/merriweather/400.css';
+@import '@fontsource/merriweather/700.css';
+@import '@fontsource/merriweather/900.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --font-merriweather: 'Merriweather', serif;
+  }
+  
+  html, body {
+    font-family: var(--font-merriweather);
+  }
+
+  h1, h2, h3, h4, h5, h6, p, span, div {
+    font-family: var(--font-merriweather);
+  }
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;

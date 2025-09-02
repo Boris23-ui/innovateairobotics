@@ -2,18 +2,40 @@ import { createTheme, ThemeOptions } from '@mui/material/styles';
 
 const commonThemeOptions: ThemeOptions = {
   typography: {
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
+    fontFamily: '"Merriweather", serif',
+    h1: {
+      fontFamily: '"Merriweather", serif',
+    },
+    h2: {
+      fontFamily: '"Merriweather", serif',
+    },
+    h3: {
+      fontFamily: '"Merriweather", serif',
+    },
+    h4: {
+      fontFamily: '"Merriweather", serif',
+    },
+    h5: {
+      fontFamily: '"Merriweather", serif',
+    },
+    h6: {
+      fontFamily: '"Merriweather", serif',
+    },
+    body1: {
+      fontFamily: '"Merriweather", serif',
+    },
+    body2: {
+      fontFamily: '"Merriweather", serif',
+    },
+    subtitle1: {
+      fontFamily: '"Merriweather", serif',
+    },
+    subtitle2: {
+      fontFamily: '"Merriweather", serif',
+    },
+    button: {
+      fontFamily: '"Merriweather", serif',
+    },
   },
   shape: {
     borderRadius: 8,
