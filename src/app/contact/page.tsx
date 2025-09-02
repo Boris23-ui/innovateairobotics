@@ -145,7 +145,7 @@ export default function ContactPage() {
                   <Box>
                     <Typography variant="subtitle1">Email</Typography>
                     <Typography color="text.secondary">
-                      contact@innovateai.com
+                      info@innovateairobotics.com
                     </Typography>
                   </Box>
                 </Box>
@@ -154,7 +154,7 @@ export default function ContactPage() {
                   <Box>
                     <Typography variant="subtitle1">Phone</Typography>
                     <Typography color="text.secondary">
-                      +1 (555) 123-4567
+                      +1 (650) 619-4676
                     </Typography>
                   </Box>
                 </Box>
@@ -163,8 +163,7 @@ export default function ContactPage() {
                   <Box>
                     <Typography variant="subtitle1">Address</Typography>
                     <Typography color="text.secondary">
-                      123 Innovation Street<br />
-                      Tech City, TC 12345<br />
+                      837 Reinert Rd, Mountain View, CA 94043<br />
                       United States
                     </Typography>
                   </Box>
