@@ -125,10 +125,54 @@ export default function LandingPage() {
         </Grid>
 
         {/* 3D Robotic Arm Animation */}
-        <Box sx={{ mt: 8, width: '100%', maxWidth: 900, mx: 'auto', borderRadius: 2, overflow: 'hidden', boxShadow: 3, background: 'linear-gradient(120deg, #e0e7ef 60%, #ede9fe 100%)' }}>
+        <Box sx={{ 
+          mt: { xs: 4, sm: 6, md: 8 }, 
+          width: '100%', 
+          maxWidth: { xs: '100%', sm: 900 }, 
+          mx: 'auto', 
+          borderRadius: { xs: 0, sm: 2 }, 
+          overflow: 'hidden', 
+          boxShadow: { xs: 'none', sm: 3 }, 
+          background: 'linear-gradient(120deg, #e0e7ef 60%, #ede9fe 100%)',
+          height: { xs: '300px', sm: '400px', md: 'auto' }
+        }}>
           <RoboticArm3D />
         </Box>
       </Container>
+
+      {/* Mobile Navigation Dots */}
+      <Box 
+        sx={{ 
+          display: { xs: 'flex', md: 'none' }, 
+          justifyContent: 'center', 
+          gap: 1, 
+          py: 2,
+          position: 'fixed',
+          bottom: 16,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 10,
+          backgroundColor: 'rgba(255,255,255,0.9)',
+          backdropFilter: 'blur(8px)',
+          borderRadius: 'full',
+          px: 3,
+          py: 1.5,
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+        }}
+      >
+        {[1, 2, 3, 4].map((dot) => (
+          <Box
+            key={dot}
+            sx={{
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              backgroundColor: dot === 1 ? 'primary.main' : 'grey.300',
+              transition: 'all 0.3s ease'
+            }}
+          />
+        ))}
+      </Box>
 
       {/* Image Gallery Section */}
       <Box sx={{ bgcolor: 'grey.50', py: { xs: 6, md: 10 } }}>
@@ -169,39 +213,178 @@ export default function LandingPage() {
                   height: { xs: '250px', sm: '300px', md: '400px' }, 
                   position: 'relative', 
                   overflow: 'hidden', 
-                  borderRadius: 2, 
-                  transition: 'all 0.3s ease-in-out', 
+                  borderRadius: { xs: 1, sm: 2 }, 
+                  transition: 'all 0.3s ease-in-out',
+                  transform: 'translateZ(0)', // Performance optimization for mobile
+                  WebkitFontSmoothing: 'antialiased',
+                  cursor: 'pointer',
                   '&:hover': { 
-                    transform: 'scale(1.02)',
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.15)'
-                  } 
+                    transform: { xs: 'none', sm: 'scale(1.02)' },
+                    boxShadow: { xs: '0 4px 12px rgba(0,0,0,0.1)', sm: '0 8px 24px rgba(0,0,0,0.15)' }
+                  },
+                  '&:active': {
+                    transform: { xs: 'scale(0.98)', sm: 'scale(1.02)' }
+                  }
                 }}
+                role="img"
+                aria-label="Mountain view robotics classes"
               >
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%)',
+                    height: '50%',
+                    zIndex: 1,
+                    display: { xs: 'block', md: 'none' }
+                  }}
+                />
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    position: 'absolute',
+                    bottom: 16,
+                    left: 16,
+                    color: 'white',
+                    zIndex: 2,
+                    fontWeight: 'medium',
+                    display: { xs: 'block', md: 'none' }
+                  }}
+                >
+                  Mountain View Campus
+                </Typography>
                 <Image
                   src="/images/Mountain-view-classes-4.jpg"
                   alt="Mountain view classes"
                   fill
+                  sizes="(max-width: 600px) 100vw, (max-width: 960px) 50vw, 33vw"
                   style={{ objectFit: 'cover' }}
+                  loading="eager"
+                  quality={90}
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Paper elevation={3} sx={{ p: 0, height: '400px', position: 'relative', overflow: 'hidden', borderRadius: 2, transition: 'transform 0.3s ease-in-out', '&:hover': { transform: 'scale(1.02)' } }}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Paper 
+                elevation={3} 
+                sx={{ 
+                  p: 0, 
+                  height: { xs: '250px', sm: '300px', md: '400px' }, 
+                  position: 'relative', 
+                  overflow: 'hidden', 
+                  borderRadius: { xs: 1, sm: 2 }, 
+                  transition: 'all 0.3s ease-in-out',
+                  transform: 'translateZ(0)',
+                  WebkitFontSmoothing: 'antialiased',
+                  cursor: 'pointer',
+                  '&:hover': { 
+                    transform: { xs: 'none', sm: 'scale(1.02)' },
+                    boxShadow: { xs: '0 4px 12px rgba(0,0,0,0.1)', sm: '0 8px 24px rgba(0,0,0,0.15)' }
+                  },
+                  '&:active': {
+                    transform: { xs: 'scale(0.98)', sm: 'scale(1.02)' }
+                  }
+                }}
+                role="img"
+                aria-label="Robotics classes in Nairobi"
+              >
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%)',
+                    height: '50%',
+                    zIndex: 1,
+                    display: { xs: 'block', md: 'none' }
+                  }}
+                />
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    position: 'absolute',
+                    bottom: 16,
+                    left: 16,
+                    color: 'white',
+                    zIndex: 2,
+                    fontWeight: 'medium',
+                    display: { xs: 'block', md: 'none' }
+                  }}
+                >
+                  Nairobi Campus
+                </Typography>
                 <Image
                   src="/images/Nairobi-classes-7.jpg"
                   alt="Nairobi classes"
                   fill
+                  sizes="(max-width: 600px) 100vw, (max-width: 960px) 50vw, 33vw"
                   style={{ objectFit: 'cover' }}
+                  loading="eager"
+                  quality={90}
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Paper elevation={3} sx={{ p: 0, height: '400px', position: 'relative', overflow: 'hidden', borderRadius: 2, transition: 'transform 0.3s ease-in-out', '&:hover': { transform: 'scale(1.02)' } }}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Paper 
+                elevation={3} 
+                sx={{ 
+                  p: 0, 
+                  height: { xs: '250px', sm: '300px', md: '400px' }, 
+                  position: 'relative', 
+                  overflow: 'hidden', 
+                  borderRadius: { xs: 1, sm: 2 }, 
+                  transition: 'all 0.3s ease-in-out',
+                  transform: 'translateZ(0)',
+                  WebkitFontSmoothing: 'antialiased',
+                  cursor: 'pointer',
+                  '&:hover': { 
+                    transform: { xs: 'none', sm: 'scale(1.02)' },
+                    boxShadow: { xs: '0 4px 12px rgba(0,0,0,0.1)', sm: '0 8px 24px rgba(0,0,0,0.15)' }
+                  },
+                  '&:active': {
+                    transform: { xs: 'scale(0.98)', sm: 'scale(1.02)' }
+                  }
+                }}
+                role="img"
+                aria-label="Robotics classes in Palo Alto"
+              >
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%)',
+                    height: '50%',
+                    zIndex: 1,
+                    display: { xs: 'block', md: 'none' }
+                  }}
+                />
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    position: 'absolute',
+                    bottom: 16,
+                    left: 16,
+                    color: 'white',
+                    zIndex: 2,
+                    fontWeight: 'medium',
+                    display: { xs: 'block', md: 'none' }
+                  }}
+                >
+                  Palo Alto Campus
+                </Typography>
                 <Image
                   src="/images/Palo-alto-classes-5.jpg"
                   alt="Palo Alto classes"
                   fill
+                  sizes="(max-width: 600px) 100vw, (max-width: 960px) 50vw, 33vw"
                   style={{ objectFit: 'cover' }}
+                  loading="eager"
+                  quality={90}
                 />
               </Paper>
             </Grid>
