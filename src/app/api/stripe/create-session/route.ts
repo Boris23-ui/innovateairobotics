@@ -6,7 +6,8 @@ if (!process.env.STRIPE_SECRET_KEY) {
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2023-10-16',
+  // Align API version with installed Stripe types
+  apiVersion: '2025-08-27.basil',
 });
 
 export async function POST(req: Request) {
