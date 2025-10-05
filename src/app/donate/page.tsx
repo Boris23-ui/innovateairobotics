@@ -22,6 +22,9 @@ import {
 } from '@mui/icons-material';
 import Image from 'next/image';
 import { loadStripe } from '@stripe/stripe-js';
+import { useUser } from '@clerk/nextjs';
+import toast from 'react-hot-toast';
+
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const donationTiers = [
@@ -56,21 +59,52 @@ export default function DonatePage() {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [customAmount, setCustomAmount] = useState('');
 
+  const { user } = useUser();
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const handleDonate = async (amount: number) => {
     if (!amount || isNaN(amount) || amount <= 0) {
-      alert('Please enter a valid donation amount.');
+      toast.error('Please enter a valid donation amount.');
       return;
     }
-    const res = await fetch('/api/create-checkout-session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: Math.round(amount * 100) }), // dollars to cents
-    });
-    const data = await res.json();
-    if (data.url) {
-      window.location.href = data.url; // Redirect to Stripe Checkout
-    } else {
-      alert('Error creating checkout session');
+
+    try {
+      setIsProcessing(true);
+
+      const response = await fetch('/api/stripe/create-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount,
+          donorEmail: user?.emailAddresses[0]?.emailAddress || undefined,
+        }),
+      });
+
+      const { sessionId, error } = await response.json();
+
+      if (error) {
+        throw new Error(error);
+      }
+
+      // Get Stripe.js instance
+      const stripe = await stripePromise;
+      if (!stripe) {
+        throw new Error('Stripe failed to initialize');
+      }
+
+      // Redirect to Checkout
+      const { error: stripeError } = await stripe.redirectToCheckout({ sessionId });
+      
+      if (stripeError) {
+        throw new Error(stripeError.message);
+      }
+    } catch (err) {
+      console.error('Donation error:', err);
+      toast.error(
+        err instanceof Error ? err.message : 'Failed to process donation'
+      );
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -264,8 +298,9 @@ export default function DonatePage() {
                   size="large"
                   fullWidth
                   onClick={() => handleDonate(tier.amount)}
+                  disabled={isProcessing}
                 >
-                  Donate
+                  {isProcessing ? 'Processing...' : `Donate $${tier.amount}`}
                 </Button>
               </CardContent>
             </Card>
@@ -294,15 +329,28 @@ export default function DonatePage() {
               </Button>
             ))}
           </Box>
-          <Button
-            variant="contained"
-            size="large"
-            fullWidth
-            sx={{ mt: 2 }}
-            onClick={() => handleDonate(Number(customAmount))}
-          >
-            Donate Custom Amount
-          </Button>
+          <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+            <TextField
+              label="Custom Amount"
+              variant="outlined"
+              type="number"
+              value={customAmount}
+              onChange={(e) => setCustomAmount(e.target.value)}
+              InputProps={{
+                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+              }}
+              fullWidth
+            />
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => handleDonate(Number(customAmount))}
+              disabled={isProcessing || !customAmount || Number(customAmount) <= 0}
+              sx={{ height: 56, whiteSpace: 'nowrap' }}
+            >
+              {isProcessing ? 'Processing...' : 'Donate Now'}
+            </Button>
+          </Box>
         </CardContent>
       </Card>
     </Container>
