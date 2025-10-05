@@ -3,7 +3,10 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-06-30.basil',
+  // Use a Stripe API version compatible with the installed Stripe types.
+  // The project types expect '2025-08-27.basil'. If you upgrade the Stripe
+  // SDK/version in the future you may need to update this string.
+  apiVersion: '2025-08-27.basil',
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
