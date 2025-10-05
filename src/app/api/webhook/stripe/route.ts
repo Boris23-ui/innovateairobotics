@@ -32,16 +32,49 @@ export async function POST(req: Request) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
         
-        // Handle successful donation
-        // You can store the donation in your database here
-        // You can also send a thank you email to the donor
-        
-        console.log('Payment successful:', {
-          amount: session.amount_total,
-          email: session.customer_email,
-          metadata: session.metadata,
-        });
+        // Store the donation in the database
+        try {
+          await prisma.donation.create({
+            data: {
+              amount: session.amount_total ? session.amount_total / 100 : 0, // Convert from cents to dollars
+              email: session.customer_email || 'anonymous',
+              stripeSessionId: session.id,
+              status: 'completed',
+              metadata: session.metadata,
+            },
+          });
 
+          // Send thank you email
+          await sendThankYouEmail({
+            email: session.customer_email!,
+            amount: session.amount_total! / 100,
+            donationId: session.id,
+          });
+        } catch (error) {
+          console.error('Error processing successful donation:', error);
+        }
+        break;
+      }
+
+      case 'payment_intent.payment_failed': {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
+        console.error('Payment failed:', {
+          paymentIntentId: paymentIntent.id,
+          error: paymentIntent.last_payment_error,
+        });
+        break;
+      }
+
+      case 'customer.subscription.created':
+      case 'customer.subscription.updated':
+      case 'customer.subscription.deleted': {
+        const subscription = event.data.object as Stripe.Subscription;
+        // Handle subscription changes
+        try {
+          await handleSubscriptionChange(subscription);
+        } catch (error) {
+          console.error('Error handling subscription change:', error);
+        }
         break;
       }
 
