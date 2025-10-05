@@ -12,6 +12,8 @@ import {
   RateReview, 
   Code,
   Menu as MenuIcon,
+  MenuBook,
+  ViewList,
   Notifications as NotificationsIcon,
   Settings as SettingsIcon,
 } from '@mui/icons-material';
@@ -20,10 +22,12 @@ const drawerWidth = 280;
 
 const menuItems = [
   { text: 'Dashboard', icon: <Dashboard />, path: '/dashboard/student' },
-  { text: 'Courses', icon: <School />, path: '/dashboard/student/all-courses' },
-  { text: 'Assignments', icon: <Assignment />, path: '/dashboard/student/assignments' },
+  { text: 'Active Courses', icon: <School />, path: '/dashboard/student/courses' },
+  { text: 'Pending Assignments', icon: <Assignment />, path: '/dashboard/student/assignments' },
   { text: 'Projects', icon: <Code />, path: '/dashboard/student/projects' },
-  { text: 'Badges', icon: <EmojiEvents />, path: '/dashboard/student/badges' },
+  { text: 'Achievements', icon: <EmojiEvents />, path: '/dashboard/student/achievements' },
+  { text: 'Learning Resources', icon: <MenuBook />, path: '/dashboard/student/resources' },
+  { text: 'View All Courses', icon: <ViewList />, path: '/dashboard/student/all-courses' },
   { text: 'Peer Reviews', icon: <RateReview />, path: '/dashboard/student/reviews' },
 ];
 
@@ -36,59 +40,36 @@ export default function StudentLayout({
   const pathname = usePathname();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [isDrawerOpen, setIsDrawerOpen] = useState(!isMobile);
+  const [isPermanentDrawerOpen, setIsPermanentDrawerOpen] = useState(true);
 
   const handleDrawerToggle = () => {
-    setIsDrawerOpen(!isDrawerOpen);
+    if (isMobile) {
+      setIsDrawerOpen(!isDrawerOpen);
+    } else {
+      setIsPermanentDrawerOpen(!isPermanentDrawerOpen);
+    }
   };
 
   const drawer = (
     <>
       <Box
         sx={{
-          p: 3,
+          p: 2,
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
-          bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'primary.main',
-          color: theme.palette.mode === 'dark' ? 'text.primary' : 'white',
-          transition: theme.transitions.create(['background-color', 'color'], {
-            duration: theme.transitions.duration.standard,
-          }),
+          bgcolor: 'background.paper',
+          color: 'text.primary',
+          borderBottom: 1,
+          borderColor: 'divider',
         }}
       >
-        <Avatar
-          sx={{
-            width: 80,
-            height: 80,
-            mb: 2,
-            border: '3px solid',
-            borderColor: theme.palette.mode === 'dark' ? 'primary.main' : 'white',
-            bgcolor: theme.palette.mode === 'dark' ? 'primary.main' : 'white',
-            color: theme.palette.mode === 'dark' ? 'white' : 'primary.main',
-            transition: theme.transitions.create(['border-color', 'background-color', 'color'], {
-              duration: theme.transitions.duration.standard,
-            }),
-          }}
-        >
-          JD
-        </Avatar>
         <Typography 
           variant="h6" 
           sx={{ 
-            fontWeight: 'bold',
-            color: 'inherit',
+            fontWeight: 500,
           }}
         >
-          John Doe
-        </Typography>
-        <Typography 
-          variant="body2" 
-          sx={{ 
-            opacity: 0.8,
-            color: 'inherit',
-          }}
-        >
-          Computer Science
+          Student Portal
         </Typography>
       </Box>
 
@@ -101,19 +82,15 @@ export default function StudentLayout({
             component={Link}
             href={item.path}
             sx={{
-              borderRadius: 2,
-              mb: 1,
+              borderRadius: 1,
+              mb: 0.5,
               color: pathname === item.path ? 'primary.main' : 'text.secondary',
               bgcolor: pathname === item.path 
-                ? theme.palette.mode === 'dark' 
-                  ? 'rgba(25, 118, 210, 0.08)'
-                  : 'rgba(25, 118, 210, 0.12)'
+                ? 'rgba(25, 118, 210, 0.08)'
                 : 'transparent',
               '&:hover': {
-                bgcolor: theme.palette.mode === 'dark' 
-                  ? 'rgba(255, 255, 255, 0.08)'
-                  : 'rgba(0, 0, 0, 0.04)',
-                transform: 'translateX(8px)',
+                bgcolor: 'rgba(255, 255, 255, 0.08)',
+                transform: 'translateX(4px)',
               },
               transition: theme.transitions.create(['background-color', 'color', 'transform'], {
                 duration: theme.transitions.duration.standard,
@@ -204,6 +181,7 @@ export default function StudentLayout({
 
   return (
     <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+      {/* Mobile Drawer */}
       <Drawer
         variant="temporary"
         open={isDrawerOpen}
@@ -225,6 +203,7 @@ export default function StudentLayout({
         {drawer}
       </Drawer>
 
+      {/* Desktop Drawer */}
       <Drawer
         variant="permanent"
         sx={{
@@ -237,20 +216,55 @@ export default function StudentLayout({
             borderColor: 'divider',
             height: '100%',
             position: 'fixed',
+            left: isPermanentDrawerOpen ? 0 : -drawerWidth,
+            transition: theme.transitions.create('left', {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
           },
         }}
-        open
+        open={isPermanentDrawerOpen}
       >
         {drawer}
       </Drawer>
 
+      {/* Toggle Button */}
+      <IconButton
+        color="inherit"
+        aria-label="toggle drawer"
+        onClick={handleDrawerToggle}
+        sx={{
+          position: 'fixed',
+          left: { xs: 16, sm: isPermanentDrawerOpen ? drawerWidth + 16 : 16 },
+          top: 16,
+          zIndex: theme.zIndex.drawer + 2,
+          bgcolor: 'background.paper',
+          boxShadow: 1,
+          transition: theme.transitions.create('left', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+          '&:hover': {
+            bgcolor: 'action.hover',
+          },
+        }}
+      >
+        <MenuIcon />
+      </IconButton>
+
+      {/* Main Content */}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           p: { xs: 1, sm: 3 },
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
+          pt: { xs: 7, sm: 7 }, // Added top padding to account for the toggle button
+          width: '100%',
+          ml: { sm: isPermanentDrawerOpen ? `${drawerWidth}px` : 0 },
+          transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
           height: '100vh',
           overflow: 'auto',
           bgcolor: 'background.default',
