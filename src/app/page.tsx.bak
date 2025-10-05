@@ -1,0 +1,184 @@
+"use client";
+
+import Image from 'next/image';
+import { Container, Typography, Box, Button, Stack, Paper, Grid } from '@mui/material';
+import { PlayArrow, School, Engineering, Code, Science } from '@mui/icons-material';
+import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
+import Features from '@/components/Features';
+
+const RoboticArm3D = dynamic(() => import('@/components/RoboticArm3D'), { ssr: false });
+
+export default function LandingPage() {
+  const router = useRouter();
+
+  return (
+    <>
+      <Container maxWidth="lg" sx={{ py: 10, minHeight: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <Grid container spacing={4} alignItems="center">
+          <Grid item xs={12} md={6}>
+            <Box sx={{ textAlign: { xs: 'center', md: 'left' }, mb: { xs: 6, md: 0 } }}>
+              <Typography variant="h2" component="h1" gutterBottom fontWeight="bold">
+                Empowering the Next Generation of
+                <Typography
+                  variant="h2"
+                  component="span"
+                  sx={{
+                    background: 'linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    fontWeight: 'bold',
+                    display: 'block'
+                  }}
+                >
+                  Robotics Engineers
+                </Typography>
+              </Typography>
+              <Box sx={{ position: 'relative', width: '100%', height: '400px', borderRadius: '16px', overflow: 'hidden', mb: 4 }}>
+                <Image
+                  src="/images/building_drones.jpg"
+                  alt="Students building drones"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  priority
+                />
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box sx={{ position: 'relative', width: '100%', height: '500px', borderRadius: '16px', overflow: 'hidden', mb: 4 }}>
+              <Image
+                src="/images/kids_designing_simple_machines.jpg"
+                alt="Kids designing simple machines"
+                fill
+                style={{ objectFit: 'cover' }}
+                priority
+              />
+            </Box>
+          </Grid>
+        </Grid>
+          <Typography variant="h5" color="text.secondary" sx={{ mb: 4, maxWidth: 600 }}>
+            Hands-on learning experiences that combine robotics, AI, and coding to inspire creativity and innovation in young minds.
+          </Typography>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mb: 4 }} role="group" aria-label="Primary actions">
+            <Button
+              variant="contained"
+              size="large"
+              startIcon={<PlayArrow />}
+              sx={{ px: 4, py: 1.5 }}
+              onClick={() => router.push('/sign-in')}
+              aria-label="Start learning - Sign in"
+            >
+              Start Learning
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<School />}
+              sx={{ px: 4, py: 1.5 }}
+              onClick={() => router.push('/courses')}
+              aria-label="Explore courses"
+            >
+              Explore Courses
+            </Button>
+          </Stack>
+        </Box>
+        {/* 3D Robotic Arm Animation at the top of hero */}
+        <Box sx={{ mb: 4, width: '100%', maxWidth: 900, mx: 'auto', borderRadius: 2, overflow: 'hidden', boxShadow: 3, background: 'linear-gradient(120deg, #e0e7ef 60%, #ede9fe 100%)' }}>
+          <RoboticArm3D />
+        </Box>
+      </Container>
+
+      {/* Image Gallery Section */}
+      <Box sx={{ bgcolor: 'grey.50', py: 10 }}>
+        <Container maxWidth="lg">
+          <Typography variant="h3" component="h2" textAlign="center" gutterBottom fontWeight="bold">
+            Inspiring Young Minds Worldwide
+          </Typography>
+          <Typography variant="h6" color="text.secondary" textAlign="center" sx={{ mb: 6, maxWidth: 800, mx: 'auto' }}>
+            From Mountain View to Nairobi, we're building the next generation of innovators through hands-on robotics education.
+          </Typography>
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={4}>
+              <Paper elevation={3} sx={{ p: 0, height: '400px', position: 'relative', overflow: 'hidden', borderRadius: 2, transition: 'transform 0.3s ease-in-out', '&:hover': { transform: 'scale(1.02)' } }}>
+                <Image
+                  src="/images/Mountain-view-classes-4.jpg"
+                  alt="Mountain view classes"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Paper elevation={3} sx={{ p: 0, height: '400px', position: 'relative', overflow: 'hidden', borderRadius: 2, transition: 'transform 0.3s ease-in-out', '&:hover': { transform: 'scale(1.02)' } }}>
+                <Image
+                  src="/images/Nairobi-classes-7.jpg"
+                  alt="Nairobi classes"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Paper elevation={3} sx={{ p: 0, height: '400px', position: 'relative', overflow: 'hidden', borderRadius: 2, transition: 'transform 0.3s ease-in-out', '&:hover': { transform: 'scale(1.02)' } }}>
+                <Image
+                  src="/images/Palo-alto-classes-5.jpg"
+                  alt="Palo Alto classes"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* Features Section */}
+      <Box sx={{ py: 8 }}>
+        <Features />
+      </Box>
+
+      {/* Testimonials Section */}
+      <Container maxWidth="md" sx={{ py: 8 }}>
+        <Box sx={{ textAlign: 'center', mb: 4 }}>
+          <Typography variant="h4" component="h2" fontWeight="bold" gutterBottom>
+            What Our Students & Teachers Say
+          </Typography>
+          <Typography variant="h6" color="text.secondary">
+            Real stories from our community
+          </Typography>
+        </Box>
+        <Stack spacing={4}>
+          <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
+            <Typography variant="body1" sx={{ fontStyle: 'italic' }}>
+              "This program sparked my love for robotics! I built my first robot and now I want to be an engineer."
+            </Typography>
+            <Box sx={{ mt: 2, textAlign: 'right' }}>
+              <Typography variant="subtitle1" fontWeight="bold">Amina K.</Typography>
+              <Typography variant="body2" color="text.secondary">Student, Nairobi</Typography>
+            </Box>
+          </Paper>
+          <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
+            <Typography variant="body1" sx={{ fontStyle: 'italic' }}>
+              "The hands-on approach makes learning fun and effective. My students are more engaged than ever!"
+            </Typography>
+            <Box sx={{ mt: 2, textAlign: 'right' }}>
+              <Typography variant="subtitle1" fontWeight="bold">Mr. Lee</Typography>
+              <Typography variant="body2" color="text.secondary">Teacher, Palo Alto</Typography>
+            </Box>
+          </Paper>
+          <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
+            <Typography variant="body1" sx={{ fontStyle: 'italic' }}>
+              "InnovateAI Robotics gave my child the confidence to explore technology. Highly recommended!"
+            </Typography>
+            <Box sx={{ mt: 2, textAlign: 'right' }}>
+              <Typography variant="subtitle1" fontWeight="bold">Sarah W.</Typography>
+              <Typography variant="body2" color="text.secondary">Parent</Typography>
+            </Box>
+          </Paper>
+        </Stack>
+      </Container>
+    </>
+  );
+} 
