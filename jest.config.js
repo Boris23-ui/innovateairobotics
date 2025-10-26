@@ -8,9 +8,13 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
-  testEnvironment: 'jest-environment-jsdom',
+  // Use node environment for these tests to avoid requiring jsdom in CI/dev
+  testEnvironment: 'node',
   moduleNameMapper: {
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
+    '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
+    '^@/types/(.*)$': '<rootDir>/src/types/$1',
+    '^@/hooks/(.*)$': '<rootDir>/src/hooks/$1',
     '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
     '^@/utils/(.*)$': '<rootDir>/src/utils/$1',

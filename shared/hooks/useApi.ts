@@ -1,6 +1,7 @@
 // API hooks
 import { useEffect, useState } from 'react';
 import { getUsers, getCourses } from '../lib/database';
+import type { User, Course } from '../types/database';
 
 export const useUsers = () => {
     const [users, setUsers] = useState<User[]>([]);

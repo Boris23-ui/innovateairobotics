@@ -4,9 +4,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/types/*": ["./src/types/*"],
-      "@/lib/*": ["./src/lib/*"],
-      "@/hooks/*": ["./src/hooks/*"],
+      "@/types/*": ["../../src/types/*"],
+      "@/lib/*": ["../../src/lib/*"],
+      "@/hooks/*": ["../../src/hooks/*"],
       "@/components/*": ["../../components/*"]
     },
     "ignoreDeprecations": "6.0"
