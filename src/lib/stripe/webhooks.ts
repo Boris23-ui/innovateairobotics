@@ -1,27 +1,17 @@
 import type { Stripe } from 'stripe';
-import { prisma } from '../db';
 
 export async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   const customerId = subscription.customer as string;
   const status = subscription.status;
   const priceId = subscription.items.data[0]?.price.id;
-
-  await prisma.subscription.upsert({
-    where: { stripeSubscriptionId: subscription.id },
-    update: {
-      status,
-      priceId,
-      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-      cancelAtPeriodEnd: subscription.cancel_at_period_end,
-    },
-    create: {
-      stripeSubscriptionId: subscription.id,
-      stripeCustomerId: customerId,
-      status,
-      priceId,
-      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-      cancelAtPeriodEnd: subscription.cancel_at_period_end,
-    },
+  // Persist subscription changes as needed. Placeholder log for now.
+  console.log('Subscription update:', {
+    subscriptionId: subscription.id,
+    customerId,
+    status,
+    priceId,
+    currentPeriodEnd: (subscription as any).current_period_end,
+    cancelAtPeriodEnd: subscription.cancel_at_period_end,
   });
 }
 

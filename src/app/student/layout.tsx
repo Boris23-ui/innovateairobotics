@@ -68,7 +68,7 @@ export default function StudentLayout({
       <AppBar 
         position="fixed" 
         sx={{ 
-          zIndex: (theme) => theme.zIndex.drawer + 1,
+          zIndex: (theme: any) => theme.zIndex.drawer + 1,
           bgcolor: 'background.paper',
           color: 'text.primary',
           boxShadow: 1
@@ -227,7 +227,7 @@ export default function StudentLayout({
           p: 3,
           width: { md: `calc(100% - ${open ? drawerWidth : 0}px)` },
           ml: { md: open ? `${drawerWidth}px` : 0 },
-          transition: (theme) =>
+          transition: (theme: any) =>
             theme.transitions.create(['margin', 'width'], {
               easing: theme.transitions.easing.sharp,
               duration: theme.transitions.duration.leavingScreen,

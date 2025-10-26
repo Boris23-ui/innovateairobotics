@@ -1,306 +1,130 @@
-# InnovateAI Robotics - Micro-Frontend Platform
+# InnovateAI Robotics
 
-🚀 **Empowering the Next Generation of Robotics Engineers**
+Lightweight monorepo for an educational robotics platform (Next.js 14). This README focuses on getting the project running locally and deploying the primary app to Vercel.
 
-A comprehensive micro-frontend architecture designed for educational robotics and AI learning platforms. Built with Next.js 14, Clerk authentication, and Supabase for real-time features.
+## Contents
+- What this repo contains
+- Quickstart (dev, build, test)
+- Environment variables (local & Vercel)
+- Vercel deployment notes (monorepo)
+- Troubleshooting & next steps
 
-## 🏗️ Micro-Frontend Structure & Main Routes
+## What this repo contains
+- apps/: multiple frontend apps (primary Next.js app is `apps/shell`)
+- shared/: shared types and helpers
+- components/, src/: UI and shared code used by the main app
+- docker/: docker-compose manifests for local services
+- SUPABASE_SETUP.md: instructions to provision Supabase locally / in production
 
-This project uses a single Next.js app with microfrontend-style routing. Each user role and major feature has a dedicated route:
+## Quickstart (Windows / PowerShell)
+Prerequisites: Node 18+ (Node 20 recommended), npm, and Git.
 
-| Microfrontend         | Main Route                  | Description                        |
-|----------------------|-----------------------------|------------------------------------|
-| Student Dashboard    | `/student/dashboard`        | Student learning interface         |
-| Teacher Dashboard    | `/teacher/dashboard`        | Teacher course management          |
-| Admin Dashboard      | `/admin/dashboard`          | Platform administration            |
-| Courses              | `/courses`                  | Course catalog/content             |
-| Assignments          | `/assignments`              | Assignment system                  |
-| Progress Tracker     | `/progress`                 | Progress and achievements          |
+Install dependencies (root workspace):
 
-- The root route `/` automatically redirects to the appropriate dashboard based on user role.
-- All microfrontend root routes (e.g., `/student`, `/teacher`, `/admin`) redirect to their respective dashboards.
-- Role-based navigation is handled automatically after login.
-
-## ⚙️ Environment Setup
-
-1. **Copy the example environment file:**
-   ```sh
-   cp .env.example .env.local
-   ```
-2. **Fill in your environment variables in `.env.local`:**
-   ```env
-   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-   CLERK_SECRET_KEY=your_clerk_secret_key
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   ```
-   - **Important:** The `NEXT_PUBLIC_SUPABASE_ANON_KEY` must be a single line (no line breaks).
-   - If you encounter build errors about missing env vars, double-check for typos and line breaks.
-
-## 🪟 Special Windows Notes
-
-- If you encounter errors like `EPERM: operation not permitted` or `EADDRINUSE: address already in use`, try the following:
-  1. Close all Node.js/Next.js processes in Task Manager.
-  2. Restart your computer.
-  3. Run your terminal as Administrator.
-  4. Temporarily disable antivirus if it interferes with file/process access.
-- Always ensure your `.env.local` file uses Windows line endings (CRLF) if editing in Notepad.
-
-## 🚀 Running & Building the Project
-
-### Install Dependencies
-```sh
+```powershell
 npm install
 ```
 
-### Start the Development Server
-```sh
-npm run dev
-```
-- The app will be available at [http://localhost:3000](http://localhost:3000)
-- All microfrontend routes are accessible from this single server.
+Run the primary app in development (from repo root):
 
-### Build for Production
-```sh
+```powershell
+# If using the main Next app in root
+npm run dev
+
+# OR run the shell app directly (monorepo):
+cd apps/shell; npm install; npm run dev
+```
+
+Open http://localhost:3000 in your browser.
+
+Build for production (root or app folder):
+
+```powershell
 npm run build
 npm start
+# or for the shell app specifically:
+cd apps/shell; npm run build; npm start
 ```
 
-## 🧭 Navigation & Role-Based Routing
-- Navigation is role-aware: after login, users are redirected to their dashboard.
-- The navigation menu adapts to the logged-in user's role.
-- Protected routes require authentication; unauthenticated users are redirected to `/login`.
+Run tests:
 
-## 🛠️ Troubleshooting
-- **404 at `/` or dashboard routes:** Ensure you are logged in and your user has the correct role assigned.
-- **Environment variable errors:** Double-check `.env.local` for typos, missing values, or line breaks.
-- **Windows process errors:** See the Special Windows Notes above.
-
-## 📚 Documentation & Support
-- See the rest of this README for platform features, design system, and contribution guidelines.
-- For more help, see the [Troubleshooting](./docs/troubleshooting.md) guide or contact support.
-
-## 🎯 Key Features
-
-### Educational Platform Features
-- **Age-Appropriate Learning**: Dedicated modules for different age groups (5 & Under, 6-9, 10-12, AI Introduction)
-- **Interactive Robotics**: Virtual robot simulation and programming interfaces
-- **Progress Tracking**: Visual progress indicators and achievement badges
-- **Real-time Collaboration**: Live coding sessions and peer reviews
-- **Assignment System**: Interactive project creation and submission
-- **Analytics Dashboard**: Comprehensive learning analytics for teachers and parents
-
-### Technical Features
-- **Micro-Frontend Architecture**: Isolated modules for fault tolerance
-- **Role-Based Access**: Separate interfaces for students, teachers, and admins
-- **Real-time Features**: WebSocket connections for live updates
-- **Responsive Design**: Mobile-first approach for all age groups
-- **Accessibility**: WCAG 2.1 compliant for inclusive learning
-- **Security**: Row Level Security (RLS) with Supabase
-
-## 🎨 Design System
-
-### Age Group Color Scheme
-- **Tiny Tinkerers** (Ages 5 & Under): `#f59e0b` (Amber)
-- **Robot Explorers** (Ages 6-9): `#10b981` (Emerald)
-- **Tech Titans** (Ages 10-12): `#3b82f6` (Blue)
-- **AI Avengers** (AI Introduction): `#8b5cf6` (Purple)
-
-### Material-UI Theme
-- **Primary**: Blue (`#2563eb`) for technology focus
-- **Secondary**: Red (`#dc2626`) for robotics emphasis
-- **Typography**: Inter font family for readability
-- **Components**: Custom educational components with accessibility features
-
-## 🔧 Development Commands
-
-### Build Commands
-```bash
-# Build all modules
-npm run build
-
-# Build individual modules
-npm run build:shell
-npm run build:student
-npm run build:teacher
-npm run build:admin
-npm run build:courses
-```
-
-### Testing Commands
-```bash
-# Run all tests
+```powershell
 npm run test
-
-# Run individual module tests
-npm run test:shell
-npm run test:student
-npm run test:teacher
+npm run test:e2e
 ```
 
-### Database Commands
-```bash
-# Supabase management
-npm run supabase:start
-npm run supabase:stop
-npm run supabase:reset
-npm run supabase:gen-types
-npm run supabase:migrate
+Lint / type-check:
+
+```powershell
+npm run lint
+npm run type-check
 ```
 
-### Deployment Commands
-```bash
-# Deploy to staging
-npm run deploy:staging
+## Important project scripts
+The root and `apps/shell` package.json include the typical Next.js scripts:
+- dev: start development server
+- build: build for production
+- start: run the built app
+- lint, test, test:e2e
 
-# Deploy to production
-npm run deploy:production
-```
+Use the app folder (`apps/shell`) as the Vercel project root for deployments in a monorepo.
 
-## 🐳 Docker Deployment
+## Environment variables
+Create a local `.env.local` file (copy from `.env.example` if present). Key variables used by the project include:
 
-### Local Development
-```bash
-# Start all services
-docker-compose -f docker/docker-compose.yml up -d
+- NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY (public)
+- CLERK_SECRET_KEY (server)
+- NEXT_PUBLIC_SUPABASE_URL (public)
+- NEXT_PUBLIC_SUPABASE_ANON_KEY (public)
+- SUPABASE_SERVICE_ROLE_KEY or SERVICE_KEY (server, keep secret)
+- NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY (public)
+- STRIPE_SECRET_KEY (server)
 
-# View logs
-docker-compose -f docker/docker-compose.yml logs -f
+Note: never commit secrets to Git. For Vercel, set these variables in the Project Settings > Environment Variables.
 
-# Stop services
-docker-compose -f docker/docker-compose.yml down
-```
+For Supabase-specific provisioning, see `SUPABASE_SETUP.md` at the repo root.
 
-### Production Deployment
-```bash
-# Build and deploy
-docker-compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml up -d
-```
+## Deploying to Vercel (recommended)
+Because this repo is a monorepo, configure the Vercel project to use `apps/shell` as the Project Root. Suggested settings:
 
-## 📊 Monitoring & Analytics
+- Framework Preset: Next.js
+- Project Root: `apps/shell`
+- Install Command: `npm install`
+- Build Command: `npm run build`
+- Output Directory: leave default (Next.js)
+- Node Version: 20 (or 18+)
 
-### Health Checks
-- **Shell**: `http://localhost:3000/health`
-- **Student Dashboard**: `http://localhost:3001/health`
-- **Teacher Dashboard**: `http://localhost:3002/health`
-- **Admin Dashboard**: `http://localhost:3003/health`
+Environment variables: Add the same variables you use locally (see Environment variables section). Make sure to add server-only variables to the Production scope only.
 
-### Analytics Events
-- Lesson started/completed
-- Assignment submitted
-- Badge earned
-- Course enrolled/completed
-- Login/logout events
+Vercel will run `npm install` and then `npm run build` in `apps/shell`. If your deployment fails, check the Vercel build logs for missing env vars or TypeScript errors.
 
-## 🔒 Security Features
+## Common issues & troubleshooting
+- Missing env vars during build: double-check names and scopes (Vercel requires env vars to be set in the dashboard for each environment).
+- Monorepo / workspace packages not found: ensure `package.json` in root includes workspace configuration and `apps/shell/package.json` uses workspace: dependencies. Vercel installs from the Project Root—if you deploy `apps/shell`, Vercel will run `npm install` there; ensure the workspace setup is compatible or add a preinstall that bootstraps workspaces.
+- Image/sharp build issues on Windows: install the required build tools or use the prebuilt sharp binaries. Ensure you have Python and windows-build-tools if you must compile native modules.
+- Locked `.next` folder on Windows: stop all node processes, delete `.next`, then rebuild. Running PowerShell as Admin can help.
 
-### Authentication & Authorization
-- **Clerk Integration**: Secure user authentication
-- **Role-Based Access**: Students, teachers, admins, parents
-- **JWT Tokens**: Secure session management
-- **Multi-factor Authentication**: Enhanced security
+## Next steps to make the app production-ready
+1. Verify `apps/shell` builds cleanly: `cd apps/shell; npm run build`.
+2. Run `npm run type-check` and fix TypeScript errors.
+3. Add a `vercel.json` if you need custom routing or redirects.
+4. Prepare an environment in Vercel and add secrets (Clerk, Supabase, Stripe).
+5. Add CI to run tests and type-check on every PR.
 
-### Data Protection
-- **Row Level Security (RLS)**: Supabase security policies
-- **Data Encryption**: At rest and in transit
-- **Privacy Compliance**: COPPA and FERPA compliant
-- **Audit Logging**: Complete activity tracking
+## Contributing
+Follow the usual GitHub flow: fork, branch, PR. Run tests and linters before submitting.
 
-## 🎯 Educational Benefits
-
-### For Students
-- **Personalized Learning**: Age-appropriate content and pacing
-- **Hands-on Experience**: Real robot programming and simulation
-- **Achievement System**: Gamified learning with badges
-- **Collaborative Learning**: Peer reviews and group projects
-
-### For Teachers
-- **Comprehensive Analytics**: Student progress and engagement metrics
-- **Flexible Content Creation**: Easy course and assignment building
-- **Real-time Monitoring**: Live student activity tracking
-- **Assessment Tools**: Automated grading and feedback
-
-### For Parents
-- **Progress Visibility**: Real-time learning progress
-- **Achievement Tracking**: Badge and milestone monitoring
-- **Communication**: Direct messaging with teachers
-- **Learning Insights**: Detailed analytics and recommendations
-
-## 🤝 Contributing
-
-### Development Workflow
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
-
-### Code Standards
-- **TypeScript**: Strict type checking
-- **ESLint**: Code quality enforcement
-- **Prettier**: Code formatting
-- **Jest**: Unit and integration testing
-- **Playwright**: End-to-end testing
-
-## 📚 Documentation
-
-### Additional Resources
-- [API Documentation](./docs/api.md)
-- [Database Schema](./docs/database.md)
-- [Component Library](./docs/components.md)
-- [Deployment Guide](./docs/deployment.md)
-- [Troubleshooting](./docs/troubleshooting.md)
-
-## 🆘 Support
-
-### Getting Help
-- **Documentation**: Check the docs folder
-- **Issues**: Create a GitHub issue
-- **Discussions**: Use GitHub Discussions
-- **Email**: support@innovateairobotics.com
-
-### Community
-- **Discord**: Join our community server
-- **YouTube**: Educational content and tutorials
-- **Blog**: Latest updates and educational insights
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Material-UI**: Component library
-- **Clerk**: Authentication service
-- **Supabase**: Database and real-time features
-- **Framer Motion**: Animation library
-- **Next.js**: React framework
+## Where to get help
+- See `SUPABASE_SETUP.md` for provisioning instructions
+- Open issues or discussions on GitHub if you get stuck
 
 ---
 
-**Built with ❤️ for the future of robotics education**
+If you want, I can now:
 
-*InnovateAI Robotics Inc. - Empowering the next generation of robotics engineers*
+1. Run a production build locally and fix any build-time errors.
+2. Add a `vercel.json` with recommended defaults for this app.
+3. Generate a short `docs/deployment.md` that lists the exact env vars and Vercel settings.
 
----
-
-## How to Fix This on Windows
-
-1. **Close all running Node.js/Next.js processes** (including any dev servers).
-2. **Delete the `.next` directory** manually:
-   - In File Explorer, go to `E:\innovateairobotics`
-   - Delete the `.next` folder (it may be locked—if so, restart your computer and try again).
-3. **Run your terminal as Administrator**:
-   - Right-click your terminal app and select “Run as administrator.”
-4. **Try the build again**:
-   ```sh
-   npm run build
-   ```
-
----
-
-**This is a common issue on Windows when files are locked by a process or antivirus.**  
-If the problem persists after a reboot and running as admin, let me know and we’ll try additional steps.
-
-Would you like me to walk you through these steps, or do you want to try them and report back?
+Tell me which of the above you'd like next and I'll proceed.
 

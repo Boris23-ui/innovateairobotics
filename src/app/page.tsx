@@ -7,7 +7,8 @@ import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Features from '@/components/Features';
 
-const RoboticArm3D = dynamic(() => import('@/components/RoboticArm3D'), { ssr: false });
+// Temporarily stub 3D component to avoid three/drei build issues
+const RoboticArm3D = () => null;
 
 export default function LandingPage() {
   const router = useRouter();
@@ -156,7 +157,6 @@ export default function LandingPage() {
           backdropFilter: 'blur(8px)',
           borderRadius: 'full',
           px: 3,
-          py: 1.5,
           boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
         }}
       >

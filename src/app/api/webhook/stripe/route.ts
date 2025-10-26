@@ -1,14 +1,13 @@
 import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
+import { handleSubscriptionChange, sendThankYouEmail } from '../../../../lib/stripe/webhooks'
 
 if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
   throw new Error('Required environment variables are not set');
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2025-08-27.basil',
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -31,27 +30,14 @@ export async function POST(req: Request) {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
-        
-        // Store the donation in the database
         try {
-          await prisma.donation.create({
-            data: {
-              amount: session.amount_total ? session.amount_total / 100 : 0, // Convert from cents to dollars
-              email: session.customer_email || 'anonymous',
-              stripeSessionId: session.id,
-              status: 'completed',
-              metadata: session.metadata,
-            },
-          });
-
-          // Send thank you email
           await sendThankYouEmail({
-            email: session.customer_email!,
-            amount: session.amount_total! / 100,
+            email: session.customer_email || 'anonymous',
+            amount: session.amount_total ? session.amount_total / 100 : 0,
             donationId: session.id,
           });
         } catch (error) {
-          console.error('Error processing successful donation:', error);
+          console.error('Error sending thank you email:', error);
         }
         break;
       }

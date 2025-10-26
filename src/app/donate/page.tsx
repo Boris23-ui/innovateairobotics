@@ -13,6 +13,8 @@ import {
   Stack,
   useTheme,
 } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 import {
   Favorite,
   School,

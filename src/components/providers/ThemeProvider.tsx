@@ -13,8 +13,8 @@ const getSemanticColors = (mode: 'light' | 'dark') => ({
   surface: {
     default: mode === 'light' ? tokens.grey[50] : tokens.grey[900],
     paper: mode === 'light' ? '#ffffff' : tokens.grey[800],
-    raised: mode === 'light' ? '#ffffff' : tokens.grey[750],
-    sunken: mode === 'light' ? tokens.grey[100] : tokens.grey[850],
+    raised: mode === 'light' ? '#ffffff' : tokens.grey[700],
+    sunken: mode === 'light' ? tokens.grey[100] : tokens.grey[800],
   },
   // Border colors
   border: {

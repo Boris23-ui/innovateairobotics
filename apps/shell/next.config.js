@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
+  // Next.js 14 auto-detects the App Router. Explicit `appDir` is no longer required
+  // and may be rejected by some Next versions — remove it to avoid the warning.
   async rewrites() {
     return [
       {
