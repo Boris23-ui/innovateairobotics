@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getUsers, getCourses } from '../lib/database';
 
 export const useUsers = () => {
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export const useUsers = () => {
 };
 
 export const useCourses = () => {
-    const [courses, setCourses] = useState([]);
+    const [courses, setCourses] = useState<Course[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
