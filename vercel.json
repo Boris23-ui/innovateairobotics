@@ -1,9 +1,16 @@
 {
+  "version": 2,
   "framework": "nextjs",
+  "builds": [
+    { "src": "apps/shell/package.json", "use": "@vercel/next" }
+  ],
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "outputDirectory": ".next",
+  "github": {
+    "silent": true
+  },
   "git": {
     "deploymentEnabled": {
       "main": true,
@@ -38,18 +45,9 @@
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        }
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" }
       ]
     }
   ]

@@ -1,0 +1,13 @@
+node_modules
+**/node_modules
+.turbo
+.next
+dist
+coverage
+.git
+**/.*.local
+**/*.log
+apps/**/build
+apps/**/.env
+README.md
+docs/**

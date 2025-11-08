@@ -8,8 +8,9 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
-  // Use node environment for these tests to avoid requiring jsdom in CI/dev
-  testEnvironment: 'node',
+  // Use jsdom for UI/unit tests; exclude Playwright e2e tests from Jest runs
+  testEnvironment: 'jsdom',
+  testPathIgnorePatterns: ['<rootDir>/src/__tests__/e2e/'],
   moduleNameMapper: {
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/lib/(.*)$': '<rootDir>/src/lib/$1',

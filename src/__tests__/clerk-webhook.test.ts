@@ -4,10 +4,10 @@
  */
 import { jest } from '@jest/globals';
 
+let mockHeaders: Record<string, string | null> = {};
+
 // Ensure webhook secret is set for the route (tests run in-process)
 process.env.CLERK_WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET || 'test-secret';
-
-let mockHeaders: Record<string, string | null> = {};
 
 // mock svix Webhook (use jest.mock to ensure it applies in CommonJS Jest runs)
 const mockVerify = jest.fn();
@@ -16,6 +16,48 @@ jest.mock('svix', () => ({
     verify: (body: any, headers: any) => mockVerify(body, headers),
   })),
 }));
+
+// Polyfill a minimal Request for the jsdom Jest environment if it's not available
+if (typeof (global as any).Request === 'undefined') {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  global.Request = class {
+    url: string;
+    method: string | undefined;
+    _body: any;
+    headers: { get: (k: string) => string | null };
+    constructor(url: string, opts: any = {}) {
+      this.url = url;
+      this.method = opts.method;
+      this._body = opts.body;
+      const hdrs = opts.headers || {};
+      this.headers = { get: (k: string) => hdrs[k] ?? null };
+    }
+    async json() {
+      return JSON.parse(this._body || '{}');
+    }
+  };
+}
+
+// Polyfill a minimal Response for the test environment
+if (typeof (global as any).Response === 'undefined') {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  global.Response = class {
+    status: number;
+    body: any;
+    constructor(body: any, opts: any = {}) {
+      this.body = body;
+      this.status = opts.status ?? 200;
+    }
+    async json() {
+      return typeof this.body === 'string' && this.body.length ? JSON.parse(this.body) : this.body;
+    }
+    text() {
+      return typeof this.body === 'string' ? this.body : JSON.stringify(this.body);
+    }
+  };
+}
 
 // mock userService (mapped by jest.config moduleNameMapper to src/lib)
 const createMock = jest.fn();
