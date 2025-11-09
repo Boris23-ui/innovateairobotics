@@ -57,8 +57,8 @@ export function useAuth() {
       }
 
       await checkAuth();
-      const redirectTo = router.query.redirectTo as string;
-      router.push(redirectTo || '/dashboard');
+  const redirectTo = router.query.redirectTo as string;
+  router.push(redirectTo || '/student/dashboard');
     } catch (error) {
       setAuthState({
         ...authState,

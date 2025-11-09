@@ -23,7 +23,7 @@ export default function LoginPage() {
   const { signIn, isLoaded } = useSignIn();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTo = searchParams?.get('redirectTo') || '/dashboard/student';
+  const redirectTo = searchParams?.get('redirectTo') || '/student/dashboard';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
