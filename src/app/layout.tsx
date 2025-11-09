@@ -18,8 +18,24 @@ export const metadata: Metadata = {
 };
 
 // Validate environment variables at build time
+// Note: validating environment variables during Next.js build can cause
+// the build to fail when Vercel (or other hosts) don't expose runtime
+// environment variables at build-time. Wrap validation in a try/catch and
+// only warn so the build can proceed. Developers should still set the
+// required environment variables in the Vercel project settings.
 if (process.env.NODE_ENV === 'production') {
-  validateEnv();
+  try {
+    validateEnv();
+  } catch (err) {
+    // Do not throw here to avoid failing the entire build during
+    // Vercel's build-time when runtime-only env vars are not yet set.
+    // Instead, log a helpful warning so deploy logs show what's missing.
+    // eslint-disable-next-line no-console
+    console.warn(
+      'Environment validation failed during build. Ensure required environment variables are set in your hosting provider (e.g. Vercel) project settings. Validation error:',
+      err
+    );
+  }
 }
 
 export default function RootLayout({

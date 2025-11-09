@@ -3,13 +3,22 @@ import { headers } from 'next/headers';
 import Stripe from 'stripe';
 import { handleSubscriptionChange, sendThankYouEmail } from '../../../../lib/stripe/webhooks'
 
-if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
-  throw new Error('Required environment variables are not set');
-}
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
 export async function POST(req: Request) {
+  // Defer environment validation to request time so the module can be
+  // imported during Next.js build without throwing. If required env
+  // vars are missing, return an error response instead of crashing the
+  // build server.
+  if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
+    // eslint-disable-next-line no-console
+    console.error('Stripe webhook called but required env vars are not set');
+    return NextResponse.json(
+      { error: 'Server configuration error' },
+      { status: 500 }
+    );
+  }
+
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
   const body = await req.text();
   const signature = headers().get('stripe-signature');
 
