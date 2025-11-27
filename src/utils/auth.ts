@@ -14,6 +14,8 @@ export interface UserProfile {
   school?: string;
 }
 
+const isDemoMode = () => process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+
 export function combineHeaders(...headers: Headers[]) {
   const combined = new Headers();
   headers.forEach(header => {
@@ -51,14 +53,29 @@ export function getAuthRedirectUrl(request: NextRequest, redirectTo?: string | n
 
 // Mock function to get user role - replace with actual database lookup
 export async function getUserRole(userId: string): Promise<UserRole> {
+  if (isDemoMode()) {
+    return 'student';
+  }
   // TODO: Replace with actual database query
-  // For now, return 'student' as default
   return 'student';
 }
 
 export async function getUserProfile(): Promise<UserProfile | null> {
+  if (isDemoMode()) {
+    // Return demo user profile
+    return {
+      id: 'demo-user-123',
+      email: 'demo@innovateai.com',
+      firstName: 'Demo',
+      lastName: 'Student',
+      role: 'student',
+      gradeLevel: 'Grade 10',
+      school: 'InnovateAI Academy (Demo)'
+    };
+  }
+
   const { userId } = auth();
-  
+
   if (!userId) {
     return null;
   }
@@ -93,4 +110,4 @@ export function getDashboardPath(role: UserRole): string {
 
 export function isAuthorized(role: UserRole, requiredRoles: UserRole[]): boolean {
   return requiredRoles.includes(role);
-} 
+}

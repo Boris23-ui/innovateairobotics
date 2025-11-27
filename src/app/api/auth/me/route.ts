@@ -2,8 +2,22 @@ import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs';
 import { userService } from '@/lib/database';
 
+const isDemoMode = () => process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+
 export async function GET() {
   try {
+    // Demo mode: return mock user
+    if (isDemoMode()) {
+      return NextResponse.json({
+        id: 'demo-user-123',
+        email: 'demo@innovateai.com',
+        name: 'Demo Student',
+        role: 'student',
+        gradeLevel: 'Grade 10',
+        school: 'InnovateAI Academy (Demo)'
+      });
+    }
+
     const { userId } = auth();
     if (!userId) {
       return NextResponse.json(
@@ -28,4 +42,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-} 
+}

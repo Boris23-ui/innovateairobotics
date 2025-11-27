@@ -15,28 +15,6 @@
   html, body {
     font-family: var(--font-merriweather);
   }
-
-  h1, h2, h3, h4, h5, h6, p, span, div {
-    font-family: var(--font-merriweather);
-  }
-}
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 245, 245, 245;
-  --background-end-rgb: 255, 255, 255;
-}
-
-[data-theme='dark'] {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 18, 18, 18;
-  --background-end-rgb: 30, 30, 30;
-}
-
-html,
-body {
-  min-height: 100vh;
-  color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-start-rgb));
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }

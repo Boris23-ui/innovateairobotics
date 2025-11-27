@@ -18,14 +18,14 @@ const getSemanticColors = (mode: 'light' | 'dark') => ({
   },
   // Border colors
   border: {
-    light: mode === 'light' 
-      ? alpha(tokens.grey[200], 0.8) 
+    light: mode === 'light'
+      ? alpha(tokens.grey[200], 0.8)
       : alpha(tokens.grey[700], 0.8),
-    main: mode === 'light' 
-      ? tokens.grey[200] 
+    main: mode === 'light'
+      ? tokens.grey[200]
       : tokens.grey[700],
-    strong: mode === 'light' 
-      ? tokens.grey[300] 
+    strong: mode === 'light'
+      ? tokens.grey[300]
       : tokens.grey[600],
   },
   // State colors with proper contrast
@@ -58,7 +58,7 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType>({
   mode: 'light',
-  toggleColorMode: () => {},
+  toggleColorMode: () => { },
 });
 
 export const useTheme = () => useContext(ThemeContext);
@@ -70,14 +70,31 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const savedMode = localStorage.getItem('theme-mode');
-    
+
+    let initialMode: 'light' | 'dark' = 'light';
     if (savedMode === 'dark' || savedMode === 'light') {
-      setMode(savedMode);
+      initialMode = savedMode;
     } else {
-      setMode(prefersDarkMode ? 'dark' : 'light');
+      initialMode = prefersDarkMode ? 'dark' : 'light';
     }
+    setMode(initialMode);
+
+    if (initialMode === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (mode === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [mode]);
 
   const toggleColorMode = () => {
     setMode((prevMode) => {
@@ -89,12 +106,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const theme = useMemo(() => {
     const semanticColors = getSemanticColors(mode);
-    
+
     // Custom shadows with proper color adaptation
-    const shadowColor = mode === 'light' 
+    const shadowColor = mode === 'light'
       ? 'rgba(17, 24, 39, 0.1)'
       : 'rgba(0, 0, 0, 0.3)';
-    
+
     const shadows = mode === 'light' ? [
       'none',
       `0px 1px 2px ${shadowColor}`,
@@ -191,7 +208,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           backgroundClip: 'text',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-          textShadow: mode === 'light' 
+          textShadow: mode === 'light'
             ? '0 2px 4px rgba(0,0,0,0.1)'
             : '0 2px 4px rgba(0,0,0,0.2)',
         },
@@ -201,7 +218,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           fontWeight: 700,
           lineHeight: 1.2,
           letterSpacing: '-0.02em',
-          color: mode === 'light' 
+          color: mode === 'light'
             ? tokens.grey[800]
             : tokens.grey[50],
           textShadow: mode === 'light'
@@ -378,8 +395,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           styleOverrides: {
             root: {
               backgroundImage: 'none',
-              backgroundColor: mode === 'light' 
-                ? alpha('#ffffff', 0.9) 
+              backgroundColor: mode === 'light'
+                ? alpha('#ffffff', 0.9)
                 : alpha(tokens.grey[800], 0.9),
               backdropFilter: 'blur(8px)',
               borderBottom: `1px solid ${semanticColors.border.light}`,
@@ -402,4 +419,4 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       </MuiThemeProvider>
     </ThemeContext.Provider>
   );
-} 
+}
