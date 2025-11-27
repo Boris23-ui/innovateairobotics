@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 // import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
@@ -9,12 +9,15 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { Toaster } from 'react-hot-toast';
 import { validateEnv } from '@/utils/env';
 
-
-
 export const metadata: Metadata = {
   title: 'InnovateAI Robotics',
   description: 'AI-powered robotics education platform',
-  viewport: 'width=device-width, initial-scale=1maximum-scale=1',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 // Validate environment variables at build time
@@ -46,7 +49,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-  <body className="font-sans">
+        <body className="font-sans">
           <ThemeProvider>
             <UserProvider>
               <Navigation />
@@ -59,4 +62,4 @@ export default function RootLayout({
       </html>
     </ClerkProvider>
   );
-} 
+}
