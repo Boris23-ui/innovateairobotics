@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
-import { handleSubscriptionChange, sendThankYouEmail } from '../../../../lib/stripe/webhooks'
+import { handleSubscriptionChange, sendThankYouEmail, handleDonation } from '../../../../lib/stripe/webhooks'
 
 export async function POST(req: Request) {
   // Defer environment validation to request time so the module can be
@@ -9,7 +9,6 @@ export async function POST(req: Request) {
   // vars are missing, return an error response instead of crashing the
   // build server.
   if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
-    // eslint-disable-next-line no-console
     console.error('Stripe webhook called but required env vars are not set');
     return NextResponse.json(
       { error: 'Server configuration error' },
@@ -33,15 +32,20 @@ export async function POST(req: Request) {
     const event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      process.env.STRIPE_WEBHOOK_SECRET
     );
 
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
+
+        // Handle Donation Persistence
+        await handleDonation(session);
+
+        // Send Email
         try {
           await sendThankYouEmail({
-            email: session.customer_email || 'anonymous',
+            email: session.customer_email || session.customer_details?.email || 'anonymous',
             amount: session.amount_total ? session.amount_total / 100 : 0,
             donationId: session.id,
           });

@@ -9,31 +9,39 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          main: '#2563eb',
+          main: '#3b82f6', // Bright Blue
           light: '#60a5fa',
-          dark: '#1e40af',
+          dark: '#1d4ed8',
         },
         secondary: {
-          main: '#dc2626',
-          light: '#f87171',
-          dark: '#b91c1c',
+          main: '#8b5cf6', // Violet
+          light: '#a78bfa',
+          dark: '#7c3aed',
+        },
+        tech: {
+          cyan: '#06b6d4',
+          purple: '#d8b4fe',
+          slate: '#0f172a',
+          surface: '#1e293b',
         },
         education: {
-          tiny: '#f59e0b',
-          explorers: '#10b981',
-          titans: '#3b82f6',
-          avengers: '#8b5cf6',
+          tiny: '#fbbf24', // Amber
+          explorers: '#34d399', // Emerald
+          titans: '#60a5fa', // Blue
+          avengers: '#f472b6', // Pink
         },
       },
       fontFamily: {
-        sans: ['Merriweather', 'serif'],
-        serif: ['Merriweather', 'serif'],
-        merriweather: ['Merriweather', 'serif'],
+        sans: ['Inter', 'sans-serif'],
+      },
+      backgroundImage: {
+        'grid-pattern': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.3s ease-out',
         'bounce-gentle': 'bounceGentle 2s infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
         fadeIn: {
@@ -52,4 +60,4 @@ module.exports = {
     },
   },
   plugins: [],
-}; 
+};

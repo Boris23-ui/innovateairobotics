@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-// import { Inter } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
 import ThemeProvider from './providers/ThemeProvider';
 import SupabaseProvider from './providers/SupabaseProvider';
 import './globals.css';
 
-
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'InnovateAI Robotics - Educational Platform',
@@ -29,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-  <body className="font-sans">
+      <body className={inter.className}>
         <ClerkProvider
           publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!}
         >
@@ -42,4 +42,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-} 
+}
