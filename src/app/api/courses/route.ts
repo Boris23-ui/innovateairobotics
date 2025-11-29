@@ -78,10 +78,14 @@ export async function GET(request: Request) {
     const courses = await courseService.getByInstructor(userId);
     return NextResponse.json(courses);
   } catch (error) {
-    console.error('[COURSES_GET]', error);
+    console.error('[COURSES_GET] Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      error
+    });
     if (error instanceof Error && error.message === 'Supabase not configured') {
       return new NextResponse('Database not configured', { status: 503 });
     }
     return new NextResponse('Internal Error', { status: 500 });
   }
-} 
+}
