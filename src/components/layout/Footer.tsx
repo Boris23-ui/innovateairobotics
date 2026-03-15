@@ -36,8 +36,8 @@ export default function Footer() {
       title: 'Resources',
       links: [
         { text: 'Programs', href: '/programs' },
+        { text: 'Pricing', href: '/pricing' },
         { text: 'Curriculum', href: '/curriculum' },
-        { text: 'Resources', href: '/resources' },
         { text: 'FAQ', href: '/faq' },
       ],
     },

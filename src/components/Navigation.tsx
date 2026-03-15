@@ -49,6 +49,7 @@ import {
   Login,
   AccountCircle,
   Home,
+  Payments,
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
@@ -103,6 +104,7 @@ const navItems = [
 const publicNavItems = [
   { label: 'Home', href: '/', icon: <Home /> },
   { label: 'About', href: '/about', icon: <Info /> },
+  { label: 'Pricing', href: '/pricing', icon: <Payments /> },
   { label: 'Donate', href: '/donate', icon: <Favorite /> },
 ];
 
