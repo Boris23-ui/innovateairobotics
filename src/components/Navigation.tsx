@@ -1,15 +1,11 @@
 "use client";
 
 import { useState } from 'react';
-import { useAuth, useUser, SignOutButton } from '@clerk/nextjs';
 import {
   AppBar,
   Toolbar,
   Typography,
   IconButton,
-  Menu,
-  MenuItem,
-  Avatar,
   Box,
   Container,
   Button as MuiButton,
@@ -25,39 +21,24 @@ import {
 import {
   Menu as MenuIcon,
   School,
-  Dashboard,
-  Person,
-  Settings,
-  Logout,
-  Book,
-  Science,
   Code,
-  Group,
+  Science,
   Info,
   ContactSupport,
   LocalLibrary,
-  Favorite,
   ExpandMore,
   ChildCare,
-  EmojiObjects,
-  RocketLaunch,
   Psychology,
-  ElderlyWoman,
+  Engineering,
   Brightness4,
   Brightness7,
-  Engineering,
-  Login,
-  AccountCircle,
   Home,
   Payments,
 } from '@mui/icons-material';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useTheme, useMediaQuery } from '@mui/material';
 import { useTheme as useAppTheme } from '@/components/providers/ThemeProvider';
-import { useUserProfile } from '@/components/providers/UserProvider';
-import LoadingSpinner from '@/components/LoadingSpinner';
-import { getDashboardPath } from '@/utils/auth';
 
 const programItems = [
   {
@@ -97,88 +78,38 @@ const programItems = [
   }
 ];
 
-const navItems = [
-  { name: 'Home', href: '/' },
-];
-
 const publicNavItems = [
   { label: 'Home', href: '/', icon: <Home /> },
   { label: 'About', href: '/about', icon: <Info /> },
   { label: 'Pricing', href: '/pricing', icon: <Payments /> },
-  { label: 'Donate', href: '/donate', icon: <Favorite /> },
+  { label: 'Contact', href: '/contact', icon: <ContactSupport /> },
 ];
 
 export default function Navigation() {
-  const { isLoaded, isSignedIn } = useAuth();
-  const { user } = useUser();
-  const { userProfile } = useUserProfile();
-  const router = useRouter();
   const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { mode, toggleColorMode } = useAppTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [programsAnchorEl, setProgramsAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-    setProgramsAnchorEl(null);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleProgramsClick = (event: React.MouseEvent<HTMLElement>) => {
     setProgramsAnchorEl(event.currentTarget);
-    setAnchorEl(null);
   };
 
   const handleProgramsClose = () => {
     setProgramsAnchorEl(null);
   };
 
-  const handleProfile = () => {
-    handleClose();
-    router.push('/profile');
-  };
-
-  const handleDashboard = () => {
-    handleClose();
-    // Use role-based routing
-    const dashboardPath = userProfile ? getDashboardPath(userProfile.role) : '/dashboard';
-    router.push(dashboardPath);
-  };
-
-  const handleSettings = () => {
-    handleClose();
-    router.push('/settings');
-  };
-
-  const handleSignOut = () => {
-    handleClose();
-  };
-
-  const handleLogin = () => {
-    setAnchorEl(null);
-    setProgramsAnchorEl(null);
-    router.push('/sign-in');
-  };
-
   const isActive = (path: string) => pathname === path;
 
-  if (!isLoaded) {
-    return <LoadingSpinner />;
-  }
-
   const drawer = (
-    <Box 
-      onClick={handleDrawerToggle} 
+    <Box
+      onClick={handleDrawerToggle}
       sx={{
         height: '100%',
         background: 'linear-gradient(135deg, #667ea0, #764ba2 100%)',
@@ -190,8 +121,8 @@ export default function Navigation() {
       }}
     >
       {/* Header Section */}
-      <Box sx={{ 
-        p: 3, 
+      <Box sx={{
+        p: 3,
         textAlign: 'center',
         background: 'rgba(255, 255, 255, 0.1)',
         backdropFilter: 'blur(10px)',
@@ -199,21 +130,21 @@ export default function Navigation() {
         position: 'relative',
         zIndex: 1
       }}>
-        <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center', 
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
           justifyContent: 'center',
           mb: 2
         }}>
-          <School sx={{ 
-            fontSize: 40, 
-            color: 'white', 
+          <School sx={{
+            fontSize: 40,
+            color: 'white',
             mr: 1,
             filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))'
           }} />
-          <Typography 
+          <Typography
             variant="h5"
-            sx={{ 
+            sx={{
               fontWeight: 700,
               textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
               letterSpacing: '0.5px'
@@ -222,9 +153,9 @@ export default function Navigation() {
             InnovateAI
           </Typography>
         </Box>
-        <Typography 
+        <Typography
           variant="body2"
-          sx={{ 
+          sx={{
             opacity: 0.9,
             fontWeight: 300,
             letterSpacing: 0.5
@@ -234,43 +165,9 @@ export default function Navigation() {
         </Typography>
       </Box>
 
-      {/* User Profile Section (if signed in) */}
-      {isSignedIn && (
-        <Box sx={{ 
-          p: 3, 
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-          position: 'relative',
-          zIndex: 1
-        }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-            <Avatar
-              src={user?.imageUrl}
-              alt={user?.firstName || 'User'}
-              sx={{
-                width: 50,
-                height: 50,
-                border: '3px solid rgba(255, 255, 255, 0.8)',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                mr: 2
-              }}
-            />
-            <Box>
-              <Typography variant="subtitle1" sx={{ fontWeight: 600, color: 'white' }}>
-                {user?.firstName} {user?.lastName}
-              </Typography>
-              <Typography variant="caption" sx={{ opacity: 0.8, color: 'white' }}>
-                {user?.emailAddresses?.[0]?.emailAddress}
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
-      )}
-
-      {/* Navigation Content - make this scrollable */}
-      <Box sx={{ 
-        flex: 1, 
+      {/* Navigation Content */}
+      <Box sx={{
+        flex: 1,
         minHeight: 0,
         overflowY: 'auto',
         py: 2,
@@ -278,12 +175,11 @@ export default function Navigation() {
         zIndex: 1
       }}>
         <List sx={{ py: 0 }}>
-          {/* Public Navigation Items */}
-          <Typography 
-            variant="overline" 
-            sx={{ 
-              px: 3, 
-              py: 1,            
+          <Typography
+            variant="overline"
+            sx={{
+              px: 3,
+              py: 1,
               color: 'rgba(255, 255, 255, 0.7)',
               fontWeight: 600,
               letterSpacing: '1px',
@@ -316,7 +212,7 @@ export default function Navigation() {
                   },
                 }}
               >
-                <ListItemIcon sx={{ 
+                <ListItemIcon sx={{
                   minWidth: 45,
                   color: 'white',
                   '& .MuiSvgIcon-root': {
@@ -325,7 +221,7 @@ export default function Navigation() {
                 }}>
                   {item.icon}
                 </ListItemIcon>
-                <ListItemText 
+                <ListItemText
                   primary={item.label}
                   primaryTypographyProps={{
                     fontWeight: 500,
@@ -339,11 +235,11 @@ export default function Navigation() {
           <Divider sx={{ my: 2, borderColor: 'rgba(255, 255, 255, 0.2)' }} />
 
           {/* Programs Section */}
-          <Typography 
-            variant="overline" 
-            sx={{ 
-              px: 3, 
-              py: 1,            
+          <Typography
+            variant="overline"
+            sx={{
+              px: 3,
+              py: 1,
               color: 'rgba(255, 255, 255, 0.7)',
               fontWeight: 600,
               letterSpacing: '1px',
@@ -376,7 +272,7 @@ export default function Navigation() {
                   },
                 }}
               >
-                <ListItemIcon sx={{ 
+                <ListItemIcon sx={{
                   minWidth: 45,
                   color: 'white',
                   '& .MuiSvgIcon-root': {
@@ -386,9 +282,9 @@ export default function Navigation() {
                   {item.icon}
                 </ListItemIcon>
                 <Box sx={{ flex: 1 }}>
-                  <Typography 
-                    variant="subtitle2" 
-                    sx={{ 
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
                       fontWeight: 600,
                       color: 'white',
                       mb: 0.5
@@ -396,9 +292,9 @@ export default function Navigation() {
                   >
                     {item.title}
                   </Typography>
-                  <Typography 
-                    variant="caption" 
-                    sx={{ 
+                  <Typography
+                    variant="caption"
+                    sx={{
                       color: 'rgba(255, 255, 255, 0.7)',
                       display: 'block',
                       lineHeight: 1.2
@@ -410,245 +306,26 @@ export default function Navigation() {
               </ListItemButton>
             </ListItem>
           ))}
-
-          <Divider sx={{ my: 2, borderColor: 'rgba(255, 255, 255, 0.2)' }} />
-
-          {/* Authentication Section */}
-          {isSignedIn ? (
-            <>
-              <Typography 
-                variant="overline"
-                sx={{ 
-                  px: 3, 
-                  py: 1, 
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  fontWeight: 600,
-                  letterSpacing: '1px',
-                  fontSize: '0.75rem'
-                }}
-              >
-                ACCOUNT
-              </Typography>
-              <ListItem disablePadding sx={{ mb: 0.5 }}>
-                <ListItemButton
-                  onClick={() => {
-                    handleDrawerToggle();
-                    const dashboardPath = userProfile ? getDashboardPath(userProfile.role) : '/dashboard';
-                    router.push(dashboardPath);
-                  }}
-                  sx={{
-                    mx: 1,
-                    borderRadius: 2,
-                    color: 'white',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    '&:hover': {
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      transform: 'translateX(8px)',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                    },
-                  }}
-                >
-                  <ListItemIcon sx={{ 
-                    minWidth: 45,
-                    color: 'white',
-                    '& .MuiSvgIcon-root': {
-                      fontSize: '1.4rem'
-                    }
-                  }}>
-                    <Dashboard />
-                  </ListItemIcon>
-                  <ListItemText 
-                    primary="Dashboard"
-                    primaryTypographyProps={{
-                      fontWeight: 500,
-                      fontSize: '1rem'
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding sx={{ mb: 0.5 }}>
-                <ListItemButton
-                  onClick={() => {
-                    handleDrawerToggle();
-                    router.push('/profile');
-                  }}
-                  sx={{
-                    mx: 1,
-                    borderRadius: 2,
-                    color: 'white',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    '&:hover': {
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      transform: 'translateX(8px)',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                    },
-                  }}
-                >
-                  <ListItemIcon sx={{ 
-                    minWidth: 45,
-                    color: 'white',
-                    '& .MuiSvgIcon-root': {
-                      fontSize: '1.4rem'
-                    }
-                  }}>
-                    <Person />
-                  </ListItemIcon>
-                  <ListItemText 
-                    primary="Profile"
-                    primaryTypographyProps={{
-                      fontWeight: 500,
-                      fontSize: '1rem'
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding sx={{ mb: 0.5 }}>
-                <ListItemButton
-                  onClick={() => {
-                    handleDrawerToggle();
-                    router.push('/settings');
-                  }}
-                  sx={{
-                    mx: 1,
-                    borderRadius: 2,
-                    color: 'white',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    '&:hover': {
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      transform: 'translateX(8px)',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                    },
-                  }}
-                >
-                  <ListItemIcon sx={{ 
-                    minWidth: 45,
-                    color: 'white',
-                    '& .MuiSvgIcon-root': {
-                      fontSize: '1.4rem'
-                    }
-                  }}>
-                    <Settings />
-                  </ListItemIcon>
-                  <ListItemText 
-                    primary="Settings"
-                    primaryTypographyProps={{
-                      fontWeight: 500,
-                      fontSize: '1rem'
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-              <SignOutButton>
-                <ListItem disablePadding sx={{ mb: 0.5 }}>
-                  <ListItemButton
-                    onClick={handleDrawerToggle}
-                    sx={{
-                      mx: 1,
-                      borderRadius: 2,
-                      color: '#ff6b6b',
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                      '&:hover': {
-                        background: 'rgba(255, 107, 107, 0.1)',
-                        transform: 'translateX(8px)',
-                        boxShadow: '0 4px 12px rgba(255, 107, 107, 0.2)',
-                      },
-                    }}
-                  >
-                    <ListItemIcon sx={{ 
-                      minWidth: 45,
-                      color: '#ff6b6b',
-                      '& .MuiSvgIcon-root': {
-                        fontSize: '1.4rem'
-                      }
-                    }}>
-                      <Logout />
-                    </ListItemIcon>
-                    <ListItemText 
-                      primary="Sign Out"
-                      primaryTypographyProps={{
-                        fontWeight: 500,
-                        fontSize: '1rem'
-                      }}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              </SignOutButton>
-            </>
-          ) : (
-            <>
-              <Typography 
-                variant="overline"
-                sx={{ 
-                  px: 3, 
-                  py: 1, 
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  fontWeight: 600,
-                  letterSpacing: '1px',
-                  fontSize: '0.75rem'
-                }}
-              >
-                GET STARTED
-              </Typography>
-              <ListItem disablePadding sx={{ mb: 0.5 }}>
-                <ListItemButton
-                  onClick={() => {
-                    handleDrawerToggle();
-                    router.push('/sign-in');
-                  }}
-                  sx={{
-                    mx: 1,
-                    borderRadius: 2,
-                    background: 'linear-gradient(135deg, #667ea0, #764ba2 100%)',
-                    color: 'white',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    boxShadow: '0 4px 12px rgba(121, 26, 26, 0.2)',
-                    '&:hover': {
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 8px 20px rgba(121, 26, 26, 0.3)',
-                      background: 'linear-gradient(135deg, #5a6fd8, #6a4190 100%)',
-                    },
-                  }}
-                >
-                  <ListItemIcon sx={{ 
-                    minWidth: 45,
-                    color: 'white',
-                    '& .MuiSvgIcon-root': {
-                      fontSize: '1.4rem'
-                    }
-                  }}>
-                    <Login />
-                  </ListItemIcon>
-                  <ListItemText 
-                    primary="Sign In"
-                    primaryTypographyProps={{
-                      fontWeight: 600,
-                      fontSize: '1rem'
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </>
-          )}
         </List>
       </Box>
 
       {/* Footer */}
-      <Box sx={{ 
-        p: 2, 
+      <Box sx={{
+        p: 2,
         textAlign: 'center',
         background: 'rgba(0, 0, 0, 0.8)',
         borderTop: '1px solid rgba(255, 255, 255, 0.2)',
         position: 'relative',
         zIndex: 1
       }}>
-        <Typography 
+        <Typography
           variant="caption"
-          sx={{ 
+          sx={{
             color: 'rgba(255, 255, 255, 0.7)',
             fontSize: '0.75rem'
           }}
         >
-          © 2024 InnovateAI Robotics
+          © 2025 InnovateAI Robotics
         </Typography>
       </Box>
     </Box>
@@ -665,7 +342,7 @@ export default function Navigation() {
               <Typography
                 variant="h6"
                 component="div"
-                sx={{ 
+                sx={{
                   display: { xs: 'none', sm: 'block' },
                   fontSize: '1.1rem',
                   lineHeight: 1.2
@@ -677,22 +354,20 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <Box sx={{ 
-            display: { xs: 'none', md: 'flex' }, 
+          <Box sx={{
+            display: { xs: 'none', md: 'flex' },
             ml: 'auto',
             gap: 1,
             alignItems: 'center'
           }}>
-              {/* Public Navigation Items - Always Visible */}
+              {/* Public Navigation Items */}
               {publicNavItems.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
                   style={{ textDecoration: 'none' }}
                 >
-                  <MuiButton
-                    startIcon={item.icon}
-                  >
+                  <MuiButton startIcon={item.icon}>
                     {item.label}
                   </MuiButton>
                 </Link>
@@ -703,11 +378,7 @@ export default function Navigation() {
                 startIcon={<LocalLibrary />}
                 endIcon={<ExpandMore />}
                 onClick={handleProgramsClick}
-                sx={{
-                  '&:hover': {
-                    bgcolor: 'action.hover',
-                  },
-                }}
+                sx={{ '&:hover': { bgcolor: 'action.hover' } }}
               >
                 Programs
               </MuiButton>
@@ -717,14 +388,8 @@ export default function Navigation() {
                 open={Boolean(programsAnchorEl)}
                 anchorEl={programsAnchorEl}
                 onClose={handleProgramsClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'left' }}
                 PaperProps={{
                   sx: {
                     width: 'auto',
@@ -738,7 +403,7 @@ export default function Navigation() {
                   },
                 }}
               >
-                <List sx={{ 
+                <List sx={{
                   py: 0,
                   display: 'flex',
                   flexDirection: 'row',
@@ -770,15 +435,9 @@ export default function Navigation() {
                           boxShadow: 2,
                           transition: 'all 0.2s ease-in-out',
                         },
-                        '&:last-child': {
-                          mb: 0,
-                        },
                       }}
                     >
-                      <ListItemIcon sx={{ 
-                        minWidth: 32,
-                        color: 'primary.main',
-                      }}>
+                      <ListItemIcon sx={{ minWidth: 32, color: 'primary.main' }}>
                         {item.icon}
                       </ListItemIcon>
                       <ListItemText
@@ -808,7 +467,7 @@ export default function Navigation() {
                             <Typography
                               component="span"
                               variant="caption"
-                              sx={{ 
+                              sx={{
                                 color: 'text.secondary',
                                 display: 'block',
                                 lineHeight: 1.3,
@@ -829,55 +488,10 @@ export default function Navigation() {
               <IconButton
                 onClick={toggleColorMode}
                 color="inherit"
-                sx={{
-                  ml: 1,
-                  '&:hover': {
-                    bgcolor: 'action.hover',
-                  },
-                }}
+                sx={{ ml: 1, '&:hover': { bgcolor: 'action.hover' } }}
               >
                 {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
               </IconButton>
-
-            {isSignedIn ? (
-              <>
-                  <MuiButton
-                  startIcon={<Dashboard />}
-                    onClick={() => {
-                      setProgramsAnchorEl(null);
-                      // Use role-based routing
-                      const dashboardPath = userProfile ? getDashboardPath(userProfile.role) : '/dashboard';
-                      router.push(dashboardPath);
-                    }}
-                >
-                  Dashboard
-                  </MuiButton>
-                <IconButton
-                    onClick={handleMenuOpen}
-                  size="small"
-                >
-                  <Avatar
-                    sx={{ width: 32, height: 32 }}
-                    src={user?.imageUrl}
-                    alt={user?.firstName || 'User'}
-                  />
-                </IconButton>
-              </>
-            ) : (
-                <MuiButton
-                  variant="contained"
-                  startIcon={<Login />}
-                  onClick={handleLogin}
-                  sx={{
-                    minWidth: '100px',
-                    '&:hover': {
-                      transform: 'translateY(-1px)',
-                    },
-                  }}
-                >
-                  Login
-                </MuiButton>
-            )}
           </Box>
 
           {/* Mobile Menu Button */}
@@ -901,9 +515,6 @@ export default function Navigation() {
                   boxShadow: '0 6px 16px rgba(121, 26, 26, 0.3)',
                   background: 'linear-gradient(135deg, #5a6fd8, #6a4190 100%)',
                 },
-                '&:active': {
-                  transform: 'scale(0.95)',
-                },
               }}
             >
               <MenuIcon sx={{ fontSize: '1.5rem' }} />
@@ -917,9 +528,7 @@ export default function Navigation() {
         anchor="left"
         open={mobileOpen}
         onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true,
-        }}
+        ModalProps={{ keepMounted: true }}
         sx={{
           display: { xs: 'block', md: 'none' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
@@ -927,58 +536,6 @@ export default function Navigation() {
       >
         {drawer}
       </Drawer>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 3,
-          sx: {
-            mt: 1.5,
-            minWidth: 240,
-            borderRadius: 2,
-            '& .MuiMenuItem-root': {
-              py: 1.5,
-              px: 2,
-              typography: 'body2',
-              '&:hover': {
-                bgcolor: 'action.hover',
-              },
-            },
-          },
-        }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          >
-        <MenuItem onClick={handleProfile}>
-          <ListItemIcon>
-            <AccountCircle fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Profile</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={handleDashboard}>
-          <ListItemIcon>
-            <Dashboard fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Dashboard</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={handleSettings}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Settings</ListItemText>
-            </MenuItem>
-        <Divider />
-        <SignOutButton>
-            <MenuItem>
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>Sign Out</ListItemText>
-          </MenuItem>
-              </SignOutButton>
-          </Menu>
-                    </Box>
+    </Box>
   );
-} 
+}
