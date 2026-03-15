@@ -4,133 +4,75 @@ import React, { useState } from "react";
 import {
   Box, Container, Typography, Grid, Card, CardContent,
   Button, Chip, Stack, Paper, ToggleButton, ToggleButtonGroup,
-  Accordion, AccordionSummary, AccordionDetails,
+  Accordion, AccordionSummary, AccordionDetails, useTheme,
 } from "@mui/material";
-import {
-  CheckCircle, ExpandMore, ArrowForward, EmojiEvents,
-  School, Groups, Computer, Favorite,
-} from "@mui/icons-material";
+import { CheckCircle, ExpandMore, ArrowForward, Groups, Favorite, School } from "@mui/icons-material";
 import Link from "next/link";
 
 const PROGRAMS = [
-  {
-    name: "Tiny Tinkerers",
-    age: "Ages 5 & Under",
-    color: "#f59e0b",
-    colorLight: "rgba(245,158,11,0.10)",
-    monthly: 199,
-    semester: 899,
-    href: "/programs/tiny-tinkerers",
-    features: ["Weekly 45-60 min sessions", "Max 8 students per class", "All materials included", "Monthly parent progress report", "Free make-up class per month"],
-    popular: false,
-  },
-  {
-    name: "Robot Explorers",
-    age: "Ages 6-9",
-    color: "#10b981",
-    colorLight: "rgba(16,185,129,0.10)",
-    monthly: 249,
-    semester: 1099,
-    href: "/programs/robot-explorers",
-    features: ["Weekly 60-75 min sessions", "Max 10 students per class", "LEGO Mindstorms kit access", "Project portfolio per semester", "Online learning portal access"],
-    popular: false,
-  },
-  {
-    name: "Tech Titans",
-    age: "Ages 10-12",
-    color: "#3b82f6",
-    colorLight: "rgba(59,130,246,0.10)",
-    monthly: 299,
-    semester: 1299,
-    href: "/programs/tech-titans",
-    features: ["Weekly 75-90 min sessions", "Max 12 students per class", "EV3/Spike kit + Python IDE", "Semester-end demo day", "Competition prep included"],
-    popular: true,
-  },
-  {
-    name: "AI Avengers",
-    age: "Ages 13-17",
-    color: "#8b5cf6",
-    colorLight: "rgba(139,92,246,0.10)",
-    monthly: 349,
-    semester: 1499,
-    href: "/programs/ai-avengers",
-    features: ["Weekly 90-120 min sessions", "Max 12 students per class", "Drone + AI hardware access", "College portfolio project", "Industry mentor sessions"],
-    popular: false,
-  },
-  {
-    name: "Senior Innovators",
-    age: "Ages 18+",
-    color: "#0891b2",
-    colorLight: "rgba(8,145,178,0.10)",
-    monthly: 279,
-    semester: 1199,
-    href: "/programs/seniors",
-    features: ["Weekly 90-120 min sessions", "Max 15 students per class", "All materials provided", "Flexible scheduling options", "Corporate group rates available"],
-    popular: false,
-  },
+  { name: "Tiny Tinkerers", age: "Ages 5 & Under", color: "#f59e0b", monthly: 199, semester: 899, href: "/programs/tiny-tinkerers", features: ["Weekly 45-60 min sessions", "Max 8 students per class", "All materials included", "Monthly progress report", "Free make-up class"], popular: false },
+  { name: "Robot Explorers", age: "Ages 6-9", color: "#10b981", monthly: 249, semester: 1099, href: "/programs/robot-explorers", features: ["Weekly 60-75 min sessions", "Max 10 students per class", "LEGO Mindstorms access", "Project portfolio", "Online portal access"], popular: false },
+  { name: "Tech Titans", age: "Ages 10-12", color: "#3b82f6", monthly: 299, semester: 1299, href: "/programs/tech-titans", features: ["Weekly 75-90 min sessions", "Max 12 students per class", "EV3/Spike + Python IDE", "Semester-end demo day", "Competition prep"], popular: true },
+  { name: "AI Avengers", age: "Ages 13-17", color: "#8b5cf6", monthly: 349, semester: 1499, href: "/programs/ai-avengers", features: ["Weekly 90-120 min sessions", "Max 12 students per class", "Drone + AI hardware", "College portfolio project", "Industry mentor sessions"], popular: false },
+  { name: "Senior Innovators", age: "Ages 18+", color: "#0891b2", monthly: 279, semester: 1199, href: "/programs/seniors", features: ["Weekly 90-120 min sessions", "Max 15 students per class", "All materials provided", "Flexible scheduling", "Corporate rates available"], popular: false },
 ];
 
 const FAQS = [
-  { q: "Is there a free trial class?", a: "Yes! We offer one free introductory class for all new students. No commitment required. Contact us to schedule yours." },
-  { q: "What happens if my child misses a class?", a: "Each monthly enrollment includes one free make-up class. Additional make-up sessions can be scheduled for a small fee." },
-  { q: "Are materials included in the tuition?", a: "Yes — all specialized robotics materials, hardware access, and software licenses are included in the monthly tuition. Students do not need to purchase any additional materials." },
-  { q: "Do you offer scholarships or financial aid?", a: "Yes. We believe every child deserves access to AI education. Need-based scholarships are available. Contact info@innovateairobotics.com to learn more." },
-  { q: "Can I enroll mid-semester?", a: "Absolutely. We welcome new students throughout the year. We will work with you to catch up on any missed foundational concepts." },
-  { q: "Is there a semester commitment?", a: "Monthly enrollment is available with no long-term commitment. Semester packages offer a 25% discount and are paid upfront. You can pause or cancel anytime with 30 days notice." },
+  { q: "Is there a free trial class?", a: "Yes! We offer one free introductory class for all new students. No commitment required." },
+  { q: "What happens if my child misses a class?", a: "Each monthly enrollment includes one free make-up class. Additional sessions can be scheduled for a small fee." },
+  { q: "Are materials included?", a: "Yes — all robotics materials, hardware access, and software licenses are included in tuition." },
+  { q: "Do you offer scholarships?", a: "Yes. Need-based scholarships are available. Contact info@innovateairobotics.com to learn more." },
+  { q: "Can I enroll mid-semester?", a: "Absolutely. We welcome new students throughout the year and will help catch up on any missed concepts." },
+  { q: "Is there a semester commitment?", a: "Monthly enrollment has no long-term commitment. Semester packages offer 25% off. Cancel anytime with 30 days notice." },
 ];
 
-const INCLUDED = [
-  { icon: CheckCircle, text: "All robotics kits and hardware" },
-  { icon: CheckCircle, text: "Software licenses and online tools" },
-  { icon: CheckCircle, text: "Curriculum materials and workbooks" },
-  { icon: CheckCircle, text: "Access to online learning portal" },
-  { icon: CheckCircle, text: "Monthly progress reports" },
-  { icon: CheckCircle, text: "InnovateAI student community access" },
-];
+const INCLUDED = ["All robotics kits and hardware", "Software licenses and tools", "Curriculum materials", "Online learning portal", "Monthly progress reports", "Student community access"];
 
 export default function PricingPage() {
   const [billing, setBilling] = useState<"monthly" | "semester">("monthly");
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+  const sectionBg = isDark ? "#0f0f1a" : "#f7f7ff";
 
   return (
     <Box>
-      {/* HERO */}
-      <Box sx={{ background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)", py: { xs: 10, md: 14 }, textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <Box sx={{ position: "absolute", top: "20%", left: "5%", width: 260, height: 260, borderRadius: "50%", background: "radial-gradient(circle, rgba(37,99,235,0.2), transparent 70%)", pointerEvents: "none" }} />
-        <Box sx={{ position: "absolute", bottom: "10%", right: "5%", width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle, rgba(139,92,246,0.2), transparent 70%)", pointerEvents: "none" }} />
+      {/* Hero */}
+      <Box sx={{ background: isDark ? "linear-gradient(135deg, #0f0f1a 0%, #1a1a35 100%)" : "linear-gradient(135deg, #eef0ff 0%, #f7f7ff 100%)", py: { xs: 10, md: 14 }, textAlign: "center", position: "relative", overflow: "hidden" }}>
+        <Box sx={{ position: "absolute", top: "20%", left: "5%", width: 260, height: 260, borderRadius: "50%", background: "radial-gradient(circle, rgba(37,144,241,0.1), transparent 70%)", pointerEvents: "none" }} />
+        <Box sx={{ position: "absolute", bottom: "10%", right: "5%", width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle, rgba(145,135,255,0.08), transparent 70%)", pointerEvents: "none" }} />
         <Container maxWidth="md">
-          <Chip label="Transparent Pricing" sx={{ bgcolor: "rgba(37,99,235,0.15)", color: "#60a5fa", border: "1px solid rgba(37,99,235,0.3)", fontWeight: 700, mb: 3 }} />
-          <Typography variant="h1" sx={{ fontSize: { xs: "2.5rem", md: "3.8rem" }, fontWeight: 900, color: "white", mb: 2 }}>
-            Simple, Fair Pricing
+          <Chip label="Transparent Pricing" sx={{ bgcolor: isDark ? "rgba(37,144,241,0.12)" : "rgba(37,144,241,0.1)", color: "primary.main", fontWeight: 700, mb: 3 }} />
+          <Typography variant="h1" sx={{ fontSize: { xs: "2.5rem", md: "3.5rem" }, fontWeight: 800, mb: 2, lineHeight: 1.1 }}>
+            Simple, Fair{" "}
+            <Box component="span" sx={{ background: "linear-gradient(135deg, #2590f1, #9187ff)", backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Pricing</Box>
           </Typography>
-          <Typography variant="h5" sx={{ color: "rgba(255,255,255,0.72)", mb: 6, maxWidth: 560, mx: "auto" }}>
+          <Typography variant="body1" sx={{ color: "text.secondary", mb: 6, maxWidth: 500, mx: "auto", fontSize: "1.1rem" }}>
             No hidden fees. No long-term contracts required. Just world-class AI education.
           </Typography>
           <ToggleButtonGroup value={billing} exclusive onChange={(_, v) => v && setBilling(v)}
-            sx={{ bgcolor: "rgba(255,255,255,0.1)", borderRadius: 3, p: 0.5, border: "1px solid rgba(255,255,255,0.2)" }}>
-            <ToggleButton value="monthly" sx={{ px: 4, py: 1.5, color: "rgba(255,255,255,0.7)", fontWeight: 600, borderRadius: "10px !important", border: "none", "&.Mui-selected": { bgcolor: "white", color: "#0f172a", fontWeight: 700 } }}>
+            sx={{ bgcolor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)", borderRadius: 3, p: 0.5, border: "1px solid", borderColor: "divider" }}>
+            <ToggleButton value="monthly" sx={{ px: 4, py: 1.5, color: "text.secondary", fontWeight: 600, borderRadius: "10px !important", border: "none", "&.Mui-selected": { bgcolor: "primary.main", color: "white", fontWeight: 700, "&:hover": { bgcolor: "primary.dark" } } }}>
               Monthly
             </ToggleButton>
-            <ToggleButton value="semester" sx={{ px: 4, py: 1.5, color: "rgba(255,255,255,0.7)", fontWeight: 600, borderRadius: "10px !important", border: "none", "&.Mui-selected": { bgcolor: "white", color: "#0f172a", fontWeight: 700 } }}>
+            <ToggleButton value="semester" sx={{ px: 4, py: 1.5, color: "text.secondary", fontWeight: 600, borderRadius: "10px !important", border: "none", "&.Mui-selected": { bgcolor: "primary.main", color: "white", fontWeight: 700, "&:hover": { bgcolor: "primary.dark" } } }}>
               Semester — Save 25%
             </ToggleButton>
           </ToggleButtonGroup>
         </Container>
       </Box>
 
-      {/* WHAT IS INCLUDED */}
-      <Box sx={{ py: 5, bgcolor: "#2563eb" }}>
+      {/* Included */}
+      <Box sx={{ py: 4, background: "linear-gradient(135deg, #2590f1, #9187ff)" }}>
         <Container maxWidth="lg">
-          <Grid container spacing={2} alignItems="center" justifyContent="center">
-            <Grid item xs={12} sx={{ textAlign: "center", mb: 1 }}>
-              <Typography sx={{ color: "rgba(255,255,255,0.85)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: 1.5, textTransform: "uppercase" }}>
-                Everything included in every program
-              </Typography>
-            </Grid>
-            {INCLUDED.map(({ icon: Icon, text }) => (
+          <Typography sx={{ color: "rgba(255,255,255,0.85)", fontWeight: 600, fontSize: "0.8rem", letterSpacing: 1.5, textTransform: "uppercase", textAlign: "center", mb: 2 }}>
+            Everything included in every program
+          </Typography>
+          <Grid container spacing={2} justifyContent="center">
+            {INCLUDED.map((text) => (
               <Grid item key={text}>
                 <Stack direction="row" spacing={1} alignItems="center">
-                  <Icon sx={{ color: "rgba(255,255,255,0.9)", fontSize: 18 }} />
-                  <Typography sx={{ color: "white", fontWeight: 500, fontSize: "0.95rem" }}>{text}</Typography>
+                  <CheckCircle sx={{ color: "rgba(255,255,255,0.9)", fontSize: 16 }} />
+                  <Typography sx={{ color: "white", fontWeight: 500, fontSize: "0.9rem" }}>{text}</Typography>
                 </Stack>
               </Grid>
             ))}
@@ -138,51 +80,59 @@ export default function PricingPage() {
         </Container>
       </Box>
 
-      {/* PRICING CARDS */}
-      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "#f8fafc" }}>
+      {/* Pricing Cards */}
+      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: sectionBg }}>
         <Container maxWidth="xl">
           <Grid container spacing={3} justifyContent="center">
             {PROGRAMS.map((prog) => (
               <Grid item xs={12} sm={6} md={4} lg={2.4} key={prog.name}>
-                <Card elevation={0} sx={{ border: prog.popular ? `2px solid ${prog.color}` : "1px solid #e5e7eb", borderRadius: 4, height: "100%", display: "flex", flexDirection: "column", position: "relative", transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-6px)", boxShadow: `0 20px 50px ${prog.color}25` } }}>
+                <Card elevation={0} sx={{
+                  borderRadius: 5,
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  position: "relative",
+                  border: prog.popular ? `2px solid ${prog.color}` : "1px solid",
+                  borderColor: prog.popular ? prog.color : "divider",
+                  bgcolor: isDark ? "rgba(255,255,255,0.03)" : "#fff",
+                  transition: "all 0.3s ease",
+                  "&:hover": { transform: "translateY(-6px)", boxShadow: `0 20px 60px ${prog.color}18` },
+                }}>
                   {prog.popular && (
                     <Box sx={{ position: "absolute", top: -14, left: "50%", transform: "translateX(-50%)" }}>
                       <Chip label="Most Popular" size="small" sx={{ bgcolor: prog.color, color: "white", fontWeight: 700 }} />
                     </Box>
                   )}
                   <CardContent sx={{ p: 3, flexGrow: 1, display: "flex", flexDirection: "column" }}>
-                    <Box sx={{ width: 44, height: 44, borderRadius: 3, bgcolor: `${prog.color}20`, display: "flex", alignItems: "center", justifyContent: "center", mb: 2 }}>
+                    <Box sx={{ width: 44, height: 44, borderRadius: 3, bgcolor: `${prog.color}15`, display: "flex", alignItems: "center", justifyContent: "center", mb: 2 }}>
                       <School sx={{ color: prog.color, fontSize: 22 }} />
                     </Box>
-                    <Typography variant="h6" sx={{ fontWeight: 800, color: "#0f172a", mb: 0.5 }}>{prog.name}</Typography>
-                    <Chip label={prog.age} size="small" sx={{ bgcolor: `${prog.color}15`, color: prog.color, fontWeight: 600, mb: 3, alignSelf: "flex-start", fontSize: "0.75rem" }} />
-
+                    <Typography variant="h6" sx={{ fontWeight: 800, mb: 0.5 }}>{prog.name}</Typography>
+                    <Chip label={prog.age} size="small" sx={{ bgcolor: `${prog.color}12`, color: prog.color, fontWeight: 600, mb: 3, alignSelf: "flex-start", fontSize: "0.75rem" }} />
                     <Box sx={{ mb: 3 }}>
-                      <Typography variant="h3" sx={{ fontWeight: 900, color: "#0f172a", lineHeight: 1 }}>
+                      <Typography variant="h3" sx={{ fontWeight: 800, lineHeight: 1, fontSize: "2.5rem" }}>
                         ${billing === "monthly" ? prog.monthly : Math.round(prog.semester / 6)}
                       </Typography>
-                      <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                      <Typography variant="body2" color="text.secondary">
                         {billing === "monthly" ? "per month" : "per month (billed semesterly)"}
                       </Typography>
                       {billing === "semester" && (
                         <Chip label={`$${prog.semester} total — save $${prog.monthly * 6 - prog.semester}`} size="small"
-                          sx={{ bgcolor: "rgba(16,185,129,0.1)", color: "#10b981", fontWeight: 600, mt: 1, fontSize: "0.7rem" }} />
+                          sx={{ bgcolor: "rgba(34,197,94,0.1)", color: "#22c55e", fontWeight: 600, mt: 1, fontSize: "0.7rem" }} />
                       )}
                     </Box>
-
                     <Stack spacing={1} sx={{ flexGrow: 1, mb: 3 }}>
                       {prog.features.map((f) => (
                         <Stack key={f} direction="row" spacing={1} alignItems="flex-start">
-                          <CheckCircle sx={{ color: prog.color, fontSize: 15, mt: 0.4, flexShrink: 0 }} />
-                          <Typography variant="body2" sx={{ color: "#4b5563", fontSize: "0.83rem" }}>{f}</Typography>
+                          <CheckCircle sx={{ color: prog.color, fontSize: 14, mt: 0.4, flexShrink: 0 }} />
+                          <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.82rem" }}>{f}</Typography>
                         </Stack>
                       ))}
                     </Stack>
-
                     <Button component={Link} href="/contact" variant={prog.popular ? "contained" : "outlined"} fullWidth
                       sx={{ borderRadius: 3, fontWeight: 700, py: 1.4,
-                        ...(prog.popular ? { bgcolor: prog.color, color: prog.color === "#f59e0b" ? "black" : "white", "&:hover": { bgcolor: prog.color, filter: "brightness(0.9)" } }
-                          : { borderColor: prog.color, color: prog.color, "&:hover": { bgcolor: `${prog.color}10` } })
+                        ...(prog.popular ? { bgcolor: prog.color, color: "white", "&:hover": { bgcolor: prog.color, filter: "brightness(0.9)" } }
+                          : { borderColor: prog.color, color: prog.color, borderWidth: 2, "&:hover": { bgcolor: `${prog.color}08`, borderWidth: 2 } })
                       }}>
                       Enroll Now
                     </Button>
@@ -194,31 +144,31 @@ export default function PricingPage() {
         </Container>
       </Box>
 
-      {/* ENTERPRISE */}
-      <Box sx={{ py: 6, bgcolor: "white" }}>
+      {/* Enterprise */}
+      <Box sx={{ py: 6 }}>
         <Container maxWidth="lg">
-          <Card elevation={0} sx={{ borderRadius: 4, background: "linear-gradient(135deg, #0f172a, #1e3a5f)", p: { xs: 4, md: 6 } }}>
+          <Card elevation={0} sx={{ borderRadius: 5, background: isDark ? "linear-gradient(135deg, #141428, #1a1a35)" : "linear-gradient(135deg, #1a1a2e, #2a2a50)", p: { xs: 4, md: 6 }, border: "1px solid", borderColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.1)" }}>
             <Grid container spacing={4} alignItems="center">
               <Grid item xs={12} md={8}>
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>
-                  <Groups sx={{ color: "#60a5fa", fontSize: 36 }} />
+                  <Groups sx={{ color: "#2590f1", fontSize: 36 }} />
                   <Typography variant="h4" sx={{ fontWeight: 800, color: "white" }}>Corporate & School Pricing</Typography>
                 </Stack>
-                <Typography sx={{ color: "rgba(255,255,255,0.75)", fontSize: "1.05rem", mb: 3 }}>
-                  Bringing InnovateAI to your school, district, or organization? We offer customized curriculum, volume discounts, and dedicated instructor support for groups of 20 or more.
+                <Typography sx={{ color: "rgba(255,255,255,0.7)", fontSize: "1rem", mb: 3 }}>
+                  Bringing InnovateAI to your school or organization? We offer customized curriculum, volume discounts, and dedicated support for groups of 20+.
                 </Typography>
-                <Stack direction={{ xs: "column", sm: "row" }} spacing={3}>
-                  {["Group discounts starting at 20%", "Custom curriculum development", "On-site instructor training", "Dedicated account manager"].map((item) => (
+                <Stack direction={{ xs: "column", sm: "row" }} spacing={3} flexWrap="wrap">
+                  {["Group discounts from 20%", "Custom curriculum", "On-site training", "Dedicated account manager"].map((item) => (
                     <Stack key={item} direction="row" spacing={1} alignItems="center">
-                      <CheckCircle sx={{ color: "#10b981", fontSize: 18 }} />
-                      <Typography sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.9rem" }}>{item}</Typography>
+                      <CheckCircle sx={{ color: "#22c55e", fontSize: 16 }} />
+                      <Typography sx={{ color: "rgba(255,255,255,0.8)", fontSize: "0.85rem" }}>{item}</Typography>
                     </Stack>
                   ))}
                 </Stack>
               </Grid>
               <Grid item xs={12} md={4} sx={{ textAlign: { md: "right" } }}>
                 <Button component={Link} href="/contact" variant="contained" size="large" endIcon={<ArrowForward />}
-                  sx={{ bgcolor: "#2563eb", color: "white", fontWeight: 700, px: 5, py: 2, borderRadius: 3, fontSize: "1.05rem", "&:hover": { bgcolor: "#1d4ed8" } }}>
+                  sx={{ bgcolor: "#2590f1", fontWeight: 700, px: 5, py: 2, borderRadius: 3, "&:hover": { bgcolor: "#1a6ec0" } }}>
                   Get Custom Quote
                 </Button>
               </Grid>
@@ -228,27 +178,25 @@ export default function PricingPage() {
       </Box>
 
       {/* FAQ */}
-      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "#f8fafc" }}>
+      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: sectionBg }}>
         <Container maxWidth="lg">
           <Grid container spacing={8}>
             <Grid item xs={12} md={4}>
-              <Typography variant="h3" sx={{ fontWeight: 800, color: "#0f172a", mb: 2 }}>Frequently Asked Questions</Typography>
-              <Typography sx={{ color: "text.secondary", mb: 4 }}>
-                Have more questions? Our team is happy to help.
-              </Typography>
+              <Typography variant="h3" fontWeight={800} gutterBottom>FAQ</Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>Have more questions? Our team is happy to help.</Typography>
               <Button component={Link} href="/contact" variant="contained" size="large"
-                sx={{ bgcolor: "#2563eb", color: "white", fontWeight: 700, px: 4, py: 1.8, borderRadius: 3 }}>
+                sx={{ bgcolor: "#2590f1", fontWeight: 700, px: 4, py: 1.8, borderRadius: 3 }}>
                 Contact Us
               </Button>
             </Grid>
             <Grid item xs={12} md={8}>
               {FAQS.map((faq) => (
-                <Accordion key={faq.q} elevation={0} sx={{ border: "1px solid #e5e7eb", borderRadius: "12px !important", mb: 2, "&:before": { display: "none" }, overflow: "hidden" }}>
+                <Accordion key={faq.q} elevation={0} sx={{ border: "1px solid", borderColor: "divider", borderRadius: "16px !important", mb: 2, overflow: "hidden", bgcolor: isDark ? "rgba(255,255,255,0.03)" : "#fff" }}>
                   <AccordionSummary expandIcon={<ExpandMore />} sx={{ px: 3, py: 1 }}>
-                    <Typography sx={{ fontWeight: 700, color: "#0f172a" }}>{faq.q}</Typography>
+                    <Typography fontWeight={700}>{faq.q}</Typography>
                   </AccordionSummary>
                   <AccordionDetails sx={{ px: 3, pb: 3 }}>
-                    <Typography sx={{ color: "#4b5563", lineHeight: 1.8 }}>{faq.a}</Typography>
+                    <Typography variant="body2" color="text.secondary" lineHeight={1.7}>{faq.a}</Typography>
                   </AccordionDetails>
                 </Accordion>
               ))}
@@ -257,21 +205,21 @@ export default function PricingPage() {
         </Container>
       </Box>
 
-      {/* FINAL CTA */}
-      <Box sx={{ py: { xs: 10, md: 14 }, bgcolor: "white", textAlign: "center" }}>
+      {/* Final CTA */}
+      <Box sx={{ py: { xs: 10, md: 14 }, textAlign: "center" }}>
         <Container maxWidth="md">
-          <Favorite sx={{ color: "#ef4444", fontSize: 48, mb: 3 }} />
-          <Typography variant="h3" sx={{ fontWeight: 800, color: "#0f172a", mb: 2 }}>Start with a Free Class</Typography>
-          <Typography sx={{ color: "text.secondary", fontSize: "1.15rem", mb: 5, maxWidth: 500, mx: "auto" }}>
+          <Favorite sx={{ color: "#ef4444", fontSize: 44, mb: 3 }} />
+          <Typography variant="h3" fontWeight={800} gutterBottom>Start with a Free Class</Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ fontSize: "1.1rem", mb: 5, maxWidth: 480, mx: "auto" }}>
             Not sure yet? Let your child try a free introductory session — no credit card required.
           </Typography>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
             <Button component={Link} href="/contact" variant="contained" size="large" endIcon={<ArrowForward />}
-              sx={{ bgcolor: "#2563eb", color: "white", fontWeight: 700, px: 5, py: 2, borderRadius: 3, fontSize: "1.05rem", "&:hover": { bgcolor: "#1d4ed8" } }}>
-              Book Free Trial Class
+              sx={{ bgcolor: "#2590f1", fontWeight: 700, px: 5, py: 2, borderRadius: 3, "&:hover": { bgcolor: "#1a6ec0" } }}>
+              Book Free Trial
             </Button>
             <Button component={Link} href="/programs" variant="outlined" size="large"
-              sx={{ borderColor: "#e5e7eb", color: "#374151", px: 5, py: 2, borderRadius: 3, fontSize: "1.05rem" }}>
+              sx={{ borderColor: "divider", color: "text.primary", px: 5, py: 2, borderRadius: 3, borderWidth: 2, "&:hover": { borderWidth: 2 } }}>
               Explore Programs
             </Button>
           </Stack>

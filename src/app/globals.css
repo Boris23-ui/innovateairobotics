@@ -1,107 +1,36 @@
-@import '@fontsource/merriweather/300.css';
-@import '@fontsource/merriweather/400.css';
-@import '@fontsource/merriweather/700.css';
-@import '@fontsource/merriweather/900.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --font-merriweather: 'Merriweather', serif;
+    --bg-deep: #0f0f1a;
+    --bg-surface: #1a1a2e;
+    --bg-elevated: #232340;
+    --accent-blue: #2590f1;
+    --accent-purple: #9187ff;
+    --accent-gradient: linear-gradient(135deg, #2590f1, #9187ff);
+    --text-primary: #f0f0f5;
+    --text-secondary: #8888a0;
+    --border-subtle: rgba(255,255,255,0.06);
   }
-  
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   html, body {
-    font-family: var(--font-merriweather);
-  }
-  background: rgb(var(--background-start-rgb));
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-  @apply font-bold;
-}
-
-/* Buttons */
-button {
-  @apply transition-all duration-200 ease-in-out;
-}
-
-/* Cards */
-.card {
-  @apply transition-all duration-300 ease-in-out;
-}
-
-/* Inputs */
-input, textarea {
-  @apply transition-all duration-200 ease-in-out;
-}
-
-/* Links */
-a {
-  @apply transition-colors duration-200 ease-in-out;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(128, 128, 128, 0.5);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(128, 128, 128, 0.7);
-}
-
-/* Selection */
-::selection {
-  background: rgba(25, 118, 210, 0.2);
-}
-
-[data-theme='dark'] ::selection {
-  background: rgba(144, 202, 249, 0.2);
-}
-
-@layer base {
-  h1 {
-    @apply text-4xl font-bold mb-4;
-  }
-  h2 {
-    @apply text-3xl font-semibold mb-3;
-  }
-  h3 {
-    @apply text-2xl font-medium mb-2;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-@layer components {
-  .btn {
-    @apply px-4 py-2 rounded-md font-medium transition-colors;
-  }
-  .btn-primary {
-    @apply bg-blue-600 text-white hover:bg-blue-700;
-  }
-  .btn-secondary {
-    @apply bg-gray-200 text-gray-800 hover:bg-gray-300;
-  }
-  .card {
-    @apply bg-white rounded-lg shadow-md p-6;
-  }
-  .input {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
-  }
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(128,128,128,0.35); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(128,128,128,0.55); }
 
-* {
-  box-sizing: border-box;
-} 
+::selection { background: rgba(37,144,241,0.25); }
+
+* { box-sizing: border-box; }

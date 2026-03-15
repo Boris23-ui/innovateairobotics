@@ -1,48 +1,56 @@
-import React from 'react';
+"use client";
 
-const Features: React.FC = () => {
-  const features = [
-    {
-      title: 'Hands-on Learning',
-      description: 'Get practical experience with real robotics projects and AI applications.',
-      icon: '🤖',
-    },
-    {
-      title: 'Expert Instructors',
-      description: 'Learn from industry professionals with years of experience in robotics and AI.',
-      icon: '👨‍🏫',
-    },
-    {
-      title: 'Modern Curriculum',
-      description: 'Stay up-to-date with the latest technologies and industry practices.',
-      icon: '📚',
-    },
-    {
-      title: 'Project-Based',
-      description: 'Build your portfolio with real-world projects and applications.',
-      icon: '💡',
-    },
-  ];
+import { Box, Container, Typography, Grid, Paper, useTheme } from "@mui/material";
+
+const features = [
+  { icon: "\u{1F916}", title: "Hands-on Learning", description: "Get practical experience with real robotics projects and AI applications." },
+  { icon: "\u{1F468}\u{200D}\u{1F3EB}", title: "Expert Instructors", description: "Learn from industry professionals with years of robotics and AI experience." },
+  { icon: "\u{1F4DA}", title: "Modern Curriculum", description: "Stay current with the latest technologies and industry best practices." },
+  { icon: "\u{1F4A1}", title: "Project-Based", description: "Build a portfolio with real-world projects and practical applications." },
+];
+
+export default function Features() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
 
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
-            >
-              <div className="text-4xl mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
-            </div>
+    <Box sx={{ py: { xs: 8, md: 12 } }}>
+      <Container maxWidth="lg">
+        <Typography variant="h3" textAlign="center" gutterBottom fontWeight={800} sx={{ mb: 2 }}>
+          Why Choose Us
+        </Typography>
+        <Typography variant="body1" textAlign="center" color="text.secondary" sx={{ mb: 8, maxWidth: 540, mx: "auto" }}>
+          Everything you need to launch a career in robotics and AI.
+        </Typography>
+        <Grid container spacing={3}>
+          {features.map((f) => (
+            <Grid item xs={12} sm={6} md={3} key={f.title}>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 4,
+                  height: "100%",
+                  borderRadius: 5,
+                  border: "1px solid",
+                  borderColor: "divider",
+                  bgcolor: isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)",
+                  textAlign: "center",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-6px)",
+                    borderColor: "primary.main",
+                    boxShadow: isDark ? "0 16px 48px rgba(37,144,241,0.12)" : "0 16px 48px rgba(0,0,0,0.08)",
+                  },
+                }}
+              >
+                <Box sx={{ fontSize: "2.5rem", mb: 2 }}>{f.icon}</Box>
+                <Typography variant="h6" fontWeight={700} gutterBottom>{f.title}</Typography>
+                <Typography variant="body2" color="text.secondary" lineHeight={1.7}>{f.description}</Typography>
+              </Paper>
+            </Grid>
           ))}
-        </div>
-      </div>
-    </section>
+        </Grid>
+      </Container>
+    </Box>
   );
-};
-
-export default Features; 
+}
