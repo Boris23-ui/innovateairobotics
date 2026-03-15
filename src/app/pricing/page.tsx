@@ -10,26 +10,26 @@ import { CheckCircle, ExpandMore, ArrowForward, Groups, Favorite, School } from 
 import Link from "next/link";
 
 const PROGRAMS = [
-  { name: "Tiny Tinkerers", age: "Ages 5 & Under", color: "#f59e0b", monthly: 199, semester: 899, href: "/programs/tiny-tinkerers", features: ["Weekly 45-60 min sessions", "Max 8 students per class", "All materials included", "Monthly progress report", "Free make-up class"], popular: false },
-  { name: "Robot Explorers", age: "Ages 6-9", color: "#10b981", monthly: 249, semester: 1099, href: "/programs/robot-explorers", features: ["Weekly 60-75 min sessions", "Max 10 students per class", "LEGO Mindstorms access", "Project portfolio", "Online portal access"], popular: false },
-  { name: "Tech Titans", age: "Ages 10-12", color: "#3b82f6", monthly: 299, semester: 1299, href: "/programs/tech-titans", features: ["Weekly 75-90 min sessions", "Max 12 students per class", "EV3/Spike + Python IDE", "Semester-end demo day", "Competition prep"], popular: true },
-  { name: "AI Avengers", age: "Ages 13-17", color: "#8b5cf6", monthly: 349, semester: 1499, href: "/programs/ai-avengers", features: ["Weekly 90-120 min sessions", "Max 12 students per class", "Drone + AI hardware", "College portfolio project", "Industry mentor sessions"], popular: false },
-  { name: "Senior Innovators", age: "Ages 18+", color: "#0891b2", monthly: 279, semester: 1199, href: "/programs/seniors", features: ["Weekly 90-120 min sessions", "Max 15 students per class", "All materials provided", "Flexible scheduling", "Corporate rates available"], popular: false },
+  { name: "Tiny Tinkerers", age: "Ages 5 & Under", color: "#f59e0b", perClass: 45, semester: 799, semesterClasses: 20, href: "/programs/tiny-tinkerers", features: ["45-60 min sessions", "Max 8 students per class", "All materials included", "Progress report each session", "Free make-up class"], popular: false },
+  { name: "Robot Explorers", age: "Ages 6-9", color: "#10b981", perClass: 55, semester: 979, semesterClasses: 20, href: "/programs/robot-explorers", features: ["60-75 min sessions", "Max 10 students per class", "LEGO Mindstorms access", "Project portfolio", "Online portal access"], popular: false },
+  { name: "Tech Titans", age: "Ages 10-12", color: "#3b82f6", perClass: 65, semester: 1149, semesterClasses: 20, href: "/programs/tech-titans", features: ["75-90 min sessions", "Max 12 students per class", "EV3/Spike + Python IDE", "Semester-end demo day", "Competition prep"], popular: true },
+  { name: "AI Avengers", age: "Ages 13-17", color: "#8b5cf6", perClass: 75, semester: 1299, semesterClasses: 20, href: "/programs/ai-avengers", features: ["90-120 min sessions", "Max 12 students per class", "Drone + AI hardware", "College portfolio project", "Industry mentor sessions"], popular: false },
+  { name: "Senior Innovators", age: "Ages 18+", color: "#0891b2", perClass: 60, semester: 1049, semesterClasses: 20, href: "/programs/seniors", features: ["90-120 min sessions", "Max 15 students per class", "All materials provided", "Flexible scheduling", "Corporate rates available"], popular: false },
 ];
 
 const FAQS = [
-  { q: "Is there a free trial class?", a: "Yes! We offer one free introductory class for all new students. No commitment required." },
-  { q: "What happens if my child misses a class?", a: "Each monthly enrollment includes one free make-up class. Additional sessions can be scheduled for a small fee." },
-  { q: "Are materials included?", a: "Yes — all robotics materials, hardware access, and software licenses are included in tuition." },
-  { q: "Do you offer scholarships?", a: "Yes. Need-based scholarships are available. Contact info@innovateairobotics.com to learn more." },
-  { q: "Can I enroll mid-semester?", a: "Absolutely. We welcome new students throughout the year and will help catch up on any missed concepts." },
-  { q: "Is there a semester commitment?", a: "Monthly enrollment has no long-term commitment. Semester packages offer 25% off. Cancel anytime with 30 days notice." },
+  { q: "Is there a free trial class?", a: "Yes! We offer one free introductory class for all new students. No commitment required — just show up and see if it clicks." },
+  { q: "How does per-class pricing work?", a: "You pay for each class session individually. Book as many or as few as you like — there's no lock-in. Perfect for trying out a program or fitting around a busy schedule." },
+  { q: "What's included in the class fee?", a: "Every class fee covers the full session, all robotics kits and hardware used during class, software access, and a session activity summary sent home afterward." },
+  { q: "Do you offer scholarships?", a: "Yes. Need-based scholarships and sibling discounts are available. Contact info@innovateairobotics.com to learn more." },
+  { q: "Can I enroll in a semester bundle mid-way through?", a: "Absolutely. Semester bundles can be started at any time — we'll pro-rate or carry over unused classes to the next block." },
+  { q: "Is there a commitment for semester bundles?", a: "Semester bundles are pre-paid for 20 classes at a discounted rate. Per-class booking has zero commitment — cancel or pause any time." },
 ];
 
 const INCLUDED = ["All robotics kits and hardware", "Software licenses and tools", "Curriculum materials", "Online learning portal", "Monthly progress reports", "Student community access"];
 
 export default function PricingPage() {
-  const [billing, setBilling] = useState<"monthly" | "semester">("monthly");
+  const [billing, setBilling] = useState<"perClass" | "semester">("perClass");
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const sectionBg = isDark ? "#0f0f1a" : "#f7f7ff";
@@ -43,19 +43,19 @@ export default function PricingPage() {
         <Container maxWidth="md">
           <Chip label="Transparent Pricing" sx={{ bgcolor: isDark ? "rgba(37,144,241,0.12)" : "rgba(37,144,241,0.1)", color: "primary.main", fontWeight: 700, mb: 3 }} />
           <Typography variant="h1" sx={{ fontSize: { xs: "2.5rem", md: "3.5rem" }, fontWeight: 800, mb: 2, lineHeight: 1.1 }}>
-            Simple, Fair{" "}
-            <Box component="span" sx={{ background: "linear-gradient(135deg, #2590f1, #9187ff)", backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Pricing</Box>
+            Pay Per Class.{" "}
+            <Box component="span" sx={{ background: "linear-gradient(135deg, #2590f1, #9187ff)", backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>No Lock-In.</Box>
           </Typography>
           <Typography variant="body1" sx={{ color: "text.secondary", mb: 6, maxWidth: 500, mx: "auto", fontSize: "1.1rem" }}>
-            No hidden fees. No long-term contracts required. Just world-class AI education.
+            Pay per class with zero commitment, or save more with a semester bundle. No hidden fees.
           </Typography>
           <ToggleButtonGroup value={billing} exclusive onChange={(_, v) => v && setBilling(v)}
             sx={{ bgcolor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)", borderRadius: 3, p: 0.5, border: "1px solid", borderColor: "divider" }}>
-            <ToggleButton value="monthly" sx={{ px: 4, py: 1.5, color: "text.secondary", fontWeight: 600, borderRadius: "10px !important", border: "none", "&.Mui-selected": { bgcolor: "primary.main", color: "white", fontWeight: 700, "&:hover": { bgcolor: "primary.dark" } } }}>
-              Monthly
+            <ToggleButton value="perClass" sx={{ px: 4, py: 1.5, color: "text.secondary", fontWeight: 600, borderRadius: "10px !important", border: "none", "&.Mui-selected": { bgcolor: "primary.main", color: "white", fontWeight: 700, "&:hover": { bgcolor: "primary.dark" } } }}>
+              Per Class
             </ToggleButton>
             <ToggleButton value="semester" sx={{ px: 4, py: 1.5, color: "text.secondary", fontWeight: 600, borderRadius: "10px !important", border: "none", "&.Mui-selected": { bgcolor: "primary.main", color: "white", fontWeight: 700, "&:hover": { bgcolor: "primary.dark" } } }}>
-              Semester — Save 25%
+              Semester Bundle — Save 20%
             </ToggleButton>
           </ToggleButtonGroup>
         </Container>
@@ -111,13 +111,13 @@ export default function PricingPage() {
                     <Chip label={prog.age} size="small" sx={{ bgcolor: `${prog.color}12`, color: prog.color, fontWeight: 600, mb: 3, alignSelf: "flex-start", fontSize: "0.75rem" }} />
                     <Box sx={{ mb: 3 }}>
                       <Typography variant="h3" sx={{ fontWeight: 800, lineHeight: 1, fontSize: "2.5rem" }}>
-                        ${billing === "monthly" ? prog.monthly : Math.round(prog.semester / 6)}
+                        ${billing === "perClass" ? prog.perClass : prog.semester}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {billing === "monthly" ? "per month" : "per month (billed semesterly)"}
+                        {billing === "perClass" ? "per class session" : `per semester (${prog.semesterClasses} classes)`}
                       </Typography>
                       {billing === "semester" && (
-                        <Chip label={`$${prog.semester} total — save $${prog.monthly * 6 - prog.semester}`} size="small"
+                        <Chip label={`Save $${prog.perClass * prog.semesterClasses - prog.semester} vs pay-as-you-go`} size="small"
                           sx={{ bgcolor: "rgba(34,197,94,0.1)", color: "#22c55e", fontWeight: 600, mt: 1, fontSize: "0.7rem" }} />
                       )}
                     </Box>
@@ -209,9 +209,9 @@ export default function PricingPage() {
       <Box sx={{ py: { xs: 10, md: 14 }, textAlign: "center" }}>
         <Container maxWidth="md">
           <Favorite sx={{ color: "#ef4444", fontSize: 44, mb: 3 }} />
-          <Typography variant="h3" fontWeight={800} gutterBottom>Start with a Free Class</Typography>
+          <Typography variant="h3" fontWeight={800} gutterBottom>Try Your First Class Free</Typography>
           <Typography variant="body1" color="text.secondary" sx={{ fontSize: "1.1rem", mb: 5, maxWidth: 480, mx: "auto" }}>
-            Not sure yet? Let your child try a free introductory session — no credit card required.
+            Not sure yet? Book a free introductory session — no credit card, no commitment required.
           </Typography>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
             <Button component={Link} href="/contact" variant="contained" size="large" endIcon={<ArrowForward />}

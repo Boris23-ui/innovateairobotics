@@ -48,7 +48,20 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       muted: isDark ? "#555570" : "#8888a0",
     };
 
+    // MUI requires exactly 25 shadow entries
+    const sc = isDark ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.08)";
+    const shadows: [string, string, string, string, string, string, string, string, string, string, string, string, string, string, string, string, string, string, string, string, string, string, string, string, string] = [
+      "none",
+      `0 1px 2px ${sc}`, `0 2px 4px ${sc}`, `0 3px 8px ${sc}`, `0 4px 12px ${sc}`,
+      `0 5px 16px ${sc}`, `0 6px 20px ${sc}`, `0 7px 24px ${sc}`, `0 8px 28px ${sc}`,
+      `0 9px 32px ${sc}`, `0 10px 36px ${sc}`, `0 11px 40px ${sc}`, `0 12px 44px ${sc}`,
+      `0 13px 48px ${sc}`, `0 14px 52px ${sc}`, `0 15px 56px ${sc}`, `0 16px 60px ${sc}`,
+      `0 17px 64px ${sc}`, `0 18px 68px ${sc}`, `0 19px 72px ${sc}`, `0 20px 76px ${sc}`,
+      `0 21px 80px ${sc}`, `0 22px 84px ${sc}`, `0 23px 88px ${sc}`, `0 24px 92px ${sc}`,
+    ];
+
     return createTheme({
+      shadows,
       palette: {
         mode,
         primary: { main: "#2590f1", light: "#60b0ff", dark: "#1a6ec0", contrastText: "#fff" },
