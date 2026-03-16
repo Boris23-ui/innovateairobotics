@@ -1,98 +1,242 @@
 "use client";
 
-import { Container, Typography, Grid, Card, CardContent, CardMedia, Button, Box } from '@mui/material';
-import { LocalLibrary, Code, Science, Psychology } from '@mui/icons-material';
+import React from "react";
+import {
+  Container, Typography, Box, Grid, Card, CardContent,
+  Button, Paper, Chip, Stack,
+} from "@mui/material";
+import {
+  ChildCare, Code, Science, Psychology, Engineering,
+  CheckCircle, ArrowForward, EmojiEvents, Groups, School,
+} from "@mui/icons-material";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const programs = [
   {
-    title: 'AI & Machine Learning',
-    description: 'Master the fundamentals of artificial intelligence and machine learning through hands-on projects and real-world applications.',
-    icon: <Science sx={{ fontSize: 40 }} />,
-    duration: '12 weeks',
-    level: 'Intermediate',
+    title: "Tiny Tinkerers", ageRange: "Ages 5 & Under",
+    tagline: "Where curiosity meets creativity",
+    description: "An age-appropriate introduction to AI and robotics through interactive play and colorful activities. Young learners meet robot friends, discover how they move, and explore basic cause-and-effect concepts in a joyful, safe environment.",
+    color: "#f59e0b", bgColor: "rgba(245,158,11,0.08)", borderColor: "rgba(245,158,11,0.3)",
+    href: "/programs/tiny-tinkerers",
+    highlights: ["Visual storytelling with robots", "Drag-and-drop coding intro", "Pattern recognition games", "Collaborative play activities"],
+    image: "/images/Kids sorting kit components.jpg", badge: "Most Popular",
   },
   {
-    title: 'Web Development',
-    description: 'Learn modern web development technologies including React, Node.js, and full-stack application development.',
-    icon: <Code sx={{ fontSize: 40 }} />,
-    duration: '10 weeks',
-    level: 'Beginner',
+    title: "Robot Explorers", ageRange: "Ages 6-9",
+    tagline: "Build, code, and discover",
+    description: "Dive into hands-on robotics by building and programming your first autonomous robots. Students explore sensors, block coding, and simple algorithms while solving fun challenges.",
+    color: "#10b981", bgColor: "rgba(16,185,129,0.08)", borderColor: "rgba(16,185,129,0.3)",
+    href: "/programs/robot-explorers",
+    highlights: ["Block-based visual coding", "Sensor integration basics", "Looping and logic concepts", "Mechanical assembly projects"],
+    image: "/images/Mountain-view-classes-4.jpg", badge: null,
   },
   {
-    title: 'Data Science',
-    description: 'Explore data analysis, visualization, and statistical methods to extract insights from complex datasets.',
-    icon: <Psychology sx={{ fontSize: 40 }} />,
-    duration: '14 weeks',
-    level: 'Advanced',
+    title: "Tech Titans", ageRange: "Ages 10-12",
+    tagline: "Code with purpose",
+    description: "Level up with Python programming, circuit design, and advanced robotics control. Students tackle algorithmic thinking, sensor fusion, and complex robot builds that solve real-world challenges.",
+    color: "#3b82f6", bgColor: "rgba(59,130,246,0.08)", borderColor: "rgba(59,130,246,0.3)",
+    href: "/programs/tech-titans",
+    highlights: ["Python programming foundations", "Circuit design and electronics", "Algorithm thinking and logic", "Multi-sensor robot systems"],
+    image: "/images/kids_designing_simple_machines.jpg", badge: null,
   },
   {
-    title: 'Robotics & Automation',
-    description: 'Dive into robotics programming, automation systems, and control theory with practical projects.',
-    icon: <LocalLibrary sx={{ fontSize: 40 }} />,
-    duration: '16 weeks',
-    level: 'Intermediate',
+    title: "AI Avengers", ageRange: "Ages 13-17",
+    tagline: "Master the future of AI",
+    description: "The most advanced youth track. Students master artificial intelligence, machine learning, and computer vision through real projects, ethical discussions, and tools used by industry professionals.",
+    color: "#8b5cf6", bgColor: "rgba(139,92,246,0.08)", borderColor: "rgba(139,92,246,0.3)",
+    href: "/programs/ai-avengers",
+    highlights: ["Neural networks and ML", "Computer vision with OpenCV", "Autonomous robot programming", "AI ethics and societal impact"],
+    image: "/images/Palo-alto-classes-5.jpg", badge: "Advanced",
+  },
+  {
+    title: "Senior Innovators", ageRange: "Ages 18+",
+    tagline: "It is never too late to innovate",
+    description: "A comprehensive adult program for professionals and lifelong learners. Explore AI, robotics, and automation with career-relevant skills, hands-on projects, and industry-grade technologies.",
+    color: "#0891b2", bgColor: "rgba(8,145,178,0.08)", borderColor: "rgba(8,145,178,0.3)",
+    href: "/programs/seniors",
+    highlights: ["Professional robotics development", "ROS and advanced frameworks", "AI integration for business", "Hands-on capstone projects"],
+    image: "/images/Palo-alto-classes-6.jpg", badge: null,
   },
 ];
 
+const stats = [
+  { value: "10,000+", label: "Active Students" },
+  { value: "5", label: "Age-Based Tracks" },
+  { value: "50+", label: "Hands-On Projects" },
+  { value: "150+", label: "Partner Schools" },
+];
+
+const howItWorks = [
+  { step: "01", title: "Choose Your Track", description: "Select the program that matches your age and experience level." },
+  { step: "02", title: "Learn and Build", description: "Work through structured lessons combining theory with hands-on robotics and coding projects." },
+  { step: "03", title: "Earn Badges", description: "Complete milestones and earn digital badges that showcase your skills and achievements." },
+  { step: "04", title: "Advance or Specialize", description: "Graduate to the next track or deepen your specialty. The path is yours to define." },
+];
+
+const ProgramIcon: React.FC<{ title: string }> = ({ title }) => {
+  const map: Record<string, React.ReactElement> = {
+    "Tiny Tinkerers": <ChildCare sx={{ fontSize: 48 }} />,
+    "Robot Explorers": <Code sx={{ fontSize: 48 }} />,
+    "Tech Titans": <Science sx={{ fontSize: 48 }} />,
+    "AI Avengers": <Psychology sx={{ fontSize: 48 }} />,
+    "Senior Innovators": <Engineering sx={{ fontSize: 48 }} />,
+  };
+  return map[title] || <School sx={{ fontSize: 48 }} />;
+};
+
 export default function ProgramsPage() {
+  const router = useRouter();
   return (
-    <Container maxWidth="lg" sx={{ py: 8 }}>
-      <Box textAlign="center" mb={6}>
-        <Typography variant="h2" component="h1" gutterBottom>
-          Our Programs
-        </Typography>
-        <Typography variant="h5" color="text.secondary" paragraph>
-          Discover our comprehensive range of technology education programs
-        </Typography>
+    <>
+      {/* Hero */}
+      <Box sx={{ background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%)", py: { xs: 8, md: 14 }, position: "relative", overflow: "hidden" }}>
+        <Box sx={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 20% 50%, rgba(37,99,235,0.15) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(139,92,246,0.15) 0%, transparent 50%)" }} />
+        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+          <Chip label="5 Programs | All Ages | In-Person and Online" sx={{ mb: 3, bgcolor: "rgba(255,255,255,0.1)", color: "white", fontWeight: 600 }} />
+          <Typography variant="h1" component="h1" sx={{ fontWeight: 900, color: "white", fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" }, lineHeight: 1.1, mb: 3 }}>
+            {"Programs for "}
+            <Box component="span" sx={{ background: "linear-gradient(135deg, #38bdf8 0%, #818cf8 100%)", backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              Every Age
+            </Box>
+          </Typography>
+          <Typography variant="h5" sx={{ color: "rgba(255,255,255,0.75)", maxWidth: 700, mx: "auto", mb: 6, fontWeight: 400, lineHeight: 1.6, fontSize: { xs: "1.1rem", md: "1.3rem" } }}>
+            From toddlers discovering robots for the first time to adults mastering AI, we have a program built specifically for you.
+          </Typography>
+          <Grid container spacing={3} justifyContent="center">
+            {stats.map((s) => (
+              <Grid item xs={6} sm={3} key={s.label}>
+                <Paper sx={{ p: { xs: 2, md: 3 }, bgcolor: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 3 }}>
+                  <Typography variant="h4" fontWeight={800} sx={{ color: "white", mb: 0.5, fontSize: { xs: "1.8rem", md: "2.2rem" } }}>{s.value}</Typography>
+                  <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.6)", fontWeight: 500 }}>{s.label}</Typography>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
       </Box>
 
-      <Grid container spacing={4}>
-        {programs.map((program) => (
-          <Grid item key={program.title} xs={12} sm={6} md={3}>
-            <Card 
-              sx={{ 
-                height: '100%', 
-                display: 'flex', 
-                flexDirection: 'column',
-                transition: 'transform 0.2s',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: 3,
-                },
-              }}
-            >
-              <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
-                <Box sx={{ color: 'primary.main', mb: 2 }}>
-                  {program.icon}
-                </Box>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {program.title}
-                </Typography>
-                <Typography color="text.secondary" paragraph>
-                  {program.description}
-                </Typography>
-                <Box sx={{ mt: 2 }}>
-                  <Typography variant="body2" color="text.secondary">
-                    Duration: {program.duration}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Level: {program.level}
-                  </Typography>
-                </Box>
-              </CardContent>
-              <Box sx={{ p: 2, pt: 0 }}>
-                <Button 
-                  variant="contained" 
-                  fullWidth
-                  sx={{ mt: 2 }}
-                >
-                  Learn More
-                </Button>
-              </Box>
+      {/* Programs */}
+      <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 } }}>
+        <Box textAlign="center" mb={8}>
+          <Typography variant="h3" component="h2" fontWeight={800} gutterBottom>Find Your Track</Typography>
+          <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: "auto", fontWeight: 400 }}>
+            Each track is age-appropriate, hands-on, and designed to build real skills that grow with every student.
+          </Typography>
+        </Box>
+        <Stack spacing={6}>
+          {programs.map((program, index) => (
+            <Card key={program.title} elevation={0} sx={{ border: "2px solid", borderColor: program.borderColor, borderRadius: 4, overflow: "hidden", transition: "all 0.3s ease", "&:hover": { transform: "translateY(-4px)", boxShadow: 8 } }}>
+              <Grid container>
+                <Grid item xs={12} md={5} sx={{ order: { md: index % 2 === 0 ? 0 : 1 } }}>
+                  <Box sx={{ position: "relative", height: { xs: 260, md: "100%" }, minHeight: { md: 360 } }}>
+                    <Image src={program.image} alt={program.title} fill style={{ objectFit: "cover" }} />
+                    {program.badge && <Chip label={program.badge} sx={{ position: "absolute", top: 16, left: 16, bgcolor: program.color, color: "white", fontWeight: 700 }} />}
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={7}>
+                  <CardContent sx={{ p: { xs: 3, md: 5 }, height: "100%", display: "flex", flexDirection: "column" }}>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2, flexWrap: "wrap" }}>
+                      <Box sx={{ color: program.color }}><ProgramIcon title={program.title} /></Box>
+                      <Box>
+                        <Typography variant="h4" fontWeight={800} sx={{ mb: 0.5 }}>{program.title}</Typography>
+                        <Chip label={program.ageRange} size="small" sx={{ bgcolor: program.bgColor, color: program.color, fontWeight: 700 }} />
+                      </Box>
+                    </Box>
+                    <Typography variant="h6" sx={{ color: program.color, fontWeight: 600, mb: 2, fontStyle: "italic" }}>{program.tagline}</Typography>
+                    <Typography variant="body1" color="text.secondary" paragraph sx={{ lineHeight: 1.8 }}>{program.description}</Typography>
+                    <Grid container spacing={1.5} sx={{ mb: 3 }}>
+                      {program.highlights.map((item) => (
+                        <Grid item xs={12} sm={6} key={item}>
+                          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                            <CheckCircle sx={{ color: program.color, fontSize: 18, flexShrink: 0 }} />
+                            <Typography variant="body2" fontWeight={500}>{item}</Typography>
+                          </Box>
+                        </Grid>
+                      ))}
+                    </Grid>
+                    <Box sx={{ mt: "auto" }}>
+                      <Button variant="contained" endIcon={<ArrowForward />} onClick={() => router.push(program.href)}
+                        sx={{ bgcolor: program.color, "&:hover": { bgcolor: program.color, filter: "brightness(0.9)" }, px: 4, py: 1.5, borderRadius: 2, fontWeight: 700, textTransform: "none", fontSize: "1rem" }}>
+                        Explore {program.title}
+                      </Button>
+                    </Box>
+                  </CardContent>
+                </Grid>
+              </Grid>
             </Card>
+          ))}
+        </Stack>
+      </Container>
+
+      {/* How It Works */}
+      <Box sx={{ bgcolor: "grey.50", py: { xs: 8, md: 12 } }}>
+        <Container maxWidth="lg">
+          <Box textAlign="center" mb={8}>
+            <Typography variant="h3" fontWeight={800} gutterBottom>How It Works</Typography>
+            <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 550, mx: "auto", fontWeight: 400 }}>Your path from curious beginner to confident innovator.</Typography>
+          </Box>
+          <Grid container spacing={4}>
+            {howItWorks.map((step) => (
+              <Grid item xs={12} sm={6} md={3} key={step.step}>
+                <Paper elevation={0} sx={{ p: 4, borderRadius: 4, border: "1px solid", borderColor: "divider", height: "100%", textAlign: "center", transition: "all 0.3s ease", "&:hover": { transform: "translateY(-6px)", boxShadow: 4 } }}>
+                  <Typography variant="h2" sx={{ fontWeight: 900, background: "linear-gradient(135deg, #2563eb, #8b5cf6)", backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", mb: 2, fontSize: "3.5rem" }}>{step.step}</Typography>
+                  <Typography variant="h6" fontWeight={700} gutterBottom>{step.title}</Typography>
+                  <Typography variant="body2" color="text.secondary" lineHeight={1.8}>{step.description}</Typography>
+                </Paper>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-    </Container>
+        </Container>
+      </Box>
+
+      {/* Gallery */}
+      <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 } }}>
+        <Box textAlign="center" mb={6}>
+          <Typography variant="h3" fontWeight={800} gutterBottom>Learning in Action</Typography>
+          <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: "auto", fontWeight: 400 }}>From Mountain View to Nairobi, our students are building the future everywhere.</Typography>
+        </Box>
+        <Grid container spacing={2}>
+          {[
+            { src: "/images/Nairobi-classes-7.jpg", label: "Nairobi, Kenya", md: 8 },
+            { src: "/images/young-robotics-engineers.jpg", label: "Mountain View, CA", md: 4 },
+            { src: "/images/kids getting ready for class.jpg", label: "Palo Alto, CA", md: 4 },
+            { src: "/images/Mountain-view-classes-8.jpg", label: "Mountain View, CA", md: 8 },
+          ].map((img) => (
+            <Grid item xs={12} md={img.md} key={img.src}>
+              <Box sx={{ position: "relative", height: 280, borderRadius: 3, overflow: "hidden" }}>
+                <Image src={img.src} alt={img.label} fill style={{ objectFit: "cover" }} />
+                <Box sx={{ position: "absolute", bottom: 0, left: 0, right: 0, p: 2, background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }}>
+                  <Typography variant="subtitle2" color="white" fontWeight={600}>{img.label}</Typography>
+                </Box>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+
+      {/* CTA */}
+      <Box sx={{ background: "linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%)", py: { xs: 8, md: 12 }, textAlign: "center" }}>
+        <Container maxWidth="md">
+          <EmojiEvents sx={{ fontSize: 60, color: "rgba(255,255,255,0.8)", mb: 2 }} />
+          <Typography variant="h3" fontWeight={800} color="white" gutterBottom sx={{ fontSize: { xs: "2rem", md: "3rem" } }}>
+            Ready to Find Your Program?
+          </Typography>
+          <Typography variant="h6" sx={{ color: "rgba(255,255,255,0.85)", mb: 5, fontWeight: 400 }}>
+            Join thousands of students already building the future with InnovateAI Robotics.
+          </Typography>
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
+            <Button variant="contained" size="large" startIcon={<School />} onClick={() => router.push("/sign-up")}
+              sx={{ bgcolor: "white", color: "#2563eb", fontWeight: 700, px: 5, py: 2, fontSize: "1.1rem", borderRadius: 3, "&:hover": { bgcolor: "rgba(255,255,255,0.9)" } }}>
+              Enroll Now
+            </Button>
+            <Button variant="outlined" size="large" startIcon={<Groups />} onClick={() => router.push("/contact")}
+              sx={{ color: "white", borderColor: "rgba(255,255,255,0.6)", borderWidth: 2, fontWeight: 700, px: 5, py: 2, fontSize: "1.1rem", borderRadius: 3, "&:hover": { borderColor: "white", bgcolor: "rgba(255,255,255,0.1)" } }}>
+              Talk to Our Team
+            </Button>
+          </Stack>
+        </Container>
+      </Box>
+    </>
   );
-} 
+}
