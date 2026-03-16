@@ -1,43 +1,87 @@
-import React from 'react';
+'use client';
+
+import React, { useRef } from 'react';
+import { SmartToy, Groups, MenuBook, EmojiObjects } from '@mui/icons-material';
+import { motion, useInView } from 'framer-motion';
 
 const Features: React.FC = () => {
   const features = [
     {
       title: 'Hands-on Learning',
-      description: 'Get practical experience with real robotics projects and AI applications.',
-      icon: '🤖',
+      description: 'Build real robots and AI systems from day one with our project-based curriculum.',
+      icon: <SmartToy style={{ fontSize: 32 }} />,
     },
     {
-      title: 'Expert Instructors',
-      description: 'Learn from industry professionals with years of experience in robotics and AI.',
-      icon: '👨‍🏫',
+      title: 'Expert Engineers',
+      description: 'Learn from industry professionals with years of robotics and AI experience.',
+      icon: <Groups style={{ fontSize: 32 }} />,
     },
     {
       title: 'Modern Curriculum',
-      description: 'Stay up-to-date with the latest technologies and industry practices.',
-      icon: '📚',
+      description: 'Stay ahead with cutting-edge technologies and industry-standard practices.',
+      icon: <MenuBook style={{ fontSize: 32 }} />,
     },
     {
-      title: 'Project-Based',
-      description: 'Build your portfolio with real-world projects and applications.',
-      icon: '💡',
+      title: 'Innovation First',
+      description: 'Build an impressive portfolio of real-world robotics projects and patents.',
+      icon: <EmojiObjects style={{ fontSize: 32 }} />,
     },
   ];
 
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+
   return (
-    <section className="py-20 bg-gray-50">
+    <section
+      ref={ref}
+      className="py-20 spx-particle-bg"
+      style={{ background: '#0d1117' }}
+    >
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+        >
+          <p className="text-center text-cyan-400 uppercase tracking-[0.3em] text-sm mb-3">
+            Why Choose Us
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">
+            Built for the <span className="gradient-text">Future</span>
+          </h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{
+                duration: 0.8,
+                delay: index * 0.1,
+                ease: [0.25, 0.1, 0.25, 1],
+              }}
             >
-              <div className="text-4xl mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
-            </div>
+              <div className="glass-card p-6 h-full flex flex-col items-center text-center">
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+                  style={{
+                    background: 'rgba(6, 182, 212, 0.1)',
+                    border: '1px solid rgba(6, 182, 212, 0.2)',
+                    color: '#06b6d4',
+                  }}
+                >
+                  {feature.icon}
+                </div>
+                <h3 className="text-lg font-semibold mb-2 text-white">
+                  {feature.title}
+                </h3>
+                <p style={{ color: '#94a3b8' }} className="text-sm leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -45,4 +89,4 @@ const Features: React.FC = () => {
   );
 };
 
-export default Features; 
+export default Features;

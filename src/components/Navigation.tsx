@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth, useUser, SignOutButton } from '@clerk/nextjs';
 import {
   AppBar,
@@ -120,6 +120,13 @@ export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [programsAnchorEl, setProgramsAnchorEl] = useState<null | HTMLElement>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -181,7 +188,7 @@ export default function Navigation() {
       onClick={handleDrawerToggle} 
       sx={{
         height: '100%',
-        background: 'linear-gradient(135deg, #667ea0, #764ba2 100%)',
+        background: 'linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)',
         color: 'white',
         position: 'relative',
         overflow: 'hidden',
@@ -574,61 +581,7 @@ export default function Navigation() {
                 </ListItem>
               </SignOutButton>
             </>
-          ) : (
-            <>
-              <Typography 
-                variant="overline"
-                sx={{ 
-                  px: 3, 
-                  py: 1, 
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  fontWeight: 600,
-                  letterSpacing: '1px',
-                  fontSize: '0.75rem'
-                }}
-              >
-                GET STARTED
-              </Typography>
-              <ListItem disablePadding sx={{ mb: 0.5 }}>
-                <ListItemButton
-                  onClick={() => {
-                    handleDrawerToggle();
-                    router.push('/sign-in');
-                  }}
-                  sx={{
-                    mx: 1,
-                    borderRadius: 2,
-                    background: 'linear-gradient(135deg, #667ea0, #764ba2 100%)',
-                    color: 'white',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    boxShadow: '0 4px 12px rgba(121, 26, 26, 0.2)',
-                    '&:hover': {
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 8px 20px rgba(121, 26, 26, 0.3)',
-                      background: 'linear-gradient(135deg, #5a6fd8, #6a4190 100%)',
-                    },
-                  }}
-                >
-                  <ListItemIcon sx={{ 
-                    minWidth: 45,
-                    color: 'white',
-                    '& .MuiSvgIcon-root': {
-                      fontSize: '1.4rem'
-                    }
-                  }}>
-                    <Login />
-                  </ListItemIcon>
-                  <ListItemText 
-                    primary="Sign In"
-                    primaryTypographyProps={{
-                      fontWeight: 600,
-                      fontSize: '1rem'
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </>
-          )}
+          ) : null}
         </List>
       </Box>
 
@@ -656,7 +609,23 @@ export default function Navigation() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="default" elevation={1} sx={{ py: 0 }}>
+      <AppBar
+        position="fixed"
+        color="default"
+        elevation={scrolled ? 1 : 0}
+        sx={{
+          py: 0,
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          backgroundColor: scrolled
+            ? 'rgba(10, 10, 15, 0.85)'
+            : 'transparent',
+          backdropFilter: scrolled ? 'blur(20px)' : 'none',
+          borderBottom: scrolled
+            ? '1px solid rgba(255,255,255,0.06)'
+            : '1px solid transparent',
+          boxShadow: scrolled ? undefined : 'none',
+        }}
+      >
       <Container maxWidth="xl" sx={{ py: 0 }}>
         <Toolbar disableGutters sx={{ minHeight: '56px !important', py: 0 }}>
           <Link href="/" passHref style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -839,45 +808,7 @@ export default function Navigation() {
                 {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
               </IconButton>
 
-            {isSignedIn ? (
-              <>
-                  <MuiButton
-                  startIcon={<Dashboard />}
-                    onClick={() => {
-                      setProgramsAnchorEl(null);
-                      // Use role-based routing
-                      const dashboardPath = userProfile ? getDashboardPath(userProfile.role) : '/dashboard';
-                      router.push(dashboardPath);
-                    }}
-                >
-                  Dashboard
-                  </MuiButton>
-                <IconButton
-                    onClick={handleMenuOpen}
-                  size="small"
-                >
-                  <Avatar
-                    sx={{ width: 32, height: 32 }}
-                    src={user?.imageUrl}
-                    alt={user?.firstName || 'User'}
-                  />
-                </IconButton>
-              </>
-            ) : (
-                <MuiButton
-                  variant="contained"
-                  startIcon={<Login />}
-                  onClick={handleLogin}
-                  sx={{
-                    minWidth: '100px',
-                    '&:hover': {
-                      transform: 'translateY(-1px)',
-                    },
-                  }}
-                >
-                  Login
-                </MuiButton>
-            )}
+            {/* Auth buttons hidden for now */}
           </Box>
 
           {/* Mobile Menu Button */}
@@ -889,7 +820,7 @@ export default function Navigation() {
               aria-label="menu"
               onClick={handleDrawerToggle}
               sx={{
-                background: 'linear-gradient(135deg, #667ea0, #764ba2 100%)',
+                background: 'linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)',
                 color: 'white',
                 borderRadius: 2,
                 width: 48,

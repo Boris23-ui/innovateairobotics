@@ -1,856 +1,939 @@
 "use client";
 
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Container, Typography, Box, Button, Stack, Paper, Grid } from '@mui/material';
-import { PlayArrow, School } from '@mui/icons-material';
+import { Container, Typography, Box, Button, Stack, Grid } from '@mui/material';
+import {
+  PlayArrow,
+  School,
+  SmartToy,
+  Groups,
+  MenuBook,
+  EmojiObjects,
+  KeyboardArrowDown,
+  LocationOn,
+  Sensors,
+  Memory,
+  Visibility,
+  Build,
+  Code,
+  Psychology,
+  RocketLaunch,
+  TrackChanges,
+  PersonSearch,
+} from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
-import Features from '@/components/Features';
+import { motion, useInView } from 'framer-motion';
 
-// Temporarily stub 3D component to avoid three/drei build issues
-const RoboticArm3D = () => null;
+// ─── Animation Helpers ─────────────────────────────────────────────────────
+
+function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay, ease: [0.25, 0.1, 0.25, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function AnimatedCounter({ target, suffix = '', prefix = '' }: { target: number; suffix?: string; prefix?: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+    let start = 0;
+    const duration = 2;
+    const increment = target / (duration * 60);
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, 1000 / 60);
+    return () => clearInterval(timer);
+  }, [isInView, target]);
+
+  return <span ref={ref}>{prefix}{count}{suffix}</span>;
+}
+
+// ─── Main Landing Page ─────────────────────────────────────────────────────
 
 export default function LandingPage() {
   const router = useRouter();
 
+  const features = [
+    {
+      title: 'Hands-on Learning',
+      description: 'Build real robots and AI systems from day one with our project-based curriculum.',
+      icon: <SmartToy sx={{ fontSize: 32 }} />,
+    },
+    {
+      title: 'Expert Engineers',
+      description: 'Learn from industry professionals with years of robotics and AI experience.',
+      icon: <Groups sx={{ fontSize: 32 }} />,
+    },
+    {
+      title: 'Modern Curriculum',
+      description: 'Stay ahead with cutting-edge technologies and industry-standard practices.',
+      icon: <MenuBook sx={{ fontSize: 32 }} />,
+    },
+    {
+      title: 'Innovation First',
+      description: 'Build an impressive portfolio of real-world robotics projects and patents.',
+      icon: <EmojiObjects sx={{ fontSize: 32 }} />,
+    },
+  ];
+
+  const stats = [
+    { value: 500, suffix: '+', label: 'Students Taught' },
+    { value: 50, suffix: '+', label: 'Hands-on Projects' },
+    { value: 3, suffix: '', label: 'Global Campuses' },
+    { value: 100, suffix: '%', label: 'Completion Rate' },
+  ];
+
+  const campuses = [
+    { name: 'Mountain View', image: '/images/Mountain-view-classes-4.jpg', location: 'California, USA' },
+    { name: 'Nairobi', image: '/images/Nairobi-classes-7.jpg', location: 'Kenya, East Africa' },
+    { name: 'Palo Alto', image: '/images/Palo-alto-classes-5.jpg', location: 'California, USA' },
+  ];
+
+  const learningPath = [
+    {
+      level: '01',
+      title: 'Beginner',
+      subtitle: 'Foundation in Robotics',
+      points: ['Basic robot construction', 'Introduction to sensors', 'Simple programming concepts'],
+      image: '/images/Kids sorting kit components.jpg',
+      icon: <Build sx={{ fontSize: 24 }} />,
+    },
+    {
+      level: '02',
+      title: 'Intermediate',
+      subtitle: 'Advanced Mechanisms',
+      points: ['Complex robot design', 'Sensor fusion & control', 'Applied mathematics'],
+      image: '/images/kids_designing_simple_machines.jpg',
+      icon: <Code sx={{ fontSize: 24 }} />,
+    },
+    {
+      level: '03',
+      title: 'Advanced',
+      subtitle: 'AI & Innovation',
+      points: ['AI integration', 'Computer vision', 'Real-world applications'],
+      image: '/images/building_drones.jpg',
+      icon: <Psychology sx={{ fontSize: 24 }} />,
+    },
+  ];
+
   return (
     <>
-      {/* Hero Section */}
-      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 }, minHeight: { xs: 'auto', md: '90vh' } }}>
-        <Grid container spacing={4} alignItems="center">
-          <Grid item xs={12} md={6}>
-            <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
-              <Typography 
-                variant="h2" 
-                component="h1" 
-                gutterBottom 
-                fontWeight="bold"
-                sx={{ 
-                  fontSize: { xs: '2.5rem', sm: '3.5rem', md: '3.75rem' },
-                  lineHeight: { xs: 1.2, md: 1.1 }
+      {/* ═══ HERO SECTION ═══════════════════════════════════════════════════ */}
+      <Box
+        sx={{
+          minHeight: '100vh',
+          position: 'relative',
+          overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          mt: '-56px',
+          pt: '56px',
+        }}
+        className="spx-grid-bg"
+      >
+        {/* Background Image */}
+        <Box sx={{
+          position: 'absolute', inset: 0, zIndex: 0,
+        }}>
+          <Image
+            src="/images/building_drones.jpg"
+            alt=""
+            fill
+            style={{ objectFit: 'cover', filter: 'brightness(0.08) saturate(0.4)' }}
+            priority
+          />
+        </Box>
+
+        {/* Gradient Overlays */}
+        <Box sx={{
+          position: 'absolute', inset: 0, zIndex: 1,
+          background: `
+            radial-gradient(ellipse at 30% 20%, rgba(6,182,212,0.08) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 80%, rgba(139,92,246,0.06) 0%, transparent 50%),
+            linear-gradient(180deg, rgba(10,10,15,0.3) 0%, rgba(10,10,15,0.8) 100%)
+          `,
+        }} />
+
+        {/* Hero Content */}
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <Typography
+              variant="overline"
+              sx={{
+                color: '#06b6d4',
+                letterSpacing: '0.3em',
+                fontSize: { xs: '0.7rem', md: '0.85rem' },
+                mb: 3,
+                display: 'block',
+              }}
+            >
+              INNOVATEAI ROBOTICS
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <Typography
+              variant="h1"
+              component="h1"
+              sx={{
+                fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem', lg: '5rem' },
+                fontWeight: 800,
+                lineHeight: 1.1,
+                mb: 3,
+                color: 'white',
+                WebkitTextFillColor: 'unset',
+                background: 'none',
+                textShadow: 'none',
+              }}
+            >
+              Empowering the Next Generation of{' '}
+              <Box
+                component="span"
+                sx={{
+                  background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  display: { xs: 'block', md: 'inline' },
                 }}
               >
-                Empowering the Next Generation of{' '}
-                <Typography
-                  variant="h2"
-                  component="span"
-                  sx={{
-                    background: 'linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%)',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    fontWeight: 'bold',
-                    fontSize: 'inherit',
-                    lineHeight: 'inherit',
-                    display: { xs: 'block', md: 'inline' },
-                    mt: { xs: 1, md: 0 }
-                  }}
-                >
-                  Robotics Engineers
-                </Typography>
-              </Typography>
-              <Typography 
-                variant="h5" 
-                color="text.secondary" 
-                sx={{ 
-                  mb: 4, 
-                  maxWidth: 600,
-                  mx: { xs: 'auto', md: 0 },
-                  fontSize: { xs: '1.1rem', sm: '1.25rem' },
-                  lineHeight: 1.5
+                Robotics Engineers
+              </Box>
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <Typography
+              variant="h5"
+              sx={{
+                color: '#94a3b8',
+                mb: 5,
+                maxWidth: 700,
+                mx: 'auto',
+                fontSize: { xs: '1rem', sm: '1.15rem', md: '1.3rem' },
+                lineHeight: 1.6,
+                fontWeight: 400,
+              }}
+            >
+              Hands-on learning experiences that combine robotics, AI, and coding
+              to inspire creativity and innovation in young minds.
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={2}
+              justifyContent="center"
+              sx={{ mb: 6 }}
+            >
+              <Button
+                variant="contained"
+                size="large"
+                startIcon={<PlayArrow />}
+                onClick={() => router.push('/sign-in')}
+                sx={{
+                  px: 5, py: 1.8,
+                  fontSize: '1.1rem',
+                  background: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
+                  boxShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
+                  borderRadius: 2,
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #22d3ee, #60a5fa)',
+                    boxShadow: '0 0 40px rgba(6, 182, 212, 0.5)',
+                    transform: 'translateY(-3px)',
+                  },
                 }}
               >
-                Hands-on learning experiences that combine robotics, AI, and coding to inspire creativity and innovation in young minds.
+                Start Learning
+              </Button>
+              <Button
+                variant="outlined"
+                size="large"
+                startIcon={<School />}
+                onClick={() => router.push('/courses')}
+                sx={{
+                  px: 5, py: 1.8,
+                  fontSize: '1.1rem',
+                  color: '#06b6d4',
+                  borderColor: 'rgba(6, 182, 212, 0.4)',
+                  borderWidth: 2,
+                  borderRadius: 2,
+                  '&:hover': {
+                    borderColor: '#06b6d4',
+                    backgroundColor: 'rgba(6, 182, 212, 0.08)',
+                    borderWidth: 2,
+                    transform: 'translateY(-3px)',
+                  },
+                }}
+              >
+                Explore Courses
+              </Button>
+            </Stack>
+          </motion.div>
+
+          {/* Scroll Indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 1 }}
+            style={{ position: 'absolute', bottom: 40, left: '50%', transform: 'translateX(-50%)' }}
+          >
+            <Box sx={{ animation: 'bounce-down 2s infinite', color: 'rgba(6, 182, 212, 0.5)' }}>
+              <KeyboardArrowDown sx={{ fontSize: 36 }} />
+            </Box>
+          </motion.div>
+        </Container>
+      </Box>
+
+      {/* ═══ STATS BAR ══════════════════════════════════════════════════════ */}
+      <Box sx={{
+        bgcolor: '#0d1117',
+        py: { xs: 5, md: 6 },
+        borderTop: '1px solid rgba(6, 182, 212, 0.1)',
+        borderBottom: '1px solid rgba(6, 182, 212, 0.1)',
+      }}>
+        <Container maxWidth="lg">
+          <Grid container spacing={4} justifyContent="center">
+            {stats.map((stat, i) => (
+              <Grid item xs={6} md={3} key={stat.label}>
+                <ScrollReveal delay={i * 0.1}>
+                  <Box sx={{ textAlign: 'center' }}>
+                    <Typography
+                      variant="h2"
+                      sx={{
+                        fontSize: { xs: '2.5rem', md: '3.5rem' },
+                        fontWeight: 800,
+                        background: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        lineHeight: 1,
+                        mb: 1,
+                      }}
+                    >
+                      <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: '#64748b',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.15em',
+                        fontSize: { xs: '0.7rem', md: '0.8rem' },
+                        fontWeight: 600,
+                      }}
+                    >
+                      {stat.label}
+                    </Typography>
+                  </Box>
+                </ScrollReveal>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* ═══ CAMPUS GALLERY ═════════════════════════════════════════════════ */}
+      <Box sx={{ bgcolor: '#0a0a0f', py: { xs: 8, md: 12 } }}>
+        <Container maxWidth="lg">
+          <ScrollReveal>
+            <Typography
+              variant="overline"
+              sx={{
+                color: '#06b6d4',
+                letterSpacing: '0.3em',
+                textAlign: 'center',
+                display: 'block',
+                mb: 2,
+              }}
+            >
+              OUR CAMPUSES
+            </Typography>
+            <Typography
+              variant="h2"
+              component="h2"
+              sx={{
+                textAlign: 'center',
+                fontWeight: 700,
+                mb: 2,
+                fontSize: { xs: '2rem', md: '3rem' },
+              }}
+            >
+              Inspiring Young Minds{' '}
+              <Box component="span" className="gradient-text">Worldwide</Box>
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                textAlign: 'center',
+                color: '#64748b',
+                mb: { xs: 5, md: 8 },
+                maxWidth: 700,
+                mx: 'auto',
+              }}
+            >
+              From Mountain View to Nairobi, we&apos;re building the next generation
+              of innovators through hands-on robotics education.
+            </Typography>
+          </ScrollReveal>
+
+          <Grid container spacing={3}>
+            {campuses.map((campus, i) => (
+              <Grid item xs={12} sm={6} md={4} key={campus.name}>
+                <ScrollReveal delay={i * 0.15}>
+                  <Box
+                    className="glass-card"
+                    sx={{
+                      position: 'relative',
+                      height: { xs: 280, md: 400 },
+                      overflow: 'hidden',
+                      cursor: 'pointer',
+                      '&:hover img': {
+                        transform: 'scale(1.05)',
+                        filter: 'brightness(0.5)',
+                      },
+                      '&:hover .campus-overlay': {
+                        opacity: 1,
+                      },
+                    }}
+                  >
+                    <Image
+                      src={campus.image}
+                      alt={campus.name}
+                      fill
+                      style={{
+                        objectFit: 'cover',
+                        filter: 'brightness(0.4)',
+                        transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                      }}
+                    />
+                    {/* Gradient overlay */}
+                    <Box sx={{
+                      position: 'absolute', inset: 0,
+                      background: 'linear-gradient(180deg, transparent 40%, rgba(10,10,15,0.9) 100%)',
+                      zIndex: 1,
+                    }} />
+                    {/* Content */}
+                    <Box sx={{
+                      position: 'absolute', bottom: 0, left: 0, right: 0,
+                      p: 3, zIndex: 2,
+                    }}>
+                      <Typography variant="h5" sx={{ fontWeight: 700, color: 'white', mb: 0.5 }}>
+                        {campus.name}
+                      </Typography>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <LocationOn sx={{ fontSize: 16, color: '#06b6d4' }} />
+                        <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                          {campus.location}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                </ScrollReveal>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* ═══ FEATURES ═══════════════════════════════════════════════════════ */}
+      <Box sx={{
+        bgcolor: '#0d1117',
+        py: { xs: 8, md: 12 },
+        position: 'relative',
+      }}
+        className="spx-particle-bg"
+      >
+        <Container maxWidth="lg">
+          <ScrollReveal>
+            <Typography
+              variant="overline"
+              sx={{
+                color: '#06b6d4',
+                letterSpacing: '0.3em',
+                textAlign: 'center',
+                display: 'block',
+                mb: 2,
+              }}
+            >
+              WHY CHOOSE US
+            </Typography>
+            <Typography
+              variant="h2"
+              component="h2"
+              sx={{
+                textAlign: 'center',
+                fontWeight: 700,
+                mb: { xs: 5, md: 8 },
+                fontSize: { xs: '2rem', md: '3rem' },
+              }}
+            >
+              Built for the{' '}
+              <Box component="span" className="gradient-text">Future</Box>
+            </Typography>
+          </ScrollReveal>
+
+          <Grid container spacing={3}>
+            {features.map((feature, i) => (
+              <Grid item xs={12} sm={6} md={3} key={feature.title}>
+                <ScrollReveal delay={i * 0.1}>
+                  <Box
+                    className="glass-card"
+                    sx={{
+                      p: 4,
+                      height: '100%',
+                      textAlign: 'center',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Box sx={{
+                      width: 64, height: 64,
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      background: 'rgba(6, 182, 212, 0.1)',
+                      border: '1px solid rgba(6, 182, 212, 0.2)',
+                      color: '#06b6d4',
+                      mb: 3,
+                    }}>
+                      {feature.icon}
+                    </Box>
+                    <Typography variant="h6" sx={{ fontWeight: 600, mb: 1.5, color: 'white' }}>
+                      {feature.title}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: '#94a3b8', lineHeight: 1.6 }}>
+                      {feature.description}
+                    </Typography>
+                  </Box>
+                </ScrollReveal>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* ═══ MISSION STATEMENT ══════════════════════════════════════════════ */}
+      <Box sx={{
+        position: 'relative',
+        minHeight: { xs: '50vh', md: '60vh' },
+        display: 'flex',
+        alignItems: 'center',
+        overflow: 'hidden',
+      }}>
+        {/* Background */}
+        <Box sx={{ position: 'absolute', inset: 0 }}>
+          <Image
+            src="/images/mobile robot + gripper.jpg"
+            alt=""
+            fill
+            style={{ objectFit: 'cover', filter: 'brightness(0.07) saturate(0.3)' }}
+          />
+        </Box>
+        <Box sx={{
+          position: 'absolute', inset: 0,
+          background: `
+            radial-gradient(ellipse at center, rgba(6,182,212,0.04) 0%, transparent 70%),
+            linear-gradient(180deg, #0a0a0f 0%, rgba(10,10,15,0.5) 20%, rgba(10,10,15,0.5) 80%, #0a0a0f 100%)
+          `,
+        }} />
+
+        <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1, textAlign: 'center', py: 8 }}>
+          <ScrollReveal>
+            <Typography
+              variant="h2"
+              component="h2"
+              sx={{
+                fontWeight: 800,
+                mb: 3,
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3.5rem' },
+                lineHeight: 1.2,
+              }}
+            >
+              By 2030, robotics and AI will create over{' '}
+              <Box component="span" className="gradient-text">97 million</Box>
+              {' '}new jobs globally
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                color: '#94a3b8',
+                fontWeight: 400,
+                mb: 5,
+                fontSize: { xs: '1rem', md: '1.3rem' },
+              }}
+            >
+              We&apos;re preparing the next generation for this exciting future
+              through hands-on robotics education.
+            </Typography>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => router.push('/courses')}
+              sx={{
+                px: 5, py: 1.8,
+                fontSize: '1.1rem',
+                background: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
+                boxShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
+                borderRadius: 2,
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #22d3ee, #60a5fa)',
+                  boxShadow: '0 0 40px rgba(6, 182, 212, 0.5)',
+                  transform: 'translateY(-3px)',
+                },
+              }}
+            >
+              Explore Our Programs
+            </Button>
+          </ScrollReveal>
+        </Container>
+      </Box>
+
+      {/* ═══ LEARNING PATH (TIMELINE) ══════════════════════════════════════ */}
+      <Box sx={{ bgcolor: '#0a0a0f', py: { xs: 8, md: 12 } }}>
+        <Container maxWidth="lg">
+          <ScrollReveal>
+            <Typography
+              variant="overline"
+              sx={{
+                color: '#06b6d4',
+                letterSpacing: '0.3em',
+                textAlign: 'center',
+                display: 'block',
+                mb: 2,
+              }}
+            >
+              LEARNING PATH
+            </Typography>
+            <Typography
+              variant="h2"
+              component="h2"
+              sx={{
+                textAlign: 'center',
+                fontWeight: 700,
+                mb: { xs: 6, md: 10 },
+                fontSize: { xs: '2rem', md: '3rem' },
+              }}
+            >
+              Your Journey to{' '}
+              <Box component="span" className="gradient-text">Mastery</Box>
+            </Typography>
+          </ScrollReveal>
+
+          {/* Timeline */}
+          <Box sx={{ position: 'relative', maxWidth: 900, mx: 'auto' }}>
+            {/* Center Line */}
+            <Box sx={{
+              display: { xs: 'none', md: 'block' },
+              position: 'absolute',
+              left: '50%',
+              top: 0,
+              bottom: 0,
+              width: 2,
+              background: 'linear-gradient(180deg, transparent, rgba(6,182,212,0.3), rgba(6,182,212,0.3), transparent)',
+              transform: 'translateX(-50%)',
+            }} />
+
+            {learningPath.map((item, i) => (
+              <ScrollReveal key={item.level} delay={i * 0.15}>
+                <Box sx={{
+                  display: 'flex',
+                  flexDirection: { xs: 'column', md: i % 2 === 0 ? 'row' : 'row-reverse' },
+                  alignItems: { xs: 'stretch', md: 'center' },
+                  mb: { xs: 4, md: 8 },
+                  gap: { xs: 0, md: 4 },
+                }}>
+                  {/* Card */}
+                  <Box sx={{ flex: 1 }}>
+                    <Box
+                      className="glass-card"
+                      sx={{ p: { xs: 3, md: 4 }, position: 'relative' }}
+                    >
+                      {/* Level Badge */}
+                      <Box sx={{
+                        position: 'absolute',
+                        top: -16,
+                        [i % 2 === 0 ? 'right' : 'left']: { xs: 16, md: 24 },
+                        width: 48, height: 48,
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 0 20px rgba(6, 182, 212, 0.3)',
+                      }}>
+                        <Typography sx={{ fontWeight: 800, color: '#0a0a0f', fontSize: '0.9rem' }}>
+                          {item.level}
+                        </Typography>
+                      </Box>
+
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1, mt: 1 }}>
+                        <Box sx={{ color: '#06b6d4' }}>{item.icon}</Box>
+                        <Typography variant="h5" sx={{
+                          fontWeight: 700,
+                          background: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
+                          backgroundClip: 'text',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                        }}>
+                          {item.title}
+                        </Typography>
+                      </Box>
+                      <Typography variant="h6" sx={{ color: 'white', mb: 2, fontWeight: 500 }}>
+                        {item.subtitle}
+                      </Typography>
+
+                      {item.points.map((point) => (
+                        <Box key={point} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+                          <Box sx={{
+                            width: 6, height: 6, borderRadius: '50%',
+                            bgcolor: '#06b6d4', flexShrink: 0,
+                          }} />
+                          <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                            {point}
+                          </Typography>
+                        </Box>
+                      ))}
+
+                      {/* Image */}
+                      <Box sx={{
+                        position: 'relative',
+                        width: '100%',
+                        height: 180,
+                        borderRadius: 2,
+                        overflow: 'hidden',
+                        mt: 3,
+                        border: '1px solid rgba(255,255,255,0.06)',
+                      }}>
+                        <Image
+                          src={item.image}
+                          alt={item.subtitle}
+                          fill
+                          style={{ objectFit: 'cover', filter: 'brightness(0.7)' }}
+                        />
+                      </Box>
+                    </Box>
+                  </Box>
+
+                  {/* Timeline Dot (desktop only) */}
+                  <Box sx={{
+                    display: { xs: 'none', md: 'flex' },
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}>
+                    <Box sx={{
+                      width: 16, height: 16,
+                      borderRadius: '50%',
+                      bgcolor: '#06b6d4',
+                      border: '3px solid #0a0a0f',
+                      boxShadow: '0 0 12px rgba(6, 182, 212, 0.4)',
+                    }} />
+                  </Box>
+
+                  {/* Spacer */}
+                  <Box sx={{ flex: 1, display: { xs: 'none', md: 'block' } }} />
+                </Box>
+              </ScrollReveal>
+            ))}
+          </Box>
+        </Container>
+      </Box>
+
+      {/* ═══ FINAL CTA ═════════════════════════════════════════════════════ */}
+      <Box
+        sx={{
+          py: { xs: 10, md: 16 },
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+        className="spx-particle-bg"
+      >
+        {/* Background */}
+        <Box sx={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="/images/young-robotics-engineers.jpg"
+            alt=""
+            fill
+            style={{ objectFit: 'cover', filter: 'brightness(0.08) saturate(0.3)' }}
+          />
+        </Box>
+        <Box sx={{
+          position: 'absolute', inset: 0, zIndex: 1,
+          background: `
+            radial-gradient(ellipse at 50% 30%, rgba(6,182,212,0.06) 0%, transparent 60%),
+            linear-gradient(180deg, #0d1117 0%, transparent 20%, transparent 80%, #0a0a0f 100%)
+          `,
+        }} />
+
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+          <ScrollReveal>
+            <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 10 } }}>
+              <Typography
+                variant="h1"
+                component="h2"
+                sx={{
+                  fontWeight: 900,
+                  mb: 3,
+                  fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4rem' },
+                  lineHeight: 1.1,
+                  color: 'white',
+                  WebkitTextFillColor: 'unset',
+                  background: 'none',
+                  textShadow: 'none',
+                }}
+              >
+                Ready to Shape the{' '}
+                <Box component="span" className="gradient-text">Future</Box>
+                ?
               </Typography>
-              <Stack 
-                direction={{ xs: 'column', sm: 'row' }} 
-                spacing={2} 
-                sx={{ 
-                  mb: { xs: 6, md: 4 },
-                  width: { xs: '100%', sm: 'auto' }
-                }} 
-                role="group" 
-                aria-label="Primary actions"
+              <Typography
+                variant="h5"
+                sx={{
+                  color: '#94a3b8',
+                  fontWeight: 400,
+                  mb: 5,
+                  maxWidth: 700,
+                  mx: 'auto',
+                  fontSize: { xs: '1rem', md: '1.3rem' },
+                }}
+              >
+                Join thousands of young innovators who are shaping the future of technology
+              </Typography>
+              <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={2}
+                justifyContent="center"
               >
                 <Button
                   variant="contained"
                   size="large"
-                  startIcon={<PlayArrow />}
-                  fullWidth={false}
-                  sx={{ 
-                    px: { xs: 3, sm: 4 }, 
-                    py: { xs: 1.5, sm: 2 },
-                    fontSize: { xs: '1rem', sm: '1.1rem' }
+                  onClick={() => router.push('/sign-up')}
+                  sx={{
+                    px: 6, py: 2,
+                    fontSize: '1.2rem',
+                    background: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
+                    boxShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
+                    borderRadius: 3,
+                    '&:hover': {
+                      background: 'linear-gradient(135deg, #22d3ee, #60a5fa)',
+                      boxShadow: '0 0 40px rgba(6, 182, 212, 0.5)',
+                      transform: 'translateY(-5px)',
+                    },
                   }}
-                  onClick={() => router.push('/sign-in')}
-                  aria-label="Start learning - Sign in"
                 >
-                  Start Learning
+                  Start Your Free Trial
                 </Button>
                 <Button
                   variant="outlined"
                   size="large"
-                  startIcon={<School />}
-                  fullWidth={false}
-                  sx={{ 
-                    px: { xs: 3, sm: 4 }, 
-                    py: { xs: 1.5, sm: 2 },
-                    fontSize: { xs: '1rem', sm: '1.1rem' }
-                  }}
                   onClick={() => router.push('/courses')}
-                  aria-label="Explore courses"
+                  sx={{
+                    px: 6, py: 2,
+                    fontSize: '1.2rem',
+                    color: 'white',
+                    borderColor: 'rgba(255,255,255,0.2)',
+                    borderWidth: 2,
+                    borderRadius: 3,
+                    backdropFilter: 'blur(10px)',
+                    backgroundColor: 'rgba(255,255,255,0.05)',
+                    '&:hover': {
+                      borderColor: 'rgba(255,255,255,0.5)',
+                      backgroundColor: 'rgba(255,255,255,0.1)',
+                      borderWidth: 2,
+                      transform: 'translateY(-5px)',
+                    },
+                  }}
                 >
                   Explore Courses
                 </Button>
               </Stack>
             </Box>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Box sx={{ 
-              position: 'relative', 
-              width: '100%', 
-              height: { xs: '300px', sm: '400px', md: '500px' }, 
-              borderRadius: '16px', 
-              overflow: 'hidden',
-              boxShadow: { xs: '0 4px 12px rgba(0,0,0,0.1)', md: '0 8px 24px rgba(0,0,0,0.15)' }
-            }}>
-              <Image
-                src="/images/building_drones.jpg"
-                alt="Students building drones"
-                fill
-                style={{ objectFit: 'cover' }}
-                priority
-              />
-            </Box>
-          </Grid>
-        </Grid>
+          </ScrollReveal>
 
-        {/* 3D Robotic Arm Animation */}
-        <Box sx={{ 
-          mt: { xs: 4, sm: 6, md: 8 }, 
-          width: '100%', 
-          maxWidth: { xs: '100%', sm: 900 }, 
-          mx: 'auto', 
-          borderRadius: { xs: 0, sm: 2 }, 
-          overflow: 'hidden', 
-          boxShadow: { xs: 'none', sm: 3 }, 
-          background: 'linear-gradient(120deg, #e0e7ef 60%, #ede9fe 100%)',
-          height: { xs: '300px', sm: '400px', md: 'auto' }
-        }}>
-          <RoboticArm3D />
-        </Box>
-      </Container>
-
-      {/* Mobile Navigation Dots */}
-      <Box 
-        sx={{ 
-          display: { xs: 'flex', md: 'none' }, 
-          justifyContent: 'center', 
-          gap: 1, 
-          py: 2,
-          position: 'fixed',
-          bottom: 16,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 10,
-          backgroundColor: 'rgba(255,255,255,0.9)',
-          backdropFilter: 'blur(8px)',
-          borderRadius: 'full',
-          px: 3,
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-        }}
-      >
-        {[1, 2, 3, 4].map((dot) => (
-          <Box
-            key={dot}
-            sx={{
-              width: 8,
-              height: 8,
-              borderRadius: '50%',
-              backgroundColor: dot === 1 ? 'primary.main' : 'grey.300',
-              transition: 'all 0.3s ease'
-            }}
-          />
-        ))}
-      </Box>
-
-      {/* Image Gallery Section */}
-      <Box sx={{ bgcolor: 'grey.50', py: { xs: 6, md: 10 } }}>
-        <Container maxWidth="lg">
-          <Typography 
-            variant="h3" 
-            component="h2" 
-            textAlign="center" 
-            gutterBottom 
-            fontWeight="bold"
-            sx={{
-              fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-              mb: { xs: 2, md: 3 }
-            }}
-          >
-            Inspiring Young Minds Worldwide
-          </Typography>
-          <Typography 
-            variant="h6" 
-            color="text.secondary" 
-            textAlign="center" 
-            sx={{ 
-              mb: { xs: 4, md: 6 }, 
-              maxWidth: 800, 
-              mx: 'auto',
-              px: { xs: 2, sm: 0 },
-              fontSize: { xs: '1rem', sm: '1.25rem' }
-            }}
-          >
-            From Mountain View to Nairobi, we're building the next generation of innovators through hands-on robotics education.
-          </Typography>
-          <Grid container spacing={{ xs: 2, md: 4 }}>
-            <Grid item xs={12} sm={6} md={4}>
-              <Paper 
-                elevation={3} 
-                sx={{ 
-                  p: 0, 
-                  height: { xs: '250px', sm: '300px', md: '400px' }, 
-                  position: 'relative', 
-                  overflow: 'hidden', 
-                  borderRadius: { xs: 1, sm: 2 }, 
-                  transition: 'all 0.3s ease-in-out',
-                  transform: 'translateZ(0)', // Performance optimization for mobile
-                  WebkitFontSmoothing: 'antialiased',
-                  cursor: 'pointer',
-                  '&:hover': { 
-                    transform: { xs: 'none', sm: 'scale(1.02)' },
-                    boxShadow: { xs: '0 4px 12px rgba(0,0,0,0.1)', sm: '0 8px 24px rgba(0,0,0,0.15)' }
-                  },
-                  '&:active': {
-                    transform: { xs: 'scale(0.98)', sm: 'scale(1.02)' }
-                  }
-                }}
-                role="img"
-                aria-label="Mountain view robotics classes"
-              >
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%)',
-                    height: '50%',
-                    zIndex: 1,
-                    display: { xs: 'block', md: 'none' }
-                  }}
-                />
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    position: 'absolute',
-                    bottom: 16,
-                    left: 16,
-                    color: 'white',
-                    zIndex: 2,
-                    fontWeight: 'medium',
-                    display: { xs: 'block', md: 'none' }
-                  }}
-                >
-                  Mountain View Campus
-                </Typography>
-                <Image
-                  src="/images/Mountain-view-classes-4.jpg"
-                  alt="Mountain view classes"
-                  fill
-                  sizes="(max-width: 600px) 100vw, (max-width: 960px) 50vw, 33vw"
-                  style={{ objectFit: 'cover' }}
-                  loading="eager"
-                  quality={90}
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Paper 
-                elevation={3} 
-                sx={{ 
-                  p: 0, 
-                  height: { xs: '250px', sm: '300px', md: '400px' }, 
-                  position: 'relative', 
-                  overflow: 'hidden', 
-                  borderRadius: { xs: 1, sm: 2 }, 
-                  transition: 'all 0.3s ease-in-out',
-                  transform: 'translateZ(0)',
-                  WebkitFontSmoothing: 'antialiased',
-                  cursor: 'pointer',
-                  '&:hover': { 
-                    transform: { xs: 'none', sm: 'scale(1.02)' },
-                    boxShadow: { xs: '0 4px 12px rgba(0,0,0,0.1)', sm: '0 8px 24px rgba(0,0,0,0.15)' }
-                  },
-                  '&:active': {
-                    transform: { xs: 'scale(0.98)', sm: 'scale(1.02)' }
-                  }
-                }}
-                role="img"
-                aria-label="Robotics classes in Nairobi"
-              >
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%)',
-                    height: '50%',
-                    zIndex: 1,
-                    display: { xs: 'block', md: 'none' }
-                  }}
-                />
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    position: 'absolute',
-                    bottom: 16,
-                    left: 16,
-                    color: 'white',
-                    zIndex: 2,
-                    fontWeight: 'medium',
-                    display: { xs: 'block', md: 'none' }
-                  }}
-                >
-                  Nairobi Campus
-                </Typography>
-                <Image
-                  src="/images/Nairobi-classes-7.jpg"
-                  alt="Nairobi classes"
-                  fill
-                  sizes="(max-width: 600px) 100vw, (max-width: 960px) 50vw, 33vw"
-                  style={{ objectFit: 'cover' }}
-                  loading="eager"
-                  quality={90}
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Paper 
-                elevation={3} 
-                sx={{ 
-                  p: 0, 
-                  height: { xs: '250px', sm: '300px', md: '400px' }, 
-                  position: 'relative', 
-                  overflow: 'hidden', 
-                  borderRadius: { xs: 1, sm: 2 }, 
-                  transition: 'all 0.3s ease-in-out',
-                  transform: 'translateZ(0)',
-                  WebkitFontSmoothing: 'antialiased',
-                  cursor: 'pointer',
-                  '&:hover': { 
-                    transform: { xs: 'none', sm: 'scale(1.02)' },
-                    boxShadow: { xs: '0 4px 12px rgba(0,0,0,0.1)', sm: '0 8px 24px rgba(0,0,0,0.15)' }
-                  },
-                  '&:active': {
-                    transform: { xs: 'scale(0.98)', sm: 'scale(1.02)' }
-                  }
-                }}
-                role="img"
-                aria-label="Robotics classes in Palo Alto"
-              >
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%)',
-                    height: '50%',
-                    zIndex: 1,
-                    display: { xs: 'block', md: 'none' }
-                  }}
-                />
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    position: 'absolute',
-                    bottom: 16,
-                    left: 16,
-                    color: 'white',
-                    zIndex: 2,
-                    fontWeight: 'medium',
-                    display: { xs: 'block', md: 'none' }
-                  }}
-                >
-                  Palo Alto Campus
-                </Typography>
-                <Image
-                  src="/images/Palo-alto-classes-5.jpg"
-                  alt="Palo Alto classes"
-                  fill
-                  sizes="(max-width: 600px) 100vw, (max-width: 960px) 50vw, 33vw"
-                  style={{ objectFit: 'cover' }}
-                  loading="eager"
-                  quality={90}
-                />
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-
-      {/* Features Section */}
-      <Box sx={{ py: 10 }}>
-        <Features />
-      </Box>
-
-      {/* Future Innovation Section */}
-      <Box sx={{ bgcolor: 'grey.50', py: 10 }}>
-        <Container maxWidth="lg">
-          <Grid container spacing={6} alignItems="center">
-            <Grid item xs={12} md={6}>
-              <Box sx={{ position: 'relative', width: '100%', height: '500px', borderRadius: '16px', overflow: 'hidden', boxShadow: 3 }}>
-                <Image
-                  src="/images/mobile robot + gripper.jpg"
-                  alt="Mobile robot with gripper"
-                  fill
-                  style={{ objectFit: 'cover' }}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Box>
-                <Typography
-                  variant="h2"
-                  component="h2"
-                  gutterBottom
-                  sx={{
-                    fontWeight: 'bold',
-                    background: 'linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%)',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    mb: 3
-                  }}
-                >
-                  Build the Future
-                </Typography>
-                <Typography variant="h5" paragraph sx={{ mb: 4 }}>
-                  By 2030, robotics and AI will create over 97 million new jobs globally. We're preparing the next generation for this exciting future.
-                </Typography>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} sm={6}>
-                    <Paper 
-                      elevation={0}
-                      sx={{ 
-                        p: 3, 
-                        bgcolor: 'background.paper',
-                        borderRadius: 2,
-                        border: '2px solid',
-                        borderColor: 'primary.light',
-                        height: '100%'
-                      }}
-                    >
-                      <Typography variant="h4" gutterBottom color="primary" sx={{ fontWeight: 'bold' }}>
-                        100%
-                      </Typography>
-                      <Typography variant="body1">
-                        of our students complete their first robotics project within 2 weeks
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Paper 
-                      elevation={0}
-                      sx={{ 
-                        p: 3, 
-                        bgcolor: 'background.paper',
-                        borderRadius: 2,
-                        border: '2px solid',
-                        borderColor: 'primary.light',
-                        height: '100%'
-                      }}
-                    >
-                      <Typography variant="h4" gutterBottom color="primary" sx={{ fontWeight: 'bold' }}>
-                        50+
-                      </Typography>
-                      <Typography variant="body1">
-                        hands-on projects from basic robotics to advanced AI integration
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                </Grid>
-                <Button
-                  variant="contained"
-                  size="large"
-                  sx={{ 
-                    mt: 4,
-                    px: 4,
-                    py: 1.5,
-                    borderRadius: 2,
-                    textTransform: 'none',
-                    fontSize: '1.1rem'
-                  }}
-                  onClick={() => router.push('/courses')}
-                >
-                  Explore Our Programs
-                </Button>
-              </Box>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-
-      {/* Learning Path Section */}
-      <Container maxWidth="lg" sx={{ py: 10 }}>
-        <Typography
-          variant="h2"
-          component="h2"
-          textAlign="center"
-          gutterBottom
-          sx={{ fontWeight: 'bold', mb: 6 }}
-        >
-          Your Journey to Mastery
-        </Typography>
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
-            <Paper
-              elevation={3}
-              sx={{
-                p: 4,
-                height: '100%',
-                borderRadius: 4,
-                transition: 'transform 0.3s ease-in-out',
-                '&:hover': { transform: 'translateY(-8px)' }
-              }}
-            >
-              <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: 'bold',
-                    color: 'primary.main'
-                  }}
-                >
-                  Beginner
-                </Typography>
-              </Box>
-              <Typography variant="h6" gutterBottom>
-                Foundation in Robotics
-              </Typography>
-              <Typography variant="body1" color="text.secondary" paragraph>
-                • Basic robot construction
-              </Typography>
-              <Typography variant="body1" color="text.secondary" paragraph>
-                • Introduction to sensors
-              </Typography>
-              <Typography variant="body1" color="text.secondary" paragraph>
-                • Simple programming concepts
-              </Typography>
-              <Box sx={{ position: 'relative', width: '100%', height: '200px', borderRadius: 2, overflow: 'hidden', mt: 3 }}>
-                <Image
-                  src="/images/Kids sorting kit components.jpg"
-                  alt="Kids learning robotics basics"
-                  fill
-                  style={{ objectFit: 'cover' }}
-                />
-              </Box>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Paper
-              elevation={3}
-              sx={{
-                p: 4,
-                height: '100%',
-                borderRadius: 4,
-                transition: 'transform 0.3s ease-in-out',
-                '&:hover': { transform: 'translateY(-8px)' }
-              }}
-            >
-              <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: 'bold',
-                    color: 'primary.main'
-                  }}
-                >
-                  Intermediate
-                </Typography>
-              </Box>
-              <Typography variant="h6" gutterBottom>
-                Advanced Mechanisms
-              </Typography>
-              <Typography variant="body1" color="text.secondary" paragraph>
-                • Complex robot design
-              </Typography>
-              <Typography variant="body1" color="text.secondary" paragraph>
-                • Sensor fusion & control
-              </Typography>
-              <Typography variant="body1" color="text.secondary" paragraph>
-                • Applied mathematics
-              </Typography>
-              <Box sx={{ position: 'relative', width: '100%', height: '200px', borderRadius: 2, overflow: 'hidden', mt: 3 }}>
-                <Image
-                  src="/images/kids_designing_simple_machines.jpg"
-                  alt="Students working on advanced projects"
-                  fill
-                  style={{ objectFit: 'cover' }}
-                />
-              </Box>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Paper
-              elevation={3}
-              sx={{
-                p: 4,
-                height: '100%',
-                borderRadius: 4,
-                transition: 'transform 0.3s ease-in-out',
-                '&:hover': { transform: 'translateY(-8px)' }
-              }}
-            >
-              <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: 'bold',
-                    color: 'primary.main'
-                  }}
-                >
-                  Advanced
-                </Typography>
-              </Box>
-              <Typography variant="h6" gutterBottom>
-                AI & Innovation
-              </Typography>
-              <Typography variant="body1" color="text.secondary" paragraph>
-                • AI integration
-              </Typography>
-              <Typography variant="body1" color="text.secondary" paragraph>
-                • Computer vision
-              </Typography>
-              <Typography variant="body1" color="text.secondary" paragraph>
-                • Real-world applications
-              </Typography>
-              <Box sx={{ position: 'relative', width: '100%', height: '200px', borderRadius: 2, overflow: 'hidden', mt: 3 }}>
-                <Image
-                  src="/images/building_drones.jpg"
-                  alt="Advanced students building drones"
-                  fill
-                  style={{ objectFit: 'cover' }}
-                />
-              </Box>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Container>
-
-      {/* Join the Innovation Section */}
-      <Box 
-        sx={{ 
-          py: 15,
-          position: 'relative',
-          overflow: 'hidden',
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundImage: 'url("/images/young-robotics-engineers.jpg")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'brightness(0.2)',
-            zIndex: 0,
-            transition: 'transform 20s ease',
-            transform: 'scale(1.1)',
-            animation: 'slowZoom 20s infinite alternate'
-          },
-          '@keyframes slowZoom': {
-            '0%': {
-              transform: 'scale(1)',
-            },
-            '100%': {
-              transform: 'scale(1.1)',
-            },
-          }
-        }}
-      >
-        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-          <Box sx={{ textAlign: 'center', color: 'white' }}>
-            <Typography 
-              variant="h1" 
-              component="h2" 
-              gutterBottom 
-              sx={{ 
-                fontWeight: 900,
-                textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                background: 'linear-gradient(135deg, #fff 0%, #e0e7ff 100%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                mb: { xs: 2, md: 3 },
-                fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4rem' },
-                lineHeight: { xs: 1.2, md: 1.1 }
-              }}
-            >
-              Ready to Start Your Journey?
-            </Typography>
-            <Typography 
-              variant="h4" 
-              sx={{ 
-                mb: { xs: 4, md: 6 },
-                maxWidth: 800,
-                mx: 'auto',
-                opacity: 0.9,
-                fontWeight: 'medium',
-                textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                fontSize: { xs: '1.25rem', sm: '1.5rem', md: '2rem' },
-                px: { xs: 2, sm: 4 }
-              }}
-            >
-              Join thousands of young innovators who are shaping the future of technology
-            </Typography>
-            <Stack 
-              direction={{ xs: 'column', sm: 'row' }} 
-              spacing={{ xs: 2, sm: 3 }} 
-              justifyContent="center"
-              sx={{ 
-                mb: { xs: 6, md: 10 },
-                px: { xs: 2, sm: 0 }
-              }}
-            >
-              <Button
-                variant="contained"
-                size="large"
-                fullWidth={false}
-                sx={{
-                  px: { xs: 4, sm: 6, md: 8 },
-                  py: { xs: 2, sm: 2.5, md: 3 },
-                  fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.4rem' },
-                  borderRadius: 3,
-                  bgcolor: 'primary.main',
-                  boxShadow: '0 4px 14px 0 rgba(37, 99, 235, 0.4)',
-                  whiteSpace: 'nowrap',
-                  '&:hover': {
-                    bgcolor: 'primary.dark',
-                    transform: 'translateY(-5px)',
-                    boxShadow: '0 6px 20px 0 rgba(37, 99, 235, 0.6)',
-                    transition: 'all 0.3s ease'
-                  }
-                }}
-                onClick={() => router.push('/sign-up')}
-              >
-                Start Your Free Trial
-              </Button>
-              <Button
-                variant="outlined"
-                size="large"
-                fullWidth={false}
-                sx={{
-                  px: { xs: 4, sm: 6, md: 8 },
-                  py: { xs: 2, sm: 2.5, md: 3 },
-                  fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.4rem' },
-                  borderRadius: 3,
-                  color: 'white',
-                  borderColor: 'rgba(255,255,255,0.5)',
-                  borderWidth: '2px',
-                  backdropFilter: 'blur(10px)',
-                  backgroundColor: 'rgba(255,255,255,0.1)',
-                  whiteSpace: 'nowrap',
-                  '&:hover': {
-                    borderColor: 'white',
-                    bgcolor: 'rgba(255,255,255,0.2)',
-                    transform: 'translateY(-5px)',
-                    transition: 'all 0.3s ease'
-                  }
-                }}
-                onClick={() => router.push('/courses')}
-              >
-                Explore Courses
-              </Button>
-            </Stack>
-            <Grid container spacing={4} justifyContent="center">
-              <Grid item xs={12} sm={4}>
-                <Paper 
-                  sx={{ 
-                    p: 4, 
-                    bgcolor: 'rgba(255,255,255,0.98)',
-                    borderRadius: 4,
-                    backdropFilter: 'blur(20px)',
-                    transition: 'all 0.3s ease',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    '&:hover': {
-                      transform: 'translateY(-8px)',
-                      boxShadow: '0 12px 24px rgba(0,0,0,0.2)'
-                    }
-                  }}
-                >
-                  <Box sx={{ mb: 2, color: 'primary.main', fontSize: '2.5rem' }}>🎯</Box>
-                  <Typography variant="h5" gutterBottom color="primary.main" fontWeight="bold">
-                    Flexible Learning
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary" textAlign="center">
-                    Learn at your own pace with personalized learning paths and both online and in-person options
-                  </Typography>
-                </Paper>
+          {/* Feature Cards */}
+          <Grid container spacing={3} justifyContent="center">
+            {[
+              { icon: <TrackChanges sx={{ fontSize: 36 }} />, title: 'Flexible Learning', desc: 'Learn at your own pace with personalized learning paths and both online and in-person options' },
+              { icon: <PersonSearch sx={{ fontSize: 36 }} />, title: 'Expert Support', desc: 'Get 1-on-1 guidance from experienced robotics engineers and dedicated mentors' },
+              { icon: <RocketLaunch sx={{ fontSize: 36 }} />, title: 'Project Portfolio', desc: 'Build an impressive portfolio of real-world robotics projects and achievements' },
+            ].map((card, i) => (
+              <Grid item xs={12} sm={4} key={card.title}>
+                <ScrollReveal delay={i * 0.15}>
+                  <Box
+                    className="glass-card"
+                    sx={{
+                      p: 4,
+                      textAlign: 'center',
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Box sx={{
+                      color: '#06b6d4',
+                      mb: 2,
+                      width: 72, height: 72,
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      background: 'rgba(6, 182, 212, 0.08)',
+                      border: '1px solid rgba(6, 182, 212, 0.15)',
+                    }}>
+                      {card.icon}
+                    </Box>
+                    <Typography variant="h5" sx={{ fontWeight: 700, color: '#06b6d4', mb: 1.5 }}>
+                      {card.title}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: '#94a3b8', lineHeight: 1.6 }}>
+                      {card.desc}
+                    </Typography>
+                  </Box>
+                </ScrollReveal>
               </Grid>
-              <Grid item xs={12} sm={4}>
-                <Paper 
-                  sx={{ 
-                    p: 4, 
-                    bgcolor: 'rgba(255,255,255,0.98)',
-                    borderRadius: 4,
-                    backdropFilter: 'blur(20px)',
-                    transition: 'all 0.3s ease',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    '&:hover': {
-                      transform: 'translateY(-8px)',
-                      boxShadow: '0 12px 24px rgba(0,0,0,0.2)'
-                    }
-                  }}
-                >
-                  <Box sx={{ mb: 2, color: 'primary.main', fontSize: '2.5rem' }}>👨‍🏫</Box>
-                  <Typography variant="h5" gutterBottom color="primary.main" fontWeight="bold">
-                    Expert Support
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary" textAlign="center">
-                    Get 1-on-1 guidance from experienced robotics engineers and dedicated mentors
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Paper 
-                  sx={{ 
-                    p: 4, 
-                    bgcolor: 'rgba(255,255,255,0.98)',
-                    borderRadius: 4,
-                    backdropFilter: 'blur(20px)',
-                    transition: 'all 0.3s ease',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    '&:hover': {
-                      transform: 'translateY(-8px)',
-                      boxShadow: '0 12px 24px rgba(0,0,0,0.2)'
-                    }
-                  }}
-                >
-                  <Box sx={{ mb: 2, color: 'primary.main', fontSize: '2.5rem' }}>🚀</Box>
-                  <Typography variant="h5" gutterBottom color="primary.main" fontWeight="bold">
-                    Project Portfolio
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary" textAlign="center">
-                    Build an impressive portfolio of real-world robotics projects and achievements
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Box>
+            ))}
+          </Grid>
         </Container>
       </Box>
     </>

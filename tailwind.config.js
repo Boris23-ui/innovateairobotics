@@ -106,6 +106,14 @@ module.exports = {
           900: '#7c2d12',
         },
       },
+      spx: {
+          dark: '#0a0a0f',
+          darker: '#050508',
+          surface: '#111827',
+          accent: '#06b6d4',
+          'accent-blue': '#3b82f6',
+          'accent-purple': '#8b5cf6',
+        },
       borderRadius: {
         DEFAULT: '12px',
         'sm': '8px',
