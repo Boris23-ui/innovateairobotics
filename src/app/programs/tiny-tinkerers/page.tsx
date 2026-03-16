@@ -1,48 +1,81 @@
 'use client';
 
-import { Box, Grid, Typography } from '@mui/material';
 import { ProgramLayout } from '@/components/programs/ProgramLayout';
-import Image from 'next/image';
 
 export default function TinyTinkerersPage() {
   return (
     <ProgramLayout
       title="Tiny Tinkerers"
+      subtitle="Where little hands build big dreams — robotics for our youngest learners"
       ageRange="5 & Under"
-      description="Welcome to the magical AI Robotics class for our youngest learners, aged 5 and under! Together, we'll discover the wonders of robots and how they can come to life with Artificial Intelligence (AI). Through interactive play and colorful activities, we'll explore how robots think, move, and communicate. Get ready to meet our adorable robot friends, watch them dance, and even teach them some tricks! It's a fun-filled and age-appropriate introduction to the amazing world of AI and robotics, where imagination knows no limits. Let's have a blast learning and playing with our robot pals!"
-    >
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 4 }}>
-        <Box sx={{ position: 'relative', height: 400, borderRadius: 4, overflow: 'hidden' }}>
-          <Image
-            src="/images/Kids sorting kit components.jpg"
-            alt="Tiny Tinkerers sorting and learning with robotics components"
-            fill
-            style={{ objectFit: 'cover' }}
-          />
-        </Box>
-        <Box sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 4 }}>
-          <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
-            What You'll Learn
-          </Typography>
-          <Box component="ul" sx={{ pl: 2 }}>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Basic robot movements and sounds
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Simple cause and effect relationships
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Introduction to colors and shapes through robotics
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Basic problem-solving through play
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Teamwork and social interaction
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-    </ProgramLayout>
+      ageBadge="Ages 5 & Under"
+      accentColor="rgb(244, 114, 182)"
+      accentGradient="linear-gradient(135deg, #f472b6, #ec4899)"
+      heroGradient="linear-gradient(135deg, #0f172a 0%, #4a1942 100%)"
+      description="A playful, age-appropriate introduction to robots, coding, and STEM thinking."
+      introTitle="Meet Your Robot Friends"
+      introText={[
+        "Tiny Tinkerers is a magical introduction to the world of robots for children aged 5 and under. Through interactive play and colorful activities, little learners discover how robots think, move, and communicate.",
+        "Our specially designed curriculum uses play-based learning to spark curiosity and build early STEM foundations. Children meet adorable robot friends, watch them dance, and even teach them tricks!",
+      ]}
+      introHighlights={[
+        "Play-based learning with age-appropriate robots",
+        "Introduction to cause-and-effect thinking",
+        "Color and shape recognition through robotics",
+        "Social skills and teamwork activities",
+      ]}
+      introImage="/images/Kids sorting kit components.jpg"
+      curriculum={[
+        {
+          icon: 'smarttoy',
+          title: 'Robot Play',
+          items: [
+            'Meet and interact with friendly robots',
+            'Basic robot movements and sounds',
+            'Simple cause and effect relationships',
+            'Storytelling with robot characters',
+          ],
+        },
+        {
+          icon: 'science',
+          title: 'Early STEM',
+          items: [
+            'Colors and shapes through robotics',
+            'Counting and patterns with robots',
+            'Simple problem-solving through play',
+            'Exploring sensors and buttons',
+          ],
+        },
+        {
+          icon: 'person',
+          title: 'Social Skills',
+          items: [
+            'Taking turns and sharing robots',
+            'Working together on robot tasks',
+            'Expressing ideas and creativity',
+            'Building confidence through play',
+          ],
+        },
+      ]}
+      sampleProjects={[
+        'Robot dance party',
+        'Color sorting challenge',
+        'Robot obstacle course',
+        'Sound-making robot',
+        'Draw with robots',
+        'Robot storytelling',
+      ]}
+      programDetails={[
+        { label: 'Age Group', value: 'Ages 3-5' },
+        { label: 'Session Length', value: '45 minutes' },
+        { label: 'Class Size', value: 'Max 8 students' },
+        { label: 'Format', value: 'In-Person only' },
+        { label: 'Frequency', value: 'Weekly sessions' },
+        { label: 'Prerequisites', value: 'None required' },
+      ]}
+      detailsImage="/images/kids getting ready for class.jpg"
+      ctaTitle="Start Their STEM Journey Early"
+      ctaSubtitle="The best time to spark a love for learning is right now. Give your child the gift of curiosity."
+    />
   );
-} 
+}

@@ -1,48 +1,81 @@
 'use client';
 
-import { Box, Typography } from '@mui/material';
 import { ProgramLayout } from '@/components/programs/ProgramLayout';
-import Image from 'next/image';
 
 export default function TechTitansPage() {
   return (
     <ProgramLayout
       title="Tech Titans"
+      subtitle="Design, build, and compete — where innovation meets engineering"
       ageRange="10-12 years old"
-      description="Welcome to the thrilling AI Robotics class for 9-12-year-olds! Get ready to dive into the cutting-edge world of Artificial Intelligence and Robotics. In this hands-on adventure, you will design, build, and program your own intelligent robots. Discover how AI helps them make smart decisions, solve challenges, and interact with the world around them. Through engaging projects and fun competitions, you will learn coding, problem-solving, and teamwork skills. Join us to unleash your creativity, explore the future of technology, and become a skilled AI Robotics enthusiast! Let's embark on this exciting journey of innovation and imagination together!"
-    >
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 4 }}>
-        <Box sx={{ position: 'relative', height: 400, borderRadius: 4, overflow: 'hidden' }}>
-          <Image
-            src="/images/Mountain-view-classes-8.jpg"
-            alt="Tech Titans working on advanced robotics projects"
-            fill
-            style={{ objectFit: 'cover' }}
-          />
-        </Box>
-        <Box sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 4 }}>
-          <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
-            What You'll Learn
-          </Typography>
-          <Box component="ul" sx={{ pl: 2 }}>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Advanced programming and robotics concepts
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              AI decision-making and problem-solving
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Robot design and construction
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Competition preparation and strategy
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Project management and presentation skills
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-    </ProgramLayout>
+      ageBadge="Ages 10-12"
+      accentColor="rgb(59, 130, 246)"
+      accentGradient="linear-gradient(135deg, #3b82f6, #2563eb)"
+      heroGradient="linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)"
+      description="Advanced robotics and coding for students ready to take their skills to the next level."
+      introTitle="Engineer Your Future"
+      introText={[
+        "Tech Titans is designed for 10-12 year olds ready to dive into the cutting-edge world of AI and Robotics. Students design, build, and program intelligent robots through hands-on projects and exciting competitions.",
+        "Through engaging challenges and real-world problem-solving, students learn coding, mechanical design, and teamwork skills that prepare them for the future of technology.",
+      ]}
+      introHighlights={[
+        "Python and text-based programming",
+        "Competition-ready robot design",
+        "Advanced sensor integration and control",
+        "Team-based engineering challenges",
+      ]}
+      introImage="/images/Mountain-view-classes-8.jpg"
+      curriculum={[
+        {
+          icon: 'code',
+          title: 'Programming',
+          items: [
+            'Python fundamentals and syntax',
+            'Algorithm design and optimization',
+            'Sensor-driven decision making',
+            'Autonomous navigation programming',
+          ],
+        },
+        {
+          icon: 'build',
+          title: 'Advanced Building',
+          items: [
+            'Complex mechanical assemblies',
+            'Custom robot chassis design',
+            'Multi-sensor integration',
+            'Competition robot optimization',
+          ],
+        },
+        {
+          icon: 'science',
+          title: 'Engineering Skills',
+          items: [
+            'Design thinking methodology',
+            'Iterative prototyping process',
+            'Data collection and analysis',
+            'Presentation and documentation',
+          ],
+        },
+      ]}
+      sampleProjects={[
+        'Sumo wrestling bot',
+        'Autonomous delivery robot',
+        'Robotic arm gripper',
+        'Line-following racer',
+        'Sensor fusion challenge',
+        'Team competition bot',
+      ]}
+      programDetails={[
+        { label: 'Age Group', value: 'Ages 10-12' },
+        { label: 'Session Length', value: '90 minutes' },
+        { label: 'Class Size', value: 'Max 12 students' },
+        { label: 'Format', value: 'In-Person & Online' },
+        { label: 'Frequency', value: 'Weekly sessions' },
+        { label: 'Prerequisites', value: 'Basic coding helpful' },
+      ]}
+      detailsImage="/images/kids_designing_simple_machines.jpg"
+      ctaTitle="Ready to Build Something Amazing?"
+      ctaSubtitle="Join the next generation of engineers, innovators, and problem-solvers."
+    />
   );
-} 
+}

@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, useMemo } from 'react';
-import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider as MuiThemeProvider, createTheme, type Shadows } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import baseTheme, { tokens } from '@/styles/theme';
 import { deepmerge } from '@mui/utils';
@@ -9,12 +9,12 @@ import { alpha } from '@mui/material';
 
 // Define semantic color meanings
 const getSemanticColors = (mode: 'light' | 'dark') => ({
-  // Surface colors
+  // Surface colors — dark mode uses SpaceX near-black palette
   surface: {
-    default: mode === 'light' ? tokens.grey[50] : tokens.grey[900],
-    paper: mode === 'light' ? '#ffffff' : tokens.grey[800],
-    raised: mode === 'light' ? '#ffffff' : tokens.grey[700],
-    sunken: mode === 'light' ? tokens.grey[100] : tokens.grey[800],
+    default: mode === 'light' ? tokens.grey[50] : '#0a0a0f',
+    paper: mode === 'light' ? '#ffffff' : '#111827',
+    raised: mode === 'light' ? '#ffffff' : '#1e293b',
+    sunken: mode === 'light' ? tokens.grey[100] : '#0d1117',
   },
   // Border colors
   border: {
@@ -64,18 +64,15 @@ const ThemeContext = createContext<ThemeContextType>({
 export const useTheme = () => useContext(ThemeContext);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const [mode, setMode] = useState<'light' | 'dark'>('dark');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const savedMode = localStorage.getItem('theme-mode');
 
-    let initialMode: 'light' | 'dark' = 'light';
+    let initialMode: 'light' | 'dark' = 'dark';
     if (savedMode === 'dark' || savedMode === 'light') {
       initialMode = savedMode;
-    } else {
-      initialMode = prefersDarkMode ? 'dark' : 'light';
     }
     setMode(initialMode);
 
@@ -112,38 +109,27 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       ? 'rgba(17, 24, 39, 0.1)'
       : 'rgba(0, 0, 0, 0.3)';
 
-    const shadows = mode === 'light' ? [
-      'none',
-      `0px 1px 2px ${shadowColor}`,
-      `0px 2px 4px ${shadowColor}`,
-      `0px 4px 8px ${shadowColor}`,
-      `0px 6px 12px ${shadowColor}`,
-      `0px 8px 16px ${shadowColor}`,
-      `0px 12px 24px ${shadowColor}`,
-      `0px 16px 32px ${shadowColor}`,
-      `0px 20px 40px ${shadowColor}`,
-      // ... more shadow definitions
-    ] : [
-      'none',
-      `0px 1px 3px ${shadowColor}`,
-      `0px 2px 6px ${shadowColor}`,
-      `0px 4px 12px ${shadowColor}`,
-      `0px 6px 16px ${shadowColor}`,
-      `0px 8px 20px ${shadowColor}`,
-      `0px 12px 28px ${shadowColor}`,
-      `0px 16px 36px ${shadowColor}`,
-      `0px 20px 44px ${shadowColor}`,
-      // ... more shadow definitions
-    ];
+    // MUI requires exactly 25 shadow entries (indices 0-24) typed as Shadows tuple
+    const makeShadows = (base: string): Shadows => {
+      const s: string[] = ['none'];
+      for (let i = 1; i <= 24; i++) {
+        const y = Math.round(i * 0.8);
+        const blur = i * 2;
+        s.push(`0px ${y}px ${blur}px ${base}`);
+      }
+      return s as unknown as Shadows;
+    };
+    const shadows = makeShadows(shadowColor);
 
-    return createTheme(deepmerge(baseTheme, {
+    // Pass shadows separately to createTheme to avoid deepmerge corrupting the tuple
+    const merged = deepmerge(baseTheme, {
       palette: {
         mode,
         primary: {
-          light: mode === 'light' ? tokens.primary[400] : tokens.primary[300],
-          main: mode === 'light' ? tokens.primary[500] : tokens.primary[400],
-          dark: mode === 'light' ? tokens.primary[600] : tokens.primary[500],
-          contrastText: mode === 'light' ? '#ffffff' : tokens.grey[900],
+          light: mode === 'light' ? tokens.primary[400] : '#22d3ee',
+          main: mode === 'light' ? tokens.primary[500] : '#06b6d4',
+          dark: mode === 'light' ? tokens.primary[600] : '#0891b2',
+          contrastText: mode === 'light' ? '#ffffff' : '#0a0a0f',
         },
         secondary: {
           light: mode === 'light' ? tokens.secondary[400] : tokens.secondary[300],
@@ -333,7 +319,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
             : tokens.primary[400],
         },
       },
-      shadows,
       shape: {
         borderRadius: 12,
       },
@@ -397,14 +382,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
               backgroundImage: 'none',
               backgroundColor: mode === 'light'
                 ? alpha('#ffffff', 0.9)
-                : alpha(tokens.grey[800], 0.9),
-              backdropFilter: 'blur(8px)',
-              borderBottom: `1px solid ${semanticColors.border.light}`,
+                : alpha('#0a0a0f', 0.85),
+              backdropFilter: 'blur(20px)',
+              borderBottom: mode === 'light'
+                ? `1px solid ${semanticColors.border.light}`
+                : '1px solid rgba(255,255,255,0.06)',
             },
           },
         },
       },
-    }));
+    });
+    return createTheme({ ...merged, shadows });
   }, [mode]);
 
   if (!mounted) {

@@ -62,9 +62,9 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        bgcolor: 'background.paper',
+        bgcolor: '#050508',
         py: 6,
-        borderTop: `1px solid ${theme.palette.divider}`,
+        borderTop: '1px solid rgba(255,255,255,0.06)',
       }}
     >
       <Container maxWidth="lg">
@@ -137,7 +137,7 @@ export default function Footer() {
           sx={{
             mt: 5,
             pt: 3,
-            borderTop: `1px solid ${theme.palette.divider}`,
+            borderTop: '1px solid rgba(255,255,255,0.06)',
             display: 'flex',
             flexDirection: { xs: 'column', sm: 'row' },
             justifyContent: { xs: 'center', sm: 'space-between' },
@@ -159,7 +159,11 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 color="inherit"
                 size="small"
-                sx={{ mx: 0.5 }}
+                sx={{
+                  mx: 0.5,
+                  transition: 'color 0.3s ease',
+                  '&:hover': { color: '#06b6d4' },
+                }}
               >
                 {social.icon}
               </IconButton>

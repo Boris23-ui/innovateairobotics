@@ -53,7 +53,7 @@ export default function RootLayout({
           <ThemeProvider>
             <UserProvider>
               <Navigation />
-              <main style={{ minHeight: 'calc(100vh - 64px - 64px)' }}>{children}</main>
+              <main style={{ minHeight: 'calc(100vh - 64px)', paddingTop: '56px' }}>{children}</main>
               <Footer />
               <Toaster position="top-right" />
             </UserProvider>

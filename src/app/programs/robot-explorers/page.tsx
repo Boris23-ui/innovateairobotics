@@ -1,48 +1,81 @@
 'use client';
 
-import { Box, Typography } from '@mui/material';
 import { ProgramLayout } from '@/components/programs/ProgramLayout';
-import Image from 'next/image';
 
 export default function RobotExplorersPage() {
   return (
     <ProgramLayout
       title="Robot Explorers"
+      subtitle="Build, code, and discover — where young engineers come alive"
       ageRange="6-9 years old"
-      description="Welcome to the fascinating world of AI Robotics! In this exciting class designed just for 6–9 year olds, you will explore the magical combination of Artificial Intelligence (AI) and Robots. Get ready to unleash your creativity as you build and interact with friendly robots that can think, learn, and respond to your commands. Through fun activities and hands-on experiments, you will discover how robots use sensors and algorithms to navigate their surroundings, solve challenges, and even play games with you! Join us for an action-packed adventure where you will learn the basics of coding and robotics while having a blast with your new robotic friends! Let's embark on an unforgettable journey into the future of technology together!"
-    >
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 4 }}>
-        <Box sx={{ position: 'relative', height: 400, borderRadius: 4, overflow: 'hidden' }}>
-          <Image
-            src="/images/Mountain-view-classes-4.jpg"
-            alt="Robot Explorers engaged in hands-on learning"
-            fill
-            style={{ objectFit: 'cover' }}
-          />
-        </Box>
-        <Box sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 4 }}>
-          <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
-            What You'll Learn
-          </Typography>
-          <Box component="ul" sx={{ pl: 2 }}>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Basic programming concepts through visual coding
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Robot movement and sensor interaction
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Problem-solving and critical thinking
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Team collaboration and communication
-            </Typography>
-            <Typography component="li" sx={{ mb: 1 }}>
-              Introduction to AI concepts through games
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-    </ProgramLayout>
+      ageBadge="Ages 6-9"
+      accentColor="rgb(16, 185, 129)"
+      accentGradient="linear-gradient(135deg, #10b981, #059669)"
+      heroGradient="linear-gradient(135deg, #0f172a 0%, #052e16 100%)"
+      description="From block coding to building working robots — a complete beginner journey."
+      introTitle="Your First Real Robot"
+      introText={[
+        "In Robot Explorers, 6-9 year olds dive into the exciting world of AI and Robotics. Through hands-on activities and guided projects, students learn to build and program their own robots using age-appropriate tools.",
+        "Using sensors, algorithms, and mini-competitions, students develop critical thinking and problem-solving skills. Our internationally recognized curriculum ensures every child gets a solid foundation in STEM.",
+      ]}
+      introHighlights={[
+        "LEGO Mindstorms and Scratch-based coding",
+        "Real hardware — build robots from the ground up",
+        "Small class sizes for personalized learning",
+        "Project portfolios showcased to parents",
+      ]}
+      introImage="/images/Mountain-view-classes-4.jpg"
+      curriculum={[
+        {
+          icon: 'code',
+          title: 'Block Coding',
+          items: [
+            'Drag-and-drop visual programming',
+            'Sequences, loops, and conditionals',
+            'Event-driven programming concepts',
+            'Debugging and testing your programs',
+          ],
+        },
+        {
+          icon: 'build',
+          title: 'Robot Building',
+          items: [
+            'Mechanical assembly with guided kits',
+            'Understanding gears, motors, and sensors',
+            'Designing autonomous robot pathways',
+            'Iterative build-test-improve cycles',
+          ],
+        },
+        {
+          icon: 'person',
+          title: 'STEM Foundations',
+          items: [
+            'Physics of motion and forces',
+            'Sensor data and measurement',
+            'Mathematical thinking through coding',
+            'Scientific method in engineering',
+          ],
+        },
+      ]}
+      sampleProjects={[
+        'Line-following robot',
+        'Obstacle avoider',
+        'Maze solver',
+        'Light-sensitive robot',
+        'Sound-reactive toy',
+        'Mini competition bot',
+      ]}
+      programDetails={[
+        { label: 'Age Group', value: 'Ages 6-9' },
+        { label: 'Session Length', value: '60-75 minutes' },
+        { label: 'Class Size', value: 'Max 10 students' },
+        { label: 'Format', value: 'In-Person & Online' },
+        { label: 'Frequency', value: 'Weekly sessions' },
+        { label: 'Prerequisites', value: 'None required' },
+      ]}
+      detailsImage="/images/young-robotics-engineers.jpg"
+      ctaTitle="Start Your Robotics Journey"
+      ctaSubtitle="Every great engineer started somewhere. This is your child's beginning."
+    />
   );
-} 
+}
