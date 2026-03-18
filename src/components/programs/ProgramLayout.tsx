@@ -17,6 +17,7 @@ import {
 } from '@mui/icons-material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTheme } from '@mui/material';
 
 // Icon map for curriculum cards
 const iconMap: Record<string, ReactNode> = {
@@ -98,6 +99,8 @@ export const ProgramLayout = ({
   ctaSubtitle,
 }: ProgramLayoutProps) => {
   const router = useRouter();
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
 
   return (
     <Box>
@@ -223,7 +226,7 @@ export const ProgramLayout = ({
       </Box>
 
       {/* ── INTRODUCTION SECTION ── */}
-      <Box sx={{ bgcolor: '#f3f4f6', py: { xs: 6, md: 10 } }}>
+      <Box sx={{ bgcolor: isDark ? '#111827' : '#f3f4f6', py: { xs: 6, md: 10 } }}>
         <Container maxWidth="lg">
           <ScrollReveal>
             <Box
@@ -243,11 +246,11 @@ export const ProgramLayout = ({
                 >
                   Hands-On Robotics
                 </Typography>
-                <Typography variant="h3" sx={{ fontWeight: 800, color: '#0f172a', mb: 3, fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
+                <Typography variant="h3" sx={{ fontWeight: 800, color: 'text.primary', mb: 3, fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
                   {introTitle}
                 </Typography>
                 {introText.map((para, i) => (
-                  <Typography key={i} sx={{ color: '#475569', lineHeight: 1.8, mb: 2, fontSize: '1rem' }}>
+                  <Typography key={i} sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 2, fontSize: '1rem' }}>
                     {para}
                   </Typography>
                 ))}
@@ -255,7 +258,7 @@ export const ProgramLayout = ({
                   {introHighlights.map((item, i) => (
                     <Box key={i} sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, mb: 1.5 }}>
                       <CheckCircle sx={{ color: accentColor, fontSize: 22, mt: 0.2 }} />
-                      <Typography sx={{ color: '#334155', fontSize: '0.95rem' }}>{item}</Typography>
+                      <Typography sx={{ color: 'text.secondary', fontSize: '0.95rem' }}>{item}</Typography>
                     </Box>
                   ))}
                 </Box>
@@ -266,14 +269,14 @@ export const ProgramLayout = ({
       </Box>
 
       {/* ── CURRICULUM SECTION ── */}
-      <Box sx={{ bgcolor: '#fff', py: { xs: 6, md: 10 } }}>
+      <Box sx={{ bgcolor: isDark ? '#0a0a0f' : '#fff', py: { xs: 6, md: 10 } }}>
         <Container maxWidth="lg">
           <ScrollReveal>
             <Box sx={{ textAlign: 'center', mb: 6 }}>
-              <Typography variant="h3" sx={{ fontWeight: 800, color: '#0f172a', mb: 2, fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
+              <Typography variant="h3" sx={{ fontWeight: 800, color: 'text.primary', mb: 2, fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
                 What You Will Learn
               </Typography>
-              <Typography sx={{ color: '#64748b', maxWidth: 600, mx: 'auto', fontSize: '1.05rem' }}>
+              <Typography sx={{ color: 'text.secondary', maxWidth: 600, mx: 'auto', fontSize: '1.05rem' }}>
                 {description}
               </Typography>
             </Box>
@@ -316,13 +319,13 @@ export const ProgramLayout = ({
                   >
                     {iconMap[card.icon] || <Code sx={{ fontSize: 28 }} />}
                   </Box>
-                  <Typography variant="h6" sx={{ fontWeight: 700, color: '#0f172a', mb: 2 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary', mb: 2 }}>
                     {card.title}
                   </Typography>
                   {card.items.map((item, i) => (
                     <Box key={i} sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, mb: 1.2 }}>
                       <CheckCircle sx={{ color: accentColor, fontSize: 18, mt: 0.3 }} />
-                      <Typography sx={{ color: '#475569', fontSize: '0.9rem', lineHeight: 1.5 }}>{item}</Typography>
+                      <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5 }}>{item}</Typography>
                     </Box>
                   ))}
                 </Box>
@@ -333,7 +336,7 @@ export const ProgramLayout = ({
       </Box>
 
       {/* ── SAMPLE PROJECTS + PROGRAM DETAILS ── */}
-      <Box sx={{ bgcolor: '#f9fafb', py: { xs: 6, md: 10 } }}>
+      <Box sx={{ bgcolor: isDark ? '#0d1117' : '#f9fafb', py: { xs: 6, md: 10 } }}>
         <Container maxWidth="lg">
           <Box
             sx={{
@@ -344,10 +347,10 @@ export const ProgramLayout = ({
           >
             {/* Sample Projects */}
             <ScrollReveal>
-              <Typography variant="h3" sx={{ fontWeight: 800, color: '#0f172a', mb: 1, fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
+              <Typography variant="h3" sx={{ fontWeight: 800, color: 'text.primary', mb: 1, fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
                 Sample Projects
               </Typography>
-              <Typography sx={{ color: '#64748b', mb: 3 }}>
+              <Typography sx={{ color: 'text.secondary', mb: 3 }}>
                 Students complete multiple hands-on projects each semester, each one building on the last.
               </Typography>
               <Box
@@ -371,7 +374,7 @@ export const ProgramLayout = ({
                     }}
                   >
                     <EmojiEvents sx={{ color: accentColor, fontSize: 20 }} />
-                    <Typography sx={{ color: '#334155', fontSize: '0.85rem', fontWeight: 500 }}>{project}</Typography>
+                    <Typography sx={{ color: 'text.secondary', fontSize: '0.85rem', fontWeight: 500 }}>{project}</Typography>
                   </Box>
                 ))}
               </Box>
@@ -379,7 +382,7 @@ export const ProgramLayout = ({
 
             {/* Program Details */}
             <ScrollReveal delay={0.15}>
-              <Typography variant="h3" sx={{ fontWeight: 800, color: '#0f172a', mb: 3, fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
+              <Typography variant="h3" sx={{ fontWeight: 800, color: 'text.primary', mb: 3, fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
                 Program Details
               </Typography>
               <Box

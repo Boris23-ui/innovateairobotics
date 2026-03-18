@@ -18,6 +18,7 @@ import {
   Phone,
   LocationOn,
 } from '@mui/icons-material';
+import Image from 'next/image';
 
 export default function Footer() {
   const theme = useTheme();
@@ -74,12 +75,15 @@ export default function Footer() {
             <Typography variant="h6" color="text.primary" gutterBottom>
               InnovateAI Robotics
             </Typography>
-            <Box
-              component="img"
-              src="/images/InnovateAI Robotics Inc. logo.png"
-              alt="InnovateAI Robotics Logo"
-              sx={{ height: 80, mb: 2 }}
-            />
+            <Box sx={{ mb: 2 }}>
+              <Image
+                src="/images/InnovateAI Robotics Inc. logo.png"
+                alt="InnovateAI Robotics Logo"
+                width={160}
+                height={80}
+                style={{ objectFit: 'contain' }}
+              />
+            </Box>
             <Typography variant="body2" color="text.secondary" paragraph>
               Empowering the next generation through AI and robotics education
             </Typography>

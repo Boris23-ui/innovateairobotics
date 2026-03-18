@@ -52,6 +52,7 @@ import {
   Payments,
 } from '@mui/icons-material';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTheme, useMediaQuery } from '@mui/material';
 import { useTheme as useAppTheme } from '@/components/providers/ThemeProvider';
@@ -206,28 +207,13 @@ export default function Navigation() {
         position: 'relative',
         zIndex: 1
       }}>
-        <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center', 
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
           justifyContent: 'center',
           mb: 2
         }}>
-          <School sx={{ 
-            fontSize: 40, 
-            color: 'white', 
-            mr: 1,
-            filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))'
-          }} />
-          <Typography 
-            variant="h5"
-            sx={{ 
-              fontWeight: 700,
-              textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
-              letterSpacing: '0.5px'
-            }}
-          >
-            InnovateAI
-          </Typography>
+          <Image src="/logo.png" alt="InnovateAI Robotics" width={140} height={48} style={{ objectFit: 'contain' }} />
         </Box>
         <Typography 
           variant="body2"
@@ -617,31 +603,25 @@ export default function Navigation() {
           py: 0,
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           backgroundColor: scrolled
-            ? 'rgba(10, 10, 15, 0.85)'
+            ? mode === 'light'
+              ? 'rgba(255, 255, 255, 0.9)'
+              : 'rgba(10, 10, 15, 0.85)'
             : 'transparent',
           backdropFilter: scrolled ? 'blur(20px)' : 'none',
           borderBottom: scrolled
-            ? '1px solid rgba(255,255,255,0.06)'
+            ? mode === 'light'
+              ? '1px solid rgba(0,0,0,0.08)'
+              : '1px solid rgba(255,255,255,0.06)'
             : '1px solid transparent',
           boxShadow: scrolled ? undefined : 'none',
+          color: mode === 'light' ? 'text.primary' : 'common.white',
         }}
       >
       <Container maxWidth="xl" sx={{ py: 0 }}>
         <Toolbar disableGutters sx={{ minHeight: '56px !important', py: 0 }}>
           <Link href="/" passHref style={{ textDecoration: 'none', color: 'inherit' }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <School sx={{ fontSize: 28, color: 'primary.main', mr: 1 }} />
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{ 
-                  display: { xs: 'none', sm: 'block' },
-                  fontSize: '1.1rem',
-                  lineHeight: 1.2
-                }}
-              >
-                InnovateAI Robotics
-              </Typography>
+              <Image src="/logo.png" alt="InnovateAI Robotics" width={120} height={40} style={{ objectFit: 'contain' }} />
             </Box>
           </Link>
 
@@ -826,10 +806,10 @@ export default function Navigation() {
                 width: 48,
                 height: 48,
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 4px 12px rgba(121, 26, 26, 0.2)',
+                boxShadow: '0 4px 12px rgba(6, 182, 212, 0.2)',
                 '&:hover': {
                   transform: 'scale(1.05)',
-                  boxShadow: '0 6px 16px rgba(121, 26, 26, 0.3)',
+                  boxShadow: '0 6px 16px rgba(6, 182, 212, 0.3)',
                   background: 'linear-gradient(135deg, #5a6fd8, #6a4190 100%)',
                 },
                 '&:active': {

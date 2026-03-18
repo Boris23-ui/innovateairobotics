@@ -15,6 +15,7 @@ import {
   Diversity3,
   TrendingUp,
 } from '@mui/icons-material';
+import { useTheme } from '@mui/material';
 
 function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null);
@@ -32,6 +33,9 @@ function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; dela
 }
 
 export default function AboutPage() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
+
   const values = [
     {
       icon: <Lightbulb sx={{ fontSize: 32 }} />,
@@ -127,7 +131,7 @@ export default function AboutPage() {
       </Box>
 
       {/* ── MISSION SECTION ── */}
-      <Box sx={{ bgcolor: '#f3f4f6', py: { xs: 6, md: 10 } }}>
+      <Box sx={{ bgcolor: isDark ? '#111827' : '#f3f4f6', py: { xs: 6, md: 10 } }}>
         <Container maxWidth="lg">
           <ScrollReveal>
             <Box
@@ -144,13 +148,13 @@ export default function AboutPage() {
                 >
                   Our Mission
                 </Typography>
-                <Typography variant="h3" sx={{ fontWeight: 800, color: '#0f172a', mb: 3, fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
+                <Typography variant="h3" sx={{ fontWeight: 800, color: 'text.primary', mb: 3, fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
                   Preparing Students for the 4th Industrial Revolution
                 </Typography>
-                <Typography sx={{ color: '#475569', lineHeight: 1.8, mb: 2, fontSize: '1rem' }}>
+                <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 2, fontSize: '1rem' }}>
                   Integrating robotics and AI into school curricula is essential for preparing students for the future. By providing access to advanced technologies, we equip the next generation with vital skills for innovation and leadership in a changing world.
                 </Typography>
-                <Typography sx={{ color: '#475569', lineHeight: 1.8, fontSize: '1rem' }}>
+                <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, fontSize: '1rem' }}>
                   InnovateAI Robotics is a donor-supported 501(c)(3) tax-exempt charity (TaxID: 99-2801688) dedicated to advancing robotics education and fostering innovation, teamwork, and problem-solving through hands-on classes for learners of all ages.
                 </Typography>
               </Box>
@@ -168,14 +172,14 @@ export default function AboutPage() {
       </Box>
 
       {/* ── VALUES SECTION ── */}
-      <Box sx={{ bgcolor: '#fff', py: { xs: 6, md: 10 } }}>
+      <Box sx={{ bgcolor: isDark ? '#0a0a0f' : '#fff', py: { xs: 6, md: 10 } }}>
         <Container maxWidth="lg">
           <ScrollReveal>
             <Box sx={{ textAlign: 'center', mb: 6 }}>
-              <Typography variant="h3" sx={{ fontWeight: 800, color: '#0f172a', mb: 2, fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
+              <Typography variant="h3" sx={{ fontWeight: 800, color: 'text.primary', mb: 2, fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
                 Our Values
               </Typography>
-              <Typography sx={{ color: '#64748b', maxWidth: 600, mx: 'auto', fontSize: '1.05rem' }}>
+              <Typography sx={{ color: 'text.secondary', maxWidth: 600, mx: 'auto', fontSize: '1.05rem' }}>
                 The principles that guide everything we do.
               </Typography>
             </Box>
@@ -215,10 +219,10 @@ export default function AboutPage() {
                     >
                       {val.icon}
                     </Box>
-                    <Typography variant="h6" sx={{ fontWeight: 700, color: '#0f172a', mb: 1 }}>
+                    <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary', mb: 1 }}>
                       {val.title}
                     </Typography>
-                    <Typography sx={{ color: '#475569', fontSize: '0.9rem', lineHeight: 1.6 }}>
+                    <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.6 }}>
                       {val.description}
                     </Typography>
                   </Box>
