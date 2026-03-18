@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add src/app/about/page.tsx src/app/api/stripe/create-session/route.ts src/components/Navigation.tsx src/components/layout/Footer.tsx src/components/programs/ProgramLayout.tsx src/styles/globals.css public/logo.png)"
+    ]
+  }
+}
