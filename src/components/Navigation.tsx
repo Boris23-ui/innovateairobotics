@@ -24,32 +24,26 @@ import {
 } from '@mui/material';
 import {
   Menu as MenuIcon,
-  School,
+  Close,
   Dashboard,
   Person,
   Settings,
   Logout,
-  Book,
   Science,
   Code,
-  Group,
   Info,
-  ContactSupport,
-  LocalLibrary,
   Favorite,
   ExpandMore,
   ChildCare,
-  EmojiObjects,
   RocketLaunch,
   Psychology,
-  ElderlyWoman,
   Brightness4,
   Brightness7,
   Engineering,
-  Login,
   AccountCircle,
   Home,
   Payments,
+  East,
 } from '@mui/icons-material';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -66,47 +60,48 @@ const programItems = [
     ageRange: '5 & Under',
     icon: <ChildCare />,
     description: 'Introduction to robotics through play',
-    href: '/programs/tiny-tinkerers'
+    href: '/programs/tiny-tinkerers',
+    color: '#f472b6',
   },
   {
     title: 'Robot Explorers',
     ageRange: '6-9 years',
     icon: <Code />,
     description: 'Basic programming and robot building',
-    href: '/programs/robot-explorers'
+    href: '/programs/robot-explorers',
+    color: '#34d399',
   },
   {
     title: 'Tech Titans',
     ageRange: '10-12 years',
     icon: <Science />,
     description: 'Advanced robotics and coding',
-    href: '/programs/tech-titans'
+    href: '/programs/tech-titans',
+    color: '#60a5fa',
   },
   {
     title: 'AI Avengers',
     ageRange: '13-17 years',
     icon: <Psychology />,
     description: 'AI and machine learning focus',
-    href: '/programs/ai-avengers'
+    href: '/programs/ai-avengers',
+    color: '#a78bfa',
   },
   {
     title: 'Seniors',
     ageRange: '18+ years',
     icon: <Engineering />,
     description: 'Adult learning and innovation',
-    href: '/programs/seniors'
-  }
-];
-
-const navItems = [
-  { name: 'Home', href: '/' },
+    href: '/programs/seniors',
+    color: '#fbbf24',
+  },
 ];
 
 const publicNavItems = [
-  { label: 'Home', href: '/', icon: <Home /> },
-  { label: 'About', href: '/about', icon: <Info /> },
-  { label: 'Pricing', href: '/pricing', icon: <Payments /> },
-  { label: 'Donate', href: '/donate', icon: <Favorite /> },
+  { label: 'Home', href: '/', icon: <Home sx={{ fontSize: 20 }} /> },
+  { label: 'About', href: '/about', icon: <Info sx={{ fontSize: 20 }} /> },
+  { label: 'Pricing', href: '/pricing', icon: <Payments sx={{ fontSize: 20 }} /> },
+  { label: 'Donate', href: '/donate', icon: <Favorite sx={{ fontSize: 20 }} /> },
 ];
 
 export default function Navigation() {
@@ -124,136 +119,96 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
     setProgramsAnchorEl(null);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClose = () => setAnchorEl(null);
 
   const handleProgramsClick = (event: React.MouseEvent<HTMLElement>) => {
     setProgramsAnchorEl(event.currentTarget);
     setAnchorEl(null);
   };
 
-  const handleProgramsClose = () => {
-    setProgramsAnchorEl(null);
-  };
+  const handleProgramsClose = () => setProgramsAnchorEl(null);
 
-  const handleProfile = () => {
-    handleClose();
-    router.push('/profile');
-  };
-
+  const handleProfile = () => { handleClose(); router.push('/profile'); };
   const handleDashboard = () => {
     handleClose();
-    // Use role-based routing
     const dashboardPath = userProfile ? getDashboardPath(userProfile.role) : '/dashboard';
     router.push(dashboardPath);
   };
-
-  const handleSettings = () => {
-    handleClose();
-    router.push('/settings');
-  };
-
-  const handleSignOut = () => {
-    handleClose();
-  };
-
-  const handleLogin = () => {
-    setAnchorEl(null);
-    setProgramsAnchorEl(null);
-    router.push('/sign-in');
-  };
+  const handleSettings = () => { handleClose(); router.push('/settings'); };
 
   const isActive = (path: string) => pathname === path;
+  const isActiveProgram = pathname.startsWith('/programs');
 
-  if (!isLoaded) {
-    return <LoadingSpinner />;
-  }
+  if (!isLoaded) return <LoadingSpinner />;
 
+  // ─── MOBILE DRAWER ──────────────────────────────────────────────
   const drawer = (
-    <Box 
-      onClick={handleDrawerToggle} 
+    <Box
       sx={{
         height: '100%',
-        background: 'linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)',
-        color: 'white',
-        position: 'relative',
-        overflow: 'hidden',
+        background: mode === 'dark'
+          ? 'linear-gradient(180deg, #0a0a0f 0%, #111827 100%)'
+          : 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)',
+        color: mode === 'dark' ? 'white' : '#0f172a',
         display: 'flex',
         flexDirection: 'column',
       }}
     >
-      {/* Header Section */}
-      <Box sx={{ 
-        p: 3, 
-        textAlign: 'center',
-        background: 'rgba(255, 255, 255, 0.1)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-        position: 'relative',
-        zIndex: 1
+      {/* Drawer Header */}
+      <Box sx={{
+        p: 2.5,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        borderBottom: `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
       }}>
-        <Box sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          mb: 2
-        }}>
-          <Image src="/logo.png" alt="InnovateAI Robotics" width={140} height={48} style={{ objectFit: 'contain' }} />
-        </Box>
-        <Typography 
-          variant="body2"
-          sx={{ 
-            opacity: 0.9,
-            fontWeight: 300,
-            letterSpacing: 0.5
+        <Image src="/logo.png" alt="InnovateAI Robotics" width={100} height={36} style={{ objectFit: 'contain' }} />
+        <IconButton
+          onClick={handleDrawerToggle}
+          sx={{
+            color: mode === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.5)',
+            '&:hover': { color: '#06b6d4' },
           }}
         >
-          Robotics Education Platform
-        </Typography>
+          <Close sx={{ fontSize: 20 }} />
+        </IconButton>
       </Box>
 
-      {/* User Profile Section (if signed in) */}
+      {/* User Profile (if signed in) */}
       {isSignedIn && (
-        <Box sx={{ 
-          p: 3, 
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-          position: 'relative',
-          zIndex: 1
+        <Box sx={{
+          px: 2.5, py: 2,
+          borderBottom: `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
         }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
             <Avatar
               src={user?.imageUrl}
               alt={user?.firstName || 'User'}
-              sx={{
-                width: 50,
-                height: 50,
-                border: '3px solid rgba(255, 255, 255, 0.8)',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                mr: 2
-              }}
+              sx={{ width: 40, height: 40, border: '2px solid rgba(6,182,212,0.4)' }}
             />
-            <Box>
-              <Typography variant="subtitle1" sx={{ fontWeight: 600, color: 'white' }}>
+            <Box sx={{ minWidth: 0 }}>
+              <Typography sx={{ fontWeight: 600, fontSize: '0.9rem', lineHeight: 1.3 }}>
                 {user?.firstName} {user?.lastName}
               </Typography>
-              <Typography variant="caption" sx={{ opacity: 0.8, color: 'white' }}>
+              <Typography sx={{
+                fontSize: '0.75rem',
+                opacity: 0.6,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}>
                 {user?.emailAddresses?.[0]?.emailAddress}
               </Typography>
             </Box>
@@ -261,635 +216,525 @@ export default function Navigation() {
         </Box>
       )}
 
-      {/* Navigation Content - make this scrollable */}
-      <Box sx={{ 
-        flex: 1, 
-        minHeight: 0,
-        overflowY: 'auto',
-        py: 2,
-        position: 'relative',
-        zIndex: 1
-      }}>
-        <List sx={{ py: 0 }}>
-          {/* Public Navigation Items */}
-          <Typography 
-            variant="overline" 
-            sx={{ 
-              px: 3, 
-              py: 1,            
-              color: 'rgba(255, 255, 255, 0.7)',
-              fontWeight: 600,
-              letterSpacing: '1px',
-              fontSize: '0.75rem'
-            }}
-          >
-            NAVIGATION
-          </Typography>
+      {/* Nav Links */}
+      <Box sx={{ flex: 1, overflowY: 'auto', py: 1 }}>
+        <List disablePadding>
           {publicNavItems.map((item) => (
-            <ListItem key={item.label} disablePadding sx={{ mb: 0.5 }}>
+            <ListItem key={item.label} disablePadding>
               <ListItemButton
                 component={Link}
                 href={item.href}
+                onClick={handleDrawerToggle}
                 selected={isActive(item.href)}
                 sx={{
-                  mx: 1,
-                  borderRadius: 2,
-                  color: 'white',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  mx: 1, my: 0.25,
+                  borderRadius: '10px',
+                  py: 1.2,
+                  transition: 'all 0.2s ease',
                   '&:hover': {
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    transform: 'translateX(8px)',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    bgcolor: mode === 'dark' ? 'rgba(6,182,212,0.08)' : 'rgba(6,182,212,0.06)',
                   },
                   '&.Mui-selected': {
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    '&:hover': {
-                      background: 'rgba(255, 255, 255, 0.1)',
-                    },
+                    bgcolor: mode === 'dark' ? 'rgba(6,182,212,0.12)' : 'rgba(6,182,212,0.1)',
+                    '&:hover': { bgcolor: mode === 'dark' ? 'rgba(6,182,212,0.15)' : 'rgba(6,182,212,0.12)' },
                   },
                 }}
               >
-                <ListItemIcon sx={{ 
-                  minWidth: 45,
-                  color: 'white',
-                  '& .MuiSvgIcon-root': {
-                    fontSize: '1.4rem'
-                  }
+                <ListItemIcon sx={{
+                  minWidth: 36,
+                  color: isActive(item.href) ? '#06b6d4' : 'inherit',
+                  opacity: isActive(item.href) ? 1 : 0.6,
                 }}>
                   {item.icon}
                 </ListItemIcon>
-                <ListItemText 
+                <ListItemText
                   primary={item.label}
                   primaryTypographyProps={{
-                    fontWeight: 500,
-                    fontSize: '1rem'
+                    fontWeight: isActive(item.href) ? 600 : 500,
+                    fontSize: '0.9rem',
+                    color: isActive(item.href) ? '#06b6d4' : 'inherit',
                   }}
                 />
               </ListItemButton>
             </ListItem>
           ))}
 
-          <Divider sx={{ my: 2, borderColor: 'rgba(255, 255, 255, 0.2)' }} />
-
-          {/* Programs Section */}
-          <Typography 
-            variant="overline" 
-            sx={{ 
-              px: 3, 
-              py: 1,            
-              color: 'rgba(255, 255, 255, 0.7)',
-              fontWeight: 600,
-              letterSpacing: '1px',
-              fontSize: '0.75rem'
-            }}
-          >
-            PROGRAMS
-          </Typography>
+          {/* Programs */}
+          <Box sx={{ px: 2.5, pt: 2, pb: 0.5 }}>
+            <Typography sx={{
+              fontSize: '0.65rem',
+              fontWeight: 700,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              opacity: 0.4,
+            }}>
+              Programs
+            </Typography>
+          </Box>
           {programItems.map((item) => (
-            <ListItem key={item.title} disablePadding sx={{ mb: 0.5 }}>
+            <ListItem key={item.title} disablePadding>
               <ListItemButton
                 component={Link}
                 href={item.href}
+                onClick={handleDrawerToggle}
                 selected={isActive(item.href)}
                 sx={{
-                  mx: 1,
-                  borderRadius: 2,
-                  color: 'white',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  mx: 1, my: 0.25,
+                  borderRadius: '10px',
+                  py: 1,
+                  transition: 'all 0.2s ease',
                   '&:hover': {
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    transform: 'translateX(8px)',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)',
                   },
                   '&.Mui-selected': {
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    '&:hover': {
-                      background: 'rgba(255, 255, 255, 0.1)',
-                    },
+                    bgcolor: `${item.color}18`,
                   },
                 }}
               >
-                <ListItemIcon sx={{ 
-                  minWidth: 45,
-                  color: 'white',
-                  '& .MuiSvgIcon-root': {
-                    fontSize: '1.4rem'
-                  }
+                <Box sx={{
+                  minWidth: 36,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: item.color,
+                  '& .MuiSvgIcon-root': { fontSize: 20 },
                 }}>
                   {item.icon}
-                </ListItemIcon>
-                <Box sx={{ flex: 1 }}>
-                  <Typography 
-                    variant="subtitle2" 
-                    sx={{ 
-                      fontWeight: 600,
-                      color: 'white',
-                      mb: 0.5
-                    }}
-                  >
+                </Box>
+                <Box sx={{ minWidth: 0 }}>
+                  <Typography sx={{ fontWeight: 600, fontSize: '0.85rem', lineHeight: 1.3 }}>
                     {item.title}
                   </Typography>
-                  <Typography 
-                    variant="caption" 
-                    sx={{ 
-                      color: 'rgba(255, 255, 255, 0.7)',
-                      display: 'block',
-                      lineHeight: 1.2
-                    }}
-                  >
-                    {item.ageRange} • {item.description}
+                  <Typography sx={{ fontSize: '0.7rem', opacity: 0.5, lineHeight: 1.2 }}>
+                    {item.ageRange}
                   </Typography>
                 </Box>
               </ListItemButton>
             </ListItem>
           ))}
 
-          <Divider sx={{ my: 2, borderColor: 'rgba(255, 255, 255, 0.2)' }} />
-
-          {/* Authentication Section */}
-          {isSignedIn ? (
+          {/* Account Section (signed in) */}
+          {isSignedIn && (
             <>
-              <Typography 
-                variant="overline"
-                sx={{ 
-                  px: 3, 
-                  py: 1, 
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  fontWeight: 600,
-                  letterSpacing: '1px',
-                  fontSize: '0.75rem'
-                }}
-              >
-                ACCOUNT
-              </Typography>
-              <ListItem disablePadding sx={{ mb: 0.5 }}>
-                <ListItemButton
-                  onClick={() => {
-                    handleDrawerToggle();
-                    const dashboardPath = userProfile ? getDashboardPath(userProfile.role) : '/dashboard';
-                    router.push(dashboardPath);
-                  }}
-                  sx={{
-                    mx: 1,
-                    borderRadius: 2,
-                    color: 'white',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    '&:hover': {
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      transform: 'translateX(8px)',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                    },
-                  }}
-                >
-                  <ListItemIcon sx={{ 
-                    minWidth: 45,
-                    color: 'white',
-                    '& .MuiSvgIcon-root': {
-                      fontSize: '1.4rem'
-                    }
-                  }}>
-                    <Dashboard />
-                  </ListItemIcon>
-                  <ListItemText 
-                    primary="Dashboard"
-                    primaryTypographyProps={{
-                      fontWeight: 500,
-                      fontSize: '1rem'
+              <Box sx={{ px: 2.5, pt: 2, pb: 0.5 }}>
+                <Typography sx={{
+                  fontSize: '0.65rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  opacity: 0.4,
+                }}>
+                  Account
+                </Typography>
+              </Box>
+              {[
+                { label: 'Dashboard', icon: <Dashboard sx={{ fontSize: 20 }} />, action: () => { handleDrawerToggle(); const p = userProfile ? getDashboardPath(userProfile.role) : '/dashboard'; router.push(p); } },
+                { label: 'Profile', icon: <Person sx={{ fontSize: 20 }} />, action: () => { handleDrawerToggle(); router.push('/profile'); } },
+                { label: 'Settings', icon: <Settings sx={{ fontSize: 20 }} />, action: () => { handleDrawerToggle(); router.push('/settings'); } },
+              ].map((item) => (
+                <ListItem key={item.label} disablePadding>
+                  <ListItemButton
+                    onClick={item.action}
+                    sx={{
+                      mx: 1, my: 0.25,
+                      borderRadius: '10px',
+                      py: 1.2,
+                      '&:hover': { bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)' },
                     }}
-                  />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding sx={{ mb: 0.5 }}>
-                <ListItemButton
-                  onClick={() => {
-                    handleDrawerToggle();
-                    router.push('/profile');
-                  }}
-                  sx={{
-                    mx: 1,
-                    borderRadius: 2,
-                    color: 'white',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    '&:hover': {
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      transform: 'translateX(8px)',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                    },
-                  }}
-                >
-                  <ListItemIcon sx={{ 
-                    minWidth: 45,
-                    color: 'white',
-                    '& .MuiSvgIcon-root': {
-                      fontSize: '1.4rem'
-                    }
-                  }}>
-                    <Person />
-                  </ListItemIcon>
-                  <ListItemText 
-                    primary="Profile"
-                    primaryTypographyProps={{
-                      fontWeight: 500,
-                      fontSize: '1rem'
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding sx={{ mb: 0.5 }}>
-                <ListItemButton
-                  onClick={() => {
-                    handleDrawerToggle();
-                    router.push('/settings');
-                  }}
-                  sx={{
-                    mx: 1,
-                    borderRadius: 2,
-                    color: 'white',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    '&:hover': {
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      transform: 'translateX(8px)',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                    },
-                  }}
-                >
-                  <ListItemIcon sx={{ 
-                    minWidth: 45,
-                    color: 'white',
-                    '& .MuiSvgIcon-root': {
-                      fontSize: '1.4rem'
-                    }
-                  }}>
-                    <Settings />
-                  </ListItemIcon>
-                  <ListItemText 
-                    primary="Settings"
-                    primaryTypographyProps={{
-                      fontWeight: 500,
-                      fontSize: '1rem'
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
+                  >
+                    <ListItemIcon sx={{ minWidth: 36, opacity: 0.6 }}>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.label} primaryTypographyProps={{ fontWeight: 500, fontSize: '0.9rem' }} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
               <SignOutButton>
-                <ListItem disablePadding sx={{ mb: 0.5 }}>
+                <ListItem disablePadding>
                   <ListItemButton
                     onClick={handleDrawerToggle}
                     sx={{
-                      mx: 1,
-                      borderRadius: 2,
-                      color: '#ff6b6b',
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                      '&:hover': {
-                        background: 'rgba(255, 107, 107, 0.1)',
-                        transform: 'translateX(8px)',
-                        boxShadow: '0 4px 12px rgba(255, 107, 107, 0.2)',
-                      },
+                      mx: 1, my: 0.25,
+                      borderRadius: '10px',
+                      py: 1.2,
+                      color: '#ef4444',
+                      '&:hover': { bgcolor: 'rgba(239,68,68,0.08)' },
                     }}
                   >
-                    <ListItemIcon sx={{ 
-                      minWidth: 45,
-                      color: '#ff6b6b',
-                      '& .MuiSvgIcon-root': {
-                        fontSize: '1.4rem'
-                      }
-                    }}>
-                      <Logout />
+                    <ListItemIcon sx={{ minWidth: 36, color: '#ef4444' }}>
+                      <Logout sx={{ fontSize: 20 }} />
                     </ListItemIcon>
-                    <ListItemText 
-                      primary="Sign Out"
-                      primaryTypographyProps={{
-                        fontWeight: 500,
-                        fontSize: '1rem'
-                      }}
-                    />
+                    <ListItemText primary="Sign Out" primaryTypographyProps={{ fontWeight: 500, fontSize: '0.9rem' }} />
                   </ListItemButton>
                 </ListItem>
               </SignOutButton>
             </>
-          ) : null}
+          )}
         </List>
       </Box>
 
-      {/* Footer */}
-      <Box sx={{ 
-        p: 2, 
-        textAlign: 'center',
-        background: 'rgba(0, 0, 0, 0.8)',
-        borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-        position: 'relative',
-        zIndex: 1
+      {/* Drawer Footer */}
+      <Box sx={{
+        p: 2, textAlign: 'center',
+        borderTop: `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
       }}>
-        <Typography 
-          variant="caption"
-          sx={{ 
-            color: 'rgba(255, 255, 255, 0.7)',
-            fontSize: '0.75rem'
+        <MuiButton
+          onClick={toggleColorMode}
+          startIcon={mode === 'dark' ? <Brightness7 sx={{ fontSize: 16 }} /> : <Brightness4 sx={{ fontSize: 16 }} />}
+          size="small"
+          sx={{
+            fontSize: '0.75rem',
+            color: mode === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)',
+            textTransform: 'none',
           }}
         >
-          © 2024 InnovateAI Robotics
-        </Typography>
+          {mode === 'dark' ? 'Light Mode' : 'Dark Mode'}
+        </MuiButton>
       </Box>
     </Box>
   );
 
+  // ─── DESKTOP NAVBAR ─────────────────────────────────────────────
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="fixed"
-        color="default"
-        elevation={scrolled ? 1 : 0}
+        elevation={0}
         sx={{
-          py: 0,
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
           backgroundColor: scrolled
-            ? mode === 'light'
-              ? 'rgba(255, 255, 255, 0.9)'
-              : 'rgba(10, 10, 15, 0.85)'
+            ? mode === 'dark' ? 'rgba(10, 10, 15, 0.8)' : 'rgba(255, 255, 255, 0.85)'
             : 'transparent',
-          backdropFilter: scrolled ? 'blur(20px)' : 'none',
+          backdropFilter: scrolled ? 'blur(24px) saturate(1.2)' : 'none',
           borderBottom: scrolled
-            ? mode === 'light'
-              ? '1px solid rgba(0,0,0,0.08)'
-              : '1px solid rgba(255,255,255,0.06)'
+            ? `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`
             : '1px solid transparent',
-          boxShadow: scrolled ? undefined : 'none',
-          color: mode === 'light' ? 'text.primary' : 'common.white',
+          boxShadow: 'none',
         }}
       >
-      <Container maxWidth="xl" sx={{ py: 0 }}>
-        <Toolbar disableGutters sx={{ minHeight: '56px !important', py: 0 }}>
-          <Link href="/" passHref style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Image src="/logo.png" alt="InnovateAI Robotics" width={120} height={40} style={{ objectFit: 'contain' }} />
-            </Box>
-          </Link>
+        <Container maxWidth="xl">
+          <Toolbar disableGutters sx={{ minHeight: { xs: '60px', md: '64px' }, gap: 1 }}>
+            {/* Logo */}
+            <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+              <Image src="/logo.png" alt="InnovateAI Robotics" width={44} height={44} style={{ objectFit: 'contain' }} />
+            </Link>
 
-          {/* Desktop Navigation */}
-          <Box sx={{ 
-            display: { xs: 'none', md: 'flex' }, 
-            ml: 'auto',
-            gap: 1,
-            alignItems: 'center'
-          }}>
-              {/* Public Navigation Items - Always Visible */}
-              {publicNavItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <MuiButton
-                    startIcon={item.icon}
-                  >
-                    {item.label}
-                  </MuiButton>
-                </Link>
-              ))}
+            {/* Desktop Nav */}
+            <Box sx={{
+              display: { xs: 'none', md: 'flex' },
+              ml: 4,
+              alignItems: 'center',
+              gap: 0.5,
+            }}>
+              {/* Nav pills */}
+              <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)',
+                borderRadius: '12px',
+                p: '3px',
+                gap: '2px',
+              }}>
+                {publicNavItems.map((item) => (
+                  <Link key={item.label} href={item.href} style={{ textDecoration: 'none' }}>
+                    <Box
+                      sx={{
+                        px: 2, py: 0.8,
+                        borderRadius: '9px',
+                        fontSize: '0.85rem',
+                        fontWeight: 500,
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        color: isActive(item.href)
+                          ? (mode === 'dark' ? '#fff' : '#0f172a')
+                          : (mode === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.5)'),
+                        bgcolor: isActive(item.href)
+                          ? (mode === 'dark' ? 'rgba(6,182,212,0.15)' : 'rgba(6,182,212,0.1)')
+                          : 'transparent',
+                        '&:hover': {
+                          color: mode === 'dark' ? '#fff' : '#0f172a',
+                          bgcolor: isActive(item.href)
+                            ? undefined
+                            : (mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'),
+                        },
+                      }}
+                    >
+                      {item.label}
+                    </Box>
+                  </Link>
+                ))}
+              </Box>
 
-              {/* Programs Dropdown */}
-              <MuiButton
-                startIcon={<LocalLibrary />}
-                endIcon={<ExpandMore />}
+              {/* Programs Dropdown Trigger */}
+              <Box
                 onClick={handleProgramsClick}
                 sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 0.5,
+                  px: 2, py: 0.8,
+                  borderRadius: '10px',
+                  fontSize: '0.85rem',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  color: isActiveProgram
+                    ? '#06b6d4'
+                    : (mode === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.5)'),
                   '&:hover': {
-                    bgcolor: 'action.hover',
+                    color: mode === 'dark' ? '#fff' : '#0f172a',
+                    bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)',
                   },
                 }}
               >
                 Programs
-              </MuiButton>
+                <ExpandMore sx={{
+                  fontSize: 18,
+                  transition: 'transform 0.2s',
+                  transform: programsAnchorEl ? 'rotate(180deg)' : 'none',
+                }} />
+              </Box>
+            </Box>
 
-              {/* Programs Popover */}
-              <Popover
-                open={Boolean(programsAnchorEl)}
-                anchorEl={programsAnchorEl}
-                onClose={handleProgramsClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                PaperProps={{
-                  sx: {
-                    width: 'auto',
-                    maxWidth: '90vw',
-                    maxHeight: 400,
-                    overflow: 'auto',
-                    p: 1,
-                    mt: 0.5,
-                    borderRadius: 2,
-                    boxShadow: 3,
-                  },
-                }}
-              >
-                <List sx={{ 
-                  py: 0,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  gap: 1,
-                  flexWrap: 'wrap',
-                  minWidth: 600,
-                  justifyContent: 'center',
-                }}>
-                  {programItems.map((item) => (
-                    <ListItem
-                      key={item.title}
-                      component={Link}
-                      href={item.href}
-                      onClick={handleProgramsClose}
-                      sx={{
-                        py: 1,
-                        px: 1.5,
-                        mb: 0.5,
-                        borderRadius: 1.5,
-                        width: 'auto',
-                        minWidth: 180,
-                        maxWidth: 240,
-                        bgcolor: 'background.paper',
-                        border: '1px solid',
-                        borderColor: 'divider',
-                        '&:hover': {
-                          backgroundColor: 'action.hover',
-                          transform: 'translateY(-2px)',
-                          boxShadow: 2,
-                          transition: 'all 0.2s ease-in-out',
-                        },
-                        '&:last-child': {
-                          mb: 0,
-                        },
-                      }}
-                    >
-                      <ListItemIcon sx={{ 
-                        minWidth: 32,
-                        color: 'primary.main',
-                      }}>
-                        {item.icon}
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={
-                          <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.25 }}>
-                            {item.title}
-                          </Typography>
-                        }
-                        secondary={
-                          <Box component="span" sx={{ display: 'flex', flexDirection: 'column', gap: 0.25 }}>
-                            <Typography
-                              component="span"
-                              variant="caption"
-                              sx={{
-                                bgcolor: 'primary.main',
-                                color: 'primary.contrastText',
-                                px: 0.75,
-                                py: 0.25,
-                                borderRadius: 0.75,
-                                fontSize: '0.65rem',
-                                display: 'inline-block',
-                                width: 'fit-content',
-                              }}
-                            >
-                              {item.ageRange}
-                            </Typography>
-                            <Typography
-                              component="span"
-                              variant="caption"
-                              sx={{ 
-                                color: 'text.secondary',
-                                display: 'block',
-                                lineHeight: 1.3,
-                                fontSize: '0.75rem',
-                              }}
-                            >
-                              {item.description}
-                            </Typography>
-                          </Box>
-                        }
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-              </Popover>
-
-              {/* Theme Toggle Button */}
+            {/* Right side actions */}
+            <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              {/* Theme Toggle */}
               <IconButton
                 onClick={toggleColorMode}
-                color="inherit"
                 sx={{
-                  ml: 1,
+                  display: { xs: 'none', md: 'flex' },
+                  width: 36, height: 36,
+                  color: mode === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)',
+                  transition: 'all 0.2s ease',
                   '&:hover': {
-                    bgcolor: 'action.hover',
+                    color: '#06b6d4',
+                    bgcolor: mode === 'dark' ? 'rgba(6,182,212,0.08)' : 'rgba(6,182,212,0.06)',
                   },
                 }}
               >
-                {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
+                {mode === 'dark' ? <Brightness7 sx={{ fontSize: 18 }} /> : <Brightness4 sx={{ fontSize: 18 }} />}
               </IconButton>
 
-            {/* Auth buttons hidden for now */}
-          </Box>
-
-          {/* Mobile Menu Button */}
-          <Box sx={{ display: { xs: 'flex', md: 'none' }, ml: 'auto' }}>
-            <IconButton
-              size="large"
-              edge="end"
-              color="inherit"
-              aria-label="menu"
-              onClick={handleDrawerToggle}
-              sx={{
-                background: 'linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)',
-                color: 'white',
-                borderRadius: 2,
-                width: 48,
-                height: 48,
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 4px 12px rgba(6, 182, 212, 0.2)',
-                '&:hover': {
-                  transform: 'scale(1.05)',
-                  boxShadow: '0 6px 16px rgba(6, 182, 212, 0.3)',
-                  background: 'linear-gradient(135deg, #5a6fd8, #6a4190 100%)',
-                },
-                '&:active': {
-                  transform: 'scale(0.95)',
-                },
-              }}
-            >
-              <MenuIcon sx={{ fontSize: '1.5rem' }} />
-            </IconButton>
-          </Box>
+              {/* Mobile Hamburger */}
+              <IconButton
+                onClick={handleDrawerToggle}
+                sx={{
+                  display: { xs: 'flex', md: 'none' },
+                  width: 40, height: 40,
+                  borderRadius: '10px',
+                  color: mode === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.6)',
+                  bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                  transition: 'all 0.2s ease',
+                  '&:hover': {
+                    bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
+                  },
+                }}
+              >
+                <MenuIcon sx={{ fontSize: 22 }} />
+              </IconButton>
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>
+
+      {/* Programs Mega Menu */}
+      <Popover
+        open={Boolean(programsAnchorEl)}
+        anchorEl={programsAnchorEl}
+        onClose={handleProgramsClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+        slotProps={{
+          paper: {
+            sx: {
+              mt: 1.5,
+              borderRadius: '16px',
+              border: `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)'}`,
+              bgcolor: mode === 'dark' ? 'rgba(17,24,39,0.95)' : 'rgba(255,255,255,0.98)',
+              backdropFilter: 'blur(24px)',
+              boxShadow: mode === 'dark'
+                ? '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05)'
+                : '0 20px 60px rgba(0,0,0,0.12)',
+              overflow: 'hidden',
+              p: 1.5,
+              minWidth: 520,
+            },
+          },
+        }}
+      >
+        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 1 }}>
+          {programItems.map((item) => (
+            <Box
+              key={item.title}
+              component={Link}
+              href={item.href}
+              onClick={handleProgramsClose}
+              sx={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: 1.5,
+                p: 2,
+                borderRadius: '12px',
+                textDecoration: 'none',
+                color: 'inherit',
+                transition: 'all 0.2s ease',
+                '&:hover': {
+                  bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)',
+                  '& .program-arrow': { opacity: 1, transform: 'translateX(0)' },
+                },
+              }}
+            >
+              <Box sx={{
+                width: 40, height: 40,
+                borderRadius: '10px',
+                bgcolor: `${item.color}18`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: item.color,
+                flexShrink: 0,
+                '& .MuiSvgIcon-root': { fontSize: 20 },
+              }}>
+                {item.icon}
+              </Box>
+              <Box sx={{ flex: 1, minWidth: 0 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mb: 0.25 }}>
+                  <Typography sx={{ fontWeight: 600, fontSize: '0.9rem', lineHeight: 1.3 }}>
+                    {item.title}
+                  </Typography>
+                  <Typography sx={{
+                    fontSize: '0.65rem',
+                    fontWeight: 600,
+                    color: item.color,
+                    bgcolor: `${item.color}15`,
+                    px: 0.75, py: 0.15,
+                    borderRadius: '4px',
+                    lineHeight: 1.3,
+                  }}>
+                    {item.ageRange}
+                  </Typography>
+                  <East
+                    className="program-arrow"
+                    sx={{
+                      fontSize: 14,
+                      ml: 'auto',
+                      opacity: 0,
+                      transform: 'translateX(-4px)',
+                      transition: 'all 0.2s ease',
+                      color: item.color,
+                    }}
+                  />
+                </Box>
+                <Typography sx={{
+                  fontSize: '0.78rem',
+                  color: mode === 'dark' ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.45)',
+                  lineHeight: 1.4,
+                }}>
+                  {item.description}
+                </Typography>
+              </Box>
+            </Box>
+          ))}
+        </Box>
+        <Divider sx={{ my: 1, borderColor: mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)' }} />
+        <Box
+          component={Link}
+          href="/programs"
+          onClick={handleProgramsClose}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 0.5,
+            py: 1,
+            borderRadius: '10px',
+            textDecoration: 'none',
+            fontSize: '0.85rem',
+            fontWeight: 600,
+            color: '#06b6d4',
+            transition: 'all 0.2s ease',
+            '&:hover': {
+              bgcolor: 'rgba(6,182,212,0.08)',
+            },
+          }}
+        >
+          View All Programs <East sx={{ fontSize: 16 }} />
+        </Box>
+      </Popover>
+
+      {/* Mobile Drawer */}
       <Drawer
         variant="temporary"
-        anchor="left"
+        anchor="right"
         open={mobileOpen}
         onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true,
-        }}
+        ModalProps={{ keepMounted: true }}
         sx={{
           display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            width: 280,
+            border: 'none',
+          },
+          '& .MuiBackdrop-root': {
+            backdropFilter: 'blur(4px)',
+            bgcolor: 'rgba(0,0,0,0.3)',
+          },
         }}
       >
         {drawer}
       </Drawer>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
+
+      {/* User Account Menu */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
         onClose={handleClose}
         onClick={handleClose}
-        PaperProps={{
-          elevation: 3,
-          sx: {
-            mt: 1.5,
-            minWidth: 240,
-            borderRadius: 2,
-            '& .MuiMenuItem-root': {
-              py: 1.5,
-              px: 2,
-              typography: 'body2',
-              '&:hover': {
-                bgcolor: 'action.hover',
+        slotProps={{
+          paper: {
+            elevation: 0,
+            sx: {
+              mt: 1.5,
+              minWidth: 200,
+              borderRadius: '12px',
+              border: `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)'}`,
+              bgcolor: mode === 'dark' ? 'rgba(17,24,39,0.95)' : 'rgba(255,255,255,0.98)',
+              backdropFilter: 'blur(24px)',
+              boxShadow: mode === 'dark'
+                ? '0 16px 48px rgba(0,0,0,0.4)'
+                : '0 16px 48px rgba(0,0,0,0.1)',
+              '& .MuiMenuItem-root': {
+                py: 1.2, px: 2,
+                borderRadius: '8px',
+                mx: 0.5,
+                fontSize: '0.9rem',
+                '&:hover': { bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)' },
               },
             },
           },
         }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          >
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
         <MenuItem onClick={handleProfile}>
-          <ListItemIcon>
-            <AccountCircle fontSize="small" />
-          </ListItemIcon>
+          <ListItemIcon><AccountCircle sx={{ fontSize: 18 }} /></ListItemIcon>
           <ListItemText>Profile</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleDashboard}>
-          <ListItemIcon>
-            <Dashboard fontSize="small" />
-          </ListItemIcon>
+          <ListItemIcon><Dashboard sx={{ fontSize: 18 }} /></ListItemIcon>
           <ListItemText>Dashboard</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleSettings}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
+          <ListItemIcon><Settings sx={{ fontSize: 18 }} /></ListItemIcon>
           <ListItemText>Settings</ListItemText>
-            </MenuItem>
-        <Divider />
+        </MenuItem>
+        <Divider sx={{ my: 0.5, mx: 1 }} />
         <SignOutButton>
-            <MenuItem>
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
+          <MenuItem sx={{ color: '#ef4444' }}>
+            <ListItemIcon><Logout sx={{ fontSize: 18, color: '#ef4444' }} /></ListItemIcon>
             <ListItemText>Sign Out</ListItemText>
           </MenuItem>
-              </SignOutButton>
-          </Menu>
-                    </Box>
+        </SignOutButton>
+      </Menu>
+    </Box>
   );
-} 
+}
