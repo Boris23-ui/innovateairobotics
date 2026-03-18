@@ -77,7 +77,7 @@ export default function Footer() {
             </Typography>
             <Box sx={{ mb: 2 }}>
               <Image
-                src="/images/InnovateAI Robotics Inc. logo.png"
+                src="/logo.png"
                 alt="InnovateAI Robotics Logo"
                 width={160}
                 height={80}

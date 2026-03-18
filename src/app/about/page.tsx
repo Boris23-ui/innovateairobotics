@@ -91,7 +91,7 @@ export default function AboutPage() {
           <ScrollReveal>
             <Box sx={{ mb: 3 }}>
               <Image
-                src="/images/InnovateAI Robotics Inc. logo.png"
+                src="/logo.png"
                 alt="InnovateAI Robotics Logo"
                 width={120}
                 height={120}
