@@ -1,0 +1,36 @@
+{
+  "date": "2026-03-18",
+  "window": "7d",
+  "metrics": {
+    "commits": 12,
+    "contributors": 1,
+    "prs_merged": 2,
+    "insertions": 9661,
+    "deletions": 3073,
+    "net_loc": 6588,
+    "test_loc": 0,
+    "test_ratio": 0,
+    "active_days": 3,
+    "sessions": 5,
+    "deep_sessions": 2,
+    "avg_session_minutes": 56,
+    "loc_per_session_hour": 2050,
+    "feat_pct": 0.56,
+    "fix_pct": 0.11,
+    "chore_pct": 0.22,
+    "peak_hour": 12,
+    "ai_assisted_commits": 7
+  },
+  "authors": {
+    "Basil-Boris-Kanyamibwa": {
+      "commits": 10,
+      "insertions": 9661,
+      "deletions": 3073,
+      "test_ratio": 0,
+      "top_area": "src/components/"
+    }
+  },
+  "streak_days": 1,
+  "tweetable": "Week of Mar 12: 12 commits (1 contributor), 9.7K LOC, 0% tests, 2 PRs, 58% AI-assisted, peak: noon PT | Streak: 1d",
+  "notes": "Excludes ~22K LOC gstack tooling add/delete noise. Solo repo. All significant work in src/ — dark theme redesign, security hardening, navbar redesign."
+}
