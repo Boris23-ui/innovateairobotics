@@ -10,6 +10,7 @@ import {
   Public, CheckCircle,
 } from "@mui/icons-material";
 import Image from "next/image";
+import { useTheme } from "@mui/material";
 
 const PROGRAMS = [
   "Tiny Tinkerers (Ages 5 & Under)",
@@ -49,6 +50,8 @@ const CAMPUSES = [
 ];
 
 export default function ContactPage() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const [form, setForm] = useState({ name: "", email: "", phone: "", program: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -97,7 +100,7 @@ export default function ContactPage() {
       </Box>
 
       {/* CONTACT CARDS */}
-      <Box sx={{ py: 6, bgcolor: "#f8fafc" }}>
+      <Box sx={{ py: 6, bgcolor: isDark ? "#0d1117" : "#f8fafc" }}>
         <Container maxWidth="lg">
           <Grid container spacing={3}>
             {[
@@ -107,12 +110,12 @@ export default function ContactPage() {
               { icon: AccessTime, label: "Office Hours", value: "Mon-Fri 9am-7pm PST", color: "#8b5cf6" },
             ].map(({ icon: Icon, label, value, color }) => (
               <Grid item xs={12} sm={6} md={3} key={label}>
-                <Card elevation={0} sx={{ border: "1px solid #e5e7eb", borderRadius: 4, height: "100%", textAlign: "center", p: 1, transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-4px)", boxShadow: "0 12px 32px rgba(0,0,0,0.1)" } }}>
+                <Card elevation={0} sx={{ border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: 4, height: "100%", textAlign: "center", p: 1, transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-4px)", boxShadow: isDark ? "0 12px 32px rgba(0,0,0,0.3)" : "0 12px 32px rgba(0,0,0,0.1)" } }}>
                   <CardContent sx={{ py: 4 }}>
                     <Box sx={{ width: 56, height: 56, borderRadius: "50%", bgcolor: `${color}15`, display: "flex", alignItems: "center", justifyContent: "center", mx: "auto", mb: 2 }}>
                       <Icon sx={{ color, fontSize: 28 }} />
                     </Box>
-                    <Typography sx={{ fontWeight: 700, color: "#374151", mb: 0.5 }}>{label}</Typography>
+                    <Typography sx={{ fontWeight: 700, color: "text.primary", mb: 0.5 }}>{label}</Typography>
                     <Typography variant="body2" sx={{ color: "text.secondary" }}>{value}</Typography>
                   </CardContent>
                 </Card>
@@ -123,12 +126,12 @@ export default function ContactPage() {
       </Box>
 
       {/* FORM + INFO */}
-      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "white" }}>
+      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: isDark ? "#0a0a0f" : "white" }}>
         <Container maxWidth="lg">
           <Grid container spacing={8}>
             {/* FORM */}
             <Grid item xs={12} md={7}>
-              <Typography variant="h3" sx={{ fontWeight: 800, color: "#0f172a", mb: 1 }}>Send Us a Message</Typography>
+              <Typography variant="h3" sx={{ fontWeight: 800, color: "text.primary", mb: 1 }}>Send Us a Message</Typography>
               <Typography sx={{ color: "text.secondary", mb: 5 }}>
                 Fill out the form and our team will get back to you within one business day.
               </Typography>
@@ -169,7 +172,7 @@ export default function ContactPage() {
 
             {/* INFO */}
             <Grid item xs={12} md={5}>
-              <Typography variant="h4" sx={{ fontWeight: 800, color: "#0f172a", mb: 4 }}>Why Reach Out?</Typography>
+              <Typography variant="h4" sx={{ fontWeight: 800, color: "text.primary", mb: 4 }}>Why Reach Out?</Typography>
               <Stack spacing={3} sx={{ mb: 6 }}>
                 {[
                   { title: "Free Trial Class", desc: "We offer a free introductory session so your child can experience our program before committing." },
@@ -180,7 +183,7 @@ export default function ContactPage() {
                   <Stack key={title} direction="row" spacing={2} alignItems="flex-start">
                     <CheckCircle sx={{ color: "#2563eb", mt: 0.5 }} />
                     <Box>
-                      <Typography sx={{ fontWeight: 700, color: "#0f172a" }}>{title}</Typography>
+                      <Typography sx={{ fontWeight: 700, color: "text.primary" }}>{title}</Typography>
                       <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>{desc}</Typography>
                     </Box>
                   </Stack>
@@ -200,10 +203,10 @@ export default function ContactPage() {
       </Box>
 
       {/* CAMPUS CARDS */}
-      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "#f8fafc" }}>
+      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: isDark ? "#0d1117" : "#f8fafc" }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: "center", mb: 8 }}>
-            <Typography variant="h3" sx={{ fontWeight: 800, color: "#0f172a", mb: 2 }}>Our Campuses</Typography>
+            <Typography variant="h3" sx={{ fontWeight: 800, color: "text.primary", mb: 2 }}>Our Campuses</Typography>
             <Typography sx={{ color: "text.secondary", maxWidth: 500, mx: "auto" }}>
               Visit us in person at one of our campuses, or join us online from anywhere in the world.
             </Typography>
@@ -211,27 +214,27 @@ export default function ContactPage() {
           <Grid container spacing={4}>
             {CAMPUSES.map((campus) => (
               <Grid item xs={12} md={4} key={campus.name}>
-                <Card elevation={0} sx={{ border: "1px solid #e5e7eb", borderRadius: 4, overflow: "hidden", height: "100%", transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-4px)", boxShadow: "0 16px 40px rgba(0,0,0,0.1)" } }}>
+                <Card elevation={0} sx={{ border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: 4, overflow: "hidden", height: "100%", transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-4px)", boxShadow: isDark ? "0 16px 40px rgba(0,0,0,0.3)" : "0 16px 40px rgba(0,0,0,0.1)" } }}>
                   <Box sx={{ position: "relative", height: 200 }}>
                     <Image src={campus.image} alt={campus.name} fill style={{ objectFit: "cover" }} />
-                    <Box sx={{ position: "absolute", top: 12, right: 12, bgcolor: "white", borderRadius: 2, px: 1.5, py: 0.5 }}>
+                    <Box sx={{ position: "absolute", top: 12, right: 12, bgcolor: isDark ? "rgba(17,24,39,0.9)" : "white", borderRadius: 2, px: 1.5, py: 0.5 }}>
                       <Typography sx={{ fontSize: "1.2rem" }}>{campus.flag}</Typography>
                     </Box>
                   </Box>
                   <CardContent sx={{ p: 3 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: "#0f172a" }}>{campus.name}</Typography>
+                    <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: "text.primary" }}>{campus.name}</Typography>
                     <Stack spacing={1.5}>
                       <Stack direction="row" spacing={1.5} alignItems="flex-start">
                         <LocationOn sx={{ color: "#2563eb", fontSize: 18, mt: 0.3 }} />
-                        <Typography variant="body2" sx={{ color: "#4b5563" }}>{campus.address}</Typography>
+                        <Typography variant="body2" sx={{ color: "text.secondary" }}>{campus.address}</Typography>
                       </Stack>
                       <Stack direction="row" spacing={1.5} alignItems="center">
                         <Phone sx={{ color: "#10b981", fontSize: 18 }} />
-                        <Typography variant="body2" sx={{ color: "#4b5563" }}>{campus.phone}</Typography>
+                        <Typography variant="body2" sx={{ color: "text.secondary" }}>{campus.phone}</Typography>
                       </Stack>
                       <Stack direction="row" spacing={1.5} alignItems="center">
                         <AccessTime sx={{ color: "#f59e0b", fontSize: 18 }} />
-                        <Typography variant="body2" sx={{ color: "#4b5563" }}>{campus.hours}</Typography>
+                        <Typography variant="body2" sx={{ color: "text.secondary" }}>{campus.hours}</Typography>
                       </Stack>
                     </Stack>
                   </CardContent>
@@ -241,7 +244,7 @@ export default function ContactPage() {
           </Grid>
 
           {/* ONLINE */}
-          <Card elevation={0} sx={{ mt: 4, border: "1px solid #e5e7eb", borderRadius: 4, p: 4, background: "linear-gradient(135deg, #0f172a, #1e3a5f)" }}>
+          <Card elevation={0} sx={{ mt: 4, border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: 4, p: 4, background: "linear-gradient(135deg, #0f172a, #1e3a5f)" }}>
             <Grid container spacing={4} alignItems="center">
               <Grid item xs={12} md={8}>
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>

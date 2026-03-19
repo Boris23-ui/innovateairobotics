@@ -234,7 +234,7 @@ export default function AboutPage() {
       </Box>
 
       {/* ── LEADERSHIP SECTION ── */}
-      <Box sx={{ bgcolor: '#0d1117', py: { xs: 6, md: 10 } }}>
+      <Box sx={{ bgcolor: isDark ? '#0d1117' : '#f8fafc', py: { xs: 6, md: 10 } }}>
         <Container maxWidth="lg">
           <ScrollReveal>
             <Box sx={{ textAlign: 'center', mb: 6 }}>
@@ -243,7 +243,7 @@ export default function AboutPage() {
               >
                 Our Team
               </Typography>
-              <Typography variant="h3" sx={{ fontWeight: 800, color: '#f1f5f9', fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
+              <Typography variant="h3" sx={{ fontWeight: 800, color: 'text.primary', fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
                 Leadership
               </Typography>
             </Box>
@@ -255,13 +255,13 @@ export default function AboutPage() {
               <ScrollReveal delay={0}>
                 <Box
                   sx={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
+                    border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
                     borderRadius: '24px',
                     p: { xs: 3, md: 4 },
                     height: '100%',
                     transition: 'border-color 0.3s',
-                    '&:hover': { borderColor: 'rgba(6, 182, 212, 0.3)' },
+                    '&:hover': { borderColor: 'rgba(6, 182, 212, 0.3)', boxShadow: isDark ? '0 8px 30px rgba(6,182,212,0.1)' : '0 8px 30px rgba(0,0,0,0.08)' },
                   }}
                 >
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
@@ -283,20 +283,20 @@ export default function AboutPage() {
                         style={{ objectFit: 'cover' }}
                       />
                     </Box>
-                    <Typography variant="h5" sx={{ fontWeight: 700, color: '#f1f5f9' }}>
+                    <Typography variant="h5" sx={{ fontWeight: 700, color: 'text.primary' }}>
                       John H. Williams
                     </Typography>
                     <Typography sx={{ color: '#06b6d4', fontWeight: 600, fontSize: '0.95rem' }}>
                       President / Founder
                     </Typography>
                   </Box>
-                  <Typography sx={{ color: '#94a3b8', lineHeight: 1.8, mb: 2, fontSize: '0.9rem' }}>
+                  <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 2, fontSize: '0.9rem' }}>
                     His career showcases a blend of technical expertise and visionary leadership. He began as a programmer at Los Angeles County Healthcare, transitioned to Mattel Toys as a systems analyst, and tackled high-impact research at The Rand Corporation.
                   </Typography>
-                  <Typography sx={{ color: '#94a3b8', lineHeight: 1.8, mb: 2, fontSize: '0.9rem' }}>
+                  <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 2, fontSize: '0.9rem' }}>
                     At Atlantic Richfield Company (ARCO), he oversaw user-centric systems for the Products Division. In Silicon Valley, John embraced the startup environment with roles at AGA and Securus, and served as VP of Operations at Tsquared Robotics LLC.
                   </Typography>
-                  <Typography sx={{ color: '#94a3b8', lineHeight: 1.8, fontSize: '0.9rem' }}>
+                  <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, fontSize: '0.9rem' }}>
                     This experience led him to found Innovate AI Robotics Inc., a nonprofit dedicated to advancing robotics education. John received his bachelor's degree from California Lutheran University in Business Administration/Information Systems.
                   </Typography>
                 </Box>
@@ -308,13 +308,13 @@ export default function AboutPage() {
               <ScrollReveal delay={0.15}>
                 <Box
                   sx={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
+                    border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
                     borderRadius: '24px',
                     p: { xs: 3, md: 4 },
                     height: '100%',
                     transition: 'border-color 0.3s',
-                    '&:hover': { borderColor: 'rgba(6, 182, 212, 0.3)' },
+                    '&:hover': { borderColor: 'rgba(6, 182, 212, 0.3)', boxShadow: isDark ? '0 8px 30px rgba(6,182,212,0.1)' : '0 8px 30px rgba(0,0,0,0.08)' },
                   }}
                 >
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
@@ -336,20 +336,20 @@ export default function AboutPage() {
                         style={{ objectFit: 'cover' }}
                       />
                     </Box>
-                    <Typography variant="h5" sx={{ fontWeight: 700, color: '#f1f5f9' }}>
+                    <Typography variant="h5" sx={{ fontWeight: 700, color: 'text.primary' }}>
                       Basil K. Boris
                     </Typography>
                     <Typography sx={{ color: '#06b6d4', fontWeight: 600, fontSize: '0.95rem' }}>
                       VP Operations / CTO
                     </Typography>
                   </Box>
-                  <Typography sx={{ color: '#94a3b8', lineHeight: 1.8, mb: 2, fontSize: '0.9rem' }}>
+                  <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 2, fontSize: '0.9rem' }}>
                     His career reflects a blend of technical expertise and a commitment to empowering learners. As CIO at Tsquared Robotics, he designed advanced robotics systems for educational applications while integrating Learning Management Systems to enhance global educational services.
                   </Typography>
-                  <Typography sx={{ color: '#94a3b8', lineHeight: 1.8, mb: 2, fontSize: '0.9rem' }}>
+                  <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 2, fontSize: '0.9rem' }}>
                     His passion for education is evident in the engaging robotics workshops and training sessions he has designed and delivered for students, educators, and industry professionals, both in-person and virtually.
                   </Typography>
-                  <Typography sx={{ color: '#94a3b8', lineHeight: 1.8, fontSize: '0.9rem' }}>
+                  <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, fontSize: '0.9rem' }}>
                     He is now building the all-in-one InnovateAI Robotics standalone app that will transform how robotics education is offered to students, teachers, organizations, and leading institutions. Boris is currently pursuing his Bachelor's degree in Computer Science.
                   </Typography>
                 </Box>

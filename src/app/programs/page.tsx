@@ -11,6 +11,7 @@ import {
 } from "@mui/icons-material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useTheme } from "@mui/material";
 
 const programs = [
   {
@@ -87,6 +88,8 @@ const ProgramIcon: React.FC<{ title: string }> = ({ title }) => {
 
 export default function ProgramsPage() {
   const router = useRouter();
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   return (
     <>
       {/* Hero */}
@@ -170,7 +173,7 @@ export default function ProgramsPage() {
       </Container>
 
       {/* How It Works */}
-      <Box sx={{ bgcolor: "grey.50", py: { xs: 8, md: 12 } }}>
+      <Box sx={{ bgcolor: isDark ? "#0d1117" : "grey.50", py: { xs: 8, md: 12 } }}>
         <Container maxWidth="lg">
           <Box textAlign="center" mb={8}>
             <Typography variant="h3" fontWeight={800} gutterBottom>How It Works</Typography>

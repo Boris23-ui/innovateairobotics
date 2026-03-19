@@ -11,6 +11,7 @@ import {
   LocationOnOutlined,
 } from '@mui/icons-material';
 import Image from 'next/image';
+import { useTheme } from '@mui/material';
 
 const footerLinks = [
   {
@@ -50,12 +51,14 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
   return (
     <Box
       component="footer"
       sx={{
-        bgcolor: '#04040a',
-        borderTop: '1px solid rgba(6,182,212,0.12)',
+        bgcolor: isDark ? '#04040a' : '#f8fafc',
+        borderTop: `1px solid ${isDark ? 'rgba(6,182,212,0.12)' : 'rgba(0,0,0,0.08)'}`,
         pt: { xs: 8, md: 10 },
         pb: { xs: 4, md: 5 },
         position: 'relative',
@@ -100,7 +103,7 @@ export default function Footer() {
                   sx={{
                     fontWeight: 700,
                     fontSize: '0.95rem',
-                    color: '#f1f5f9',
+                    color: isDark ? '#f1f5f9' : '#0f172a',
                     lineHeight: 1.2,
                     letterSpacing: '-0.01em',
                   }}
@@ -114,7 +117,7 @@ export default function Footer() {
             </Box>
 
             <Typography
-              sx={{ color: '#64748b', fontSize: '0.875rem', lineHeight: 1.75, mb: 3, maxWidth: 300 }}
+              sx={{ color: isDark ? '#64748b' : '#475569', fontSize: '0.875rem', lineHeight: 1.75, mb: 3, maxWidth: 300 }}
             >
               Empowering the next generation through AI and robotics education — from Mountain View to Nairobi and beyond.
             </Typography>
@@ -128,7 +131,7 @@ export default function Footer() {
               ].map((item) => (
                 <Box key={item.text} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Box sx={{ color: '#06b6d4', display: 'flex', flexShrink: 0 }}>{item.icon}</Box>
-                  <Typography sx={{ color: '#64748b', fontSize: '0.8rem' }}>{item.text}</Typography>
+                  <Typography sx={{ color: isDark ? '#64748b' : '#475569', fontSize: '0.8rem' }}>{item.text}</Typography>
                 </Box>
               ))}
             </Box>
@@ -139,7 +142,7 @@ export default function Footer() {
             <Box key={section.title}>
               <Typography
                 sx={{
-                  color: '#f1f5f9',
+                  color: isDark ? '#f1f5f9' : '#0f172a',
                   fontWeight: 600,
                   fontSize: '0.8rem',
                   letterSpacing: '0.08em',
@@ -156,7 +159,7 @@ export default function Footer() {
                     href={link.href}
                     underline="none"
                     sx={{
-                      color: '#64748b',
+                      color: isDark ? '#64748b' : '#475569',
                       fontSize: '0.875rem',
                       transition: 'color 0.2s',
                       '&:hover': { color: '#06b6d4' },
@@ -171,7 +174,7 @@ export default function Footer() {
         </Box>
 
         {/* Divider */}
-        <Box sx={{ height: '1px', bgcolor: 'rgba(255,255,255,0.06)', mb: 4 }} />
+        <Box sx={{ height: '1px', bgcolor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)', mb: 4 }} />
 
         {/* Bottom bar */}
         <Box
@@ -184,10 +187,10 @@ export default function Footer() {
           }}
         >
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, textAlign: { xs: 'center', sm: 'left' } }}>
-            <Typography sx={{ color: '#475569', fontSize: '0.8rem' }}>
+            <Typography sx={{ color: isDark ? '#475569' : '#64748b', fontSize: '0.8rem' }}>
               © {new Date().getFullYear()} InnovateAI Robotics Inc. All rights reserved.
             </Typography>
-            <Typography sx={{ color: '#334155', fontSize: '0.72rem' }}>
+            <Typography sx={{ color: isDark ? '#334155' : '#94a3b8', fontSize: '0.72rem' }}>
               TaxID: 99-2801688 · Donor-supported 501(c)(3) tax-exempt charity
             </Typography>
           </Box>
@@ -205,9 +208,9 @@ export default function Footer() {
                 sx={{
                   width: 34,
                   height: 34,
-                  border: '1px solid rgba(255,255,255,0.08)',
+                  border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
                   borderRadius: '8px',
-                  color: '#475569',
+                  color: isDark ? '#475569' : '#64748b',
                   transition: 'all 0.2s',
                   '&:hover': {
                     borderColor: 'rgba(6,182,212,0.4)',

@@ -35,7 +35,7 @@ const Features: React.FC = () => {
     <section
       ref={ref}
       className="py-20 spx-particle-bg"
-      style={{ background: '#0d1117' }}
+      style={{ background: 'var(--spx-bg-alt)' }}
     >
       <div className="container mx-auto px-6">
         <motion.div
@@ -46,7 +46,7 @@ const Features: React.FC = () => {
           <p className="text-center text-cyan-400 uppercase tracking-[0.3em] text-sm mb-3">
             Why Choose Us
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12" style={{ color: 'var(--spx-text)' }}>
             Built for the <span className="gradient-text">Future</span>
           </h2>
         </motion.div>
@@ -74,10 +74,10 @@ const Features: React.FC = () => {
                 >
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-white">
+                <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--spx-text)' }}>
                   {feature.title}
                 </h3>
-                <p style={{ color: '#94a3b8' }} className="text-sm leading-relaxed">
+                <p style={{ color: 'var(--spx-text-secondary)' }} className="text-sm leading-relaxed">
                   {feature.description}
                 </p>
               </div>

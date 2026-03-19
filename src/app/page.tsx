@@ -24,6 +24,7 @@ import {
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { motion, useInView } from 'framer-motion';
+import { useTheme } from '@mui/material';
 
 // ─── Animation Helpers ─────────────────────────────────────────────────────
 
@@ -71,6 +72,8 @@ function AnimatedCounter({ target, suffix = '', prefix = '' }: { target: number;
 
 export default function LandingPage() {
   const router = useRouter();
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
 
   const features = [
     {
@@ -324,10 +327,10 @@ export default function LandingPage() {
 
       {/* ═══ STATS BAR ══════════════════════════════════════════════════════ */}
       <Box sx={{
-        bgcolor: '#0d1117',
+        bgcolor: isDark ? '#0d1117' : '#f8fafc',
         py: { xs: 5, md: 6 },
-        borderTop: '1px solid rgba(6, 182, 212, 0.1)',
-        borderBottom: '1px solid rgba(6, 182, 212, 0.1)',
+        borderTop: `1px solid ${isDark ? 'rgba(6, 182, 212, 0.1)' : 'rgba(0,0,0,0.06)'}`,
+        borderBottom: `1px solid ${isDark ? 'rgba(6, 182, 212, 0.1)' : 'rgba(0,0,0,0.06)'}`,
       }}>
         <Container maxWidth="lg">
           <Grid container spacing={4} justifyContent="center">
@@ -353,7 +356,7 @@ export default function LandingPage() {
                     <Typography
                       variant="body2"
                       sx={{
-                        color: '#64748b',
+                        color: 'text.secondary',
                         textTransform: 'uppercase',
                         letterSpacing: '0.15em',
                         fontSize: { xs: '0.7rem', md: '0.8rem' },
@@ -371,7 +374,7 @@ export default function LandingPage() {
       </Box>
 
       {/* ═══ CAMPUS GALLERY ═════════════════════════════════════════════════ */}
-      <Box sx={{ bgcolor: '#0a0a0f', py: { xs: 8, md: 12 } }}>
+      <Box sx={{ bgcolor: isDark ? '#0a0a0f' : '#ffffff', py: { xs: 8, md: 12 } }}>
         <Container maxWidth="lg">
           <ScrollReveal>
             <Typography
@@ -403,7 +406,7 @@ export default function LandingPage() {
               variant="body1"
               sx={{
                 textAlign: 'center',
-                color: '#64748b',
+                color: 'text.secondary',
                 mb: { xs: 5, md: 8 },
                 maxWidth: 700,
                 mx: 'auto',
@@ -460,7 +463,7 @@ export default function LandingPage() {
                       </Typography>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                         <LocationOn sx={{ fontSize: 16, color: '#06b6d4' }} />
-                        <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                        <Typography variant="body2" sx={{ color: 'rgba(148,163,184,1)' }}>
                           {campus.location}
                         </Typography>
                       </Box>
@@ -475,7 +478,7 @@ export default function LandingPage() {
 
       {/* ═══ FEATURES ═══════════════════════════════════════════════════════ */}
       <Box sx={{
-        bgcolor: '#0d1117',
+        bgcolor: isDark ? '#0d1117' : '#f8fafc',
         py: { xs: 8, md: 12 },
         position: 'relative',
       }}
@@ -538,10 +541,10 @@ export default function LandingPage() {
                     }}>
                       {feature.icon}
                     </Box>
-                    <Typography variant="h6" sx={{ fontWeight: 600, mb: 1.5, color: 'white' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 600, mb: 1.5, color: 'text.primary' }}>
                       {feature.title}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: '#94a3b8', lineHeight: 1.6 }}>
+                    <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6 }}>
                       {feature.description}
                     </Typography>
                   </Box>
@@ -629,7 +632,7 @@ export default function LandingPage() {
       </Box>
 
       {/* ═══ LEARNING PATH (TIMELINE) ══════════════════════════════════════ */}
-      <Box sx={{ bgcolor: '#0a0a0f', py: { xs: 8, md: 12 } }}>
+      <Box sx={{ bgcolor: isDark ? '#0a0a0f' : '#ffffff', py: { xs: 8, md: 12 } }}>
         <Container maxWidth="lg">
           <ScrollReveal>
             <Typography
@@ -718,7 +721,7 @@ export default function LandingPage() {
                           {item.title}
                         </Typography>
                       </Box>
-                      <Typography variant="h6" sx={{ color: 'white', mb: 2, fontWeight: 500 }}>
+                      <Typography variant="h6" sx={{ color: 'text.primary', mb: 2, fontWeight: 500 }}>
                         {item.subtitle}
                       </Typography>
 
@@ -728,7 +731,7 @@ export default function LandingPage() {
                             width: 6, height: 6, borderRadius: '50%',
                             bgcolor: '#06b6d4', flexShrink: 0,
                           }} />
-                          <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                             {point}
                           </Typography>
                         </Box>
@@ -765,7 +768,7 @@ export default function LandingPage() {
                       width: 16, height: 16,
                       borderRadius: '50%',
                       bgcolor: '#06b6d4',
-                      border: '3px solid #0a0a0f',
+                      border: `3px solid ${isDark ? '#0a0a0f' : '#ffffff'}`,
                       boxShadow: '0 0 12px rgba(6, 182, 212, 0.4)',
                     }} />
                   </Box>
@@ -926,7 +929,7 @@ export default function LandingPage() {
                     <Typography variant="h5" sx={{ fontWeight: 700, color: '#06b6d4', mb: 1.5 }}>
                       {card.title}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: '#94a3b8', lineHeight: 1.6 }}>
+                    <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6 }}>
                       {card.desc}
                     </Typography>
                   </Box>

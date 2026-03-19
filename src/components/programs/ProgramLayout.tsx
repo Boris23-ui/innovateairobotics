@@ -397,17 +397,17 @@ export const ProgramLayout = ({
                   <Box
                     key={i}
                     sx={{
-                      bgcolor: '#1f2937',
+                      bgcolor: isDark ? '#1f2937' : '#e5e7eb',
                       borderRadius: '36px',
                       px: 2.5,
                       py: 1.5,
                       textAlign: 'center',
                     }}
                   >
-                    <Typography sx={{ color: '#9ca3af', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+                    <Typography sx={{ color: 'text.secondary', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
                       {detail.label}
                     </Typography>
-                    <Typography sx={{ color: '#f3f4f6', fontSize: '0.9rem', fontWeight: 600 }}>
+                    <Typography sx={{ color: 'text.primary', fontSize: '0.9rem', fontWeight: 600 }}>
                       {detail.value}
                     </Typography>
                   </Box>

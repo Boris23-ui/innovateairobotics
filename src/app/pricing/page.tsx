@@ -11,6 +11,7 @@ import {
   School, Groups, Computer, Favorite,
 } from "@mui/icons-material";
 import Link from "next/link";
+import { useTheme } from "@mui/material";
 
 const PROGRAMS = [
   {
@@ -89,6 +90,8 @@ const INCLUDED = [
 ];
 
 export default function PricingPage() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const [billing, setBilling] = useState<"monthly" | "semester">("monthly");
 
   return (
@@ -107,10 +110,10 @@ export default function PricingPage() {
           </Typography>
           <ToggleButtonGroup value={billing} exclusive onChange={(_, v) => v && setBilling(v)}
             sx={{ bgcolor: "rgba(255,255,255,0.1)", borderRadius: 3, p: 0.5, border: "1px solid rgba(255,255,255,0.2)" }}>
-            <ToggleButton value="monthly" sx={{ px: 4, py: 1.5, color: "rgba(255,255,255,0.7)", fontWeight: 600, borderRadius: "10px !important", border: "none", "&.Mui-selected": { bgcolor: "white", color: "#0f172a", fontWeight: 700 } }}>
+            <ToggleButton value="monthly" sx={{ px: 4, py: 1.5, color: "rgba(255,255,255,0.7)", fontWeight: 600, borderRadius: "10px !important", border: "none", "&.Mui-selected": { bgcolor: "white", color: "text.primary", fontWeight: 700 } }}>
               Monthly
             </ToggleButton>
-            <ToggleButton value="semester" sx={{ px: 4, py: 1.5, color: "rgba(255,255,255,0.7)", fontWeight: 600, borderRadius: "10px !important", border: "none", "&.Mui-selected": { bgcolor: "white", color: "#0f172a", fontWeight: 700 } }}>
+            <ToggleButton value="semester" sx={{ px: 4, py: 1.5, color: "rgba(255,255,255,0.7)", fontWeight: 600, borderRadius: "10px !important", border: "none", "&.Mui-selected": { bgcolor: "white", color: "text.primary", fontWeight: 700 } }}>
               Semester — Save 25%
             </ToggleButton>
           </ToggleButtonGroup>
@@ -139,12 +142,12 @@ export default function PricingPage() {
       </Box>
 
       {/* PRICING CARDS */}
-      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "#f8fafc" }}>
+      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: isDark ? "#0a0a0f" : "#f8fafc" }}>
         <Container maxWidth="xl">
           <Grid container spacing={3} justifyContent="center">
             {PROGRAMS.map((prog) => (
               <Grid item xs={12} sm={6} md={4} lg={2.4} key={prog.name}>
-                <Card elevation={0} sx={{ border: prog.popular ? `2px solid ${prog.color}` : "1px solid #e5e7eb", borderRadius: 4, height: "100%", display: "flex", flexDirection: "column", position: "relative", transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-6px)", boxShadow: `0 20px 50px ${prog.color}25` } }}>
+                <Card elevation={0} sx={{ border: prog.popular ? `2px solid ${prog.color}` : `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: 4, height: "100%", display: "flex", flexDirection: "column", position: "relative", transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-6px)", boxShadow: `0 20px 50px ${prog.color}25` } }}>
                   {prog.popular && (
                     <Box sx={{ position: "absolute", top: -14, left: "50%", transform: "translateX(-50%)" }}>
                       <Chip label="Most Popular" size="small" sx={{ bgcolor: prog.color, color: "white", fontWeight: 700 }} />
@@ -154,11 +157,11 @@ export default function PricingPage() {
                     <Box sx={{ width: 44, height: 44, borderRadius: 3, bgcolor: `${prog.color}20`, display: "flex", alignItems: "center", justifyContent: "center", mb: 2 }}>
                       <School sx={{ color: prog.color, fontSize: 22 }} />
                     </Box>
-                    <Typography variant="h6" sx={{ fontWeight: 800, color: "#0f172a", mb: 0.5 }}>{prog.name}</Typography>
+                    <Typography variant="h6" sx={{ fontWeight: 800, color: "text.primary", mb: 0.5 }}>{prog.name}</Typography>
                     <Chip label={prog.age} size="small" sx={{ bgcolor: `${prog.color}15`, color: prog.color, fontWeight: 600, mb: 3, alignSelf: "flex-start", fontSize: "0.75rem" }} />
 
                     <Box sx={{ mb: 3 }}>
-                      <Typography variant="h3" sx={{ fontWeight: 900, color: "#0f172a", lineHeight: 1 }}>
+                      <Typography variant="h3" sx={{ fontWeight: 900, color: "text.primary", lineHeight: 1 }}>
                         ${billing === "monthly" ? prog.monthly : Math.round(prog.semester / 6)}
                       </Typography>
                       <Typography variant="body2" sx={{ color: "text.secondary" }}>
@@ -174,7 +177,7 @@ export default function PricingPage() {
                       {prog.features.map((f) => (
                         <Stack key={f} direction="row" spacing={1} alignItems="flex-start">
                           <CheckCircle sx={{ color: prog.color, fontSize: 15, mt: 0.4, flexShrink: 0 }} />
-                          <Typography variant="body2" sx={{ color: "#4b5563", fontSize: "0.83rem" }}>{f}</Typography>
+                          <Typography variant="body2" sx={{ color: "text.secondary", fontSize: "0.83rem" }}>{f}</Typography>
                         </Stack>
                       ))}
                     </Stack>
@@ -195,7 +198,7 @@ export default function PricingPage() {
       </Box>
 
       {/* ENTERPRISE */}
-      <Box sx={{ py: 6, bgcolor: "white" }}>
+      <Box sx={{ py: 6, bgcolor: isDark ? "#111827" : "white" }}>
         <Container maxWidth="lg">
           <Card elevation={0} sx={{ borderRadius: 4, background: "linear-gradient(135deg, #0f172a, #1e3a5f)", p: { xs: 4, md: 6 } }}>
             <Grid container spacing={4} alignItems="center">
@@ -228,11 +231,11 @@ export default function PricingPage() {
       </Box>
 
       {/* FAQ */}
-      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "#f8fafc" }}>
+      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: isDark ? "#0a0a0f" : "#f8fafc" }}>
         <Container maxWidth="lg">
           <Grid container spacing={8}>
             <Grid item xs={12} md={4}>
-              <Typography variant="h3" sx={{ fontWeight: 800, color: "#0f172a", mb: 2 }}>Frequently Asked Questions</Typography>
+              <Typography variant="h3" sx={{ fontWeight: 800, color: "text.primary", mb: 2 }}>Frequently Asked Questions</Typography>
               <Typography sx={{ color: "text.secondary", mb: 4 }}>
                 Have more questions? Our team is happy to help.
               </Typography>
@@ -243,12 +246,12 @@ export default function PricingPage() {
             </Grid>
             <Grid item xs={12} md={8}>
               {FAQS.map((faq) => (
-                <Accordion key={faq.q} elevation={0} sx={{ border: "1px solid #e5e7eb", borderRadius: "12px !important", mb: 2, "&:before": { display: "none" }, overflow: "hidden" }}>
+                <Accordion key={faq.q} elevation={0} sx={{ border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: "12px !important", mb: 2, "&:before": { display: "none" }, overflow: "hidden" }}>
                   <AccordionSummary expandIcon={<ExpandMore />} sx={{ px: 3, py: 1 }}>
-                    <Typography sx={{ fontWeight: 700, color: "#0f172a" }}>{faq.q}</Typography>
+                    <Typography sx={{ fontWeight: 700, color: "text.primary" }}>{faq.q}</Typography>
                   </AccordionSummary>
                   <AccordionDetails sx={{ px: 3, pb: 3 }}>
-                    <Typography sx={{ color: "#4b5563", lineHeight: 1.8 }}>{faq.a}</Typography>
+                    <Typography sx={{ color: "text.secondary", lineHeight: 1.8 }}>{faq.a}</Typography>
                   </AccordionDetails>
                 </Accordion>
               ))}
@@ -258,10 +261,10 @@ export default function PricingPage() {
       </Box>
 
       {/* FINAL CTA */}
-      <Box sx={{ py: { xs: 10, md: 14 }, bgcolor: "white", textAlign: "center" }}>
+      <Box sx={{ py: { xs: 10, md: 14 }, bgcolor: isDark ? "#111827" : "white", textAlign: "center" }}>
         <Container maxWidth="md">
           <Favorite sx={{ color: "#ef4444", fontSize: 48, mb: 3 }} />
-          <Typography variant="h3" sx={{ fontWeight: 800, color: "#0f172a", mb: 2 }}>Start with a Free Class</Typography>
+          <Typography variant="h3" sx={{ fontWeight: 800, color: "text.primary", mb: 2 }}>Start with a Free Class</Typography>
           <Typography sx={{ color: "text.secondary", fontSize: "1.15rem", mb: 5, maxWidth: 500, mx: "auto" }}>
             Not sure yet? Let your child try a free introductory session — no credit card required.
           </Typography>
@@ -271,7 +274,7 @@ export default function PricingPage() {
               Book Free Trial Class
             </Button>
             <Button component={Link} href="/programs" variant="outlined" size="large"
-              sx={{ borderColor: "#e5e7eb", color: "#374151", px: 5, py: 2, borderRadius: 3, fontSize: "1.05rem" }}>
+              sx={{ borderColor: isDark ? "rgba(255,255,255,0.2)" : "#e5e7eb", color: "text.primary", px: 5, py: 2, borderRadius: 3, fontSize: "1.05rem" }}>
               Explore Programs
             </Button>
           </Stack>
