@@ -17,62 +17,62 @@ const programs = [
   {
     title: "Tiny Tinkerers", ageRange: "Ages 5 & Under",
     tagline: "Where curiosity meets creativity",
-    description: "An age-appropriate introduction to AI and robotics through interactive play and colorful activities. Young learners meet robot friends, discover how they move, and explore basic cause-and-effect concepts in a joyful, safe environment.",
+    description: "An age-appropriate introduction to early engineering through hands-on play with LEGO bricks. Young learners build simple machines, discover how levers, wheels, and ramps work, and explore cause-and-effect concepts in a joyful, safe environment.",
     color: "#f59e0b", bgColor: "rgba(245,158,11,0.08)", borderColor: "rgba(245,158,11,0.3)",
     href: "/programs/tiny-tinkerers",
-    highlights: ["Visual storytelling with robots", "Drag-and-drop coding intro", "Pattern recognition games", "Collaborative play activities"],
+    highlights: ["LEGO brick building and construction", "Simple machines exploration", "Cause-and-effect discovery", "Show & Tell presentations"],
     image: "/images/Kids sorting kit components.jpg", badge: "Most Popular",
   },
   {
     title: "Robot Explorers", ageRange: "Ages 6-9",
     tagline: "Build, code, and discover",
-    description: "Dive into hands-on robotics by building and programming your first autonomous robots. Students explore sensors, block coding, and simple algorithms while solving fun challenges.",
+    description: "Dive into hands-on robotics by building real mechanical systems with LEGO Mindstorms. Students explore gear trains, pistons, pulleys, and CAM systems while following the Engineering Design Process.",
     color: "#10b981", bgColor: "rgba(16,185,129,0.08)", borderColor: "rgba(16,185,129,0.3)",
     href: "/programs/robot-explorers",
-    highlights: ["Block-based visual coding", "Sensor integration basics", "Looping and logic concepts", "Mechanical assembly projects"],
+    highlights: ["Gear trains and pulley systems", "Pistons and CAM mechanisms", "LEGO Mindstorms building", "Show & Tell presentations"],
     image: "/images/Mountain-view-classes-4.jpg", badge: null,
   },
   {
     title: "Tech Titans", ageRange: "Ages 10-12",
     tagline: "Code with purpose",
-    description: "Level up with Python programming, circuit design, and advanced robotics control. Students tackle algorithmic thinking, sensor fusion, and complex robot builds that solve real-world challenges.",
+    description: "Level up with EV3 Mindstorms programming, sensor integration, and competition-ready robot design. Students master gear ratios, locomotion systems, and programming with Scratch and EV3 software.",
     color: "#3b82f6", bgColor: "rgba(59,130,246,0.08)", borderColor: "rgba(59,130,246,0.3)",
     href: "/programs/tech-titans",
-    highlights: ["Python programming foundations", "Circuit design and electronics", "Algorithm thinking and logic", "Multi-sensor robot systems"],
+    highlights: ["EV3 Mindstorms programming", "Color, touch, and ultrasonic sensors", "Gear ratios and locomotion", "FLL competition preparation"],
     image: "/images/kids_designing_simple_machines.jpg", badge: null,
   },
   {
     title: "AI Avengers", ageRange: "Ages 13-17",
     tagline: "Master the future of AI",
-    description: "The most advanced youth track. Students master artificial intelligence, machine learning, and computer vision through real projects, ethical discussions, and tools used by industry professionals.",
+    description: "The most advanced youth track. Students master Python programming, data logging, sensor fusion, and autonomous systems while preparing for FLL and World Robotics Olympiad (WRO) competitions.",
     color: "#8b5cf6", bgColor: "rgba(139,92,246,0.08)", borderColor: "rgba(139,92,246,0.3)",
     href: "/programs/ai-avengers",
-    highlights: ["Neural networks and ML", "Computer vision with OpenCV", "Autonomous robot programming", "AI ethics and societal impact"],
+    highlights: ["Python and EV3 programming", "Data logging and analytics", "Advanced sensor fusion", "FLL & WRO competition prep"],
     image: "/images/Palo-alto-classes-5.jpg", badge: "Advanced",
   },
   {
     title: "Senior Innovators", ageRange: "Ages 18+",
     tagline: "It is never too late to innovate",
-    description: "A comprehensive adult program for professionals and lifelong learners. Explore AI, robotics, and automation with career-relevant skills, hands-on projects, and industry-grade technologies.",
+    description: "Designed for educators and professionals. Become a certified STEM Robotics Trainer with comprehensive EV3 Mindstorms training, UAV/drone education, and data analytics skills.",
     color: "#0891b2", bgColor: "rgba(8,145,178,0.08)", borderColor: "rgba(8,145,178,0.3)",
     href: "/programs/seniors",
-    highlights: ["Professional robotics development", "ROS and advanced frameworks", "AI integration for business", "Hands-on capstone projects"],
+    highlights: ["STEM Trainer certification", "Advanced EV3 and Python", "UAV/drone fundamentals", "Curriculum development"],
     image: "/images/Palo-alto-classes-6.jpg", badge: null,
   },
 ];
 
 const stats = [
-  { value: "10,000+", label: "Active Students" },
+  { value: "500+", label: "Students Taught" },
   { value: "5", label: "Age-Based Tracks" },
   { value: "50+", label: "Hands-On Projects" },
-  { value: "150+", label: "Partner Schools" },
+  { value: "8", label: "Countries" },
 ];
 
 const howItWorks = [
   { step: "01", title: "Choose Your Track", description: "Select the program that matches your age and experience level." },
-  { step: "02", title: "Learn and Build", description: "Work through structured lessons combining theory with hands-on robotics and coding projects." },
-  { step: "03", title: "Earn Badges", description: "Complete milestones and earn digital badges that showcase your skills and achievements." },
-  { step: "04", title: "Advance or Specialize", description: "Graduate to the next track or deepen your specialty. The path is yours to define." },
+  { step: "02", title: "Learn and Build", description: "Work through structured modules combining LEGO Mindstorms building, sensor integration, and programming." },
+  { step: "03", title: "Present Your Work", description: "Complete Show & Tell presentations at the end of each module, demonstrating your robot builds and solutions." },
+  { step: "04", title: "Advance or Compete", description: "Graduate to the next track, prepare for FLL/WRO competitions, or pursue STEM Trainer certification." },
 ];
 
 const ProgramIcon: React.FC<{ title: string }> = ({ title }) => {

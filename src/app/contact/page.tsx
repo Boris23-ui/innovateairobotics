@@ -18,6 +18,8 @@ const PROGRAMS = [
   "Tech Titans (Ages 10-12)",
   "AI Avengers (Ages 13-17)",
   "Senior Innovators (Ages 18+)",
+  "Teacher Training / Certification",
+  "Holiday Camp / Summer Program",
   "Corporate / Group Training",
   "General Inquiry",
 ];
@@ -176,9 +178,9 @@ export default function ContactPage() {
               <Stack spacing={3} sx={{ mb: 6 }}>
                 {[
                   { title: "Free Trial Class", desc: "We offer a free introductory session so your child can experience our program before committing." },
-                  { title: "Flexible Scheduling", desc: "We work around your schedule — weekday evenings, weekends, and online options available." },
+                  { title: "Flexible Scheduling", desc: "Weekday, weekend, holiday camp, and spring/summer break sessions available — in-person and online." },
                   { title: "Scholarship Programs", desc: "Need-based financial assistance is available. Ask us about our scholarship opportunities." },
-                  { title: "School Partnerships", desc: "Bring InnovateAI to your school — we offer after-school and in-curriculum programs." },
+                  { title: "School Partnerships", desc: "Bring InnovateAI robotics to your school — we offer after-school programs, in-curriculum integration, and teacher training certification." },
                 ].map(({ title, desc }) => (
                   <Stack key={title} direction="row" spacing={2} alignItems="flex-start">
                     <CheckCircle sx={{ color: "#2563eb", mt: 0.5 }} />

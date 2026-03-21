@@ -12,17 +12,17 @@ export default function TechTitansPage() {
       accentColor="rgb(59, 130, 246)"
       accentGradient="linear-gradient(135deg, #3b82f6, #2563eb)"
       heroGradient="linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)"
-      description="Advanced robotics and coding for students ready to take their skills to the next level."
+      description="EV3 Mindstorms programming, sensor integration, and competition-ready robot design."
       introTitle="Engineer Your Future"
       introText={[
-        "Tech Titans is designed for 10-12 year olds ready to dive into the cutting-edge world of AI and Robotics. Students design, build, and program intelligent robots through hands-on projects and exciting competitions.",
-        "Through engaging challenges and real-world problem-solving, students learn coding, mechanical design, and teamwork skills that prepare them for the future of technology.",
+        "Tech Titans is designed for 10-12 year olds ready to program intelligent robots using EV3 LEGO Mindstorms. Students integrate color sensors, ultrasonic sensors, and touch sensors with their robot builds while mastering gear ratios and locomotion systems.",
+        "Through Scratch and EV3 Mindstorms software, students program autonomous behaviors and begin preparing for First Lego League (FLL) competitions — developing the skills and confidence for real engineering challenges.",
       ]}
       introHighlights={[
-        "Python and text-based programming",
-        "Competition-ready robot design",
-        "Advanced sensor integration and control",
-        "Team-based engineering challenges",
+        "EV3 Mindstorms programming (Scratch & EV3 software)",
+        "Color, ultrasonic, and touch sensor integration",
+        "Gear ratios and locomotion systems",
+        "First Lego League (FLL) competition prep",
       ]}
       introImage="/images/Mountain-view-classes-8.jpg"
       curriculum={[
@@ -30,8 +30,8 @@ export default function TechTitansPage() {
           icon: 'code',
           title: 'Programming',
           items: [
-            'Python fundamentals and syntax',
-            'Algorithm design and optimization',
+            'EV3 Mindstorms block programming',
+            'Scratch-based visual programming',
             'Sensor-driven decision making',
             'Autonomous navigation programming',
           ],
@@ -40,30 +40,30 @@ export default function TechTitansPage() {
           icon: 'build',
           title: 'Advanced Building',
           items: [
-            'Complex mechanical assemblies',
-            'Custom robot chassis design',
-            'Multi-sensor integration',
-            'Competition robot optimization',
+            'Gear ratio calculation and optimization',
+            'Locomotion systems (wheeled, tracked, walking)',
+            'Multi-sensor robot integration',
+            'Competition-ready robot design',
           ],
         },
         {
           icon: 'science',
           title: 'Engineering Skills',
           items: [
-            'Design thinking methodology',
+            'Engineering Design Process mastery',
             'Iterative prototyping process',
-            'Data collection and analysis',
-            'Presentation and documentation',
+            'Data collection from sensors',
+            'FLL challenge strategy and Show & Tell',
           ],
         },
       ]}
       sampleProjects={[
-        'Sumo wrestling bot',
-        'Autonomous delivery robot',
-        'Robotic arm gripper',
-        'Line-following racer',
-        'Sensor fusion challenge',
-        'Team competition bot',
+        'Line-following robot',
+        'Ultrasonic obstacle avoider',
+        'Color-sorting robot',
+        'FLL challenge robot',
+        'Gear ratio speed test',
+        'Show & Tell competition demo',
       ]}
       programDetails={[
         { label: 'Age Group', value: 'Ages 10-12' },

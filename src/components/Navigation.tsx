@@ -174,7 +174,7 @@ export default function Navigation() {
         justifyContent: 'space-between',
         borderBottom: `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
       }}>
-        <Image src="/logo.png" alt="InnovateAI Robotics" width={100} height={36} style={{ objectFit: 'contain' }} />
+        <Image src="/logo_new.jpg" alt="InnovateAI Robotics" width={100} height={36} style={{ objectFit: 'contain', borderRadius: '50%' }} />
         <IconButton
           onClick={handleDrawerToggle}
           sx={{
@@ -414,7 +414,7 @@ export default function Navigation() {
           <Toolbar disableGutters sx={{ minHeight: { xs: '60px', md: '64px' }, gap: 1 }}>
             {/* Logo */}
             <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-              <Image src="/logo.png" alt="InnovateAI Robotics" width={44} height={44} style={{ objectFit: 'contain' }} />
+              <Image src="/logo_new.jpg" alt="InnovateAI Robotics" width={44} height={44} style={{ objectFit: 'contain', borderRadius: '50%' }} />
             </Link>
 
             {/* Desktop Nav */}

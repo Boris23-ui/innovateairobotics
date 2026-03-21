@@ -24,7 +24,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Programs', path: '/programs' },
-    { name: 'Curriculum', path: '/curriculum' },
+    { name: 'Curriculum', path: '/programs/curriculum' },
     { name: 'Resources', path: '/resources' },
     { name: 'Contact', path: '/contact' },
   ];

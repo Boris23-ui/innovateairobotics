@@ -1,11 +1,7 @@
 'use client';
 
-import { Box, Container, Typography, Link, IconButton } from '@mui/material';
+import { Box, Container, Typography, Link } from '@mui/material';
 import {
-  Facebook,
-  Twitter,
-  LinkedIn,
-  Instagram,
   EmailOutlined,
   PhoneOutlined,
   LocationOnOutlined,
@@ -43,12 +39,6 @@ const footerLinks = [
   },
 ];
 
-const socialLinks = [
-  { icon: <Facebook sx={{ fontSize: 18 }} />, href: 'https://facebook.com', label: 'Facebook' },
-  { icon: <Twitter sx={{ fontSize: 18 }} />, href: 'https://twitter.com', label: 'Twitter' },
-  { icon: <LinkedIn sx={{ fontSize: 18 }} />, href: 'https://linkedin.com', label: 'LinkedIn' },
-  { icon: <Instagram sx={{ fontSize: 18 }} />, href: 'https://instagram.com', label: 'Instagram' },
-];
 
 export default function Footer() {
   const theme = useTheme();
@@ -92,11 +82,11 @@ export default function Footer() {
           <Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
               <Image
-                src="/logo.png"
+                src="/logo_new.jpg"
                 alt="InnovateAI Robotics"
                 width={48}
                 height={48}
-                style={{ objectFit: 'contain' }}
+                style={{ objectFit: 'contain', borderRadius: '50%' }}
               />
               <Box>
                 <Typography
@@ -119,7 +109,7 @@ export default function Footer() {
             <Typography
               sx={{ color: isDark ? '#64748b' : '#475569', fontSize: '0.875rem', lineHeight: 1.75, mb: 3, maxWidth: 300 }}
             >
-              Empowering the next generation through AI and robotics education — from Mountain View to Nairobi and beyond.
+              Envision it. Engineer it. Make It Work. — K-12 STEM robotics education across 8 countries.
             </Typography>
 
             {/* Contact */}
@@ -195,34 +185,6 @@ export default function Footer() {
             </Typography>
           </Box>
 
-          {/* Social links */}
-          <Box sx={{ display: 'flex', gap: 1 }}>
-            {socialLinks.map((social) => (
-              <IconButton
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.label}
-                size="small"
-                sx={{
-                  width: 34,
-                  height: 34,
-                  border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
-                  borderRadius: '8px',
-                  color: isDark ? '#475569' : '#64748b',
-                  transition: 'all 0.2s',
-                  '&:hover': {
-                    borderColor: 'rgba(6,182,212,0.4)',
-                    color: '#06b6d4',
-                    bgcolor: 'rgba(6,182,212,0.06)',
-                  },
-                }}
-              >
-                {social.icon}
-              </IconButton>
-            ))}
-          </Box>
         </Box>
       </Container>
     </Box>

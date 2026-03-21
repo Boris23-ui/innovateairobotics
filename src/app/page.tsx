@@ -21,6 +21,12 @@ import {
   RocketLaunch,
   TrackChanges,
   PersonSearch,
+  Rocket,
+  Grass,
+  DirectionsCar,
+  FlightTakeoff,
+  LocalHospital,
+  Factory,
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { motion, useInView } from 'framer-motion';
@@ -78,22 +84,22 @@ export default function LandingPage() {
   const features = [
     {
       title: 'Hands-on Learning',
-      description: 'Build real robots and AI systems from day one with our project-based curriculum.',
+      description: 'Build real EV3 LEGO Mindstorms robots from day one — gear trains, pulleys, sensors, and programmable systems.',
       icon: <SmartToy sx={{ fontSize: 32 }} />,
     },
     {
-      title: 'Expert Engineers',
-      description: 'Learn from industry professionals with years of robotics and AI experience.',
+      title: 'Certified STEM Trainers',
+      description: 'Learn from certified STEM Robotics Trainers with hands-on EV3 Mindstorms and programming experience.',
       icon: <Groups sx={{ fontSize: 32 }} />,
     },
     {
-      title: 'Modern Curriculum',
-      description: 'Stay ahead with cutting-edge technologies and industry-standard practices.',
+      title: 'K-12 Curriculum',
+      description: 'Structured curriculum covering simple machines, sensors, Scratch, Python, and competition preparation.',
       icon: <MenuBook sx={{ fontSize: 32 }} />,
     },
     {
-      title: 'Innovation First',
-      description: 'Build an impressive portfolio of real-world robotics projects and patents.',
+      title: 'Competition Ready',
+      description: 'Prepare for First Lego League (FLL) and World Robotics Olympiad (WRO) with real engineering challenges.',
       icon: <EmojiObjects sx={{ fontSize: 32 }} />,
     },
   ];
@@ -101,7 +107,7 @@ export default function LandingPage() {
   const stats = [
     { value: 500, suffix: '+', label: 'Students Taught' },
     { value: 50, suffix: '+', label: 'Hands-on Projects' },
-    { value: 3, suffix: '', label: 'Global Campuses' },
+    { value: 8, suffix: '', label: 'Countries' },
     { value: 100, suffix: '%', label: 'Completion Rate' },
   ];
 
@@ -115,24 +121,24 @@ export default function LandingPage() {
     {
       level: '01',
       title: 'Beginner',
-      subtitle: 'Foundation in Robotics',
-      points: ['Basic robot construction', 'Introduction to sensors', 'Simple programming concepts'],
+      subtitle: 'Simple Machines & Early Engineering',
+      points: ['LEGO building and basic construction', 'Introduction to gears, pulleys, and levers', 'Cause-and-effect exploration with sensors'],
       image: '/images/Kids sorting kit components.jpg',
       icon: <Build sx={{ fontSize: 24 }} />,
     },
     {
       level: '02',
       title: 'Intermediate',
-      subtitle: 'Advanced Mechanisms',
-      points: ['Complex robot design', 'Sensor fusion & control', 'Applied mathematics'],
+      subtitle: 'Mechanical Systems & Programming',
+      points: ['Gear trains, pistons, pulleys, and CAM systems', 'EV3 Mindstorms programming with Scratch', 'Color, touch, and ultrasonic sensors'],
       image: '/images/kids_designing_simple_machines.jpg',
       icon: <Code sx={{ fontSize: 24 }} />,
     },
     {
       level: '03',
       title: 'Advanced',
-      subtitle: 'AI & Innovation',
-      points: ['AI integration', 'Computer vision', 'Real-world applications'],
+      subtitle: 'Programming, Data & Competition',
+      points: ['Python programming and data logging', 'Sensor fusion and autonomous navigation', 'FLL & WRO competition preparation'],
       image: '/images/building_drones.jpg',
       icon: <Psychology sx={{ fontSize: 24 }} />,
     },
@@ -250,8 +256,8 @@ export default function LandingPage() {
                 fontWeight: 400,
               }}
             >
-              Hands-on learning experiences that combine robotics, AI, and coding
-              to inspire creativity and innovation in young minds.
+              Hands-on EV3 LEGO Mindstorms robotics education that teaches kids to
+              envision it, engineer it, and make it work.
             </Typography>
           </motion.div>
 
@@ -605,8 +611,8 @@ export default function LandingPage() {
                 fontSize: { xs: '1rem', md: '1.3rem' },
               }}
             >
-              We&apos;re preparing the next generation for this exciting future
-              through hands-on robotics education.
+              We&apos;re preparing the next generation through hands-on EV3 LEGO Mindstorms
+              robotics, coding, and engineering education across 8 countries.
             </Typography>
             <Button
               variant="contained"
@@ -628,6 +634,134 @@ export default function LandingPage() {
               Explore Our Programs
             </Button>
           </ScrollReveal>
+        </Container>
+      </Box>
+
+      {/* ═══ ROBOTICS USE CASES ═════════════════════════════════════════════ */}
+      <Box sx={{ bgcolor: isDark ? '#0d1117' : '#f8fafc', py: { xs: 8, md: 12 } }}>
+        <Container maxWidth="lg">
+          <ScrollReveal>
+            <Typography
+              variant="overline"
+              sx={{
+                color: '#06b6d4',
+                letterSpacing: '0.3em',
+                textAlign: 'center',
+                display: 'block',
+                mb: 2,
+              }}
+            >
+              ROBOTICS IN THE REAL WORLD
+            </Typography>
+            <Typography
+              variant="h2"
+              component="h2"
+              sx={{
+                textAlign: 'center',
+                fontWeight: 700,
+                mb: 2,
+                fontSize: { xs: '2rem', md: '3rem' },
+              }}
+            >
+              Where Robotics Is{' '}
+              <Box component="span" className="gradient-text">Changing Everything</Box>
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                textAlign: 'center',
+                color: 'text.secondary',
+                mb: { xs: 5, md: 8 },
+                maxWidth: 700,
+                mx: 'auto',
+              }}
+            >
+              The skills students learn with us today are powering the industries of tomorrow.
+              From Mars rovers to self-driving cars, robotics is everywhere.
+            </Typography>
+          </ScrollReveal>
+
+          <Grid container spacing={3}>
+            {[
+              {
+                icon: <Rocket sx={{ fontSize: 36 }} />,
+                title: 'Space Exploration',
+                description: 'NASA\'s Mars rovers use the same sensor logic and autonomous navigation principles our students learn with EV3 robots.',
+                color: '#8b5cf6',
+              },
+              {
+                icon: <Grass sx={{ fontSize: 36 }} />,
+                title: 'Agriculture',
+                description: 'Robotic harvesters and autonomous drones monitor crops, optimize irrigation, and increase food production worldwide.',
+                color: '#10b981',
+              },
+              {
+                icon: <DirectionsCar sx={{ fontSize: 36 }} />,
+                title: 'Self-Driving Vehicles',
+                description: 'Autonomous cars from Waymo and Tesla rely on sensor fusion, control loops, and decision logic — concepts taught in our curriculum.',
+                color: '#3b82f6',
+              },
+              {
+                icon: <FlightTakeoff sx={{ fontSize: 36 }} />,
+                title: 'Drones & UAVs',
+                description: 'From package delivery to disaster relief, drones use the programming and navigation skills students build in our advanced modules.',
+                color: '#f59e0b',
+              },
+              {
+                icon: <LocalHospital sx={{ fontSize: 36 }} />,
+                title: 'Healthcare',
+                description: 'Surgical robots like da Vinci perform precise operations. Robotic exoskeletons help patients walk again — all powered by engineering.',
+                color: '#ef4444',
+              },
+              {
+                icon: <Factory sx={{ fontSize: 36 }} />,
+                title: 'Manufacturing',
+                description: 'Boston Dynamics robots and industrial arms automate factories, warehouses, and supply chains with the engineering design process.',
+                color: '#06b6d4',
+              },
+            ].map((useCase, i) => (
+              <Grid item xs={12} sm={6} md={4} key={useCase.title}>
+                <ScrollReveal delay={i * 0.1}>
+                  <Box
+                    className="glass-card"
+                    sx={{
+                      p: 4,
+                      height: '100%',
+                      textAlign: 'center',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      transition: 'transform 0.3s, box-shadow 0.3s',
+                      '&:hover': {
+                        transform: 'translateY(-6px)',
+                        boxShadow: `0 16px 40px ${useCase.color}20`,
+                      },
+                    }}
+                  >
+                    <Box sx={{
+                      width: 72, height: 72,
+                      borderRadius: 3,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      background: `${useCase.color}15`,
+                      border: `1px solid ${useCase.color}30`,
+                      color: useCase.color,
+                      mb: 3,
+                    }}>
+                      {useCase.icon}
+                    </Box>
+                    <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary', mb: 1.5 }}>
+                      {useCase.title}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7 }}>
+                      {useCase.description}
+                    </Typography>
+                  </Box>
+                </ScrollReveal>
+              </Grid>
+            ))}
+          </Grid>
         </Container>
       </Box>
 
@@ -840,7 +974,7 @@ export default function LandingPage() {
                   fontSize: { xs: '1rem', md: '1.3rem' },
                 }}
               >
-                Join thousands of young innovators who are shaping the future of technology
+                Join young innovators across 8 countries who are building, coding, and competing with EV3 LEGO Mindstorms robots
               </Typography>
               <Stack
                 direction={{ xs: 'column', sm: 'row' }}
@@ -896,9 +1030,9 @@ export default function LandingPage() {
           {/* Feature Cards */}
           <Grid container spacing={3} justifyContent="center">
             {[
-              { icon: <TrackChanges sx={{ fontSize: 36 }} />, title: 'Flexible Learning', desc: 'Learn at your own pace with personalized learning paths and both online and in-person options' },
-              { icon: <PersonSearch sx={{ fontSize: 36 }} />, title: 'Expert Support', desc: 'Get 1-on-1 guidance from experienced robotics engineers and dedicated mentors' },
-              { icon: <RocketLaunch sx={{ fontSize: 36 }} />, title: 'Project Portfolio', desc: 'Build an impressive portfolio of real-world robotics projects and achievements' },
+              { icon: <TrackChanges sx={{ fontSize: 36 }} />, title: 'Flexible Learning', desc: 'Learn through holiday camps, spring/summer break programs, after-school sessions, and online classes' },
+              { icon: <PersonSearch sx={{ fontSize: 36 }} />, title: 'Expert Support', desc: 'Get guidance from certified STEM Robotics Trainers with structured, module-based learning' },
+              { icon: <RocketLaunch sx={{ fontSize: 36 }} />, title: 'Show & Tell', desc: 'Present your robot builds at the end of each module, showcasing real engineering solutions to parents and peers' },
             ].map((card, i) => (
               <Grid item xs={12} sm={4} key={card.title}>
                 <ScrollReveal delay={i * 0.15}>

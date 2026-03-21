@@ -12,58 +12,58 @@ export default function AIAvengersPage() {
       accentColor="rgb(139, 92, 246)"
       accentGradient="linear-gradient(135deg, #8b5cf6, #7c3aed)"
       heroGradient="linear-gradient(135deg, #0f172a 0%, #312e81 100%)"
-      description="Advanced AI, machine learning, and autonomous systems for ambitious teen engineers."
-      introTitle="Shape the Future with AI"
+      description="Advanced EV3 programming, Python, data logging, and intensive FLL/WRO competition preparation."
+      introTitle="Compete at the World Level"
       introText={[
-        "AI Avengers is our flagship program for teens aged 13-17 who are ready to explore the intersection of artificial intelligence and robotics. Students work with cutting-edge technologies and tackle real-world engineering challenges.",
-        "Through advanced projects, interactive labs, and engaging discussions, students learn programming, algorithm design, and the ethical considerations of AI — preparing them for careers in technology.",
+        "AI Avengers is our most advanced youth program for teens aged 13-17 ready to master robotics at a competitive level. Students work with advanced EV3 Mindstorms programming, Python, and data logging to build sophisticated autonomous systems.",
+        "Through intensive preparation for First Lego League (FLL) and World Robotics Olympiad (WRO), students develop advanced sensor fusion techniques, data analytics skills, and the ability to present engineering solutions under pressure.",
       ]}
       introHighlights={[
-        "Machine learning and neural network fundamentals",
-        "Advanced Python and C++ programming",
-        "Autonomous systems and computer vision",
-        "Ethics in AI and responsible innovation",
+        "Advanced Python and EV3 Mindstorms programming",
+        "Data logging, analytics, and visualization",
+        "Sensor fusion (color, ultrasonic, touch, infrared)",
+        "FLL & WRO competition preparation",
       ]}
       introImage="/images/Palo-alto-classes-5.jpg"
       curriculum={[
         {
           icon: 'psychology',
-          title: 'Artificial Intelligence',
+          title: 'Advanced Programming',
           items: [
-            'Machine learning fundamentals',
-            'Neural networks and deep learning',
-            'Natural language processing basics',
-            'Computer vision and image recognition',
+            'Python programming for robotics',
+            'EV3 advanced block programming',
+            'Data logging and sensor data analysis',
+            'Algorithm design for autonomous behavior',
           ],
         },
         {
           icon: 'code',
-          title: 'Advanced Programming',
+          title: 'Sensor Fusion & Data',
           items: [
-            'Python for AI and data science',
-            'C++ for robotics control',
-            'API integration and cloud services',
-            'Version control with Git',
+            'Multi-sensor fusion (IR, ultrasonic, color, touch)',
+            'Data logging and real-time analytics',
+            'Decision making with math models',
+            'Infrared communication and remote control',
           ],
         },
         {
           icon: 'devices',
-          title: 'Autonomous Systems',
+          title: 'Competition & Presentation',
           items: [
-            'Sensor fusion and SLAM',
-            'Path planning algorithms',
-            'Real-time decision making',
-            'Human-robot interaction design',
+            'FLL challenge strategy and execution',
+            'WRO competition rules and categories',
+            'Engineering notebook documentation',
+            'Presentation skills and judging prep',
           ],
         },
       ]}
       sampleProjects={[
-        'Self-driving robot',
-        'Voice-controlled assistant',
-        'Object recognition system',
-        'AI game player',
-        'Gesture-controlled drone',
-        'Smart home prototype',
+        'FLL competition robot',
+        'WRO challenge solution',
+        'Data logging dashboard',
+        'Multi-sensor autonomous navigator',
+        'Infrared-controlled robot',
+        'Engineering presentation portfolio',
       ]}
       programDetails={[
         { label: 'Age Group', value: 'Ages 13-17' },

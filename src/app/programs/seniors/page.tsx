@@ -6,64 +6,64 @@ export default function SeniorsPage() {
   return (
     <ProgramLayout
       title="Senior Innovators"
-      subtitle="It's never too late to explore — AI and robotics for lifelong learners"
+      subtitle="Become a certified STEM Robotics Trainer — lead the next generation"
       ageRange="18+ years"
       ageBadge="Ages 18+"
       accentColor="rgb(20, 184, 166)"
       accentGradient="linear-gradient(135deg, #14b8a6, #0d9488)"
       heroGradient="linear-gradient(135deg, #0f172a 0%, #134e4a 100%)"
-      description="A comprehensive introduction to AI and robotics in a supportive, engaging environment."
-      introTitle="Your Tech Journey Starts Here"
+      description="Teacher training and certification, advanced EV3 programming, data analytics, and UAV/drone education."
+      introTitle="Train, Certify, and Lead"
       introText={[
-        "Senior Innovators offers adults a unique opportunity to explore the fascinating world of artificial intelligence and robotics. Whether you're enhancing professional skills, pursuing a new hobby, or staying current with technology, this program is for you.",
-        "Through practical projects and interactive discussions, you'll gain hands-on experience with cutting-edge technologies and understand how AI and robotics are shaping our future.",
+        "Senior Innovators is designed for educators, professionals, and lifelong learners who want to become certified STEM Robotics Trainers. Through comprehensive training on EV3 LEGO Mindstorms, curriculum delivery, and classroom management, participants gain the skills to teach robotics at any level.",
+        "The program also covers advanced topics including data logging and analytics, UAV/drone fundamentals, and Python programming — preparing participants to lead STEM programs in schools, camps, and community organizations worldwide.",
       ]}
       introHighlights={[
-        "No prior experience needed — we start from the basics",
-        "Professional development and career enhancement",
-        "Hands-on projects with real hardware and software",
+        "STEM Robotics Trainer certification program",
+        "Complete EV3 LEGO Mindstorms mastery",
+        "UAV/drone education fundamentals",
         "Flexible scheduling for working professionals",
       ]}
-      introImage="/images/palo-alto-classes-6.jpg"
+      introImage="/images/senior_image.png"
       curriculum={[
         {
           icon: 'code',
-          title: 'Programming Basics',
+          title: 'Teacher Certification',
           items: [
-            'Python fundamentals from scratch',
-            'Logical thinking and algorithms',
-            'Data analysis and visualization',
-            'Web-based tools and APIs',
+            'EV3 Mindstorms curriculum delivery training',
+            'Classroom management for STEM labs',
+            'Assessment and student progress tracking',
+            'Certification exam preparation',
           ],
         },
         {
           icon: 'build',
-          title: 'Robotics Essentials',
+          title: 'Advanced EV3 & Drones',
           items: [
-            'Robot assembly and mechanics',
-            'Sensor integration and control',
-            'Autonomous navigation basics',
-            'IoT and smart device programming',
+            'Advanced EV3 programming and sensor integration',
+            'UAV/drone principles and operation',
+            'Robot design for all age groups',
+            'Holiday camp and workshop planning',
           ],
         },
         {
           icon: 'psychology',
-          title: 'AI & Industry',
+          title: 'Data & Analytics',
           items: [
-            'Understanding machine learning',
-            'AI applications across industries',
-            'Ethical considerations in AI',
-            'Future trends and opportunities',
+            'Data logging with EV3 sensors',
+            'Data visualization and analytics',
+            'Python for data analysis',
+            'Curriculum development for STEM programs',
           ],
         },
       ]}
       sampleProjects={[
-        'Personal robot assistant',
-        'Smart garden monitor',
-        'AI chatbot builder',
-        'Home automation system',
-        'Data dashboard project',
-        'Robotics capstone project',
+        'Complete EV3 teaching module',
+        'Student assessment rubric design',
+        'UAV/drone demonstration flight',
+        'Data logging lab exercise',
+        'Holiday camp curriculum plan',
+        'Certification capstone project',
       ]}
       programDetails={[
         { label: 'Age Group', value: 'Ages 18+' },

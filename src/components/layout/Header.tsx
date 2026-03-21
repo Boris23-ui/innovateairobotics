@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,9 +11,7 @@ export default function Header() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <svg className="w-8 h-8 text-[rgb(60,152,251)]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-            </svg>
+            <Image src="/logo_new.jpg" alt="InnovateAI Robotics" width={36} height={36} style={{ objectFit: 'contain', borderRadius: '50%' }} />
             <span className="text-xl font-bold text-[rgb(60,152,251)]">InnovateAI Robotics</span>
           </div>
 
@@ -20,7 +19,7 @@ export default function Header() {
           <nav className="hidden md:flex items-center space-x-6">
             <Link href="/" className="hover:text-[rgb(60,152,251)] transition-colors">Home</Link>
             <Link href="/programs" className="hover:text-[rgb(60,152,251)] transition-colors">Programs</Link>
-            <Link href="/curriculum" className="hover:text-[rgb(60,152,251)] transition-colors">Curriculum</Link>
+            <Link href="/programs/curriculum" className="hover:text-[rgb(60,152,251)] transition-colors">Curriculum</Link>
             <Link href="/resources" className="hover:text-[rgb(60,152,251)] transition-colors">Resources</Link>
             <Link href="/contact" className="hover:text-[rgb(60,152,251)] transition-colors">Contact</Link>
 
@@ -62,7 +61,7 @@ export default function Header() {
             <div className="container mx-auto px-4 space-y-2">
               <Link href="/" className="block w-full py-2 px-4 rounded-lg hover:bg-gray-100">Home</Link>
               <Link href="/programs" className="block w-full py-2 px-4 rounded-lg hover:bg-gray-100">Programs</Link>
-              <Link href="/curriculum" className="block w-full py-2 px-4 rounded-lg hover:bg-gray-100">Curriculum</Link>
+              <Link href="/programs/curriculum" className="block w-full py-2 px-4 rounded-lg hover:bg-gray-100">Curriculum</Link>
               <Link href="/resources" className="block w-full py-2 px-4 rounded-lg hover:bg-gray-100">Resources</Link>
               <Link href="/contact" className="block w-full py-2 px-4 rounded-lg hover:bg-gray-100">Contact</Link>
 

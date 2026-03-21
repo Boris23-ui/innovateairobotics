@@ -40,22 +40,22 @@ export default function AboutPage() {
     {
       icon: <Lightbulb sx={{ fontSize: 32 }} />,
       title: 'Innovation',
-      description: 'We embrace cutting-edge technologies and creative approaches to inspire the next generation of engineers.',
+      description: 'We use EV3 LEGO Mindstorms and the Engineering Design Process to inspire students to envision, engineer, and make things work.',
     },
     {
       icon: <Groups sx={{ fontSize: 32 }} />,
       title: 'Accessibility',
-      description: 'We believe every child deserves access to quality STEM education, regardless of background or location.',
+      description: 'We believe every child deserves access to quality STEM robotics education, operating across 8 countries including the US, Kenya, Nigeria, Rwanda, and India.',
     },
     {
       icon: <Diversity3 sx={{ fontSize: 32 }} />,
       title: 'Community',
-      description: 'We build strong communities of learners, educators, and innovators united by a passion for technology.',
+      description: 'We build communities of learners, certified STEM trainers, and innovators united by a passion for robotics and preparing for the 4th Industrial Revolution.',
     },
     {
       icon: <TrendingUp sx={{ fontSize: 32 }} />,
       title: 'Excellence',
-      description: 'We maintain the highest standards in curriculum design, instruction, and student outcomes.',
+      description: 'We maintain the highest standards in curriculum design — from simple machines to data analytics — with structured modules and Show & Tell presentations.',
     },
   ];
 
@@ -91,11 +91,11 @@ export default function AboutPage() {
           <ScrollReveal>
             <Box sx={{ mb: 3 }}>
               <Image
-                src="/logo.png"
+                src="/logo_new.jpg"
                 alt="InnovateAI Robotics Logo"
                 width={120}
                 height={120}
-                style={{ objectFit: 'contain' }}
+                style={{ objectFit: 'contain', borderRadius: '50%' }}
               />
             </Box>
             <Typography
@@ -124,7 +124,7 @@ export default function AboutPage() {
                 lineHeight: 1.6,
               }}
             >
-              Empowering the next generation through AI and robotics education — from Mountain View to Nairobi and beyond.
+              Envision it. Engineer it. Make It Work. — K-12 STEM robotics education from Mountain View to Nairobi and beyond.
             </Typography>
           </ScrollReveal>
         </Container>
@@ -152,10 +152,10 @@ export default function AboutPage() {
                   Preparing Students for the 4th Industrial Revolution
                 </Typography>
                 <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 2, fontSize: '1rem' }}>
-                  Integrating robotics and AI into school curricula is essential for preparing students for the future. By providing access to advanced technologies, we equip the next generation with vital skills for innovation and leadership in a changing world.
+                  Integrating robotics and AI into school curricula is essential for preparing students for the 4th Industrial Revolution. Using EV3 LEGO Mindstorms and a proven K-12 curriculum, we equip the next generation with vital engineering, coding, and problem-solving skills.
                 </Typography>
                 <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, fontSize: '1rem' }}>
-                  InnovateAI Robotics is a donor-supported 501(c)(3) tax-exempt charity (TaxID: 99-2801688) dedicated to advancing robotics education and fostering innovation, teamwork, and problem-solving through hands-on classes for learners of all ages.
+                  InnovateAI Robotics is a donor-supported 501(c)(3) tax-exempt nonprofit (TaxID: 99-2801688) dedicated to advancing K-12 STEM robotics education. Through hands-on classes, teacher training and certification, and preparation for FLL and WRO competitions, we foster innovation, teamwork, and the Engineering Design Process in learners of all ages.
                 </Typography>
               </Box>
               <Box sx={{ position: 'relative', height: { xs: 300, md: 400 }, borderRadius: 4, overflow: 'hidden' }}>
@@ -277,10 +277,10 @@ export default function AboutPage() {
                       }}
                     >
                       <Image
-                        src="/images/John Williams Sr.jpg"
+                        src="/images/JohnSr-about.png"
                         alt="John H. Williams"
                         fill
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: 'cover', objectPosition: 'center 15%' }}
                       />
                     </Box>
                     <Typography variant="h5" sx={{ fontWeight: 700, color: 'text.primary' }}>
@@ -330,10 +330,10 @@ export default function AboutPage() {
                       }}
                     >
                       <Image
-                        src="/images/basil.jpg"
+                        src="/images/BasilBoris-about.png"
                         alt="Basil K. Boris"
                         fill
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: 'cover', objectPosition: 'center 15%' }}
                       />
                     </Box>
                     <Typography variant="h5" sx={{ fontWeight: 700, color: 'text.primary' }}>

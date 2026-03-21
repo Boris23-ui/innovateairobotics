@@ -6,64 +6,64 @@ export default function TinyTinkerersPage() {
   return (
     <ProgramLayout
       title="Tiny Tinkerers"
-      subtitle="Where little hands build big dreams — robotics for our youngest learners"
+      subtitle="Where little hands discover big engineering ideas"
       ageRange="5 & Under"
       ageBadge="Ages 5 & Under"
       accentColor="rgb(244, 114, 182)"
       accentGradient="linear-gradient(135deg, #f472b6, #ec4899)"
       heroGradient="linear-gradient(135deg, #0f172a 0%, #4a1942 100%)"
-      description="A playful, age-appropriate introduction to robots, coding, and STEM thinking."
-      introTitle="Meet Your Robot Friends"
+      description="A playful, age-appropriate introduction to early engineering, simple machines, and LEGO construction."
+      introTitle="Build Your First Machines"
       introText={[
-        "Tiny Tinkerers is a magical introduction to the world of robots for children aged 5 and under. Through interactive play and colorful activities, little learners discover how robots think, move, and communicate.",
-        "Our specially designed curriculum uses play-based learning to spark curiosity and build early STEM foundations. Children meet adorable robot friends, watch them dance, and even teach them tricks!",
+        "Tiny Tinkerers introduces children aged 5 and under to the exciting world of engineering through hands-on play with LEGO bricks. Little learners discover how simple machines work — levers, wheels, and basic structures — while building their very first creations.",
+        "Our curriculum uses play-based learning to build early STEM foundations. Children construct their first machines, explore cause-and-effect relationships, and present their creations in fun Show & Tell sessions!",
       ]}
       introHighlights={[
-        "Play-based learning with age-appropriate robots",
-        "Introduction to cause-and-effect thinking",
-        "Color and shape recognition through robotics",
-        "Social skills and teamwork activities",
+        "LEGO brick building and early construction",
+        "Simple machines: levers, wheels, and ramps",
+        "Cause-and-effect exploration",
+        "Show & Tell presentations to parents",
       ]}
       introImage="/images/Kids sorting kit components.jpg"
       curriculum={[
         {
           icon: 'smarttoy',
-          title: 'Robot Play',
+          title: 'Early Building',
           items: [
-            'Meet and interact with friendly robots',
-            'Basic robot movements and sounds',
-            'Simple cause and effect relationships',
-            'Storytelling with robot characters',
+            'Build structures with LEGO bricks',
+            'Explore wheels, axles, and ramps',
+            'Simple lever and balance activities',
+            'Storytelling about machines and inventions',
           ],
         },
         {
           icon: 'science',
           title: 'Early STEM',
           items: [
-            'Colors and shapes through robotics',
-            'Counting and patterns with robots',
-            'Simple problem-solving through play',
-            'Exploring sensors and buttons',
+            'Shapes and structures in building',
+            'Counting gears and wheels',
+            'Simple problem-solving through construction',
+            'Exploring how things move and connect',
           ],
         },
         {
           icon: 'person',
           title: 'Social Skills',
           items: [
-            'Taking turns and sharing robots',
-            'Working together on robot tasks',
-            'Expressing ideas and creativity',
+            'Taking turns and sharing materials',
+            'Working together on building tasks',
+            'Show & Tell presentation practice',
             'Building confidence through play',
           ],
         },
       ]}
       sampleProjects={[
-        'Robot dance party',
-        'Color sorting challenge',
-        'Robot obstacle course',
-        'Sound-making robot',
-        'Draw with robots',
-        'Robot storytelling',
+        'LEGO tower challenge',
+        'Simple ramp and ball run',
+        'Lever seesaw build',
+        'Wheel and axle car',
+        'Bridge building challenge',
+        'Show & Tell presentation',
       ]}
       programDetails={[
         { label: 'Age Group', value: 'Ages 3-5' },
@@ -75,7 +75,7 @@ export default function TinyTinkerersPage() {
       ]}
       detailsImage="/images/kids getting ready for class.jpg"
       ctaTitle="Start Their STEM Journey Early"
-      ctaSubtitle="The best time to spark a love for learning is right now. Give your child the gift of curiosity."
+      ctaSubtitle="The best time to spark a love for engineering is right now. Give your child the gift of curiosity."
     />
   );
 }

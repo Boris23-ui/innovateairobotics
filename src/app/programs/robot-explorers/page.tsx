@@ -12,37 +12,37 @@ export default function RobotExplorersPage() {
       accentColor="rgb(16, 185, 129)"
       accentGradient="linear-gradient(135deg, #10b981, #059669)"
       heroGradient="linear-gradient(135deg, #0f172a 0%, #052e16 100%)"
-      description="From block coding to building working robots — a complete beginner journey."
+      description="From gear trains to pulley systems — a complete hands-on engineering journey with LEGO Mindstorms."
       introTitle="Your First Real Robot"
       introText={[
-        "In Robot Explorers, 6-9 year olds dive into the exciting world of AI and Robotics. Through hands-on activities and guided projects, students learn to build and program their own robots using age-appropriate tools.",
-        "Using sensors, algorithms, and mini-competitions, students develop critical thinking and problem-solving skills. Our internationally recognized curriculum ensures every child gets a solid foundation in STEM.",
+        "In Robot Explorers, 6-9 year olds dive into the exciting world of robotics and engineering. Through hands-on building with LEGO Mindstorms kits, students learn how gear trains, pistons, pulleys, and CAM systems work — the same mechanisms used in real-world machines.",
+        "Students follow the Engineering Design Process: envision, design, build, test, and improve. Each module concludes with a Show & Tell presentation where students demonstrate their builds to parents and peers.",
       ]}
       introHighlights={[
-        "LEGO Mindstorms and Scratch-based coding",
-        "Real hardware — build robots from the ground up",
-        "Small class sizes for personalized learning",
-        "Project portfolios showcased to parents",
+        "LEGO Mindstorms hands-on building",
+        "Gear trains, pulleys, and CAM systems",
+        "Engineering Design Process methodology",
+        "Show & Tell presentations each module",
       ]}
       introImage="/images/Mountain-view-classes-4.jpg"
       curriculum={[
         {
           icon: 'code',
-          title: 'Block Coding',
+          title: 'Mechanical Systems',
           items: [
-            'Drag-and-drop visual programming',
-            'Sequences, loops, and conditionals',
-            'Event-driven programming concepts',
-            'Debugging and testing your programs',
+            'Gear trains and gear ratios',
+            'Piston and crank mechanisms',
+            'Pulley systems and mechanical advantage',
+            'CAM systems and worm gears',
           ],
         },
         {
           icon: 'build',
           title: 'Robot Building',
           items: [
-            'Mechanical assembly with guided kits',
-            'Understanding gears, motors, and sensors',
-            'Designing autonomous robot pathways',
+            'LEGO Mindstorms assembly and construction',
+            'Understanding motors, axles, and frames',
+            'Building structural supports and mechanisms',
             'Iterative build-test-improve cycles',
           ],
         },
@@ -58,12 +58,12 @@ export default function RobotExplorersPage() {
         },
       ]}
       sampleProjects={[
-        'Line-following robot',
-        'Obstacle avoider',
-        'Maze solver',
-        'Light-sensitive robot',
-        'Sound-reactive toy',
-        'Mini competition bot',
+        'Gear train mechanism',
+        'Pulley lift system',
+        'Piston-powered machine',
+        'CAM follower device',
+        'Worm gear assembly',
+        'Show & Tell presentation',
       ]}
       programDetails={[
         { label: 'Age Group', value: 'Ages 6-9' },
