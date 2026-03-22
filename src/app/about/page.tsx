@@ -277,7 +277,7 @@ export default function AboutPage() {
                       }}
                     >
                       <Image
-                        src="/images/JohnSr-about.png"
+                        src="/images/John_Sr.png"
                         alt="John H. Williams"
                         fill
                         style={{ objectFit: 'cover', objectPosition: 'center 15%' }}
