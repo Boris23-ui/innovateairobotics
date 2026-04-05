@@ -2,8 +2,6 @@ import type { Stripe } from 'stripe';
 import { supabaseAdmin } from '../supabase/admin';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function handleDonation(session: Stripe.Checkout.Session) {
   if (session.payment_status === 'paid') {
     try {
@@ -55,6 +53,8 @@ export async function sendThankYouEmail({ email, amount, donationId }: {
     console.log('RESEND_API_KEY not set — skipping thank-you email for donation:', donationId);
     return;
   }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   await resend.emails.send({
     from: 'InnovateAI Robotics <info@innovateairobotics.com>',
