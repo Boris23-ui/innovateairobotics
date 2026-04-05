@@ -220,7 +220,7 @@ function DonatePageInner() {
           <Stack direction="row" spacing={4} justifyContent="center" alignItems="center">
             <Box>
               <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
-                $25,000
+                $4,000
               </Typography>
               <Typography variant="subtitle1">Raised This Year</Typography>
             </Box>
@@ -229,12 +229,6 @@ function DonatePageInner() {
                 500+
               </Typography>
               <Typography variant="subtitle1">Students Impacted</Typography>
-            </Box>
-            <Box>
-              <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
-                15
-              </Typography>
-              <Typography variant="subtitle1">Schools Supported</Typography>
             </Box>
           </Stack>
         </Paper>
