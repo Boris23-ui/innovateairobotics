@@ -28,15 +28,6 @@ const footerLinks = [
       { text: 'AI Avengers', href: '/programs/ai-avengers' },
     ],
   },
-  {
-    title: 'Legal',
-    links: [
-      { text: 'Privacy Policy', href: '/privacy' },
-      { text: 'Terms of Service', href: '/terms' },
-      { text: 'Cookie Policy', href: '/cookies' },
-      { text: 'FAQ', href: '/faq' },
-    ],
-  },
 ];
 
 
@@ -109,7 +100,7 @@ export default function Footer() {
             <Typography
               sx={{ color: isDark ? '#64748b' : '#475569', fontSize: '0.875rem', lineHeight: 1.75, mb: 3, maxWidth: 300 }}
             >
-              Envision it. Engineer it. Make It Work. — K-12 STEM robotics education across 8 countries.
+              Envision it. Engineer it. Make It Work. — K-12 STEM robotics education in Kenya and the US.
             </Typography>
 
             {/* Contact */}

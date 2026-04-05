@@ -45,7 +45,7 @@ export default function AboutPage() {
     {
       icon: <Groups sx={{ fontSize: 32 }} />,
       title: 'Accessibility',
-      description: 'We believe every child deserves access to quality STEM robotics education, operating across 8 countries including the US, Kenya, Nigeria, Rwanda, and India.',
+      description: 'We believe every child deserves access to quality STEM robotics education, operating in Kenya and the United States.',
     },
     {
       icon: <Diversity3 sx={{ fontSize: 32 }} />,

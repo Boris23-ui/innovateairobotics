@@ -107,7 +107,7 @@ export default function LandingPage() {
   const stats = [
     { value: 500, suffix: '+', label: 'Students Taught' },
     { value: 50, suffix: '+', label: 'Hands-on Projects' },
-    { value: 8, suffix: '', label: 'Countries' },
+    { value: 2, suffix: '', label: 'Countries' },
     { value: 100, suffix: '%', label: 'Completion Rate' },
   ];
 
@@ -275,7 +275,7 @@ export default function LandingPage() {
               <Button
                 variant="contained"
                 size="large"
-                startIcon={<PlayArrow />}
+                endIcon={<PlayArrow />}
                 onClick={() => router.push('/sign-in')}
                 sx={{
                   px: 5, py: 1.8,
@@ -290,7 +290,7 @@ export default function LandingPage() {
                   },
                 }}
               >
-                Start Learning
+                Start Learning Soon
               </Button>
               <Button
                 variant="outlined"
@@ -612,7 +612,7 @@ export default function LandingPage() {
               }}
             >
               We&apos;re preparing the next generation through hands-on EV3 LEGO Mindstorms
-              robotics, coding, and engineering education across 8 countries.
+              robotics, coding, and engineering education in Kenya and the US.
             </Typography>
             <Button
               variant="contained"
@@ -974,7 +974,7 @@ export default function LandingPage() {
                   fontSize: { xs: '1rem', md: '1.3rem' },
                 }}
               >
-                Join young innovators across 8 countries who are building, coding, and competing with EV3 LEGO Mindstorms robots
+                Join young innovators in Kenya and the US who are building, coding, and competing with EV3 LEGO Mindstorms robots
               </Typography>
               <Stack
                 direction={{ xs: 'column', sm: 'row' }}

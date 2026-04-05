@@ -39,7 +39,7 @@ const programs = [
     color: "#3b82f6", bgColor: "rgba(59,130,246,0.08)", borderColor: "rgba(59,130,246,0.3)",
     href: "/programs/tech-titans",
     highlights: ["EV3 Mindstorms programming", "Color, touch, and ultrasonic sensors", "Gear ratios and locomotion", "FLL competition preparation"],
-    image: "/images/kids_designing_simple_machines.jpg", badge: null,
+    image: "/images/Mountain-view-classes-8.jpg", badge: null,
   },
   {
     title: "AI Avengers", ageRange: "Ages 13-17",
@@ -57,7 +57,7 @@ const programs = [
     color: "#0891b2", bgColor: "rgba(8,145,178,0.08)", borderColor: "rgba(8,145,178,0.3)",
     href: "/programs/seniors",
     highlights: ["STEM Trainer certification", "Advanced EV3 and Python", "UAV/drone fundamentals", "Curriculum development"],
-    image: "/images/Palo-alto-classes-6.jpg", badge: null,
+    image: "/images/senior_image.png", badge: null,
   },
 ];
 
@@ -65,7 +65,7 @@ const stats = [
   { value: "500+", label: "Students Taught" },
   { value: "5", label: "Age-Based Tracks" },
   { value: "50+", label: "Hands-On Projects" },
-  { value: "8", label: "Countries" },
+  { value: "2", label: "Countries" },
 ];
 
 const howItWorks = [
