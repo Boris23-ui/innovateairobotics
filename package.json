@@ -19,6 +19,7 @@
     "@mui/icons-material": "^5.14.0",
     "@mui/lab": "^5.0.0-alpha.125",
     "@mui/material": "^5.14.0",
+    "@phosphor-icons/react": "^2.1.10",
     "@react-three/drei": "^9.56.14",
     "@react-three/fiber": "^8.13.7",
     "@stripe/stripe-js": "^7.9.0",

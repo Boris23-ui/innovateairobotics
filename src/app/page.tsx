@@ -6,28 +6,30 @@ import { Container, Typography, Box, Button, Stack, Grid } from '@mui/material';
 import {
   PlayArrow,
   School,
-  SmartToy,
-  Groups,
-  MenuBook,
-  EmojiObjects,
   KeyboardArrowDown,
   LocationOn,
   Sensors,
   Memory,
   Visibility,
-  Build,
   Code,
-  Psychology,
   RocketLaunch,
-  TrackChanges,
-  PersonSearch,
-  Rocket,
-  Grass,
-  DirectionsCar,
-  FlightTakeoff,
-  LocalHospital,
-  Factory,
 } from '@mui/icons-material';
+import {
+  Planet,
+  Plant,
+  CarProfile,
+  Drone,
+  Heartbeat,
+  Robot,
+  Circuitry,
+  UsersThree,
+  BookOpen,
+  Trophy,
+  Wrench,
+  HeadCircuit,
+  CalendarDots,
+  ChalkboardTeacher,
+} from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import { motion, useInView } from 'framer-motion';
 import { useTheme } from '@mui/material';
@@ -85,22 +87,22 @@ export default function LandingPage() {
     {
       title: 'Hands-on Learning',
       description: 'Build real EV3 LEGO Mindstorms robots from day one — gear trains, pulleys, sensors, and programmable systems.',
-      icon: <SmartToy sx={{ fontSize: 32 }} />,
+      icon: <Circuitry weight="duotone" size={32} />,
     },
     {
       title: 'Certified STEM Trainers',
       description: 'Learn from certified STEM Robotics Trainers with hands-on EV3 Mindstorms and programming experience.',
-      icon: <Groups sx={{ fontSize: 32 }} />,
+      icon: <UsersThree weight="duotone" size={32} />,
     },
     {
       title: 'K-12 Curriculum',
       description: 'Structured curriculum covering simple machines, sensors, Scratch, Python, and competition preparation.',
-      icon: <MenuBook sx={{ fontSize: 32 }} />,
+      icon: <BookOpen weight="duotone" size={32} />,
     },
     {
       title: 'Competition Ready',
       description: 'Prepare for First Lego League (FLL) and World Robotics Olympiad (WRO) with real engineering challenges.',
-      icon: <EmojiObjects sx={{ fontSize: 32 }} />,
+      icon: <Trophy weight="duotone" size={32} />,
     },
   ];
 
@@ -124,7 +126,7 @@ export default function LandingPage() {
       subtitle: 'Simple Machines & Early Engineering',
       points: ['LEGO building and basic construction', 'Introduction to gears, pulleys, and levers', 'Cause-and-effect exploration with sensors'],
       image: '/images/Kids sorting kit components.jpg',
-      icon: <Build sx={{ fontSize: 24 }} />,
+      icon: <Wrench weight="duotone" size={24} />,
     },
     {
       level: '02',
@@ -140,7 +142,7 @@ export default function LandingPage() {
       subtitle: 'Programming, Data & Competition',
       points: ['Python programming and data logging', 'Sensor fusion and autonomous navigation', 'FLL & WRO competition preparation'],
       image: '/images/building_drones.jpg',
-      icon: <Psychology sx={{ fontSize: 24 }} />,
+      icon: <HeadCircuit weight="duotone" size={24} />,
     },
   ];
 
@@ -684,37 +686,37 @@ export default function LandingPage() {
           <Grid container spacing={3}>
             {[
               {
-                icon: <Rocket sx={{ fontSize: 36 }} />,
+                icon: <Planet weight="duotone" size={36} />,
                 title: 'Space Exploration',
                 description: 'NASA\'s Mars rovers use the same sensor logic and autonomous navigation principles our students learn with EV3 robots.',
                 color: '#8b5cf6',
               },
               {
-                icon: <Grass sx={{ fontSize: 36 }} />,
+                icon: <Plant weight="duotone" size={36} />,
                 title: 'Agriculture',
                 description: 'Robotic harvesters and autonomous drones monitor crops, optimize irrigation, and increase food production worldwide.',
                 color: '#10b981',
               },
               {
-                icon: <DirectionsCar sx={{ fontSize: 36 }} />,
+                icon: <CarProfile weight="duotone" size={36} />,
                 title: 'Self-Driving Vehicles',
                 description: 'Autonomous cars from Waymo and Tesla rely on sensor fusion, control loops, and decision logic — concepts taught in our curriculum.',
                 color: '#3b82f6',
               },
               {
-                icon: <FlightTakeoff sx={{ fontSize: 36 }} />,
+                icon: <Drone weight="duotone" size={36} />,
                 title: 'Drones & UAVs',
                 description: 'From package delivery to disaster relief, drones use the programming and navigation skills students build in our advanced modules.',
                 color: '#f59e0b',
               },
               {
-                icon: <LocalHospital sx={{ fontSize: 36 }} />,
+                icon: <Heartbeat weight="duotone" size={36} />,
                 title: 'Healthcare',
                 description: 'Surgical robots like da Vinci perform precise operations. Robotic exoskeletons help patients walk again — all powered by engineering.',
                 color: '#ef4444',
               },
               {
-                icon: <Factory sx={{ fontSize: 36 }} />,
+                icon: <Robot weight="duotone" size={36} />,
                 title: 'Manufacturing',
                 description: 'Boston Dynamics robots and industrial arms automate factories, warehouses, and supply chains with the engineering design process.',
                 color: '#06b6d4',
@@ -1030,8 +1032,8 @@ export default function LandingPage() {
           {/* Feature Cards */}
           <Grid container spacing={3} justifyContent="center">
             {[
-              { icon: <TrackChanges sx={{ fontSize: 36 }} />, title: 'Flexible Learning', desc: 'Learn through holiday camps, spring/summer break programs, after-school sessions, and online classes' },
-              { icon: <PersonSearch sx={{ fontSize: 36 }} />, title: 'Expert Support', desc: 'Get guidance from certified STEM Robotics Trainers with structured, module-based learning' },
+              { icon: <CalendarDots weight="duotone" size={36} />, title: 'Flexible Learning', desc: 'Learn through holiday camps, spring/summer break programs, after-school sessions, and online classes' },
+              { icon: <ChalkboardTeacher weight="duotone" size={36} />, title: 'Expert Support', desc: 'Get guidance from certified STEM Robotics Trainers with structured, module-based learning' },
               { icon: <RocketLaunch sx={{ fontSize: 36 }} />, title: 'Show & Tell', desc: 'Present your robot builds at the end of each module, showcasing real engineering solutions to parents and peers' },
             ].map((card, i) => (
               <Grid item xs={12} sm={4} key={card.title}>
