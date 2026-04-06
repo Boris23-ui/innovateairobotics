@@ -11,7 +11,7 @@ export default function TechTitansPage() {
       ageBadge="Ages 10-12"
       accentColor="rgb(59, 130, 246)"
       accentGradient="linear-gradient(135deg, #3b82f6, #2563eb)"
-      heroGradient="linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)"
+      heroGradient="linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)"
       description="EV3 Mindstorms programming, sensor integration, and competition-ready robot design."
       introTitle="Engineer Your Future"
       introText={[

@@ -737,8 +737,8 @@ export default function LandingPage() {
                       alignItems: 'center',
                       transition: 'transform 0.3s, box-shadow 0.3s',
                       '&:hover': {
-                        transform: 'translateY(-6px)',
-                        boxShadow: `0 16px 40px ${useCase.color}20`,
+                        transform: 'translateY(-2px)',
+                        boxShadow: `0 12px 28px ${useCase.color}20`,
                       },
                     }}
                   >

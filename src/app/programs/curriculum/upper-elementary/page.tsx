@@ -10,7 +10,7 @@ export default function UpperElementaryCurriculumPage() {
       gradeRange="Grades 4-6 · Ages 9-12"
       accentColor="#3b82f6"
       accentGradient="linear-gradient(135deg, #3b82f6, #2563eb)"
-      heroGradient="linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)"
+      heroGradient="linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)"
       description="Envision it. Engineer it. Make It Work."
       overview="The Upper Elementary curriculum bridges mechanical building with programming and sensor integration. Students start with advanced gear ratios and locomotion systems, then progress to EV3 Mindstorms programming using Scratch. They learn to integrate touch, color, and ultrasonic sensors to create intelligent, autonomous robots. This level prepares students for FLL competition challenges through hands-on engineering and programming mastery."
       skillsGained={[

@@ -84,7 +84,7 @@ export default function AllCoursesPage() {
                   flexDirection: 'column',
                   transition: 'transform 0.2s',
                   '&:hover': {
-                    transform: 'translateY(-4px)',
+                    transform: 'translateY(-2px)',
                     boxShadow: 6
                   }
                 }}

@@ -338,9 +338,9 @@ export default function TeacherDashboard() {
                 borderRadius: 3,
                 background: 'linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)',
                 color: 'white',
-                transition: 'all 0.3s ease',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-                '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
+                '&:hover': { transform: 'translateY(-2px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
               }}>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={2}>
@@ -363,9 +363,9 @@ export default function TeacherDashboard() {
                 borderRadius: 3,
                 background: 'linear-gradient(135deg, #388e3c 0%, #66bb6a 100%)',
                 color: 'white',
-                transition: 'all 0.3s ease',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-                '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
+                '&:hover': { transform: 'translateY(-2px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
               }}>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={2}>
@@ -390,9 +390,9 @@ export default function TeacherDashboard() {
                 borderRadius: 3,
                 background: 'linear-gradient(135deg, #fbc02d 0%, #ffd54f 100%)',
                 color: 'white',
-                transition: 'all 0.3s ease',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-                '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
+                '&:hover': { transform: 'translateY(-2px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
               }}>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={2}>
@@ -415,9 +415,9 @@ export default function TeacherDashboard() {
                 borderRadius: 3,
                 background: 'linear-gradient(135deg, #7b1fa2 0%, #ba68c8 100%)',
                 color: 'white',
-                transition: 'all 0.3s ease',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-                '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
+                '&:hover': { transform: 'translateY(-2px)', boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)' }
               }}>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={2}>

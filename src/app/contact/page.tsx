@@ -88,7 +88,7 @@ export default function ContactPage() {
   return (
     <Box>
       {/* HERO */}
-      <Box sx={{ background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)", py: { xs: 10, md: 14 }, position: "relative", overflow: "hidden" }}>
+      <Box sx={{ background: "linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)", py: { xs: 10, md: 14 }, position: "relative", overflow: "hidden" }}>
         <Box sx={{ position: "absolute", top: "10%", right: "8%", width: 280, height: 280, borderRadius: "50%", background: "radial-gradient(circle, rgba(37,99,235,0.25), transparent 70%)", pointerEvents: "none" }} />
         <Container maxWidth="lg">
           <Chip label="Get In Touch" sx={{ bgcolor: "rgba(37,99,235,0.15)", color: "#60a5fa", border: "1px solid rgba(37,99,235,0.3)", fontWeight: 700, mb: 3 }} />
@@ -216,7 +216,7 @@ export default function ContactPage() {
           <Grid container spacing={4}>
             {CAMPUSES.map((campus) => (
               <Grid item xs={12} md={4} key={campus.name}>
-                <Card elevation={0} sx={{ border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: 4, overflow: "hidden", height: "100%", transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-4px)", boxShadow: isDark ? "0 16px 40px rgba(0,0,0,0.3)" : "0 16px 40px rgba(0,0,0,0.1)" } }}>
+                <Card elevation={0} sx={{ border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: 4, overflow: "hidden", height: "100%", transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-2px)", boxShadow: isDark ? "0 16px 40px rgba(0,0,0,0.3)" : "0 16px 40px rgba(0,0,0,0.1)" } }}>
                   <Box sx={{ position: "relative", height: 200 }}>
                     <Image src={campus.image} alt={campus.name} fill style={{ objectFit: "cover" }} />
                     <Box sx={{ position: "absolute", top: 12, right: 12, bgcolor: isDark ? "rgba(17,24,39,0.9)" : "white", borderRadius: 2, px: 1.5, py: 0.5 }}>
@@ -246,7 +246,7 @@ export default function ContactPage() {
           </Grid>
 
           {/* ONLINE */}
-          <Card elevation={0} sx={{ mt: 4, border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: 4, p: 4, background: "linear-gradient(135deg, #0f172a, #1e3a5f)" }}>
+          <Card elevation={0} sx={{ mt: 4, border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: 4, p: 4, background: "linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)" }}>
             <Grid container spacing={4} alignItems="center">
               <Grid item xs={12} md={8}>
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>

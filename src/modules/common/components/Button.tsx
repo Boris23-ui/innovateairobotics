@@ -17,7 +17,7 @@ const StyledButton = styled(MuiButton)<{ animation?: string }>(
   ({ theme, animation }) => ({
     position: 'relative',
     overflow: 'hidden',
-    transition: 'all 0.2s ease-in-out',
+    transition: 'color 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out',
     '&:hover': {
       transform: 'translateY(-1px)',
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',

@@ -84,7 +84,7 @@ export default function CurriculumOverviewPage() {
       {/* HERO */}
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%)',
+          background: 'linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)',
           py: { xs: 10, md: 16 },
           position: 'relative',
           overflow: 'hidden',
@@ -174,7 +174,7 @@ export default function CurriculumOverviewPage() {
                     overflow: 'hidden',
                     transition: 'all 0.3s',
                     '&:hover': {
-                      transform: 'translateY(-4px)',
+                      transform: 'translateY(-2px)',
                       boxShadow: `0 16px 40px ${curr.color}20`,
                       borderColor: `${curr.color}60`,
                     },

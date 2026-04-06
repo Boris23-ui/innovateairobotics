@@ -370,7 +370,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
               borderRadius: '16px',
               boxShadow: shadows[1],
               '&:hover': {
-                transform: 'translateY(-4px)',
+                transform: 'translateY(-2px)',
                 boxShadow: shadows[3],
               },
             },

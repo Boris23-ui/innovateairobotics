@@ -27,7 +27,7 @@ const StyledCard = styled(MuiCard)<{ animation?: string; hoverEffect?: boolean }
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    transition: 'all 0.3s ease-in-out',
+    transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
     ...(hoverEffect && {
       '&:hover': {
         transform: 'translateY(-8px)',

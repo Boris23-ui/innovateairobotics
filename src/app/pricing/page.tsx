@@ -194,7 +194,7 @@ export default function PricingPage() {
       {/* ENTERPRISE */}
       <Box sx={{ py: 6, bgcolor: isDark ? "#111827" : "white" }}>
         <Container maxWidth="lg">
-          <Card elevation={0} sx={{ borderRadius: 4, background: "linear-gradient(135deg, #0f172a, #1e3a5f)", p: { xs: 4, md: 6 } }}>
+          <Card elevation={0} sx={{ borderRadius: 4, background: "linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)", p: { xs: 4, md: 6 } }}>
             <Grid container spacing={4} alignItems="center">
               <Grid item xs={12} md={8}>
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>

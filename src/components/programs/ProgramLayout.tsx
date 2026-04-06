@@ -299,7 +299,7 @@ export const ProgramLayout = ({
                     height: '100%',
                     transition: 'transform 0.3s, box-shadow 0.3s',
                     '&:hover': {
-                      transform: 'translateY(-4px)',
+                      transform: 'translateY(-2px)',
                       boxShadow: `0 8px 30px ${accentColor}22`,
                     },
                   }}

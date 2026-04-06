@@ -233,7 +233,7 @@ export function CurriculumLayout({
                       '&:hover': {
                         borderColor: `${accentColor}50`,
                         boxShadow: `0 8px 30px ${accentColor}15`,
-                        transform: 'translateY(-4px)',
+                        transform: 'translateY(-2px)',
                       },
                     }}
                   >
