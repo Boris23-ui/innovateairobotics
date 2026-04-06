@@ -10,22 +10,24 @@ import {
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
 import {
-  Lightbulb,
-  Groups,
-  Diversity3,
-  TrendingUp,
-} from '@mui/icons-material';
+  LightbulbFilament,
+  UsersThree,
+  GlobeHemisphereWest,
+  ChartLineUp,
+} from '@phosphor-icons/react';
 import { useTheme } from '@mui/material';
 
 function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const prefersReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return <div ref={ref}>{children}</div>;
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: [0.25, 0.1, 0.25, 1] }}
+      transition={{ duration: 0.6, delay, ease: [0.25, 0.1, 0.25, 1] }}
     >
       {children}
     </motion.div>
@@ -38,22 +40,22 @@ export default function AboutPage() {
 
   const values = [
     {
-      icon: <Lightbulb sx={{ fontSize: 32 }} />,
+      icon: <LightbulbFilament weight="duotone" size={32} />,
       title: 'Innovation',
       description: 'We use EV3 LEGO Mindstorms and the Engineering Design Process to inspire students to envision, engineer, and make things work.',
     },
     {
-      icon: <Groups sx={{ fontSize: 32 }} />,
+      icon: <UsersThree weight="duotone" size={32} />,
       title: 'Accessibility',
       description: 'We believe every child deserves access to quality STEM robotics education, operating in Kenya and the United States.',
     },
     {
-      icon: <Diversity3 sx={{ fontSize: 32 }} />,
+      icon: <GlobeHemisphereWest weight="duotone" size={32} />,
       title: 'Community',
       description: 'We build communities of learners, certified STEM trainers, and innovators united by a passion for robotics and preparing for the 4th Industrial Revolution.',
     },
     {
-      icon: <TrendingUp sx={{ fontSize: 32 }} />,
+      icon: <ChartLineUp weight="duotone" size={32} />,
       title: 'Excellence',
       description: 'We maintain the highest standards in curriculum design — from simple machines to data analytics — with structured modules and Show & Tell presentations.',
     },
@@ -70,7 +72,7 @@ export default function AboutPage() {
           alignItems: 'center',
           justifyContent: 'center',
           textAlign: 'center',
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)',
+          background: 'linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)',
           overflow: 'hidden',
         }}
       >
@@ -198,7 +200,7 @@ export default function AboutPage() {
                       textAlign: 'center',
                       transition: 'transform 0.3s, box-shadow 0.3s',
                       '&:hover': {
-                        transform: 'translateY(-4px)',
+                        transform: 'translateY(-2px)',
                         boxShadow: '0 8px 30px rgba(6, 182, 212, 0.15)',
                       },
                     }}
@@ -207,8 +209,9 @@ export default function AboutPage() {
                       sx={{
                         width: 56,
                         height: 56,
-                        borderRadius: '50%',
-                        bgcolor: 'rgba(6, 182, 212, 0.15)',
+                        borderRadius: 2,
+                        bgcolor: 'rgba(6, 182, 212, 0.1)',
+                        border: '1px solid rgba(6, 182, 212, 0.2)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -362,7 +365,7 @@ export default function AboutPage() {
       {/* ── CAMPUSES CTA ── */}
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)',
+          background: 'linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)',
           py: { xs: 6, md: 8 },
           textAlign: 'center',
         }}
