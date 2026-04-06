@@ -14,16 +14,6 @@ import {
   Code,
 } from '@mui/icons-material';
 import {
-  Planet,
-  Plant,
-  CarProfile,
-  Drone,
-  Heartbeat,
-  Robot,
-  Circuitry,
-  UsersThree,
-  BookOpen,
-  Trophy,
   Wrench,
   HeadCircuit,
   CalendarDots,
@@ -89,22 +79,22 @@ export default function LandingPage() {
     {
       title: 'Hands-on Learning',
       description: 'Build real EV3 LEGO Mindstorms robots from day one — gear trains, pulleys, sensors, and programmable systems.',
-      icon: <Circuitry weight="duotone" size={32} />,
+      img: '/robot-icons/arm_14509879.png',
     },
     {
       title: 'Certified STEM Trainers',
       description: 'Learn from certified STEM Robotics Trainers with hands-on EV3 Mindstorms and programming experience.',
-      icon: <UsersThree weight="duotone" size={32} />,
+      img: '/robot-icons/robotics_12775607.png',
     },
     {
       title: 'K-12 Curriculum',
       description: 'Structured curriculum covering simple machines, sensors, Scratch, Python, and competition preparation.',
-      icon: <BookOpen weight="duotone" size={32} />,
+      img: '/robot-icons/industrial-robot_8947338.png',
     },
     {
       title: 'Competition Ready',
       description: 'Prepare for First Lego League (FLL) and World Robotics Olympiad (WRO) with real engineering challenges.',
-      icon: <Trophy weight="duotone" size={32} />,
+      img: '/robot-icons/rover_8605946.png',
     },
   ];
 
@@ -544,12 +534,12 @@ export default function LandingPage() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      background: 'rgba(6, 182, 212, 0.08)',
-                      border: '1px solid rgba(6, 182, 212, 0.15)',
-                      color: '#06b6d4',
+                      bgcolor: 'white',
+                      border: '1px solid rgba(6, 182, 212, 0.25)',
+                      p: 1,
                       mb: 3,
                     }}>
-                      {feature.icon}
+                      <Image src={feature.img} alt={feature.title} width={44} height={44} style={{ objectFit: 'contain' }} />
                     </Box>
                     <Typography variant="h6" sx={{ fontWeight: 600, mb: 1.5, color: 'text.primary' }}>
                       {feature.title}
@@ -688,37 +678,37 @@ export default function LandingPage() {
           <Grid container spacing={3}>
             {[
               {
-                icon: <Planet weight="duotone" size={36} />,
+                img: '/robot-icons/rover_8605946.png',
                 title: 'Space Exploration',
                 description: 'NASA\'s Mars rovers use the same sensor logic and autonomous navigation principles our students learn with EV3 robots.',
                 color: '#8b5cf6',
               },
               {
-                icon: <Plant weight="duotone" size={36} />,
+                img: '/robot-icons/robotic_9860179.png',
                 title: 'Agriculture',
                 description: 'Robotic harvesters and autonomous drones monitor crops, optimize irrigation, and increase food production worldwide.',
                 color: '#10b981',
               },
               {
-                icon: <CarProfile weight="duotone" size={36} />,
+                img: '/robot-icons/robot-dog_18985013.png',
                 title: 'Self-Driving Vehicles',
-                description: 'Autonomous cars from Waymo and Tesla rely on sensor fusion, control loops, and decision logic — concepts taught in our curriculum.',
+                description: 'Autonomous robots from Boston Dynamics and self-driving systems rely on sensor fusion and decision logic — concepts taught in our curriculum.',
                 color: '#3b82f6',
               },
               {
-                icon: <Drone weight="duotone" size={36} />,
+                img: '/robot-icons/robot_2752865.png',
                 title: 'Drones & UAVs',
                 description: 'From package delivery to disaster relief, drones use the programming and navigation skills students build in our advanced modules.',
                 color: '#f59e0b',
               },
               {
-                icon: <Heartbeat weight="duotone" size={36} />,
+                img: '/robot-icons/robotic-arm_2539936.png',
                 title: 'Healthcare',
                 description: 'Surgical robots like da Vinci perform precise operations. Robotic exoskeletons help patients walk again — all powered by engineering.',
                 color: '#ef4444',
               },
               {
-                icon: <Robot weight="duotone" size={36} />,
+                img: '/robot-icons/robot-arm_10376241.png',
                 title: 'Manufacturing',
                 description: 'Boston Dynamics robots and industrial arms automate factories, warehouses, and supply chains with the engineering design process.',
                 color: '#06b6d4',
@@ -748,12 +738,12 @@ export default function LandingPage() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      background: `${useCase.color}15`,
-                      border: `1px solid ${useCase.color}30`,
-                      color: useCase.color,
+                      bgcolor: 'white',
+                      border: `2px solid ${useCase.color}40`,
+                      p: 1,
                       mb: 3,
                     }}>
-                      {useCase.icon}
+                      <Image src={useCase.img} alt={useCase.title} width={52} height={52} style={{ objectFit: 'contain' }} />
                     </Box>
                     <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary', mb: 1.5 }}>
                       {useCase.title}
