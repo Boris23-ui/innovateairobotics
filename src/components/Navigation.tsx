@@ -230,7 +230,7 @@ export default function Navigation() {
                   mx: 1, my: 0.25,
                   borderRadius: '10px',
                   py: 1.2,
-                  transition: 'all 0.2s ease',
+                  transition: 'color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease',
                   '&:hover': {
                     bgcolor: mode === 'dark' ? 'rgba(6,182,212,0.08)' : 'rgba(6,182,212,0.06)',
                   },
@@ -282,7 +282,7 @@ export default function Navigation() {
                   mx: 1, my: 0.25,
                   borderRadius: '10px',
                   py: 1,
-                  transition: 'all 0.2s ease',
+                  transition: 'color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease',
                   '&:hover': {
                     bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)',
                   },
@@ -399,7 +399,7 @@ export default function Navigation() {
         position="fixed"
         elevation={0}
         sx={{
-          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+          transition: 'background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
           backgroundColor: scrolled
             ? mode === 'dark' ? 'rgba(10, 10, 15, 0.8)' : 'rgba(255, 255, 255, 0.85)'
             : 'transparent',
@@ -442,7 +442,7 @@ export default function Navigation() {
                         fontSize: '0.85rem',
                         fontWeight: 500,
                         cursor: 'pointer',
-                        transition: 'all 0.2s ease',
+                        transition: 'color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease',
                         color: isActive(item.href)
                           ? (mode === 'dark' ? '#fff' : '#0f172a')
                           : (mode === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.5)'),
@@ -475,7 +475,7 @@ export default function Navigation() {
                   fontSize: '0.85rem',
                   fontWeight: 500,
                   cursor: 'pointer',
-                  transition: 'all 0.2s ease',
+                  transition: 'color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease',
                   color: isActiveProgram
                     ? '#06b6d4'
                     : (mode === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.5)'),
@@ -503,7 +503,7 @@ export default function Navigation() {
                   display: { xs: 'none', md: 'flex' },
                   width: 36, height: 36,
                   color: mode === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)',
-                  transition: 'all 0.2s ease',
+                  transition: 'color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease',
                   '&:hover': {
                     color: '#06b6d4',
                     bgcolor: mode === 'dark' ? 'rgba(6,182,212,0.08)' : 'rgba(6,182,212,0.06)',
@@ -522,7 +522,7 @@ export default function Navigation() {
                   borderRadius: '10px',
                   color: mode === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.6)',
                   bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
-                  transition: 'all 0.2s ease',
+                  transition: 'color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease',
                   '&:hover': {
                     bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
                   },
@@ -575,7 +575,7 @@ export default function Navigation() {
                 borderRadius: '12px',
                 textDecoration: 'none',
                 color: 'inherit',
-                transition: 'all 0.2s ease',
+                transition: 'color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease',
                 '&:hover': {
                   bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)',
                   '& .program-arrow': { opacity: 1, transform: 'translateX(0)' },
@@ -618,7 +618,7 @@ export default function Navigation() {
                       ml: 'auto',
                       opacity: 0,
                       transform: 'translateX(-4px)',
-                      transition: 'all 0.2s ease',
+                      transition: 'color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease',
                       color: item.color,
                     }}
                   />
@@ -650,7 +650,7 @@ export default function Navigation() {
             fontSize: '0.85rem',
             fontWeight: 600,
             color: '#06b6d4',
-            transition: 'all 0.2s ease',
+            transition: 'color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease',
             '&:hover': {
               bgcolor: 'rgba(6,182,212,0.08)',
             },
