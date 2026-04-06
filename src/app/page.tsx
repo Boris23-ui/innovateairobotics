@@ -12,7 +12,6 @@ import {
   Memory,
   Visibility,
   Code,
-  RocketLaunch,
 } from '@mui/icons-material';
 import {
   Planet,
@@ -29,6 +28,7 @@ import {
   HeadCircuit,
   CalendarDots,
   ChalkboardTeacher,
+  RocketLaunch,
 } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import { motion, useInView } from 'framer-motion';
@@ -1034,7 +1034,7 @@ export default function LandingPage() {
             {[
               { icon: <CalendarDots weight="duotone" size={36} />, title: 'Flexible Learning', desc: 'Learn through holiday camps, spring/summer break programs, after-school sessions, and online classes' },
               { icon: <ChalkboardTeacher weight="duotone" size={36} />, title: 'Expert Support', desc: 'Get guidance from certified STEM Robotics Trainers with structured, module-based learning' },
-              { icon: <RocketLaunch sx={{ fontSize: 36 }} />, title: 'Show & Tell', desc: 'Present your robot builds at the end of each module, showcasing real engineering solutions to parents and peers' },
+              { icon: <RocketLaunch weight="duotone" size={36} />, title: 'Show & Tell', desc: 'Present your robot builds at the end of each module, showcasing real engineering solutions to parents and peers' },
             ].map((card, i) => (
               <Grid item xs={12} sm={4} key={card.title}>
                 <ScrollReveal delay={i * 0.15}>
