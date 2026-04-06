@@ -93,13 +93,13 @@ export default function ProgramsPage() {
   return (
     <>
       {/* Hero */}
-      <Box sx={{ background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%)", py: { xs: 8, md: 14 }, position: "relative", overflow: "hidden" }}>
-        <Box sx={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 20% 50%, rgba(37,99,235,0.15) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(139,92,246,0.15) 0%, transparent 50%)" }} />
+      <Box sx={{ background: "linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)", py: { xs: 8, md: 14 }, position: "relative", overflow: "hidden" }}>
+        <Box sx={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 20% 50%, rgba(6,182,212,0.07) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(59,130,246,0.07) 0%, transparent 50%)" }} />
         <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1, textAlign: "center" }}>
           <Chip label="5 Programs | All Ages | In-Person and Online" sx={{ mb: 3, bgcolor: "rgba(255,255,255,0.1)", color: "white", fontWeight: 600 }} />
           <Typography variant="h1" component="h1" sx={{ fontWeight: 900, color: "white", fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" }, lineHeight: 1.1, mb: 3 }}>
             {"Programs for "}
-            <Box component="span" sx={{ background: "linear-gradient(135deg, #38bdf8 0%, #818cf8 100%)", backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            <Box component="span" sx={{ background: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)", backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               Every Age
             </Box>
           </Typography>
@@ -182,8 +182,8 @@ export default function ProgramsPage() {
           <Grid container spacing={4}>
             {howItWorks.map((step) => (
               <Grid item xs={12} sm={6} md={3} key={step.step}>
-                <Paper elevation={0} sx={{ p: 4, borderRadius: 4, border: "1px solid", borderColor: "divider", height: "100%", textAlign: "center", transition: "all 0.3s ease", "&:hover": { transform: "translateY(-6px)", boxShadow: 4 } }}>
-                  <Typography variant="h2" sx={{ fontWeight: 900, background: "linear-gradient(135deg, #2563eb, #8b5cf6)", backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", mb: 2, fontSize: "3.5rem" }}>{step.step}</Typography>
+                <Paper elevation={0} sx={{ p: 4, borderRadius: 4, border: "1px solid", borderColor: "divider", height: "100%", textAlign: "center", transition: "transform 0.3s ease, box-shadow 0.3s ease", "&:hover": { transform: "translateY(-2px)", boxShadow: 4 } }}>
+                  <Typography variant="h2" sx={{ fontWeight: 900, background: "linear-gradient(135deg, #06b6d4, #3b82f6)", backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", mb: 2, fontSize: "3.5rem" }}>{step.step}</Typography>
                   <Typography variant="h6" fontWeight={700} gutterBottom>{step.title}</Typography>
                   <Typography variant="body2" color="text.secondary" lineHeight={1.8}>{step.description}</Typography>
                 </Paper>
