@@ -373,6 +373,80 @@ export default function LandingPage() {
         </Container>
       </Box>
 
+      {/* ═══ MISSION / EQUITY SECTION ══════════════════════════════════════ */}
+      <Box sx={{ bgcolor: isDark ? '#0a0a0f' : '#ffffff', py: { xs: 8, md: 12 } }}>
+        <Container maxWidth="lg">
+          <ScrollReveal>
+            <Box sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+              gap: { xs: 6, md: 8 },
+              alignItems: 'center',
+            }}>
+              {/* Left: image */}
+              <Box sx={{ position: 'relative', height: { xs: 280, md: 420 }, borderRadius: 4, overflow: 'hidden', order: { xs: 2, md: 1 } }}>
+                <Image
+                  src="/images/Nairobi-classes-7.jpg"
+                  alt="Students in Nairobi robotics class"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+                <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 50%)' }} />
+                <Box sx={{ position: 'absolute', bottom: 20, left: 20, right: 20 }}>
+                  <Typography sx={{ color: 'white', fontWeight: 700, fontSize: '1rem' }}>Nairobi, Kenya</Typography>
+                  <Typography sx={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.85rem' }}>Same curriculum. Same standards. Same belief in every child.</Typography>
+                </Box>
+              </Box>
+
+              {/* Right: text */}
+              <Box sx={{ order: { xs: 1, md: 2 } }}>
+                <Typography sx={{ color: '#06b6d4', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', mb: 2 }}>
+                  501(c)(3) Nonprofit · TaxID 99-2801688
+                </Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, fontSize: { xs: '2rem', md: '2.8rem' }, lineHeight: 1.15, mb: 3 }}>
+                  From Silicon Valley{' '}
+                  <Box component="span" className="gradient-text">to Nairobi</Box>
+                  {' '}— same dream, every child
+                </Typography>
+                <Typography sx={{ color: 'text.secondary', fontSize: '1.05rem', lineHeight: 1.8, mb: 3 }}>
+                  We are a donor-supported nonprofit on a mission to give every child — regardless of zip code or continent — access to world-class robotics and AI education. Our classes run identically in Mountain View, Palo Alto, and Nairobi.
+                </Typography>
+                <Typography sx={{ color: 'text.secondary', fontSize: '1.05rem', lineHeight: 1.8, mb: 4 }}>
+                  By 2030, AI and robotics will reshape every industry. We are making sure the children who grow up to build that world look like the world itself.
+                </Typography>
+                {/* Scholarship callout */}
+                <Box sx={{
+                  display: 'flex', alignItems: 'flex-start', gap: 2,
+                  bgcolor: 'rgba(6,182,212,0.06)', border: '1px solid rgba(6,182,212,0.2)',
+                  borderRadius: 3, p: 2.5, mb: 3,
+                }}>
+                  <Box sx={{ fontSize: '1.4rem', flexShrink: 0 }}>🎓</Box>
+                  <Box>
+                    <Typography sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>Need-based scholarships available</Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>No student is ever turned away for financial reasons. Contact us to learn about scholarship opportunities.</Typography>
+                  </Box>
+                </Box>
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
+                  <Button
+                    component="a" href="/donate" variant="contained"
+                    sx={{ bgcolor: '#ef4444', '&:hover': { bgcolor: '#dc2626' }, px: 3, py: 1.4, borderRadius: 2, fontWeight: 700, textTransform: 'none', fontSize: '0.95rem' }}
+                    startIcon={<span>❤️</span>}
+                  >
+                    Support Our Mission
+                  </Button>
+                  <Button
+                    component="a" href="/about" variant="outlined"
+                    sx={{ borderColor: 'rgba(6,182,212,0.4)', color: '#06b6d4', px: 3, py: 1.4, borderRadius: 2, fontWeight: 600, textTransform: 'none', fontSize: '0.95rem', '&:hover': { borderColor: '#06b6d4', bgcolor: 'rgba(6,182,212,0.06)' } }}
+                  >
+                    Our Story
+                  </Button>
+                </Stack>
+              </Box>
+            </Box>
+          </ScrollReveal>
+        </Container>
+      </Box>
+
       {/* ═══ CAMPUS GALLERY ═════════════════════════════════════════════════ */}
       <Box sx={{ bgcolor: isDark ? '#0a0a0f' : '#ffffff', py: { xs: 8, md: 12 } }}>
         <Container maxWidth="lg">
@@ -907,6 +981,72 @@ export default function LandingPage() {
               </ScrollReveal>
             ))}
           </Box>
+        </Container>
+      </Box>
+
+      {/* ═══ TESTIMONIALS ═══════════════════════════════════════════════════ */}
+      <Box sx={{ bgcolor: isDark ? '#0d1117' : '#f8fafc', py: { xs: 8, md: 12 } }}>
+        <Container maxWidth="lg">
+          <ScrollReveal>
+            <Typography variant="overline" sx={{ color: '#06b6d4', letterSpacing: '0.3em', textAlign: 'center', display: 'block', mb: 2 }}>
+              WHAT FAMILIES SAY
+            </Typography>
+            <Typography variant="h2" sx={{ textAlign: 'center', fontWeight: 700, mb: { xs: 5, md: 8 }, fontSize: { xs: '2rem', md: '3rem' } }}>
+              Changing Lives,{' '}
+              <Box component="span" className="gradient-text">One Robot at a Time</Box>
+            </Typography>
+          </ScrollReveal>
+          <Grid container spacing={3}>
+            {[
+              {
+                quote: "My daughter went from being nervous about math to building her own robot in 6 weeks. InnovateAI didn't just teach her code — it gave her confidence.",
+                name: "Sarah M.",
+                role: "Parent, Mountain View CA",
+                initials: "SM",
+                color: '#06b6d4',
+              },
+              {
+                quote: "The curriculum bridges the gap between what kids learn in school and what the real world requires. My son is already asking about engineering colleges.",
+                name: "James K.",
+                role: "Parent, Nairobi Kenya",
+                initials: "JK",
+                color: '#3b82f6',
+              },
+              {
+                quote: "As a teacher who went through their certification program, I can say the training is world-class. I now run a robotics club at my school in Nairobi.",
+                name: "Amina W.",
+                role: "Certified STEM Trainer, Kenya",
+                initials: "AW",
+                color: '#10b981',
+              },
+            ].map((t, i) => (
+              <Grid item xs={12} md={4} key={t.name}>
+                <ScrollReveal delay={i * 0.12}>
+                  <Box className="glass-card" sx={{ p: 4, height: '100%', display: 'flex', flexDirection: 'column' }}>
+                    {/* Stars */}
+                    <Box sx={{ color: '#f59e0b', mb: 2, fontSize: '1rem', letterSpacing: '0.1em' }}>★★★★★</Box>
+                    <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 3, flex: 1, fontStyle: 'italic', fontSize: '0.97rem' }}>
+                      &ldquo;{t.quote}&rdquo;
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                      <Box sx={{
+                        width: 44, height: 44, borderRadius: '50%',
+                        bgcolor: `${t.color}20`, border: `2px solid ${t.color}40`,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        color: t.color, fontWeight: 800, fontSize: '0.85rem', flexShrink: 0,
+                      }}>
+                        {t.initials}
+                      </Box>
+                      <Box>
+                        <Typography sx={{ fontWeight: 700, color: 'text.primary', fontSize: '0.9rem' }}>{t.name}</Typography>
+                        <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.8rem' }}>{t.role}</Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                </ScrollReveal>
+              </Grid>
+            ))}
+          </Grid>
         </Container>
       </Box>
 

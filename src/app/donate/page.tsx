@@ -201,36 +201,73 @@ function DonatePageInner() {
 
       {/* Hero Section */}
       <Box sx={{ textAlign: 'center', mb: 8 }}>
-        <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
-          Support the Future of Robotics Education
+        {/* 501(c)(3) badge */}
+        <Box sx={{
+          display: 'inline-flex', alignItems: 'center', gap: 1,
+          bgcolor: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.25)',
+          borderRadius: 99, px: 2.5, py: 0.8, mb: 4,
+        }}>
+          <Typography sx={{ color: '#06b6d4', fontWeight: 700, fontSize: '0.78rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            501(c)(3) Tax-Exempt Nonprofit · TaxID 99-2801688 · Donations are tax-deductible
+          </Typography>
+        </Box>
+
+        <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 900, fontSize: { xs: '2rem', md: '3rem' }, lineHeight: 1.15 }}>
+          Every dollar opens a door{' '}
+          <Box component="span" sx={{ background: 'linear-gradient(135deg, #06b6d4, #3b82f6)', backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            for a young engineer
+          </Box>
         </Typography>
-        <Typography variant="h5" color="text.secondary" sx={{ maxWidth: 800, mx: 'auto', mb: 4 }}>
-          Your donation helps us provide cutting-edge robotics education to students worldwide,
-          preparing them for the future of technology and innovation.
+        <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 680, mx: 'auto', mb: 5, fontWeight: 400, lineHeight: 1.7 }}>
+          We are a donor-supported nonprofit bringing world-class robotics and AI education to children in Kenya and California — regardless of income or background.
         </Typography>
-        <Paper
-          elevation={0}
-          sx={{
-            p: 4,
-            background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
-            color: 'white',
-            borderRadius: 4,
-          }}
-        >
-          <Stack direction="row" spacing={4} justifyContent="center" alignItems="center">
-            <Box>
-              <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
-                $4,000
-              </Typography>
-              <Typography variant="subtitle1">Raised This Year</Typography>
+
+        {/* Impact per dollar */}
+        <Grid container spacing={2} sx={{ mb: 5, maxWidth: 720, mx: 'auto' }}>
+          {[
+            { amount: '$50', impact: '4 weeks of class for one child in Nairobi', color: '#10b981' },
+            { amount: '$100', impact: 'Workshop materials for an entire session', color: '#3b82f6' },
+            { amount: '$500', impact: 'Advanced EV3 kit for a full team', color: '#8b5cf6' },
+            { amount: '$1,000', impact: 'Sponsors a complete semester for one class', color: '#f59e0b' },
+          ].map((item) => (
+            <Grid item xs={12} sm={6} key={item.amount}>
+              <Box sx={{
+                display: 'flex', alignItems: 'center', gap: 2,
+                bgcolor: `${item.color}08`, border: `1px solid ${item.color}25`,
+                borderRadius: 2, px: 2.5, py: 1.5, textAlign: 'left',
+              }}>
+                <Typography sx={{ fontWeight: 900, color: item.color, fontSize: '1.2rem', flexShrink: 0 }}>{item.amount}</Typography>
+                <Typography sx={{ color: 'text.secondary', fontSize: '0.85rem', lineHeight: 1.4 }}>{item.impact}</Typography>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+
+        {/* Fundraising progress bar */}
+        <Paper elevation={0} sx={{ p: { xs: 3, md: 4 }, background: 'linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)', borderRadius: 4, maxWidth: 720, mx: 'auto', mb: 2 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', mb: 1.5 }}>
+            <Box sx={{ textAlign: 'left' }}>
+              <Typography variant="h4" sx={{ fontWeight: 900, color: 'white' }}>$4,000</Typography>
+              <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>raised this year</Typography>
             </Box>
-            <Box>
-              <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
-                500+
-              </Typography>
-              <Typography variant="subtitle1">Students Impacted</Typography>
+            <Box sx={{ textAlign: 'right' }}>
+              <Typography variant="h5" sx={{ fontWeight: 700, color: 'rgba(255,255,255,0.5)' }}>$25,000</Typography>
+              <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.4)' }}>goal</Typography>
             </Box>
-          </Stack>
+          </Box>
+          {/* Bar */}
+          <Box sx={{ height: 10, bgcolor: 'rgba(255,255,255,0.1)', borderRadius: 99, overflow: 'hidden' }}>
+            <Box sx={{
+              height: '100%',
+              width: '16%',
+              background: 'linear-gradient(90deg, #06b6d4, #3b82f6)',
+              borderRadius: 99,
+            }} />
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
+            <Typography variant="caption" sx={{ color: '#06b6d4', fontWeight: 700 }}>16% of annual goal</Typography>
+            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.4)' }}>500+ students impacted</Typography>
+          </Box>
         </Paper>
       </Box>
 

@@ -496,6 +496,30 @@ export default function Navigation() {
 
             {/* Right side actions */}
             <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              {/* Donate CTA */}
+              <MuiButton
+                component={Link}
+                href="/donate"
+                size="small"
+                startIcon={<Favorite sx={{ fontSize: 14 }} />}
+                sx={{
+                  display: { xs: 'none', md: 'flex' },
+                  ml: 1,
+                  px: 2, py: 0.7,
+                  borderRadius: '10px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  textTransform: 'none',
+                  bgcolor: 'rgba(239,68,68,0.12)',
+                  color: '#ef4444',
+                  border: '1px solid rgba(239,68,68,0.25)',
+                  '&:hover': { bgcolor: '#ef4444', color: 'white' },
+                  transition: 'color 0.2s ease, background-color 0.2s ease',
+                }}
+              >
+                Donate
+              </MuiButton>
+
               {/* Theme Toggle */}
               <IconButton
                 onClick={toggleColorMode}

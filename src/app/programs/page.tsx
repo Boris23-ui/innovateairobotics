@@ -218,6 +218,27 @@ export default function ProgramsPage() {
         </Grid>
       </Container>
 
+      {/* Scholarship Banner */}
+      <Box sx={{ bgcolor: "rgba(6,182,212,0.06)", borderTop: "1px solid rgba(6,182,212,0.15)", borderBottom: "1px solid rgba(6,182,212,0.15)", py: 4, textAlign: "center" }}>
+        <Container maxWidth="md">
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems="center" justifyContent="center">
+            <Typography sx={{ fontSize: "1.5rem" }}>🎓</Typography>
+            <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
+              <Typography sx={{ fontWeight: 700, color: "text.primary", fontSize: "1rem" }}>
+                Need-based scholarships available — no student is ever turned away.
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                We are a 501(c)(3) nonprofit. Contact us about financial assistance.
+              </Typography>
+            </Box>
+            <Button variant="outlined" size="small" onClick={() => router.push("/contact")}
+              sx={{ borderColor: "#06b6d4", color: "#06b6d4", fontWeight: 700, borderRadius: 2, textTransform: "none", whiteSpace: "nowrap", flexShrink: 0, "&:hover": { bgcolor: "rgba(6,182,212,0.08)" } }}>
+              Ask About Aid
+            </Button>
+          </Stack>
+        </Container>
+      </Box>
+
       {/* CTA */}
       <Box sx={{ background: "linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%)", py: { xs: 8, md: 12 }, textAlign: "center" }}>
         <Container maxWidth="md">
@@ -225,8 +246,11 @@ export default function ProgramsPage() {
           <Typography variant="h3" fontWeight={800} color="white" gutterBottom sx={{ fontSize: { xs: "2rem", md: "3rem" } }}>
             Ready to Find Your Program?
           </Typography>
-          <Typography variant="h6" sx={{ color: "rgba(255,255,255,0.85)", mb: 5, fontWeight: 400 }}>
-            Join thousands of students already building the future with InnovateAI Robotics.
+          <Typography variant="h6" sx={{ color: "rgba(255,255,255,0.85)", mb: 2, fontWeight: 400 }}>
+            Join students in Kenya and California already building the future with InnovateAI Robotics.
+          </Typography>
+          <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.6)", mb: 5 }}>
+            501(c)(3) nonprofit · Need-based scholarships available · Free trial class for new students
           </Typography>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
             <Button variant="contained" size="large" startIcon={<School />} onClick={() => router.push("/sign-up")}
