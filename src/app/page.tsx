@@ -538,12 +538,12 @@ export default function LandingPage() {
                   >
                     <Box sx={{
                       width: 64, height: 64,
-                      borderRadius: '50%',
+                      borderRadius: 2,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      background: 'rgba(6, 182, 212, 0.1)',
-                      border: '1px solid rgba(6, 182, 212, 0.2)',
+                      background: 'rgba(6, 182, 212, 0.08)',
+                      border: '1px solid rgba(6, 182, 212, 0.15)',
                       color: '#06b6d4',
                       mb: 3,
                     }}>
@@ -1053,7 +1053,7 @@ export default function LandingPage() {
                       color: '#06b6d4',
                       mb: 2,
                       width: 72, height: 72,
-                      borderRadius: '50%',
+                      borderRadius: 2.5,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
