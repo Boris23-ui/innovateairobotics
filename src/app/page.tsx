@@ -992,7 +992,7 @@ export default function LandingPage() {
                     fontSize: '1.2rem',
                     background: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
                     boxShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
-                    borderRadius: 3,
+                    borderRadius: 2,
                     '&:hover': {
                       background: 'linear-gradient(135deg, #22d3ee, #60a5fa)',
                       boxShadow: '0 0 40px rgba(6, 182, 212, 0.5)',
@@ -1012,7 +1012,7 @@ export default function LandingPage() {
                     color: 'white',
                     borderColor: 'rgba(255,255,255,0.2)',
                     borderWidth: 2,
-                    borderRadius: 3,
+                    borderRadius: 2,
                     backdropFilter: 'blur(10px)',
                     backgroundColor: 'rgba(255,255,255,0.05)',
                     '&:hover': {
