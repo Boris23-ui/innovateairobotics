@@ -112,9 +112,9 @@ export default function ContactPage() {
               { icon: AccessTime, label: "Office Hours", value: "Mon-Fri 9am-7pm PST", color: "#8b5cf6" },
             ].map(({ icon: Icon, label, value, color }) => (
               <Grid item xs={12} sm={6} md={3} key={label}>
-                <Card elevation={0} sx={{ border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: 4, height: "100%", textAlign: "center", p: 1, transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-4px)", boxShadow: isDark ? "0 12px 32px rgba(0,0,0,0.3)" : "0 12px 32px rgba(0,0,0,0.1)" } }}>
+                <Card elevation={0} sx={{ border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: 4, height: "100%", textAlign: "center", p: 1, transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-2px)", boxShadow: isDark ? "0 12px 32px rgba(0,0,0,0.3)" : "0 12px 32px rgba(0,0,0,0.1)" } }}>
                   <CardContent sx={{ py: 4 }}>
-                    <Box sx={{ width: 56, height: 56, borderRadius: "50%", bgcolor: `${color}15`, display: "flex", alignItems: "center", justifyContent: "center", mx: "auto", mb: 2 }}>
+                    <Box sx={{ width: 56, height: 56, borderRadius: 2, bgcolor: `${color}12`, border: `1px solid ${color}25`, display: "flex", alignItems: "center", justifyContent: "center", mx: "auto", mb: 2 }}>
                       <Icon sx={{ color, fontSize: 28 }} />
                     </Box>
                     <Typography sx={{ fontWeight: 700, color: "text.primary", mb: 0.5 }}>{label}</Typography>

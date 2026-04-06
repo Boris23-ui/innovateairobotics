@@ -129,7 +129,7 @@ export default function ProgramsPage() {
         </Box>
         <Stack spacing={6}>
           {programs.map((program, index) => (
-            <Card key={program.title} elevation={0} sx={{ border: "2px solid", borderColor: program.borderColor, borderRadius: 4, overflow: "hidden", transition: "all 0.3s ease", "&:hover": { transform: "translateY(-4px)", boxShadow: 8 } }}>
+            <Card key={program.title} elevation={0} sx={{ border: "2px solid", borderColor: program.borderColor, borderRadius: 4, overflow: "hidden", transition: "transform 0.3s ease, box-shadow 0.3s ease", "&:hover": { transform: "translateY(-2px)", boxShadow: 8 } }}>
               <Grid container>
                 <Grid item xs={12} md={5} sx={{ order: { md: index % 2 === 0 ? 0 : 1 } }}>
                   <Box sx={{ position: "relative", height: { xs: 260, md: "100%" }, minHeight: { md: 360 } }}>

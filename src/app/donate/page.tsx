@@ -361,7 +361,7 @@ function DonatePageInner() {
                 flexDirection: 'column',
                 transition: 'transform 0.3s ease',
                 '&:hover': {
-                  transform: 'translateY(-8px)',
+                  transform: 'translateY(-2px)',
                 },
               }}
             >

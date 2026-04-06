@@ -99,9 +99,9 @@ export default function PricingPage() {
   return (
     <Box>
       {/* HERO */}
-      <Box sx={{ background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)", py: { xs: 10, md: 14 }, textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <Box sx={{ position: "absolute", top: "20%", left: "5%", width: 260, height: 260, borderRadius: "50%", background: "radial-gradient(circle, rgba(37,99,235,0.2), transparent 70%)", pointerEvents: "none" }} />
-        <Box sx={{ position: "absolute", bottom: "10%", right: "5%", width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle, rgba(139,92,246,0.2), transparent 70%)", pointerEvents: "none" }} />
+      <Box sx={{ background: "linear-gradient(180deg, #0a0a0f 0%, #0d1117 100%)", py: { xs: 10, md: 14 }, textAlign: "center", position: "relative", overflow: "hidden" }}>
+        <Box sx={{ position: "absolute", top: "20%", left: "5%", width: 260, height: 260, borderRadius: "50%", background: "radial-gradient(circle, rgba(6,182,212,0.08), transparent 70%)", pointerEvents: "none" }} />
+        <Box sx={{ position: "absolute", bottom: "10%", right: "5%", width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle, rgba(59,130,246,0.08), transparent 70%)", pointerEvents: "none" }} />
         <Container maxWidth="md">
           <Chip label="Launching Summer 2026" sx={{ bgcolor: "rgba(37,99,235,0.15)", color: "#60a5fa", border: "1px solid rgba(37,99,235,0.3)", fontWeight: 700, mb: 3 }} />
           <Typography variant="h1" sx={{ fontSize: { xs: "2.5rem", md: "3.8rem" }, fontWeight: 900, color: "white", mb: 2 }}>
@@ -145,7 +145,7 @@ export default function PricingPage() {
           <Grid container spacing={3} justifyContent="center">
             {PROGRAMS.map((prog) => (
               <Grid item xs={12} sm={6} md={4} lg={2.4} key={prog.name}>
-                <Card elevation={0} sx={{ border: prog.popular ? `2px solid ${prog.color}` : `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: 4, height: "100%", display: "flex", flexDirection: "column", position: "relative", transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-6px)", boxShadow: `0 20px 50px ${prog.color}25` } }}>
+                <Card elevation={0} sx={{ border: prog.popular ? `2px solid ${prog.color}` : `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#e5e7eb"}`, borderRadius: 4, height: "100%", display: "flex", flexDirection: "column", position: "relative", transition: "transform 0.2s, box-shadow 0.2s", "&:hover": { transform: "translateY(-2px)", boxShadow: `0 12px 32px ${prog.color}20` } }}>
                   {prog.popular && (
                     <Box sx={{ position: "absolute", top: -14, left: "50%", transform: "translateX(-50%)" }}>
                       <Chip label="Most Popular" size="small" sx={{ bgcolor: prog.color, color: "white", fontWeight: 700 }} />
