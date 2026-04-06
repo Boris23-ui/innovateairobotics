@@ -14,9 +14,8 @@
   
   html, body {
     font-family: var(--font-merriweather);
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
   }
-  background: rgb(var(--background-start-rgb));
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 /* Typography */
