@@ -77,12 +77,15 @@ a {
 @layer base {
   h1 {
     @apply text-4xl font-bold mb-4;
+    text-wrap: balance;
   }
   h2 {
     @apply text-3xl font-semibold mb-3;
+    text-wrap: balance;
   }
   h3 {
     @apply text-2xl font-medium mb-2;
+    text-wrap: balance;
   }
 }
 
