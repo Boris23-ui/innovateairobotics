@@ -261,7 +261,7 @@ const baseTheme: ThemeOptions = {
           flexDirection: 'column',
           minHeight: '100%',
           width: '100%',
-          transition: 'all 0.3s ease-in-out',
+          transition: 'background-color 0.3s ease-in-out, color 0.3s ease-in-out',
         },
         ':root': {
           colorScheme: 'light dark',
@@ -282,7 +282,7 @@ const baseTheme: ThemeOptions = {
           ':active': {
             transform: 'translateY(0)',
           },
-          transition: `all 200ms ${transitions.easings.easeInOut}`,
+          transition: `color 200ms ${transitions.easings.easeInOut}, background-color 200ms ${transitions.easings.easeInOut}, border-color 200ms ${transitions.easings.easeInOut}, box-shadow 200ms ${transitions.easings.easeInOut}, transform 200ms ${transitions.easings.easeInOut}`,
         },
         contained: {
           '&.Mui-disabled': {
@@ -304,7 +304,7 @@ const baseTheme: ThemeOptions = {
       styleOverrides: {
         root: {
           borderRadius: 12,
-          transition: `all 200ms ${transitions.easings.easeInOut}`,
+          transition: `transform 200ms ${transitions.easings.easeInOut}, box-shadow 200ms ${transitions.easings.easeInOut}`,
           '&:hover': {
             transform: 'translateY(-2px)',
           },
@@ -315,14 +315,13 @@ const baseTheme: ThemeOptions = {
       styleOverrides: {
         root: {
           backgroundImage: 'none',
-          transition: `all 200ms ${transitions.easings.easeInOut}`,
         },
       },
     },
     MuiInputBase: {
       styleOverrides: {
         root: {
-          transition: `all 200ms ${transitions.easings.easeInOut}`,
+          transition: `border-color 200ms ${transitions.easings.easeInOut}, box-shadow 200ms ${transitions.easings.easeInOut}`,
         },
       },
     },
@@ -345,7 +344,7 @@ const baseTheme: ThemeOptions = {
     MuiAccordion: {
       styleOverrides: {
         root: {
-          transition: `all 200ms ${transitions.easings.easeInOut}`,
+          transition: `background-color 200ms ${transitions.easings.easeInOut}`,
           '&:before': {
             display: 'none',
           },
@@ -358,7 +357,7 @@ const baseTheme: ThemeOptions = {
       },
       styleOverrides: {
         root: {
-          transition: `all 200ms ${transitions.easings.easeInOut}`,
+          transition: `color 200ms ${transitions.easings.easeInOut}`,
           '&:hover': {
             textDecoration: 'none',
           },
@@ -376,7 +375,7 @@ const baseTheme: ThemeOptions = {
       styleOverrides: {
         root: {
           borderRadius: 8,
-          transition: `all 200ms ${transitions.easings.easeInOut}`,
+          transition: `background-color 200ms ${transitions.easings.easeInOut}`,
         },
       },
     },
