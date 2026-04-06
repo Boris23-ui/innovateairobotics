@@ -48,7 +48,7 @@ const programs = [
     color: "#8b5cf6", bgColor: "rgba(139,92,246,0.08)", borderColor: "rgba(139,92,246,0.3)",
     href: "/programs/ai-avengers",
     highlights: ["Python and EV3 programming", "Data logging and analytics", "Advanced sensor fusion", "FLL & WRO competition prep"],
-    image: "/images/Palo-alto-classes-5.jpg", badge: "Advanced",
+    image: "/images/mobile robot + gripper.jpg", badge: "Advanced",
   },
   {
     title: "Senior Innovators", ageRange: "Ages 18+",
