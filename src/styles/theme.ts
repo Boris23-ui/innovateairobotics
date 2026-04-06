@@ -277,7 +277,7 @@ const baseTheme: ThemeOptions = {
           boxShadow: 'none',
           ':hover': {
             boxShadow: 'none',
-            transform: 'translateY(-1px)',
+            transform: 'translateY(-2px)',
           },
           ':active': {
             transform: 'translateY(0)',
@@ -306,7 +306,7 @@ const baseTheme: ThemeOptions = {
           borderRadius: 12,
           transition: `all 200ms ${transitions.easings.easeInOut}`,
           '&:hover': {
-            transform: 'translateY(-4px)',
+            transform: 'translateY(-2px)',
           },
         },
       },

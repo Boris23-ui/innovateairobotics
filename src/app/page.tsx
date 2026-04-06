@@ -288,7 +288,7 @@ export default function LandingPage() {
                   '&:hover': {
                     background: 'linear-gradient(135deg, #22d3ee, #60a5fa)',
                     boxShadow: '0 0 40px rgba(6, 182, 212, 0.5)',
-                    transform: 'translateY(-3px)',
+                    transform: 'translateY(-2px)',
                   },
                 }}
               >
@@ -310,7 +310,7 @@ export default function LandingPage() {
                     borderColor: '#06b6d4',
                     backgroundColor: 'rgba(6, 182, 212, 0.08)',
                     borderWidth: 2,
-                    transform: 'translateY(-3px)',
+                    transform: 'translateY(-2px)',
                   },
                 }}
               >
@@ -629,7 +629,7 @@ export default function LandingPage() {
                 '&:hover': {
                   background: 'linear-gradient(135deg, #22d3ee, #60a5fa)',
                   boxShadow: '0 0 40px rgba(6, 182, 212, 0.5)',
-                  transform: 'translateY(-3px)',
+                  transform: 'translateY(-2px)',
                 },
               }}
             >
@@ -996,7 +996,7 @@ export default function LandingPage() {
                     '&:hover': {
                       background: 'linear-gradient(135deg, #22d3ee, #60a5fa)',
                       boxShadow: '0 0 40px rgba(6, 182, 212, 0.5)',
-                      transform: 'translateY(-5px)',
+                      transform: 'translateY(-2px)',
                     },
                   }}
                 >
@@ -1019,7 +1019,7 @@ export default function LandingPage() {
                       borderColor: 'rgba(255,255,255,0.5)',
                       backgroundColor: 'rgba(255,255,255,0.1)',
                       borderWidth: 2,
-                      transform: 'translateY(-5px)',
+                      transform: 'translateY(-2px)',
                     },
                   }}
                 >
