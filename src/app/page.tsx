@@ -131,7 +131,7 @@ export default function LandingPage() {
       title: 'Intermediate',
       subtitle: 'Mechanical Systems & Programming',
       points: ['Gear trains, pistons, pulleys, and CAM systems', 'EV3 Mindstorms programming with Scratch', 'Color, touch, and ultrasonic sensors'],
-      image: '/images/kids_designing_simple_machines.jpg',
+      image: '/images/20220810_152306.jpg',
       icon: <Code sx={{ fontSize: 24 }} />,
     },
     {
